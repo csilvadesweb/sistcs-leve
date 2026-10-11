@@ -1,0 +1,12 @@
+{
+  // Publica o app (pasta dist) como Cloudflare Worker com arquivos estáticos e liga o domínio leve.sistcs.com.
+  // Precisa do DNS de sistcs.com na mesma conta da Cloudflare: o registro e o HTTPS são criados sozinhos.
+  "name": "sistcs-leve",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist"
+  },
+  "routes": [
+    { "pattern": "leve.sistcs.com", "custom_domain": true }
+  ]
+}

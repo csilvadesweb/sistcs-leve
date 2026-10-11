@@ -1,0 +1,145 @@
+import type { ReactNode } from 'react';
+import {
+  Apple,
+  CalendarDays,
+  ChartNoAxesCombined,
+  CircleUserRound,
+  ClipboardList,
+  Heart,
+  House,
+  Pill,
+  Timer,
+} from 'lucide-react';
+import { Link, Route, Router as WouterRouter, Switch, useLocation } from 'wouter';
+import { useHashLocation } from 'wouter/use-hash-location';
+import { AuthGate, useAppData } from './session';
+import { Avatar } from './photos';
+import { PwaBanners } from './pwa';
+import { Home } from './pages/Home';
+import { FoodTracking } from './pages/Food';
+import { Records } from './pages/Records';
+import { Medications } from './pages/Medications';
+import { Fasting } from './pages/Fasting';
+import { Reports } from './pages/Reports';
+import { ProfileSettings } from './pages/Profile';
+
+const destinations = [
+  { href: '/', label: 'Início', short: 'Início', icon: House },
+  { href: '/alimentacao', label: 'Alimentação', short: 'Alimentos', icon: Apple },
+  { href: '/registros', label: 'Registros', short: 'Registros', icon: ClipboardList },
+  { href: '/jejum', label: 'Jejum', short: 'Jejum', icon: Timer },
+  { href: '/medicamentos', label: 'Medicamentos', short: 'Remédios', icon: Pill },
+  { href: '/relatorios', label: 'Relatórios', short: 'Relatórios', icon: ChartNoAxesCombined },
+  { href: '/perfil', label: 'Perfil', short: 'Perfil', icon: CircleUserRound },
+];
+
+const dateLabel = new Intl.DateTimeFormat('pt-BR', {
+  timeZone: 'America/Sao_Paulo',
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(new Date());
+
+function NavLink({ href, label, text, icon: Icon, active, mobile = false }: {
+  href: string;
+  label: string;
+  text?: string;
+  icon: typeof House;
+  active: boolean;
+  mobile?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      aria-label={label}
+      aria-current={active ? 'page' : undefined}
+      className={`nav-link ${active ? 'nav-link-active' : ''} ${mobile ? 'nav-link-mobile' : ''}`}
+    >
+      <Icon aria-hidden="true" strokeWidth={active ? 2.1 : 1.7} />
+      <span>{text ?? label}</span>
+    </Link>
+  );
+}
+
+function Shell({ children }: { children: ReactNode }) {
+  const [location] = useLocation();
+  const { data } = useAppData();
+
+  return (
+    <div className="app-shell">
+      <aside className="sidebar" aria-label="Navegação principal">
+        <Link href="/" className="brand-mark" aria-label="SISTCS Leve — Início">
+          <img className="brand-emblem" src={`${import.meta.env.BASE_URL}emblem.webp`} alt="" width={42} height={42} />
+          <span className="brand-name">SISTCS<span>leve</span></span>
+        </Link>
+        <p className="sidebar-caption">SEU ESPAÇO DE CUIDADO</p>
+        <nav className="desktop-nav" aria-label="Áreas do aplicativo">
+          {destinations.map(({ href, label, icon }) => (
+            <NavLink key={href} href={href} label={label} icon={icon} active={location === href} />
+          ))}
+        </nav>
+        <div className="sidebar-foot">
+          <span className="foot-mark"><Heart size={14} aria-hidden="true" /></span>
+          <p>Um passo de cada vez.<br /><strong>Você está no seu tempo.</strong></p>
+        </div>
+      </aside>
+      <div className="app-main">
+        <header className="topbar">
+          <div className="mobile-brand">
+            <img className="brand-emblem" src={`${import.meta.env.BASE_URL}emblem.webp`} alt="" width={34} height={34} />
+            <span className="brand-name">SISTCS<span>leve</span></span>
+          </div>
+          <div className="topbar-date">
+            <CalendarDays size={16} aria-hidden="true" />
+            <time>{dateLabel}</time>
+          </div>
+          <Link href="/relatorios" className="stage-tag">VER RELATÓRIOS</Link>
+          <Link href="/perfil" className="topbar-avatar" aria-label="Abrir o perfil">
+            <Avatar path={data.profile?.avatarPath} name={data.profile?.displayName} size={36} />
+          </Link>
+        </header>
+        <PwaBanners />
+        <main className="main-content" id="conteudo-principal">{children}</main>
+        <nav className="mobile-nav" aria-label="Navegação principal">
+          {destinations.map(({ href, label, short, icon }) => (
+            <NavLink key={href} href={href} label={label} text={short} icon={icon} active={location === href} mobile />
+          ))}
+        </nav>
+      </div>
+    </div>
+  );
+}
+
+function NotFound() {
+  return (
+    <div className="page page-enter">
+      <section className="initial-card">
+        <h2>Página não encontrada</h2>
+        <p className="empty-description">O endereço que você abriu não existe neste aplicativo.</p>
+        <p className="empty-description"><Link href="/">Voltar ao início</Link></p>
+      </section>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthGate>
+      <WouterRouter hook={useHashLocation}>
+        <Shell>
+          <Switch>
+            <Route path="/" component={Home} />
+            <Route path="/alimentacao" component={FoodTracking} />
+            <Route path="/registros" component={Records} />
+            <Route path="/jejum" component={Fasting} />
+            <Route path="/medicamentos" component={Medications} />
+            <Route path="/relatorios" component={Reports} />
+            <Route path="/perfil" component={ProfileSettings} />
+            <Route component={NotFound} />
+          </Switch>
+        </Shell>
+      </WouterRouter>
+    </AuthGate>
+  );
+}

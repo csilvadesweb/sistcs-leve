@@ -127,3 +127,14 @@
   .ft-favorite-row { flex-wrap: wrap; }
   .ft-favorite-row > div { min-width: calc(100% - 90px); }
 }
+
+
+/* Busca alimentar · legibilidade e hierarquia visual premium */
+.food-search input, .food-search select, .food-search textarea { font-size: 16px; }
+.food-search label, .food-search .field > label { font-size: 15px; }
+.food-search button { font-size: 14px; }
+.food-search small, .food-search .muted { font-size: 13px; line-height: 1.55; }
+.food-search article, .food-search .card { border-radius: 17px; }
+@media (max-width: 600px) {
+  .food-search input, .food-search select, .food-search textarea { min-height: 48px; }
+}

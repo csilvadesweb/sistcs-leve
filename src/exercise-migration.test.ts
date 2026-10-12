@@ -1,10 +1,6 @@
-import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
-const migration = readFileSync(
-  new URL('../supabase/migrations/20261012_exercise_entries.sql', import.meta.url),
-  'utf8',
-);
+import migration from '../supabase/migrations/20261012_exercise_entries.sql?raw';
 
 describe('contrato da migration do diário de exercícios', () => {
   it('cria a tabela de forma aditiva e preserva os dados existentes', () => {

@@ -13,6 +13,7 @@ type Detector = { detect(v: HTMLVideoElement): Promise<Array<{ rawValue: string 
 
 function BarcodeScanner({ onCode, onClose }: { onCode: (code: string) => void; onClose: () => void }) {
   const video = useRef<HTMLVideoElement>(null);
+  const lastCodeRef = useRef<{ code: string; at: number } | null>(null);
   const [error, setError] = useState('');
   // Guarda o callback mais recente para a câmera não reiniciar a cada renderização do pai.
   const onCodeRef = useRef(onCode);
@@ -40,7 +41,15 @@ function BarcodeScanner({ onCode, onClose }: { onCode: (code: string) => void; o
         timer = window.setInterval(async () => {
           try {
             const found = await detector.detect(el);
-            if (!stopped && found[0]?.rawValue) onCodeRef.current(found[0].rawValue);
+            const code = found[0]?.rawValue?.trim();
+            if (!stopped && code) {
+              const previous = lastCodeRef.current;
+              // BarcodeDetector encontra o mesmo código em muitos quadros seguidos.
+              // Evita disparar várias consultas para o mesmo produto em sequência.
+              if (previous?.code === code && Date.now() - previous.at < 2500) return;
+              lastCodeRef.current = { code, at: Date.now() };
+              onCodeRef.current(code);
+            }
           } catch {
             /* quadro sem código: tenta de novo */
           }

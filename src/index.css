@@ -229,3 +229,93 @@ a { color: #32684f; }
   .profile-data-scope { margin-left: 0; }
   .auth-card { padding: 24px 20px; }
 }
+
+
+/* ---------- SISTCS Leve · refinamento premium e legibilidade ---------- */
+:root {
+  --background: 42 32% 96%;
+  --foreground: 162 25% 15%;
+  --border: 145 18% 82%;
+  --input: 145 18% 82%;
+  --ring: 43 54% 54%;
+  --primary: 160 35% 27%;
+  --primary-foreground: 0 0% 100%;
+  --muted: 145 18% 91%;
+  --radius: 1.1rem;
+}
+body { font-size: 16px; line-height: 1.6; }
+button, input, select, textarea { font: inherit; }
+.btn { min-height: 46px; padding-inline: 19px; border-radius: 12px; font-size: 15px; font-weight: 700; letter-spacing: -.01em; box-shadow: 0 2px 5px rgba(22, 50, 39, .06); }
+.btn-sm { min-height: 40px; padding-inline: 14px; font-size: 14px; }
+.input { height: 49px; padding-inline: 15px; border-radius: 12px; font-size: 16px; box-shadow: inset 0 1px 2px rgba(24, 48, 37, .025); }
+.input:focus-visible { border-color: #b38b3f; outline: 3px solid rgba(179, 139, 63, .2); outline-offset: 1px; }
+.field { gap: 8px; }
+.field > label { font-size: 15px; line-height: 1.45; }
+.field > label span { font-size: 13px; }
+.field-hint, .field-error { font-size: 13px; line-height: 1.55; }
+.auth-screen, .app-shell { background: radial-gradient(ellipse at 85% 0%, rgba(215, 193, 137, .16), transparent 30%), radial-gradient(ellipse at 5% 45%, rgba(195, 216, 197, .28), transparent 34%), hsl(var(--background)); }
+.auth-card, .initial-card, .profile-card, .profile-privacy-card, .today-card { border-color: rgba(65, 94, 76, .16); border-radius: 22px; box-shadow: 0 14px 38px rgba(28, 52, 40, .075), 0 2px 8px rgba(28, 52, 40, .035); }
+.auth-card { padding: 34px 30px; }
+.auth-title { font-size: clamp(32px, 5vw, 38px); line-height: 1.12; }
+.auth-intro { font-size: 16px; }
+.brand-icon { color: #7b602d; background: linear-gradient(145deg, #f2e6c8, #dfd0a8); box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 3px 9px rgba(86, 66, 31, .08); }
+.brand-name { font-size: 16px; }
+.nav-link { min-height: 50px; font-size: 14px; }
+.nav-link-active { color: #244f3e; background: linear-gradient(100deg, #fff 0%, #f8f5eb 100%); box-shadow: 0 5px 16px rgba(38, 65, 48, .075); }
+.nav-link-active::before { background: linear-gradient(180deg, #c5a25c, #8b6b32); }
+.topbar { min-height: 76px; }
+.topbar-date { font-size: 13px; }
+.stage-tag { border-color: #e1d4b5; color: #6f572a; background: #f7f0df; font-size: 11px; }
+.eyebrow { color: #6b572f; font-size: 12px; letter-spacing: .13em; }
+.eyebrow-dot { background: #b99a56; box-shadow: 0 0 0 4px rgba(185, 154, 86, .13); }
+.page-heading h1 { font-size: clamp(44px, 6.2vw, 66px); line-height: 1.04; letter-spacing: -.05em; }
+.page-intro { font-size: 17px; line-height: 1.72; }
+.heading-art .art-ring { border-color: rgba(164, 132, 66, .24); }
+.art-icon { color: #80652f; background: linear-gradient(145deg, #f5ecd8, #e6d9b9); box-shadow: 0 10px 30px rgba(102, 80, 36, .08); }
+.art-seed { background: #b99a56; }
+.initial-card { padding: 30px 32px 27px; }
+.initial-card::after { width: 4px; background: linear-gradient(180deg, #d5bc7c, #8ca88e); }
+.initial-card h2 { font-size: 23px; }
+.empty-description { font-size: 16px; line-height: 1.75; }
+.empty-note p, .quiet-footer p { font-size: 13px; line-height: 1.7; }
+.empty-symbol, .profile-card-icon, .area-icon { color: #755c2e; background: linear-gradient(145deg, #f7f0df, #e9e0c7); }
+.initial-pill { font-size: 11px; color: #705a30; border-color: #e8dcc0; background: #fbf7ed; }
+.section-heading h2 { font-size: 23px; }
+.area-list { border-color: rgba(65, 94, 76, .16); border-radius: 19px; box-shadow: 0 8px 24px rgba(28, 52, 40, .035); }
+.area-row { min-height: 80px; padding-inline: 19px; }
+.area-copy strong { font-size: 15px; }
+.area-copy small { font-size: 13px; line-height: 1.5; }
+.area-row:hover { background: #fffdf8; }
+.quiet-footer { background: linear-gradient(110deg, rgba(238, 232, 213, .8), rgba(231, 239, 228, .75)); }
+.profile-card { padding: 30px 32px; }
+.profile-card-heading h2, .profile-privacy-heading h2 { font-size: 22px; }
+.profile-card-heading p, .profile-privacy-heading p { font-size: 15px; }
+.profile-subsection-heading h3 { font-size: 17px; }
+.profile-subsection-heading p, .profile-help, .profile-save-hint, .profile-data-scope { font-size: 14px; }
+.profile-unit { font-size: 14px; }
+.profile-feedback, .profile-state-message { font-size: 15px; }
+.mobile-nav { padding-top: 10px; border-top-color: rgba(65, 94, 76, .18); background: rgba(250, 249, 244, .97); box-shadow: 0 -8px 28px rgba(30, 50, 37, .055); }
+.nav-link-mobile { min-height: 56px; font-size: 11px; }
+.nav-link-mobile svg { width: 21px; height: 21px; }
+.nav-link-mobile.nav-link-active { color: #735a2b; }
+:focus-visible { outline-color: #b99a56; }
+@media (max-width: 420px) {
+  body { font-size: 16px; }
+  .topbar-date { font-size: 11px; }
+  .main-content { padding-inline: 17px; }
+  .page-heading h1 { font-size: clamp(42px, 11vw, 48px); }
+  .page-intro { font-size: 15px; line-height: 1.65; }
+  .initial-card { padding: 23px 20px; }
+  .initial-card h2 { font-size: 20px; }
+  .empty-description { font-size: 15px; }
+  .section-heading h2 { font-size: 20px; }
+  .area-copy strong { font-size: 14px; }
+  .area-copy small { font-size: 12px; }
+  .profile-card { padding: 23px 19px; }
+  .auth-card { padding: 26px 21px; }
+  .nav-link-mobile { font-size: 10px; }
+}
+@media (min-width: 720px) {
+  .main-content { padding-top: 58px; }
+  .page-heading h1 { font-size: clamp(56px, 5.2vw, 68px); }
+}

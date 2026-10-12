@@ -1,0 +1,163 @@
+/* SISTCS Leve — camada de consistência visual para diário nutricional.
+   Mantém a identidade verde/dourado e os componentes existentes; não muda lógica nem dados. */
+
+:root {
+  --visual-card-radius: 22px;
+  --visual-card-shadow: 0 8px 26px rgba(22, 48, 33, .055);
+  --visual-card-border: rgba(28, 66, 45, .10);
+}
+
+body::before, body::after { opacity: .22; filter: blur(90px); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+.topbar {
+  min-height: 68px;
+  height: auto;
+  padding: 12px clamp(16px, 3vw, 40px);
+  background: rgba(255, 255, 255, .9);
+  border-bottom-color: rgba(28, 66, 45, .09);
+}
+.main-content {
+  width: 100%;
+  max-width: 1240px;
+  padding: clamp(20px, 3vw, 38px) clamp(14px, 3vw, 38px) 120px;
+}
+.page, .ft-page { width: 100%; max-width: 1040px; }
+.page-heading { min-height: 210px; }
+.page-heading h1, .ft-heading h1 {
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -.04em;
+}
+.page-intro, .ft-heading > div > p:not(.eyebrow) {
+  max-width: 620px;
+  font-size: 16px;
+  line-height: 1.65;
+}
+.eyebrow { font-size: 11px; letter-spacing: .14em; }
+.ft-heading {
+  min-height: 200px;
+  margin-bottom: 20px;
+  padding: 26px clamp(20px, 3vw, 34px);
+  border: 1px solid var(--visual-card-border);
+  border-radius: var(--visual-card-radius);
+  background: linear-gradient(115deg, rgba(255,255,255,.98), rgba(246,249,243,.96));
+  box-shadow: var(--visual-card-shadow);
+}
+.ft-heading-icon { opacity: .75; }
+.ft-heading h1 { margin-top: 4px; }
+
+.today-card, .ft-card, .initial-card, .profile-card, .profile-privacy-card,
+.ft-date-card, .setup-card, .today-card, .install-card {
+  border-color: var(--visual-card-border);
+  border-radius: var(--visual-card-radius);
+  box-shadow: var(--visual-card-shadow);
+}
+.today-card, .ft-card { padding: clamp(18px, 2.5vw, 28px); }
+.today-card::before, .ft-card::before, .initial-card::before, .profile-card::before { display: none; }
+.today-head, .ft-section-heading { gap: 14px; }
+.today-head h2, .ft-section-heading h2, .rep-title {
+  font-size: clamp(19px, 2.2vw, 23px);
+  letter-spacing: -.025em;
+}
+.ft-kicker { font-size: 11px; letter-spacing: .13em; }
+.today-link { font-size: 14px; font-weight: 700; }
+.today-body { gap: clamp(18px, 3vw, 34px); }
+.today-macro { padding: 12px 0; border-bottom: 1px solid rgba(28,66,45,.08); }
+.today-macro:last-child { border-bottom: 0; }
+.goal-bar { height: 7px; background: rgba(28,66,45,.09); }
+.goal-bar > i { box-shadow: none; }
+.goal-bar > i.over { box-shadow: none; }
+
+.mini-grid { gap: 14px; }
+.mini-card, .stat {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--visual-card-border);
+  border-radius: 18px;
+  background: rgba(255,255,255,.97);
+  box-shadow: var(--visual-card-shadow);
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+a.mini-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(154,108,18,.28);
+  box-shadow: 0 12px 28px rgba(22,48,33,.08);
+}
+.mini-card strong { font-size: clamp(24px, 2.5vw, 30px); letter-spacing: -.035em; }
+.mini-label, .stat > span { font-size: 13px; }
+.stat-grid { gap: 14px; }
+.stat strong { font-size: clamp(23px, 2.4vw, 29px); letter-spacing: -.035em; }
+.stat small { line-height: 1.5; }
+
+.ft-total-grid { gap: 12px; }
+.ft-total {
+  padding: 16px;
+  border: 1px solid var(--visual-card-border);
+  border-radius: 16px;
+  background: #fff;
+}
+.ft-total strong { font-size: 25px; }
+.ft-record {
+  padding: 14px 0;
+  border-bottom-color: rgba(28,66,45,.09);
+}
+.ft-record:last-child { border-bottom: 0; }
+.ft-record strong { line-height: 1.4; }
+.ft-editor, .fs-selected {
+  border-radius: 18px;
+  border-color: var(--visual-card-border);
+  box-shadow: none;
+}
+.input, select.input, textarea.input {
+  border-color: rgba(28,66,45,.17);
+  border-radius: 12px;
+}
+.btn { border-radius: 12px; }
+.btn-default { box-shadow: 0 5px 14px rgba(19,122,66,.16); }
+.btn-default:hover:not(:disabled) { box-shadow: 0 8px 18px rgba(19,122,66,.22); }
+.fs-selected { background: #fff; }
+.fs-calc { background: #f1f8f2; border-color: rgba(31,154,82,.16); }
+.fs-calc strong { color: #13783f; }
+.ft-preview { background: #fbf7eb; border-color: rgba(154,108,18,.16); }
+
+.area-list { border-color: var(--visual-card-border); border-radius: 18px; box-shadow: var(--visual-card-shadow); }
+.area-row { min-height: 72px; }
+.nav-link { border-radius: 12px; }
+.nav-link-active { box-shadow: inset 0 0 0 1px rgba(154,108,18,.16); }
+.sidebar { background: #fff; border-right-color: rgba(28,66,45,.09); }
+.topbar-date { font-size: 13px; }
+.stage-tag { border-radius: 12px; letter-spacing: .04em; }
+
+@media (min-width: 980px) {
+  .sidebar { width: 250px; flex-basis: 250px; padding: 28px 16px 20px; }
+  .main-content { padding-bottom: 50px; }
+  .page, .ft-page { max-width: 1040px; }
+}
+@media (max-width: 719px) {
+  .topbar { min-height: 60px; padding: 10px 14px; gap: 8px; }
+  .topbar-date { font-size: 12px; gap: 5px; }
+  .main-content { padding: 18px 14px 110px; }
+  .page-heading { min-height: 190px; }
+  .page-heading h1, .ft-heading h1 { font-size: clamp(30px, 8vw, 40px); }
+  .ft-heading { min-height: 170px; margin-bottom: 14px; padding: 22px 18px; }
+  .today-card, .ft-card { padding: 18px; border-radius: 18px; }
+  .mini-grid, .stat-grid { gap: 10px; }
+  .mini-card, .stat { padding: 14px; border-radius: 15px; }
+  .today-head { flex-wrap: wrap; }
+  .today-link { min-height: 40px; display: inline-flex; align-items: center; }
+}
+@media (max-width: 380px) {
+  .main-content { padding-inline: 10px; }
+  .topbar-date .date-long { display: none; }
+  .topbar-date .date-short { display: inline; }
+  .today-card, .ft-card { padding: 15px; }
+  .mini-card, .stat { padding: 12px; }
+}

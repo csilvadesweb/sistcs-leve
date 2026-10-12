@@ -294,8 +294,8 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           <div className="fs-selected-top">
             <div>
               <strong>{food.name}</strong>
-              <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por 100 g{food.origin === 'local' ? ' · fonte: TACO (Unicamp)' : food.origin === 'estimate' ? ' · estimativa nutricional' : food.origin === 'usda' ? ' · USDA SR Legacy via TempoLife (referência internacional)' : ''}</span>
-              {food.origin === 'usda' && <a href={food.sourceUrl ?? 'https://tempolife.app/'} target="_blank" rel="noreferrer">Fonte dos nutrientes: USDA SR Legacy via TempoLife</a>}
+              <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por 100 g{food.origin === 'local' ? ' · fonte: TACO (Unicamp)' : food.origin === 'tbca' ? ' · fonte: TBCA/USP' : food.origin === 'estimate' ? ' · estimativa nutricional' : food.origin === 'usda' ? ' · USDA SR Legacy via TempoLife (referência internacional)' : ''}</span>
+              {(food.origin === 'usda' || food.origin === 'tbca') && <a href={food.sourceUrl ?? (food.origin === 'tbca' ? 'https://www.tbca.net.br/' : 'https://tempolife.app/')} target="_blank" rel="noreferrer">{food.origin === 'tbca' ? 'Fonte dos nutrientes: TBCA/USP' : 'Fonte dos nutrientes: USDA SR Legacy via TempoLife'}</a>}
             </div>
           </div>
           <label className="fs-g-label" htmlFor="fs-measure">Medida do alimento</label>

@@ -131,7 +131,7 @@ export function Reports() {
           <p className="ft-favorites-empty">O diário de exercícios será exibido após aplicar a migration aditiva e ativar o módulo. <Link href="/exercicios">Abrir exercícios</Link></p>
         ) : exerciseDays.length ? (
           <div className="chart-wrap">
-            <BarChart days={perDay.map((d) => ({ date: d.date, value: Math.round(d.exerciseCalories) }))} label="Calorias estimadas de exercício por dia" color="#b58a42" />
+            <BarChart days={perDay.map((d) => ({ date: d.date, value: Math.round(d.exerciseCalories) }))} goal={null} label="Calorias estimadas de exercício por dia" color="#b58a42" />
           </div>
         ) : (
           <p className="ft-favorites-empty">Nenhum exercício registrado neste período. <Link href="/exercicios">Registrar exercício</Link></p>

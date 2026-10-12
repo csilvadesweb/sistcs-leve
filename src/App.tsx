@@ -7,6 +7,7 @@ import {
   ClipboardList,
   Heart,
   House,
+  Dumbbell,
   Pill,
   Timer,
 } from 'lucide-react';
@@ -21,11 +22,13 @@ import { Records } from './pages/Records';
 import { Medications } from './pages/Medications';
 import { Fasting } from './pages/Fasting';
 import { Reports } from './pages/Reports';
+import { Exercises } from './pages/Exercises';
 import { ProfileSettings } from './pages/Profile';
 
 const destinations = [
   { href: '/', label: 'Início', short: 'Início', icon: House },
   { href: '/alimentacao', label: 'Alimentação', short: 'Comida', icon: Apple },
+  { href: '/exercicios', label: 'Exercícios', short: 'Exercícios', icon: Dumbbell },
   { href: '/registros', label: 'Registros', short: 'Evolução', icon: ClipboardList },
   { href: '/jejum', label: 'Jejum', short: 'Jejum', icon: Timer },
   { href: '/medicamentos', label: 'Medicamentos', short: 'Remédio', icon: Pill },
@@ -129,6 +132,7 @@ export default function App() {
           <Switch>
             <Route path="/" component={Home} />
             <Route path="/alimentacao" component={FoodTracking} />
+            <Route path="/exercicios" component={Exercises} />
             <Route path="/registros" component={Records} />
             <Route path="/jejum" component={Fasting} />
             <Route path="/medicamentos" component={Medications} />

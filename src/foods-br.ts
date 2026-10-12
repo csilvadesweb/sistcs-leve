@@ -208,7 +208,9 @@ function fromOff(p: any): FoodPer100 | null {
 // Cache apenas em memória: reduz chamadas repetidas à API pública sem persistir dados pessoais.
 const OFF_SEARCH_CACHE = new Map<string, { expiresAt: number; result: { foods: FoodPer100[]; hasMore: boolean } }>();
 const OFF_SEARCH_CACHE_TTL_MS = 10 * 60 * 1000;
-consexport async function searchOpenFoodFactsPage(query: string, page = 1, signal?: AbortSignal): Promise<{ foods: FoodPer100[]; hasMore: boolean }> {
+const OFF_SEARCH_CACHE_MAX = 20;
+
+export async function searchOpenFoodFactsPage(query: string, page = 1, signal?: AbortSignal): Promise<{ foods: FoodPer100[]; hasMore: boolean }> {
   const normalizedQuery = normalize(query);
   const safePage = Number.isInteger(page) && page > 0 ? page : 1;
   if (!normalizedQuery || signal?.aborted) return { foods: [], hasMore: false };
@@ -244,9 +246,7 @@ consexport async function searchOpenFoodFactsPage(query: string, page = 1, signa
 /** Compatibilidade com chamadas existentes: primeira página de produtos. */
 export async function searchOpenFoodFacts(query: string, signal?: AbortSignal): Promise<FoodPer100[]> {
   return (await searchOpenFoodFactsPage(query, 1, signal)).foods;
-}p((food) => ({ ...food }));
 }
-
 export async function lookupBarcode(code: string, signal?: AbortSignal): Promise<FoodPer100 | null> {
   const res = await fetch(`${OFF}/api/v2/product/${encodeURIComponent(code)}.json?fields=${FIELDS}`, { signal });
   if (res.status === 404) return null;

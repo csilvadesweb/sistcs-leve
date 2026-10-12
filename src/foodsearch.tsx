@@ -121,8 +121,9 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
     return [...options.values()];
   }, [food]);
   const selectedMeasure = measureOptions.find((option) => normalize(option.value) === normalize(measureUnit)) ?? measureOptions[0]!;
-  const amountValid = decimalIsValid(measureAmount, false) && parseDecimal(measureAmount) > 0;
-  const calculatedGrams = amountValid ? parseDecimal(measureAmount) * selectedMeasure.grams : 0;
+  const displayedMeasureAmount = gramsText === null && auto && measureUnit === 'g' ? String(auto.grams) : measureAmount;
+  const amountValid = decimalIsValid(displayedMeasureAmount, false) && parseDecimal(displayedMeasureAmount) > 0;
+  const calculatedGrams = amountValid ? parseDecimal(displayedMeasureAmount) * selectedMeasure.grams : 0;
   const typedOk = gramsText !== null && decimalIsValid(gramsText, false) && parseDecimal(gramsText) <= 5000;
   const grams = gramsText !== null ? (typedOk ? parseDecimal(gramsText) : 0) : auto?.grams ?? 0;
   const gramsOk = grams > 0 && grams <= 5000;
@@ -300,7 +301,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           <label className="fs-g-label" htmlFor="fs-measure">Medida do alimento</label>
           <div className="fs-grams-row">
             <div className="fs-grams">
-              <input id="fs-measure-amount" className="input" inputMode="decimal" maxLength={6} aria-label="Quantidade da medida selecionada" value={measureAmount} onChange={(e) => {
+              <input id="fs-measure-amount" className="input" inputMode="decimal" maxLength={6} aria-label="Quantidade da medida selecionada" value={displayedMeasureAmount} onChange={(e) => {
                 setMeasureAmount(e.target.value);
                 const next = decimalIsValid(e.target.value, false) ? parseDecimal(e.target.value) * selectedMeasure.grams : 0;
                 setGramsText(next > 0 && next <= 5000 ? String(Math.round(next * 10) / 10) : '0');
@@ -310,7 +311,9 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
               const nextUnit = e.target.value;
               const nextMeasure = measureOptions.find((option) => normalize(option.value) === normalize(nextUnit)) ?? measureOptions[0]!;
               setMeasureUnit(nextUnit);
-              const next = amountValid ? parseDecimal(measureAmount) * nextMeasure.grams : 0;
+              const nextAmount = nextUnit === 'g' && auto ? String(auto.grams) : '1';
+              setMeasureAmount(nextAmount);
+              const next = decimalIsValid(nextAmount, false) ? parseDecimal(nextAmount) * nextMeasure.grams : 0;
               setGramsText(next > 0 && next <= 5000 ? String(Math.round(next * 10) / 10) : '0');
             }} aria-label="Unidade de medida">
               {measureOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}

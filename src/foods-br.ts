@@ -149,7 +149,9 @@ const ALIASES: Record<string, string> = {
 };
 
 export function searchLocal(query: string, limit = 8): FoodPer100[] {
-  const terms = stemAll(query)
+  // A TACO usa o nome oficial “Castanha-do-Brasil”; aceitar também o nome popular.
+  const searchableQuery = normalize(query).replace(/castanha[ -]+do[ -]+par[aá]/g, 'castanha do brasil');
+  const terms = stemAll(searchableQuery)
     .split(' ')
     .filter((t) => t && !STOPWORDS.has(t))
     .flatMap((t) => (ALIASES[t] ?? t).split(' '));
@@ -166,7 +168,9 @@ export function searchLocal(query: string, limit = 8): FoodPer100[] {
     const raw = /\b(cru|crua|crus|cruas)\b/i.test(f.name) ? 3 : 0;
     return rank < 0 ? rank : words + raw + rank / 10000;
   };
-  return hits.sort((a, b) => score(a) - score(b)).slice(0, limit);
+  return hits.sort((a, b) => score(a) - score(b)).slice(0, limit).map((food) =>
+    food.code === 'taco-589' ? { ...food, name: 'Castanha-do-Pará (Castanha-do-Brasil), crua' } : food,
+  );
 }
 
 /* ---------- Referências genéricas USDA via TempoLife (somente linhas licenciadas) ---------- */

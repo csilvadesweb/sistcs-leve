@@ -19,6 +19,12 @@ export interface UserProfile {
   weeklyRateKg?: number | null;
   macroPreset?: MacroPreset;
   avatarPath?: string | null;
+  navigationPreferences?: NavigationPreferences;
+}
+
+export interface NavigationPreferences {
+  order: string[];
+  labels: Record<string, string>;
 }
 
 export type PhotoKind = 'before' | 'progress' | 'after';
@@ -158,6 +164,20 @@ export function calculateFoodNutrientTotals(
 
 type Row = Record<string, any>;
 const num = (v: unknown) => Number(v);
+const DEFAULT_NAVIGATION_ORDER = ['/', '/alimentacao', '/registros', '/jejum', '/medicamentos', '/relatorios', '/perfil'];
+
+export function normalizeNavigationPreferences(value: unknown): NavigationPreferences {
+  const input = value && typeof value === 'object' ? value as Partial<NavigationPreferences> : {};
+  const requestedOrder = Array.isArray(input.order) ? input.order.filter((item): item is string => typeof item === 'string') : [];
+  const order = [...new Set([...requestedOrder.filter((item) => DEFAULT_NAVIGATION_ORDER.includes(item)), ...DEFAULT_NAVIGATION_ORDER])];
+  const labels: Record<string, string> = {};
+  if (input.labels && typeof input.labels === 'object') {
+    for (const [key, label] of Object.entries(input.labels)) {
+      if (DEFAULT_NAVIGATION_ORDER.includes(key) && typeof label === 'string' && label.trim()) labels[key] = label.trim().slice(0, 30);
+    }
+  }
+  return { order, labels };
+}
 const numOrNull = (v: unknown) => (v === null || v === undefined ? null : Number(v));
 
 function profileFromRow(r: Row): UserProfile {
@@ -182,6 +202,7 @@ function profileFromRow(r: Row): UserProfile {
     weeklyRateKg: numOrNull(r.weekly_rate_kg),
     macroPreset: (r.macro_preset ?? 'balanced') as MacroPreset,
     avatarPath: r.avatar_path ?? null,
+    navigationPreferences: normalizeNavigationPreferences(r.navigation_preferences),
   };
 }
 
@@ -322,6 +343,15 @@ export async function loadAll(userId: string): Promise<AppData> {
 }
 
 /* ---------- perfil ---------- */
+
+export async function saveNavigationPreferences(userId: string, preferences: NavigationPreferences) {
+  const safePreferences = normalizeNavigationPreferences(preferences);
+  const { error } = await supabase.from('profiles').upsert(
+    { user_id: userId, navigation_preferences: safePreferences },
+    { onConflict: 'user_id' },
+  );
+  fail(error, 'Não foi possível salvar a personalização do menu.');
+}
 
 export async function saveUserProfile(userId: string, p: UserProfile) {
   const { error } = await supabase.from('profiles').upsert(

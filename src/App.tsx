@@ -63,6 +63,16 @@ function NavLink({ href, label, text, icon: Icon, active, mobile = false }: {
 function Shell({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   const { data } = useAppData();
+  const navigationPreferences = data.profile?.navigationPreferences;
+  const orderedDestinations = [...destinations]
+    .sort((a, b) => {
+      const order = navigationPreferences?.order ?? [];
+      const ai = order.indexOf(a.href);
+      const bi = order.indexOf(b.href);
+      return (ai < 0 ? destinations.findIndex((d) => d.href === a.href) : ai)
+        - (bi < 0 ? destinations.findIndex((d) => d.href === b.href) : bi);
+    })
+    .map((item) => ({ ...item, label: navigationPreferences?.labels?.[item.href]?.trim() || item.label }));
 
   return (
     <div className="app-shell">
@@ -73,7 +83,7 @@ function Shell({ children }: { children: ReactNode }) {
         </Link>
         <p className="sidebar-caption">SEU ESPAÇO DE CUIDADO</p>
         <nav className="desktop-nav" aria-label="Áreas do aplicativo">
-          {destinations.map(({ href, label, icon }) => (
+          {orderedDestinations.map(({ href, label, icon }) => (
             <NavLink key={href} href={href} label={label} icon={icon} active={location === href} />
           ))}
         </nav>
@@ -100,8 +110,8 @@ function Shell({ children }: { children: ReactNode }) {
         <PwaBanners />
         <main className="main-content" id="conteudo-principal">{children}</main>
         <nav className="mobile-nav" aria-label="Navegação principal">
-          {destinations.map(({ href, label, short, icon }) => (
-            <NavLink key={href} href={href} label={label} text={short} icon={icon} active={location === href} mobile />
+          {orderedDestinations.map(({ href, label, short, icon }) => (
+            <NavLink key={href} href={href} label={label} text={navigationPreferences?.labels?.[href]?.trim() || short} icon={icon} active={location === href} mobile />
           ))}
         </nav>
       </div>

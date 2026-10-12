@@ -144,18 +144,19 @@ export function normalize(text: string) {
 export function householdUnitsForFood(food: FoodPer100): Array<[string, number]> {
   if (food.units?.length) return food.units;
   const name = normalize(food.name);
+  // Frutas frescas e secas.
   if (/ameixa.*(seca|desidratada)|prune|dried plum/.test(name)) return [['unidade', 9.5], ['porção (5 unidades)', 47.5]];
-  if (/banana/.test(name)) return [['unidade', 80]];
-  if (/maca|apple/.test(name)) return [['unidade', 180]];
-  if (/pera|pear/.test(name)) return [['unidade', 170]];
-  if (/laranja|orange/.test(name)) return [['unidade', 130]];
-  if (/tangerina|mexerica|mandarin|clementine/.test(name)) return [['unidade', 80]];
-  if (/kiwi/.test(name)) return [['unidade', 75]];
-  if (/morango|strawberr/.test(name)) return [['unidade', 12], ['porção (10 unidades)', 120]];
-  if (/uva|grape/.test(name)) return [['unidade', 5], ['cacho pequeno', 100]];
   if (/damasco.*(seco|desidratado)|dried apricot/.test(name)) return [['unidade', 8]];
   if (/tâmara|tamara|date, dried|dried date/.test(name)) return [['unidade', 8]];
   if (/figo.*(seco|desidratado)|dried fig/.test(name)) return [['unidade', 20]];
+  if (/banana/.test(name)) return [['unidade', 80]];
+  if (/(maçã|maca|apple)(?!.*(suco|juice|néctar|nectar))/.test(name)) return [['unidade', 180]];
+  if (/(pera|pear)(?!.*(suco|juice|néctar|nectar))/.test(name)) return [['unidade', 170]];
+  if (/(laranja|orange)(?!.*(suco|juice|refrigerante|soda))/.test(name)) return [['unidade', 130]];
+  if (/tangerina|mexerica|mandarin|clementine/.test(name)) return [['unidade', 80]];
+  if (/kiwi/.test(name)) return [['unidade', 75]];
+  if (/morango|strawberr/.test(name)) return [['unidade', 12], ['porção (10 unidades)', 120]];
+  if (/(uva|grape)(?!.*(suco|juice|vinho|wine|passa|raisin))/.test(name)) return [['unidade', 5], ['cacho pequeno', 100]];
   if (/abacate|avocado/.test(name)) return [['unidade', 200], ['fatia', 50]];
   if (/abacaxi|pineapple/.test(name)) return [['fatia', 80], ['porção', 100]];
   if (/mam[aã]o|papaya/.test(name)) return [['fatia', 150], ['unidade pequena', 300]];
@@ -167,6 +168,22 @@ export function householdUnitsForFood(food: FoodPer100): Array<[string, number]>
   if (/goiaba|guava/.test(name)) return [['unidade', 170]];
   if (/cereja|cherr/.test(name)) return [['unidade', 8]];
   if (/framboesa|raspberr|amora|blackberr|blueberr|mirtilo/.test(name)) return [['unidade', 3], ['porção', 100]];
+  // Outros alimentos normalmente contados por unidade ou por embalagem individual.
+  if (/ovo(?!.*(pó|po|líquido|liquido))|egg/.test(name)) return [['unidade', 50]];
+  if (/p[aã]o franc[eê]s|bread roll|roll, bread/.test(name)) return [['unidade', 50]];
+  if (/torrada|toast/.test(name)) return [['unidade', 10]];
+  if (/fatia de pão|p[aã]o de forma|sliced bread|white bread|whole wheat bread/.test(name)) return [['fatia', 25]];
+  if (/biscoito|bolacha|cookie|cracker/.test(name)) return [['unidade', 10], ['porção (5 unidades)', 50]];
+  if (/barra de cereal|cereal bar|protein bar/.test(name)) return [['unidade', 25]];
+  if (/quadrado de chocolate|chocolate.*(quadrado|square)/.test(name)) return [['quadrado', 5]];
+  if (/iogurte|yogurt/.test(name)) return [['pote', 170]];
+  if (/queijo.*(fatia|slice)|slice.*cheese/.test(name)) return [['fatia', 20]];
+  if (/presunto|mortadela|peito de peru|ham|deli turkey|bologna/.test(name)) return [['fatia', 15]];
+  if (/salsicha|hot dog sausage|sausage/.test(name)) return [['unidade', 50]];
+  if (/hamb[uú]rguer|hamburger patty|meatball|alm[oô]ndega/.test(name)) return [['unidade', 100]];
+  if (/pizza/.test(name)) return [['fatia', 100]];
+  if (/castanha|am[eê]ndoa|noz|amendoim|nut|almond|walnut|peanut/.test(name)) return [['porção (um punhado)', 30]];
+  if (/lata|canned/.test(name) && /atum|sardinha|milho|ervilha|tuna|sardine|corn|peas/.test(name)) return [['lata drenada (aprox.)', 120]];
   return [];
 }
 
@@ -452,8 +469,9 @@ const show = (u: string) => SHOW[u] ?? u;
 
 /** Converte o que a pessoa digitou em gramas para o alimento escolhido. */
 export function gramsFor(food: FoodPer100, q: ParsedQuery): { grams: number; label: string } {
-  const first = food.units?.[0];
-  const find = (u: string) => food.units?.find(([k]) => stem(k) === stem(u) || stemAll(k) === stemAll(u));
+  const availableUnits = householdUnitsForFood(food);
+  const first = availableUnits[0];
+  const find = (u: string) => availableUnits.find(([k]) => stem(k) === stem(u) || stemAll(k) === stemAll(u));
   const count = q.amount ?? 1;
   if (q.unit && q.unit in WEIGHT_UNITS) {
     const g = count * WEIGHT_UNITS[q.unit]!;

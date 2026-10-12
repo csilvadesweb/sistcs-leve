@@ -9,5 +9,6 @@
   "routes": [
     { "pattern": "leve.sistcs.com", "custom_domain": true }
   ],
-  "previews": {}
+  "previews": {},
+  "preview_urls": true
 }

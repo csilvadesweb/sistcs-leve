@@ -1,0 +1,32 @@
+name: Validate SISTCS Leve
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [feat/visual-parity-nutrition-ui]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: TypeScript check
+        run: npm run typecheck
+      - name: Production build
+        run: npm run build

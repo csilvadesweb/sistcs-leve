@@ -305,3 +305,167 @@ button, a, input, select, textarea { touch-action: manipulation; -webkit-tap-hig
   .profile-data-scope { margin-left: 0; }
   .auth-card { padding: 28px 20px; }
 }
+
+
+/* SISTCS Leve — atualização visual inspirada na clareza dos diários nutricionais
+   (referência de layout; identidade e funcionalidades próprias do aplicativo). */
+:root {
+  --bg: #f5f8f5;
+  --surface: #ffffff;
+  --surface-2: #f2f7f3;
+  --surface-3: #e4eee6;
+  --line: #d7e5da;
+  --line-soft: #e3ebe5;
+  --text: #24352a;
+  --text-2: #526459;
+  --text-3: #6d7d72;
+  --gold: #218548;
+  --gold-2: #176b38;
+  --gold-3: #39a65e;
+  --gold-grad: linear-gradient(135deg, #35a85e 0%, #218548 100%);
+  --leaf: #218548;
+  --leaf-2: #176b38;
+  --leaf-grad: linear-gradient(90deg, #218548, #42b86c);
+  --green-grad: linear-gradient(135deg, #2b9b52 0%, #19753d 100%);
+  --glow: 0 0 0 1px rgba(33, 133, 72, .08), 0 8px 24px -16px rgba(26, 91, 48, .22);
+  --shadow: 0 1px 2px rgba(28, 64, 39, .04), 0 8px 24px -18px rgba(28, 64, 39, .2);
+  --radius: 12px;
+}
+body::before, body::after { display: none; }
+.sidebar {
+  background: #fff;
+  border-right-color: #e0e9e2;
+  backdrop-filter: none;
+}
+.topbar {
+  background: rgba(255, 255, 255, .96);
+  border-bottom-color: #e1e9e3;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.brand-name span {
+  background: none;
+  color: var(--leaf);
+  -webkit-text-fill-color: var(--leaf);
+  letter-spacing: .16em;
+}
+.sidebar-caption { letter-spacing: .12em; }
+.nav-link { border-radius: 10px; font-weight: 550; }
+.nav-link:hover { background: #f2f7f3; transform: none; }
+.nav-link-active {
+  color: #176b38;
+  background: #eaf5ed;
+  box-shadow: inset 3px 0 0 #218548;
+}
+.nav-link-active::before { display: none; }
+.nav-link-active svg { color: #218548; }
+.stage-tag {
+  color: #176b38;
+  background: #edf7ef;
+  border-color: #d4e8d9;
+  letter-spacing: .02em;
+}
+.page-heading { min-height: 190px; }
+.page-heading h1 {
+  font-family: var(--app-font-sans);
+  font-size: clamp(30px, 5vw, 44px);
+  line-height: 1.15;
+  font-weight: 750;
+  letter-spacing: -.035em;
+}
+.eyebrow { color: #218548; letter-spacing: .1em; }
+.eyebrow-dot { box-shadow: none; }
+.heading-art { opacity: .16; transform: translateY(-51%) scale(.82); }
+.art-ring { border-color: rgba(33, 133, 72, .2); }
+.art-icon {
+  color: #218548;
+  background: #eaf5ed;
+  box-shadow: none;
+}
+.art-seed { background: #218548; box-shadow: none; }
+.initial-card, .profile-card, .profile-privacy-card, .today-card, .ft-card, .ft-date-card {
+  border-color: #e0e9e2;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(27, 68, 40, .035);
+}
+.initial-card::before, .profile-card::before, .today-card::before, .ft-card::before { display: none; }
+.today-card, .ft-card { background: #fff; }
+.today-head, .ft-section-heading { border-color: #e4ece6; }
+.today-link, .ft-kicker { color: #218548; }
+.btn { border-radius: 10px; box-shadow: none; }
+.btn-default {
+  background: #218548;
+  box-shadow: none;
+}
+.btn-default:hover:not(:disabled) {
+  background: #176b38;
+  box-shadow: 0 3px 10px rgba(33, 133, 72, .16);
+}
+.btn-default::after { display: none; }
+.btn-outline { background: #fff; border-color: #cbdccf; }
+.btn-outline:hover:not(:disabled) { background: #f2f8f3; border-color: #218548; }
+.input { border-color: #d4e0d7; border-radius: 10px; }
+.input:focus { border-color: #218548; box-shadow: 0 0 0 3px rgba(33, 133, 72, .12); background: #fff; }
+.goal-bar { background: #e8efe9; border-radius: 999px; }
+.goal-bar i { background: #2b9b52; border-radius: 999px; }
+.goal-bar.water i { background: #258db0; }
+.mini-card, .ft-meal-group, .ft-favorites, .ft-water-summary {
+  border-color: #e0e9e2;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(27, 68, 40, .025);
+}
+.mini-card:hover { border-color: #b7d8c0; background: #fbfefb; }
+.mobile-nav {
+  right: 8px;
+  left: 8px;
+  display: flex;
+  gap: 2px;
+  justify-content: flex-start;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  border-color: #dbe6de;
+  border-radius: 15px;
+  padding: 5px;
+  background: rgba(255, 255, 255, .98);
+  box-shadow: 0 4px 20px rgba(26, 65, 39, .12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.mobile-nav::-webkit-scrollbar { display: none; }
+.nav-link-mobile {
+  flex: 0 0 68px;
+  min-width: 0;
+  min-height: 54px;
+  gap: 3px;
+  border-radius: 10px;
+  color: #637468;
+  font-size: 11px;
+}
+.nav-link-mobile svg { width: 20px; height: 20px; }
+.nav-link-mobile.nav-link-active {
+  color: #176b38;
+  background: #eaf5ed;
+  box-shadow: none;
+}
+.nav-link-mobile.nav-link-active svg { filter: none; }
+@media (min-width: 720px) {
+  .sidebar { width: 256px; flex-basis: 256px; padding: 28px 16px 20px; }
+  .topbar { padding: 0 4vw; }
+  .main-content { max-width: 1180px; }
+  .page { max-width: 1000px; }
+  .page-heading { min-height: 210px; }
+}
+@media (max-width: 719px) {
+  .page-heading { min-height: 0; }
+  .page-heading h1 { font-size: clamp(29px, 8vw, 38px); }
+  .heading-copy { padding-bottom: 18px; }
+  .main-content { padding-top: 20px; }
+  .today-card, .ft-card { padding: 18px 16px; border-radius: 14px; }
+}
+@media (max-width: 420px) {
+  .page-heading { min-height: 0; }
+  .page-heading h1 { font-size: 32px; }
+  .heading-art { display: none; }
+  .main-content { padding: 18px 13px calc(100px + env(safe-area-inset-bottom)); }
+}

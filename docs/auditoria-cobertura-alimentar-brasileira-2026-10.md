@@ -8,7 +8,7 @@ A base local existente contém 590 registros derivados da TACO 4ª edição, com
 
 ## O que entrou nesta fase
 
-Foram adicionadas seis entradas da TBCA/USP à busca local, com código de referência, link da fonte e valores por 100 g:
+Foram adicionadas doze entradas da TBCA/USP à busca local, com código de referência, link da fonte e valores por 100 g:
 
 | Alimento | Referência TBCA | Medida inicial |
 |---|---|---|
@@ -34,8 +34,8 @@ Fontes de referência:
 | Carnes, aves, ovos, pescados e frutos do mar | Muitos cortes e preparações na TACO | Carne de sol, churrasco por corte, peixes regionais e preparos |
 | Leite, queijos e derivados | Leites, queijos e iogurtes; produtos embalados via OFF | Queijos regionais, coalhada, requeijão e marcas faltantes |
 | Frutas, verduras e legumes | Muitas espécies e estados de preparo na TACO | Frutas regionais/sazonais, PANCs, tubérculos e variedades locais |
-| Pratos brasileiros e regionais | Acarajé, arroz carreteiro, baião de dois, barreado, cuscuz, feijão tropeiro, maniçoba, tacacá, vatapá e outros na TACO | Pão de queijo pronto, feijoada, tapioca simples, moqueca e preparações regionais adicionais |
-| Doces e sobremesas | Doces da TACO e produtos de marca via OFF | Brigadeiros e doces regionais, bolos caseiros e sobremesas com receita identificada |
+| Pratos brasileiros e regionais | Acarajé, arroz carreteiro, baião de dois, barreado, cuscuz, feijão tropeiro, maniçoba, tacacá, vatapá e outros na TACO | Preparações regionais adicionais, receitas por recheio e variações de tamanho/preparo |
+| Doces e sobremesas | Doces da TACO e produtos de marca via OFF | Brigadeiros e doces regionais, outros bolos caseiros e sobremesas com receita identificada |
 | Bebidas | Café, chás, sucos e refrigerantes em várias formas | Bebidas regionais e produtos embalados ausentes |
 | Industrializados e marcas | Open Food Facts com busca paginada e código de barras | Qualidade, duplicatas, rótulos incompletos e cobertura de marcas brasileiras |
 

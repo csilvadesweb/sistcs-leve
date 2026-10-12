@@ -136,6 +136,38 @@ describe('Open Food Facts — integração externa resiliente', () => {
     await expect(searchOpenFoodFacts('produto')).resolves.toEqual([]);
   });
 
+  it('ignora calorias negativas e neutraliza macros negativos de catálogo colaborativo', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        products: [
+          { product_name: 'Produto com energia inválida', nutriments: { 'energy-kcal_100g': -25 } },
+          {
+            product_name: 'Produto com macros inválidos',
+            nutriments: {
+              'energy-kcal_100g': 120,
+              proteins_100g: -4,
+              carbohydrates_100g: 'not-a-number',
+              fat_100g: 3.26,
+              fiber_100g: -0.5,
+            },
+          },
+        ],
+      }),
+    }));
+
+    await expect(searchOpenFoodFacts('produto')).resolves.toEqual([
+      expect.objectContaining({
+        name: 'Produto com macros inválidos',
+        kcal: 120,
+        protein: 0,
+        carbs: 0,
+        fat: 3.3,
+        fiber: 0,
+      }),
+    ]);
+  });
+
   it('retorna null quando o código de barras não existe', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ status: 404, ok: false }));
     await expect(lookupBarcode('00000000')).resolves.toBeNull();

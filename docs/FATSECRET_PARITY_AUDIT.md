@@ -47,7 +47,7 @@ Com base em `README.md`, `src/App.tsx`, `src/foods-br.ts` e `src/foodsearch.tsx`
 | Diário alimentar e refeições | Parcial | Calendário diário, editar/excluir/copiar lançamento, refeições personalizadas e histórico consistente |
 | Metas de peso e nutrição | Existente | Testar limites, alterações de objetivo e cálculos; manter alertas e estimativas claramente identificados |
 | Peso e gráficos | Existente | Testar histórico, datas, ordenação, valores inválidos e séries vazias |
-| Diário de exercícios/calorias queimadas | Ausente no inventário atual | Criar registros, catálogo/entrada manual, estimativa claramente identificada e balanço diário |
+| Diário de exercícios/calorias queimadas | Implementado na branch de auditoria; ativação de banco pendente | Tela, histórico diário, edição/exclusão, catálogo MET e estimativa claramente identificada; migration aditiva com RLS criada, ainda não aplicada |
 | Calendário de dieta (consumo × exercício) | Parcial/ausente | Visão por dia, totais e navegação histórica sem duplicar lançamentos |
 | Jornal/notas de progresso | Ausente no inventário atual | Notas por data, edição/exclusão e privacidade por usuário |
 | Fotos e reconhecimento de alimentos por imagem | Parcial: fotos de progresso, sem reconhecimento alimentar observado | Fluxo de foto separado, consentimento, estimativa revisável e nenhuma gravação automática sem confirmação |
@@ -101,3 +101,13 @@ Cada novo módulo precisa de testes de unidade, integração com persistência, 
 ## Limite desta auditoria
 
 Esta é a matriz inicial para orientar a implementação incremental. Não afirma que os recursos ausentes já foram construídos nem que testes de execução foram aprovados. O próximo passo é implementar em PRs pequenos, começando por cobertura de testes para busca/cálculos e depois pelos módulos de maior valor, sem integrar mudanças não verificadas.
+
+
+## Atualização de execução — 2026-10-12
+
+- Implementado o primeiro módulo de paridade: diário de exercícios em `/exercicios`, com atividades comuns, duração, peso usado no cálculo, observações, resumo diário, edição e exclusão.
+- A estimativa de calorias usa MET e é explicitamente aproximada; não é apresentada como medição real.
+- Adicionada migration aditiva `supabase/migrations/20261012_exercise_entries.sql`, com chave por usuário, índice e políticas RLS de leitura/escrita por proprietário.
+- A leitura tolera a tabela ausente para que a aplicação existente continue abrindo, mostra aviso de ativação e desabilita gravações até a migration existir.
+- CI aprovado no commit `6e9ecc4d3aac2a81a353dc3d638ec1f8d4a44be3`: testes unitários, TypeScript e build de produção aprovados: https://github.com/csilvadesweb/sistcs-leve/actions/runs/38272967400
+- Não foi aplicada migration ao Supabase, não houve deploy nem merge. A tela depende da migration para persistência real; RLS ainda precisa de teste integrado no projeto correto.

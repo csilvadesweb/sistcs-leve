@@ -133,7 +133,7 @@ describe('Open Food Facts — integração externa resiliente', () => {
         ],
       }),
     }));
-    await expect(searchOpenFoodFacts('produto')).resolves.toEqual([]);
+    await expect(searchOpenFoodFacts('produto sem energia')).resolves.toEqual([]);
   });
 
   it('ignora calorias negativas e neutraliza macros negativos de catálogo colaborativo', async () => {
@@ -156,7 +156,7 @@ describe('Open Food Facts — integração externa resiliente', () => {
       }),
     }));
 
-    await expect(searchOpenFoodFacts('produto')).resolves.toEqual([
+    await expect(searchOpenFoodFacts('produto macros invalidos')).resolves.toEqual([
       expect.objectContaining({
         name: 'Produto com macros inválidos',
         kcal: 120,
@@ -175,6 +175,6 @@ describe('Open Food Facts — integração externa resiliente', () => {
 
   it('expõe erro controlado quando a busca externa falha', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 503 }));
-    await expect(searchOpenFoodFacts('produto')).rejects.toThrow('A busca de produtos está indisponível agora.');
+    await expect(searchOpenFoodFacts('produto indisponivel')).rejects.toThrow('A busca de produtos está indisponível agora.');
   });
 });

@@ -217,12 +217,12 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
     }
   }
 
-  const others = [...matches.filter((m) => m !== food), ...online.filter((o) => o !== food)];
+  const others = [...matches.filter((m) => m !== food), ...online.filter((o) => o !== food), ...referenceFoods.filter((r) => r !== food)];
   const row = (f: FoodPer100, key: string) => (
     <li key={key} className="fs-row">
       <div>
         <strong>{f.name}</strong>
-        <span>{f.brand ? `${f.brand} · ` : ''}{decimalText(f.kcal)} kcal por 100 g</span>
+        <span>{f.brand ? `${f.brand} · ` : ''}{decimalText(f.kcal)} kcal por 100 g{f.origin === 'usda' ? ' · USDA (referência)' : ''}</span>
       </div>
       <Button variant="outline" size="sm" onClick={() => choose(f)}>Usar</Button>
     </li>
@@ -265,7 +265,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           <div className="fs-selected-top">
             <div>
               <strong>{food.name}</strong>
-              <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por 100 g{food.origin === 'local' ? ' · fonte: TACO (Unicamp)' : food.origin === 'estimate' ? ' · estimativa nutricional' : ''}</span>
+              <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por 100 g{food.origin === 'local' ? ' · fonte: TACO (Unicamp)' : food.origin === 'estimate' ? ' · estimativa nutricional' : food.origin === 'usda' ? ' · USDA SR Legacy via TempoLife (referência internacional)' : ''}</span>
             </div>
           </div>
           <label className="fs-g-label" htmlFor="fs-g">Quantidade em gramas</label>

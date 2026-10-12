@@ -102,13 +102,19 @@ describe('Cobertura de alimentos brasileiros — referências TBCA', () => {
     ['tapioca sem manteiga', 'tbca-BRC0906B'],
     ['cuscuz de tapioca', 'tbca-BRC0997B'],
     ['moqueca baiana de peixe', 'tbca-BRC0121E'],
+    ['esfiha', 'tbca-BRC0439A'],
+    ['bolo de cenoura', 'tbca-BRC0461A'],
+    ['bolo de cenoura com cobertura de chocolate', 'tbca-BRC1071A'],
+    ['pamonha com coco', 'tbca-BRC1051A'],
+    ['coxinha de frango industrializada', 'tbca-BRC0100F'],
+    ['pastel frito caseiro', 'tbca-BRC0165A'],
   ])('encontra %s na base local com referência TBCA', (query, code) => {
     expect(searchLocal(query, 20)).toContainEqual(expect.objectContaining({ code, origin: 'tbca' }));
   });
 
   it('marca todas as novas entradas com fonte e valores nutricionais válidos', () => {
     const additions = FOODS_BR.filter((food) => food.origin === 'tbca');
-    expect(additions.length).toBeGreaterThanOrEqual(6);
+    expect(additions.length).toBeGreaterThanOrEqual(12);
     for (const food of additions) {
       expect(food.sourceUrl).toContain('tbca.net.br');
       expect(food.sourceLicense).toContain('TBCA/USP');

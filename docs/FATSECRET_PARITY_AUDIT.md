@@ -12,6 +12,16 @@
 - Não publicar em produção enquanto testes, revisão e validação funcional não estiverem aprovados.
 - Toda funcionalidade nova deve respeitar o isolamento por usuário já existente no Supabase.
 
+## Progresso verificado em 2026-10-12
+
+- CI #39 no commit `1a1f6ccea15b4812ecdea2b7c4105b4fd4ddc972`: 45 testes aprovados, typecheck aprovado e build de produção aprovado.
+- Adicionada cópia de um alimento do diário para a data selecionada, com confirmação ao duplicar no mesmo dia e testes para preservar nutrientes sem reutilizar o ID.
+- Ampliados testes de leitura de dados legados e de escopo de conta nas nove consultas de `loadAll`; os testes mockados não substituem teste RLS real no Supabase.
+- As consultas de `loadAll` na branch desta auditoria filtram explicitamente por `user_id`.
+- A importação externa do Open Food Facts agora descarta produtos com energia negativa e normaliza nutrientes negativos/não numéricos para zero, com teste de regressão.
+- Não foi executada migration, alteração de banco, merge ou deploy nesta rodada. Build aprovado não certifica comportamento em produção.
+- O estado do PR deve ser conferido no GitHub antes de declarar integração à `main`; o estado observado nesta verificação ainda mostrava PR #3 aberta.
+
 ## Inventário observado no SISTCS Leve
 
 Com base em `README.md`, `src/App.tsx`, `src/foods-br.ts` e `src/foodsearch.tsx`:

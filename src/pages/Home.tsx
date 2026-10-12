@@ -3,6 +3,7 @@ import { Apple, ChevronRight, Droplets, Pill, Scale, Sprout } from 'lucide-react
 import { useAppData } from '../session';
 import { calculateFoodNutrientTotals, weightSummary } from '../data';
 import { decimalText, todayInSaoPaulo } from '../ui';
+import { WaterReminders } from '../WaterReminders';
 
 function leftText(goal: number, total: number, unit: string) {
   const diff = goal - total;
@@ -179,6 +180,8 @@ export function Home() {
           <small>{foods.length ? 'toque para ver por refeição' : 'nada registrado ainda'}</small>
         </Link>
       </section>
+
+      <WaterReminders />
     </div>
   );
 }

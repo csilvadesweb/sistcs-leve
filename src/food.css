@@ -20,9 +20,9 @@
 .ft-section-heading h2 { margin: 0; color: var(--text); font-size: 22px; letter-spacing: -.03em; line-height: 1.25; }
 .ft-section-heading > .btn { min-height: 46px; padding-inline: 16px; font-size: 14.5px; }
 .ft-explainer { max-width: 660px; margin: 18px 0 0 61px; color: var(--text-2); font-size: 15px; line-height: 1.65; }
-.ft-feedback { margin: 18px 0 0; padding: 14px 16px; border: 1px solid rgba(114, 212, 76, .3); border-radius: 14px; color: #b9f0a3; background: rgba(114, 212, 76, .09); font-size: 15px; line-height: 1.5; animation: rise .4s var(--ease) both; }
+.ft-feedback { margin: 18px 0 0; padding: 14px 16px; border: 1px solid rgba(114, 212, 76, .3); border-radius: 14px; color: #0f7a3d; background: rgba(114, 212, 76, .09); font-size: 15px; line-height: 1.5; animation: rise .4s var(--ease) both; }
 .ft-feedback-error { border-color: rgba(255, 146, 131, .4); color: var(--danger); background: rgba(255, 146, 131, .09); }
-.ft-editor { margin-top: 20px; padding: 22px; border: 1px solid var(--line); border-radius: 20px; background: rgba(0, 0, 0, .28); animation: rise .5s var(--ease) both; }
+.ft-editor { margin-top: 20px; padding: 22px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface-2); animation: rise .5s var(--ease) both; }
 .ft-editor-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
 .ft-editor-top h3 { margin: 0; color: var(--text); font-size: 19px; }
 .ft-editor-top .btn { min-height: 42px; }
@@ -37,7 +37,7 @@
 .ft-source-field { max-width: 440px; }
 .ft-form-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 20px; }
 .ft-form-actions > span { color: var(--text-3); font-size: 14px; line-height: 1.5; }
-.ft-total-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 22px; padding: 18px; border-radius: 20px; background: rgba(0, 0, 0, .3); border: 1px solid var(--line-soft); }
+.ft-total-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 22px; padding: 18px; border-radius: 20px; background: var(--surface-2); border: 1px solid var(--line-soft); }
 .ft-total { display: grid; gap: 6px; min-width: 0; }
 .ft-total > span { color: var(--text-3); font-size: 14px; font-weight: 600; }
 .ft-total strong { color: var(--text); font-family: var(--app-font-display); font-size: 21px; font-variant-numeric: tabular-nums; }
@@ -50,7 +50,7 @@
 .ft-meal-subtotal { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 2px 2px; color: var(--text-2); font-size: 14px; font-weight: 650; }
 .ft-meal-subtotal span { color: var(--text-3); font-weight: 500; }
 .ft-record { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 15px 4px; border-bottom: 1px solid var(--line-soft); transition: background-color .2s ease; }
-.ft-record:hover { background: rgba(255, 255, 255, .03); }
+.ft-record:hover { background: rgba(20, 50, 35, 0.03); }
 .ft-record:last-child { border-bottom: 0; }
 .ft-record-copy { display: grid; gap: 4px; min-width: 0; }
 .ft-record-copy strong { color: var(--text); font-size: 16px; overflow-wrap: anywhere; }

@@ -17,6 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - run: npm install -g npm@10.8.2
       - run: npm install --no-audit
       - name: Diagnose npm install failure
         if: failure()

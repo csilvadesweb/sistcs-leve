@@ -24,13 +24,19 @@ export function Reports() {
         const foods = data.foodEntries.filter((e) => e.date === date);
         const totals = calculateFoodNutrientTotals(foods);
         const water = data.waterEntries.filter((w) => w.date === date).reduce((sum, w) => sum + w.volumeMl, 0);
-        return { date, logged: foods.length > 0, totals, water };
+        const exerciseEntries = data.exerciseEntries.filter((e) => e.date === date);
+        const exerciseCalories = exerciseEntries.reduce((sum, e) => sum + e.caloriesBurned, 0);
+        const exerciseMinutes = exerciseEntries.reduce((sum, e) => sum + e.durationMinutes, 0);
+        return { date, logged: foods.length > 0, totals, water, exerciseCalories, exerciseMinutes, exerciseCount: exerciseEntries.length };
       }),
-    [days, data.foodEntries, data.waterEntries],
+    [days, data.foodEntries, data.waterEntries, data.exerciseEntries],
   );
 
   const loggedDays = perDay.filter((d) => d.logged);
   const waterDays = perDay.filter((d) => d.water > 0);
+  const exerciseDays = perDay.filter((d) => d.exerciseCount > 0);
+  const exerciseMinutes = perDay.reduce((sum, d) => sum + d.exerciseMinutes, 0);
+  const exerciseCalories = perDay.reduce((sum, d) => sum + d.exerciseCalories, 0);
   const kcalGoal = goals?.calories ?? null;
   const waterGoal = goals?.waterMl ?? null;
   const withinGoal = kcalGoal === null ? null : loggedDays.filter((d) => d.totals.calories <= kcalGoal).length;
@@ -42,6 +48,7 @@ export function Reports() {
 
   const stats = [
     { label: 'Dias com alimentos', value: `${loggedDays.length} de ${range}`, note: 'dias com ao menos um registro' },
+    { label: 'Calorias de exercício', value: data.exerciseTrackingAvailable ? `${decimalText(exerciseCalories)} kcal` : '—', note: data.exerciseTrackingAvailable ? `${exerciseMinutes} min ativos · estimativa` : 'ative o diário de exercícios' },
     {
       label: 'Média de calorias',
       value: loggedDays.length ? `${decimalText(Math.round(average(loggedDays.map((d) => d.totals.calories))))} kcal` : '—',
@@ -115,6 +122,21 @@ export function Reports() {
         {kcalGoal === null && (
           <p className="ft-cup-note">Sem meta de calorias. <Link href="/perfil">Defina no Perfil</Link> para ver a linha da meta.</p>
         )}
+      </section>
+
+      <section className="ft-card" aria-labelledby="exercise-title">
+        <p className="ft-kicker">MOVIMENTO</p>
+        <h2 className="rep-title" id="exercise-title">Calorias de exercício por dia</h2>
+        {!data.exerciseTrackingAvailable ? (
+          <p className="ft-favorites-empty">O diário de exercícios será exibido após aplicar a migration aditiva e ativar o módulo. <Link href="/exercicios">Abrir exercícios</Link></p>
+        ) : exerciseDays.length ? (
+          <div className="chart-wrap">
+            <BarChart days={perDay.map((d) => ({ date: d.date, value: Math.round(d.exerciseCalories) }))} label="Calorias estimadas de exercício por dia" color="#b58a42" />
+          </div>
+        ) : (
+          <p className="ft-favorites-empty">Nenhum exercício registrado neste período. <Link href="/exercicios">Registrar exercício</Link></p>
+        )}
+        <p className="ft-cup-note">Calorias de exercício são estimativas e não representam o gasto energético total do dia.</p>
       </section>
 
       <section className="ft-card" aria-labelledby="water-title">

@@ -16,12 +16,14 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
       - run: npm install
       - name: Report dependency audit findings
         if: always()
         run: |
           npm audit --json 2>/dev/null | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{const a=JSON.parse(s);console.log('VULNERABILITY SUMMARY',JSON.stringify(a.metadata?.vulnerabilities??{}));for(const [n,v] of Object.entries(a.vulnerabilities??{}))console.log(JSON.stringify({name:n,severity:v.severity,direct:v.isDirect,range:v.range,fixAvailable:v.fixAvailable,via:v.via.map(x=>typeof x==='string'?x:{name:x.name,title:x.title,range:x.range,url:x.url})}));}catch(e){console.log('Could not parse audit report:',s.slice(0,1000));}})"
+      - name: Fail on high or critical dependency vulnerabilities
+        run: npm audit --audit-level=high
       - run: npm run typecheck
       - run: npm test
       - run: npm run build

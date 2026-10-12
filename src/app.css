@@ -230,3 +230,22 @@ label.btn.is-disabled { opacity: .55; pointer-events: none; }
 .install-card > div { flex: 1 1 220px; display: grid; gap: 6px; justify-items: start; }
 .install-card strong { color: #e6c36a; font-size: 14px; }
 .install-card p { margin: 0; font-size: 12.5px; line-height: 1.6; color: #d9d2bb; }
+
+/* cálculo automático de calorias */
+.fs-selected { display: grid; gap: 10px; padding: 14px; border: 1px solid #cfe0cc; border-radius: 12px; background: #fff; }
+.fs-selected-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.fs-selected-top > div { min-width: 0; display: grid; gap: 2px; }
+.fs-selected-top strong { color: #30483c; font-size: 14px; overflow-wrap: anywhere; }
+.fs-selected-top span { color: #6b7d70; font-size: 12px; }
+.fs-g-label { color: #30483c; font-size: 12px; font-weight: 700; }
+.fs-grams-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.fs-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.fs-chip { min-height: 36px; padding: 0 12px; border: 1px solid #cfdccd; border-radius: 999px; background: #fff; color: #30483c; font: inherit; font-size: 13px; cursor: pointer; }
+.fs-chip.on { background: #30483c; border-color: #30483c; color: #fff; }
+.fs-calc { display: grid; gap: 3px; margin: 0; padding: 11px 13px; border-radius: 10px; background: #eef5ec; }
+.fs-calc strong { color: #1f6b3d; font-size: 22px; line-height: 1.1; }
+.fs-calc span { color: #30483c; font-size: 12px; }
+.fs-calc em { color: #6b7d70; font-size: 11px; font-style: normal; }
+.ft-preview { display: grid; gap: 2px; margin: 0; padding: 11px 13px; border-radius: 10px; background: #eef5ec; }
+.ft-preview strong { color: #1f6b3d; font-size: 15px; }
+.ft-preview span { color: #30483c; font-size: 12px; }

@@ -256,7 +256,6 @@ export function FoodTracking() {
       nutritionSource: 'user-estimated',
     }));
     setFoodErrors({});
-    setFoodFeedback({ kind: 'success', message: 'Valores preenchidos. Confira, escolha o momento e registre.' });
   }
 
   function openNewFood(favorite?: FavoriteFood) {
@@ -294,6 +293,17 @@ export function FoodTracking() {
       'Não foi possível salvar o alimento.',
     );
   }
+
+  const preview = useMemo(() => {
+    const kcalPortion = decimalIsValid(foodForm.calories) ? parseDecimal(foodForm.calories) : 0;
+    const qty = decimalIsValid(foodForm.quantity, false) ? parseDecimal(foodForm.quantity) : 0;
+    const thisKcal = kcalPortion * qty;
+    const others = data.foodEntries
+      .filter((e) => e.date === foodForm.date && e.id !== editingFood?.id)
+      .reduce((sum, e) => sum + calculateFoodEntryNutrient(e, 'calories'), 0);
+    const goal = data.profile?.goals.calories ?? null;
+    return { thisKcal, dayTotal: others + thisKcal, goal };
+  }, [foodForm.calories, foodForm.quantity, foodForm.date, data.foodEntries, data.profile, editingFood]);
 
   async function removeFood(entry: FoodEntry) {
     if (!window.confirm(`Excluir o registro de “${entry.name}” desta data?`)) return;
@@ -447,7 +457,7 @@ export function FoodTracking() {
           )}
         </div>
         <p className="ft-explainer">
-          As informações nutricionais são inseridas ou estimadas por você. Nada é preenchido automaticamente nem inventado.
+          Escolha um alimento na busca e informe as gramas: as calorias e os nutrientes são calculados automaticamente. Os valores são aproximados e você pode ajustá-los.
         </p>
 
         {foodFeedback && (
@@ -496,6 +506,15 @@ export function FoodTracking() {
                 ))}
               </div>
             </fieldset>
+            <p className="ft-preview" aria-live="polite">
+              <strong>Este lançamento: {decimalText(preview.thisKcal)} kcal</strong>
+              <span>
+                Total do dia com ele: {decimalText(preview.dayTotal)} kcal
+                {preview.goal !== null && (preview.goal - preview.dayTotal >= 0
+                  ? ` · faltam ${decimalText(preview.goal - preview.dayTotal)} kcal para a meta de ${decimalText(preview.goal)}`
+                  : ` · ${decimalText(preview.dayTotal - preview.goal)} kcal acima da meta de ${decimalText(preview.goal)}`)}
+              </span>
+            </p>
             <Field id="food-source" label="Como você informou esses valores?" className="ft-field ft-source-field" error={foodErrors.nutritionSource} hint="O aplicativo não verifica nem recomenda valores nutricionais.">
               <select id="food-source" className="input ft-select" value={foodForm.nutritionSource} onChange={setFood('nutritionSource')}>
                 <option value="">Escolha uma opção</option>

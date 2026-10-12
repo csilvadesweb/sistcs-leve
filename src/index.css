@@ -469,3 +469,49 @@ body::before, body::after { display: none; }
   .heading-art { display: none; }
   .main-content { padding: 18px 13px calc(100px + env(safe-area-inset-bottom)); }
 }
+
+
+/* Seletor semanal no diário alimentar: segunda a domingo */
+.ft-week-strip {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 18px;
+  padding: 10px;
+  border: 1px solid #e0e9e2;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(27, 68, 40, .035);
+}
+.ft-week-day {
+  display: flex;
+  min-width: 0;
+  min-height: 64px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: #526459;
+  font: inherit;
+  cursor: pointer;
+  transition: background .16s ease, color .16s ease, border-color .16s ease;
+}
+.ft-week-day span { font-size: 12px; font-weight: 650; }
+.ft-week-day strong { font-size: 18px; line-height: 1.2; font-weight: 700; }
+.ft-week-day:hover { background: #f2f8f3; border-color: #d7e5da; }
+.ft-week-day.is-selected {
+  background: #218548;
+  border-color: #218548;
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(33, 133, 72, .16);
+}
+.ft-week-day:focus-visible { outline: 3px solid rgba(33, 133, 72, .28); outline-offset: 2px; }
+@media (max-width: 420px) {
+  .ft-week-strip { gap: 3px; padding: 6px; }
+  .ft-week-day { min-height: 58px; border-radius: 8px; }
+  .ft-week-day span { font-size: 11px; }
+  .ft-week-day strong { font-size: 16px; }
+}

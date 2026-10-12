@@ -208,6 +208,18 @@ function NutrientTotals({ entries, goals }: { entries: FoodEntry[]; goals: UserG
 export function FoodTracking() {
   const { data, error: loadError, loading, reload } = useAppData();
   const [selectedDate, setSelectedDate] = useState(todayInSaoPaulo);
+  const weekDays = useMemo(() => {
+    const [year, month, day] = selectedDate.split('-').map(Number);
+    const monday = new Date(year, month - 1, day, 12);
+    monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
+    const labels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+    return labels.map((label, index) => {
+      const date = new Date(monday);
+      date.setDate(monday.getDate() + index);
+      const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+      return { label, day: date.getDate(), date: dateKey };
+    });
+  }, [selectedDate]);
   const [foodEditorOpen, setFoodEditorOpen] = useState(false);
   const [editingFood, setEditingFood] = useState<FoodEntry | null>(null);
   const [waterEditorOpen, setWaterEditorOpen] = useState(false);
@@ -452,6 +464,22 @@ export function FoodTracking() {
         </div>
         <div className="ft-heading-icon" aria-hidden="true"><Apple size={29} strokeWidth={1.6} /></div>
       </header>
+
+      <nav className="ft-week-strip" aria-label="Dias da semana">
+        {weekDays.map(({ label, day, date }) => (
+          <button
+            key={date}
+            type="button"
+            className={`ft-week-day ${selectedDate === date ? 'is-selected' : ''}`}
+            aria-label={`${label}, dia ${day}`}
+            aria-pressed={selectedDate === date}
+            onClick={() => setSelectedDate(date)}
+          >
+            <span>{label}</span>
+            <strong>{day}</strong>
+          </button>
+        ))}
+      </nav>
 
       {loadError && <p className="ft-feedback ft-feedback-error" role="alert">{loadError}</p>}
       {loading && <p className="ft-feedback" role="status">Carregando seus registros…</p>}

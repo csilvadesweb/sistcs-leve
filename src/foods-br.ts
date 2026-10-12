@@ -259,7 +259,7 @@ const ALIASES: Record<string, string> = {
 
 export function searchLocal(query: string, limit = 8): FoodPer100[] {
   // A TACO usa o nome oficial “Castanha-do-Brasil”; aceitar também o nome popular.
-  const searchableQuery = normalize(query).replace(/castanha[ -]+do[ -]+par[aá]/g, 'castanha do brasil');
+  const searchableQuery = normalize(query)\n    .replace(/castanha[ -]+do[ -]+par[aá]/g, 'castanha do brasil')\n    .replace(/\\bpao de sal\\b/g, 'pao frances')\n    .replace(/\\bjerimum\\b/g, 'abobora')\n    .replace(/\\bbergamota\\b/g, 'tangerina');
   const terms = stemAll(searchableQuery)
     .split(' ')
     .filter((t) => t && !STOPWORDS.has(t))

@@ -4,6 +4,7 @@ import App from './App';
 import './index.css';
 import './food.css';
 import './app.css';
+import './visual-parity.css';
 import { registerServiceWorker } from './pwa';
 
 createRoot(document.getElementById('root')!).render(

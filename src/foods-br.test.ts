@@ -66,6 +66,12 @@ describe('searchLocal — catálogo TACO', () => {
     expect(searchLocal('maca').length).toBeGreaterThan(0);
   });
 
+  it('reconhece nomes regionais comuns para alimentos já cadastrados', () => {
+    expect(searchLocal('pão de sal', 20).some((food) => /pão, trigo, francês/i.test(food.name))).toBe(true);
+    expect(searchLocal('jerimum', 20).some((food) => /abóbora/i.test(food.name))).toBe(true);
+    expect(searchLocal('bergamota', 20).some((food) => /tangerina/i.test(food.name))).toBe(true);
+  });
+
   it('encontra strogonoff de carne bovina e identifica que os nutrientes são estimados', () => {
     const results = searchLocal('strogonoff de carne');
     expect(results).toContainEqual(expect.objectContaining({

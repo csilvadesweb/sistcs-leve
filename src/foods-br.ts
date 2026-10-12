@@ -469,8 +469,9 @@ const show = (u: string) => SHOW[u] ?? u;
 
 /** Converte o que a pessoa digitou em gramas para o alimento escolhido. */
 export function gramsFor(food: FoodPer100, q: ParsedQuery): { grams: number; label: string } {
-  const first = food.units?.[0];
-  const find = (u: string) => food.units?.find(([k]) => stem(k) === stem(u) || stemAll(k) === stemAll(u));
+  const availableUnits = householdUnitsForFood(food);
+  const first = availableUnits[0];
+  const find = (u: string) => availableUnits.find(([k]) => stem(k) === stem(u) || stemAll(k) === stemAll(u));
   const count = q.amount ?? 1;
   if (q.unit && q.unit in WEIGHT_UNITS) {
     const g = count * WEIGHT_UNITS[q.unit]!;

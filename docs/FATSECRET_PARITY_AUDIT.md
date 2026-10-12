@@ -19,6 +19,9 @@
 - Ampliados testes de leitura de dados legados e de escopo de conta nas nove consultas de `loadAll`; os testes mockados não substituem teste RLS real no Supabase.
 - As consultas de `loadAll` na branch desta auditoria filtram explicitamente por `user_id`.
 - A importação externa do Open Food Facts agora descarta produtos com energia negativa e normaliza nutrientes negativos/não numéricos para zero, com teste de regressão.
+- Validação defensiva adicional em `src/calc.ts`: datas ISO impossíveis retornam idade inválida; estimativas recusam peso fora de 20–400 kg, altura fora de 50–260 cm, valores não finitos e configurações de atividade/macros desconhecidas.
+- Testes de regressão acrescentados em `src/calc.test.ts` para datas impossíveis, limites de altura/peso e valores não finitos.
+- CI do commit `e64fd1e20f89099af7885b92e04df2dfc207915d`: testes unitários, typecheck e build aprovados: https://github.com/csilvadesweb/sistcs-leve/actions/runs/38271409857
 - Não foi executada migration, alteração de banco, merge ou deploy nesta rodada. Build aprovado não certifica comportamento em produção.
 - O estado do PR deve ser conferido no GitHub antes de declarar integração à `main`; o estado observado nesta verificação ainda mostrava PR #3 aberta.
 

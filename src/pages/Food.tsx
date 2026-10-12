@@ -448,21 +448,26 @@ export function FoodTracking() {
   }
 
   const mealGroups = mealKeys
-    .map((meal) => ({ meal, entries: entriesForDate.filter((e) => e.meal === meal) }))
-    .filter((g) => g.entries.length > 0);
+    .map((meal) => ({ meal, entries: entriesForDate.filter((e) => e.meal === meal) }));
+  const consumedCalories = entriesForDate.reduce((total, entry) => total + calculateFoodEntryNutrient(entry, 'calories'), 0);
+  const calorieGoal = data.profile?.goals.calories ?? null;
+  const remainingCalories = calorieGoal === null ? null : calorieGoal - consumedCalories;
+
+  function openNewFoodForMeal(meal: MealType) {
+    openNewFood();
+    setFoodForm((current) => ({ ...current, meal }));
+  }
 
   const sum = (entries: FoodEntry[], key: FoodNutrientKey) =>
     decimalText(entries.reduce((total, e) => total + calculateFoodEntryNutrient(e, key), 0));
 
   return (
     <div className="ft-page page-enter">
-      <header className="ft-heading">
+      <header className="ft-heading ft-diary-heading">
         <div>
-          <p className="eyebrow"><span className="eyebrow-dot" />ETAPA 3 · CUIDADO À MESA</p>
-          <h1 className="serif-display">Alimentação e hidratação</h1>
-          <p>Registre o que fizer sentido para você, sem julgamentos e no seu próprio ritmo.</p>
+          <h1>Diário alimentar</h1>
+          <p>Acompanhe suas refeições e calorias do dia.</p>
         </div>
-        <div className="ft-heading-icon" aria-hidden="true"><Apple size={29} strokeWidth={1.6} /></div>
       </header>
 
       <nav className="ft-week-strip" aria-label="Dias da semana">
@@ -480,6 +485,19 @@ export function FoodTracking() {
           </button>
         ))}
       </nav>
+
+      <section className="ft-calorie-overview" aria-label="Resumo de calorias do dia">
+        <div className="ft-calorie-main">
+          <span>Calorias consumidas</span>
+          <strong>{decimalText(consumedCalories)}</strong>
+          <small>kcal</small>
+        </div>
+        <div className="ft-calorie-stats">
+          <div><span>Meta diária</span><strong>{calorieGoal === null ? '—' : decimalText(calorieGoal)} <small>kcal</small></strong></div>
+          <div><span>{remainingCalories !== null && remainingCalories < 0 ? 'Acima da meta' : 'Restantes'}</span><strong>{remainingCalories === null ? '—' : decimalText(Math.abs(remainingCalories))} <small>kcal</small></strong></div>
+        </div>
+        {calorieGoal !== null && <div className="ft-calorie-progress" role="progressbar" aria-label="Progresso da meta calórica" aria-valuemin={0} aria-valuemax={calorieGoal} aria-valuenow={Math.min(consumedCalories, calorieGoal)}><span style={{ width: `${Math.min(100, Math.max(0, (consumedCalories / Math.max(calorieGoal, 1)) * 100))}%` }} /></div>}
+      </section>
 
       {loadError && <p className="ft-feedback ft-feedback-error" role="alert">{loadError}</p>}
       {loading && <p className="ft-feedback" role="status">Carregando seus registros…</p>}
@@ -604,8 +622,13 @@ export function FoodTracking() {
               {mealGroups.map(({ meal, entries }) => (
                 <section className="ft-meal-group" key={meal} aria-labelledby={`meal-${meal}`}>
                   <div className="ft-meal-heading">
-                    <h3 id={`meal-${meal}`}>{mealLabels[meal]}</h3>
-                    <span>{entries.length} {entries.length === 1 ? 'registro' : 'registros'}</span>
+                    <div>
+                      <h3 id={`meal-${meal}`}>{mealLabels[meal]}</h3>
+                      <span>{sum(entries, 'calories')} kcal</span>
+                    </div>
+                    <Button variant="outline" size="sm" onClick={() => openNewFoodForMeal(meal)} disabled={busy} aria-label={`Adicionar alimento em ${mealLabels[meal]}`}>
+                      <Plus aria-hidden="true" /> Adicionar
+                    </Button>
                   </div>
                   <p className="ft-meal-subtotal">
                     Subtotal · {sum(entries, 'calories')} kcal
@@ -647,14 +670,7 @@ export function FoodTracking() {
               ))}
             </div>
           </>
-        ) : (
-          <div className="ft-empty">
-            <span className="ft-empty-icon"><Apple size={20} aria-hidden="true" /></span>
-            <h3>Nenhum alimento neste dia</h3>
-            <p>Quando quiser, você pode registrar algo que comeu. O espaço fica no seu ritmo.</p>
-            {!foodEditorOpen && <Button variant="outline" onClick={() => openNewFood()}><Plus aria-hidden="true" /> Registrar alimento</Button>}
-          </div>
-        )}
+        ) : null}
 
         <section className="ft-favorites" aria-labelledby="favorites-title">
           <div className="ft-favorites-heading">

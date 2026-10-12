@@ -288,7 +288,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
       {others.length > 0 && (
         <>
           <p className="fs-group">{food ? 'Outras opções' : 'Resultados'} <small>toque para trocar</small></p>
-          <ul className="fs-list">{others.slice(0, 12).map((f, i) => row(f, `${f.origin}-${f.code ?? f.name}-${i}`))}</ul>
+          <ul className="fs-list">{others.slice(0, onlinePage * 12).map((f, i) => row(f, `${f.origin}-${f.code ?? f.name}-${i}`))}</ul>
         </>
       )}
       {hasMoreOnline && !manualPick && (

@@ -132,13 +132,11 @@ const ALIASES: Record<string, string> = {
   mucarela: 'mussarela', mozarela: 'mussarela', muzzarela: 'mussarela',
   mingnon: 'mignon', bolacha: 'biscoito',
   macaxeira: 'mandioca', aipim: 'mandioca',
-  coca: 'refrigerante cola', 'coca-cola': 'refrigerante cola',
+  coca: 'refrigerante cola',
   pepsi: 'refrigerante cola', guarana: 'refrigerante guarana',
   refri: 'refrigerante', patinho: 'carne bovina',
   acem: 'carne bovina', alcatra: 'carne bovina',
-  'contra-file': 'carne bovina', 'peito-frango': 'frango peito',
-  'file-frango': 'frango file',
-};;
+};
 
 export function searchLocal(query: string, limit = 8): FoodPer100[] {
   const terms = stemAll(query)

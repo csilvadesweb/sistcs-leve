@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
-import { gramsFor, lookupBarcode, normalize, parseQuery, scale, searchLocal, searchOpenFoodFactsPage, type FoodPer100 } from './foods-br';
+import { gramsFor, lookupBarcode, normalize, parseQuery, scale, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 export interface PickedFood {
   name: string;
@@ -78,6 +78,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   const [manualPick, setManualPick] = useState<FoodPer100 | null>(null);
   const [gramsText, setGramsText] = useState<string | null>(null);
   const [online, setOnline] = useState<FoodPer100[]>([]);
+  const [referenceFoods, setReferenceFoods] = useState<FoodPer100[]>([]);
   const [onlinePage, setOnlinePage] = useState(1);
   const [hasMoreOnline, setHasMoreOnline] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -121,6 +122,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   // Produtos embalados: busca automática enquanto a pessoa digita.
   useEffect(() => {
     setOnline([]);
+    setReferenceFoods([]);
     setOnlinePage(1);
     setHasMoreOnline(false);
     setLoadingMore(false);

@@ -86,7 +86,12 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   const typedOk = gramsText !== null && decimalIsValid(gramsText, false) && parseDecimal(gramsText) <= 5000;
   const grams = gramsText !== null ? (typedOk ? parseDecimal(gramsText) : 0) : auto?.grams ?? 0;
   const gramsOk = grams > 0 && grams <= 5000;
-  const label = gramsText !== null || !auto ? `${decimalText(grams)} g` : `${auto.label} (${decimalText(Math.round(grams * 10) / 10)} g)`;
+  const label =
+    gramsText !== null || !auto
+      ? `${decimalText(grams)} g`
+      : auto.label.includes('×')
+        ? `${auto.label} (${decimalText(Math.round(grams * 10) / 10)} g)`
+        : auto.label;
   const calc = food && gramsOk ? scale(food, grams) : null;
 
   // Cálculo automático: preenche o formulário toda vez que o alimento ou a quantidade mudam.

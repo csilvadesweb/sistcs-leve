@@ -164,6 +164,20 @@ export function calculateFoodNutrientTotals(
 
 type Row = Record<string, any>;
 const num = (v: unknown) => Number(v);
+const DEFAULT_NAVIGATION_ORDER = ['/', '/alimentacao', '/registros', '/jejum', '/medicamentos', '/relatorios', '/perfil'];
+
+export function normalizeNavigationPreferences(value: unknown): NavigationPreferences {
+  const input = value && typeof value === 'object' ? value as Partial<NavigationPreferences> : {};
+  const requestedOrder = Array.isArray(input.order) ? input.order.filter((item): item is string => typeof item === 'string') : [];
+  const order = [...new Set([...requestedOrder.filter((item) => DEFAULT_NAVIGATION_ORDER.includes(item)), ...DEFAULT_NAVIGATION_ORDER])];
+  const labels: Record<string, string> = {};
+  if (input.labels && typeof input.labels === 'object') {
+    for (const [key, label] of Object.entries(input.labels)) {
+      if (DEFAULT_NAVIGATION_ORDER.includes(key) && typeof label === 'string' && label.trim()) labels[key] = label.trim().slice(0, 30);
+    }
+  }
+  return { order, labels };
+}
 const numOrNull = (v: unknown) => (v === null || v === undefined ? null : Number(v));
 
 function profileFromRow(r: Row): UserProfile {

@@ -196,7 +196,7 @@ export async function searchOpenFoodFacts(query: string, signal?: AbortSignal): 
   if (cached && cached.expiresAt > Date.now()) return cached.foods.map((food) => ({ ...food }));
   if (cached) OFF_SEARCH_CACHE.delete(normalizedQuery);
 
-  const url = `${OFF}/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=15&lc=pt&cc=br&fields=${FIELDS}`;
+  const url = `${OFF}/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=30&lc=pt&cc=br&fields=${FIELDS}`;
   const res = await fetch(url, { signal });
   if (!res.ok) throw new Error('A busca de produtos está indisponível agora.');
   const json = await res.json();

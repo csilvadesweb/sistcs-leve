@@ -1,4 +1,7 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+
+// Os testes exercitam funções puras; não devem inicializar Auth/Realtime nem acessar Supabase.
+vi.mock('./supabase', () => ({ supabase: {} }));
 import {
   addDays,
   calculateFoodEntryNutrient,

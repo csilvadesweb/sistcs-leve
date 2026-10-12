@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
-import { gramsFor, lookupBarcode, normalize, parseQuery, scale, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { gramsFor, householdUnitsForFood, lookupBarcode, normalize, parseQuery, scale, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 export interface PickedFood {
   name: string;
@@ -112,7 +112,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
       { value: 'concha', label: 'Concha', grams: 100 },
     ];
     const options = new Map(defaults.map((item) => [normalize(item.value), item]));
-    for (const [name, weight] of food?.units ?? []) {
+    for (const [name, weight] of (food ? householdUnitsForFood(food) : [])) {
       const key = normalize(name);
       const existing = options.get(key);
       options.set(key, { value: name, label: name.charAt(0).toLocaleUpperCase('pt-BR') + name.slice(1), grams: weight });

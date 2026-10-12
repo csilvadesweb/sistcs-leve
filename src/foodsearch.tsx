@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
-import { gramsFor, lookupBarcode, normalize, parseQuery, scale, searchLocal, searchOpenFoodFacts, type FoodPer100 } from './foods-br';
+import { gramsFor, lookupBarcode, normalize, parseQuery, scale, searchLocal, searchOpenFoodFactsPage, type FoodPer100 } from './foods-br';
 
 export interface PickedFood {
   name: string;
@@ -78,6 +78,9 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   const [manualPick, setManualPick] = useState<FoodPer100 | null>(null);
   const [gramsText, setGramsText] = useState<string | null>(null);
   const [online, setOnline] = useState<FoodPer100[]>([]);
+  const [onlinePage, setOnlinePage] = useState(1);
+  const [hasMoreOnline, setHasMoreOnline] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
   const [message, setMessage] = useState('');
   const [code, setCode] = useState('');
@@ -117,9 +120,12 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
 
   // Produtos embalados: busca automática enquanto a pessoa digita.
   useEffect(() => {
+    setOnline([]);
+    setOnlinePage(1);
+    setHasMoreOnline(false);
+    setLoadingMore(false);
     if (manualPick) return;
     if (normalize(parsed.name).length < 3) {
-      setOnline([]);
       setStatus('idle');
       return;
     }
@@ -129,7 +135,10 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
       abort.current = ctl;
       setStatus('loading');
       try {
-        setOnline(await searchOpenFoodFacts(parsed.name, ctl.signal));
+        const result = await searchOpenFoodFactsPage(parsed.name, 1, ctl.signal);
+        if (ctl.signal.aborted) return;
+        setOnline(result.foods);
+        setHasMoreOnline(result.hasMore);
         setStatus('done');
       } catch {
         if (!ctl.signal.aborted) {
@@ -143,6 +152,31 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
       ctl.abort();
     };
   }, [parsed.name, manualPick]);
+
+  async function loadMoreOnline() {
+    if (loadingMore || !hasMoreOnline || normalize(parsed.name).length < 3) return;
+    const nextPage = onlinePage + 1;
+    const ctl = new AbortController();
+    abort.current?.abort();
+    abort.current = ctl;
+    setLoadingMore(true);
+    setMessage('');
+    try {
+      const result = await searchOpenFoodFactsPage(parsed.name, nextPage, ctl.signal);
+      if (ctl.signal.aborted) return;
+      setOnline((previous) => {
+        const seen = new Set(previous.map((item) => `${item.code ?? ''}|${normalize(item.name)}|${normalize(item.brand ?? '')}`));
+        const additions = result.foods.filter((item) => !seen.has(`${item.code ?? ''}|${normalize(item.name)}|${normalize(item.brand ?? '')}`));
+        return [...previous, ...additions];
+      });
+      setOnlinePage(nextPage);
+      setHasMoreOnline(result.hasMore);
+    } catch {
+      if (!ctl.signal.aborted) setMessage('Não foi possível carregar mais produtos. Tente novamente.');
+    } finally {
+      if (!ctl.signal.aborted) setLoadingMore(false);
+    }
+  }
 
   function choose(f: FoodPer100) {
     setManualPick(f);
@@ -256,6 +290,13 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           <p className="fs-group">{food ? 'Outras opções' : 'Resultados'} <small>toque para trocar</small></p>
           <ul className="fs-list">{others.slice(0, 12).map((f, i) => row(f, `${f.origin}-${f.code ?? f.name}-${i}`))}</ul>
         </>
+      )}
+      {hasMoreOnline && !manualPick && (
+        <div className="fs-more">
+          <Button variant="outline" size="sm" onClick={loadMoreOnline} disabled={loadingMore || status === 'loading'}>
+            {loadingMore ? 'Carregando produtos…' : 'Carregar mais produtos'}
+          </Button>
+        </div>
       )}
     </div>
   );

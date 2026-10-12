@@ -138,3 +138,60 @@
 @media (max-width: 600px) {
   .food-search input, .food-search select, .food-search textarea { min-height: 48px; }
 }
+
+
+/* Refinamento premium da área alimentar: textos mais confortáveis e controles maiores */
+.ft-heading h1 { font-size: clamp(42px, 5.5vw, 62px); letter-spacing: -.05em; }
+.ft-heading p:last-child { font-size: 16px; line-height: 1.75; }
+.ft-date-card { padding: 19px 21px; border-radius: 17px; box-shadow: 0 6px 20px rgba(28, 52, 40, .04); }
+.ft-date-card label { font-size: 13px; }
+.ft-date-card p { font-size: 16px; }
+.ft-date-card input { min-height: 46px; font-size: 15px; }
+.ft-card { padding: 27px 28px; border-radius: 21px; box-shadow: 0 12px 32px rgba(28, 52, 40, .055); }
+.ft-section-mark { color: #795f2f; background: linear-gradient(145deg, #f6efdd, #e8dfc5); }
+.ft-kicker { font-size: 11px; letter-spacing: .12em; color: #7a6438; }
+.ft-section-heading h2 { font-size: 23px; }
+.ft-section-heading > .btn { min-height: 44px; font-size: 14px; }
+.ft-explainer { font-size: 14px; line-height: 1.75; }
+.ft-feedback { padding: 13px 15px; font-size: 15px; line-height: 1.6; }
+.ft-editor { padding: 23px; border-radius: 17px; }
+.ft-editor-top h3 { font-size: 19px; }
+.ft-editor-top .btn { min-height: 40px; }
+.ft-form-grid { gap: 18px; }
+.ft-field > label { font-size: 14px; }
+.ft-field .input { min-height: 48px; font-size: 16px; }
+.ft-nutrients legend { font-size: 15px; }
+.ft-nutrients > p { font-size: 13px; }
+.ft-total-grid { padding: 18px; border-radius: 15px; }
+.ft-total > span, .ft-total small { font-size: 12px; }
+.ft-total strong { font-size: 18px; }
+.ft-meal-heading h3 { font-size: 16px; }
+.ft-meal-heading span, .ft-meal-subtotal { font-size: 12px; }
+.ft-record { padding-block: 16px; }
+.ft-record-copy strong { font-size: 15px; }
+.ft-record-copy > span { font-size: 13px; }
+.ft-record-copy small, .ft-record-nutrients span { font-size: 12px; }
+.ft-record-nutrients { font-size: 14px; }
+.ft-record-actions { gap: 7px; }
+.ft-record-actions .btn, .ft-water-row .btn { min-height: 38px; padding-inline: 11px; font-size: 12px; }
+.ft-empty h3 { font-size: 17px; }
+.ft-empty p, .ft-favorites-empty { font-size: 14px; line-height: 1.7; }
+.ft-empty .btn { min-height: 42px; font-size: 14px; }
+.ft-favorites-heading h3 { font-size: 18px; }
+.ft-favorite-row strong { font-size: 14px; }
+.ft-favorite-row span { font-size: 12px; }
+.ft-favorite-row .btn { min-height: 38px; font-size: 12px; }
+@media (max-width: 600px) {
+  .ft-heading h1 { font-size: clamp(38px, 10vw, 46px); }
+  .ft-heading p:last-child { font-size: 15px; }
+  .ft-card { padding: 21px 17px; }
+  .ft-section-heading h2 { font-size: 20px; }
+  .ft-explainer { margin-left: 0; font-size: 13px; }
+  .ft-editor { padding: 17px; }
+  .ft-form-grid { grid-template-columns: 1fr; }
+  .ft-total-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .ft-total strong { font-size: 17px; }
+  .ft-record { gap: 8px; }
+  .ft-record-copy strong { font-size: 14px; }
+  .ft-record-nutrients { font-size: 13px; }
+}

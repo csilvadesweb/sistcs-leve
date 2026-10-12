@@ -71,3 +71,7 @@ projeto já são o padrão. A chave publicável pode ficar no front-end. Nunca c
 - `src/foodsearch.tsx` e `src/foods-br.ts`: busca de alimentos, Open Food Facts e código de barras.
 - `src/photos.tsx`: redução de imagem, links temporários e avatar.
 - `src/charts.tsx`: gráficos em SVG, sem biblioteca.
+
+## Base de alimentos
+
+A busca local usa a **TACO – Tabela Brasileira de Composição de Alimentos, 4ª edição ampliada e revisada** (NEPA/UNICAMP, 2011), com 590 alimentos (`src/foods-taco.ts`, valores por 100 g). Valores "traço" foram tratados como zero. Leite integral e desnatado não têm energia na tabela e usam referências aproximadas. Medidas caseiras (ovo, fatia, colher, copo, concha…) e a prioridade dos resultados ficam em `src/foods-br.ts`. Produtos embalados vêm do Open Food Facts. Cite a fonte ao divulgar o app e confirme os termos de uso com o NEPA se for comercializá-lo.

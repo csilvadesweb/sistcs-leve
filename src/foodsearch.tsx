@@ -207,7 +207,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           <div className="fs-selected-top">
             <div>
               <strong>{food.name}</strong>
-              <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por 100 g{food.origin === 'local' ? ' · valor aproximado' : ''}</span>
+              <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por 100 g{food.origin === 'local' ? ' · fonte: TACO (Unicamp)' : ''}</span>
             </div>
           </div>
           <label className="fs-g-label" htmlFor="fs-g">Quantidade em gramas</label>

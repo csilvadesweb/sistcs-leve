@@ -1,8 +1,9 @@
 /**
- * Alimentos comuns no Brasil, valores APROXIMADOS por 100 g (preparo indicado no nome).
- * São referências aproximadas, inspiradas em tabelas como a TACO, digitadas à mão:
- * servem para agilizar o registro, não como fonte oficial. O app sempre deixa editar os valores.
+ * Busca de alimentos: TACO 4ª edição (valores por 100 g) + Open Food Facts para produtos embalados.
+ * O app sempre deixa a pessoa conferir e ajustar os valores antes de registrar.
  */
+import { TACO } from './foods-taco';
+
 export interface FoodPer100 {
   name: string;
   brand?: string;
@@ -17,105 +18,98 @@ export interface FoodPer100 {
   units?: Array<[string, number]>;
 }
 
-const L = (name: string, kcal: number, protein: number, carbs: number, fat: number, fiber: number): FoodPer100 => ({
-  name, kcal, protein, carbs, fat, fiber, origin: 'local',
-});
-
-const RAW_FOODS: FoodPer100[] = [
-  L('Arroz branco cozido', 128, 2.5, 28.1, 0.2, 1.6),
-  L('Arroz integral cozido', 124, 2.6, 25.8, 1.0, 2.7),
-  L('Feijão carioca cozido', 76, 4.8, 13.6, 0.5, 8.5),
-  L('Feijão preto cozido', 77, 4.5, 14.0, 0.5, 8.4),
-  L('Lentilha cozida', 93, 6.3, 16.3, 0.5, 7.9),
-  L('Peito de frango grelhado', 159, 32.0, 0, 2.5, 0),
-  L('Carne bovina (patinho) grelhada', 219, 35.9, 0, 7.3, 0),
-  L('Carne bovina moída refogada', 212, 26.7, 0, 10.9, 0),
-  L('Tilápia grelhada', 128, 26.0, 0, 2.6, 0),
-  L('Ovo de galinha cozido', 146, 13.3, 0.6, 9.5, 0),
-  L('Leite integral', 61, 3.2, 4.6, 3.3, 0),
-  L('Leite desnatado', 35, 3.4, 4.9, 0.1, 0),
-  L('Iogurte natural integral', 51, 4.1, 1.9, 3.0, 0),
-  L('Queijo minas frescal', 264, 17.4, 3.2, 20.2, 0),
-  L('Queijo mussarela', 330, 22.6, 3.0, 25.2, 0),
-  L('Pão francês', 300, 8.0, 58.6, 3.1, 2.3),
-  L('Pão de forma integral', 253, 9.4, 49.9, 3.7, 6.9),
-  L('Banana prata', 98, 1.3, 26.0, 0.1, 2.0),
-  L('Maçã com casca', 56, 0.3, 15.2, 0, 1.3),
-  L('Laranja pera', 37, 1.0, 8.9, 0.1, 0.8),
-  L('Mamão papaia', 40, 0.5, 10.4, 0.1, 1.0),
-  L('Abacate', 96, 1.2, 6.0, 8.4, 6.3),
-  L('Batata inglesa cozida', 52, 1.2, 11.9, 0, 1.3),
-  L('Batata-doce cozida', 77, 0.6, 18.4, 0.1, 2.2),
-  L('Mandioca cozida', 125, 0.6, 30.1, 0.3, 1.6),
-  L('Macarrão cozido', 102, 3.4, 19.9, 0.5, 1.5),
-  L('Aveia em flocos', 394, 13.9, 66.6, 8.5, 9.1),
-  L('Brócolis cozido', 25, 2.1, 4.4, 0.5, 3.4),
-  L('Alface', 11, 1.3, 1.7, 0.2, 1.8),
-  L('Tomate', 15, 1.1, 3.1, 0.2, 1.2),
-  L('Cenoura crua', 34, 1.3, 7.7, 0.2, 3.2),
-  L('Azeite de oliva', 884, 0, 0, 100, 0),
-  L('Manteiga', 726, 0.4, 0.1, 82.4, 0),
-  L('Açúcar refinado', 387, 0.3, 99.5, 0, 0),
-  L('Castanha-do-pará', 643, 14.5, 15.1, 63.5, 7.9),
-  L('Ovo de galinha frito', 240, 15.6, 1.2, 18.6, 0),
-  L('Pão de queijo', 363, 5.1, 34.2, 24.6, 0.6),
-  L('Cuscuz de milho cozido', 113, 2.2, 25.3, 0.7, 2.1),
-  L('Biscoito cream cracker', 432, 10.1, 68.7, 14.4, 2.5),
-  L('Chocolate ao leite', 540, 7.2, 59.6, 30.3, 2.2),
-  L('Suco de laranja', 45, 0.7, 10.4, 0.2, 0.2),
-  L('Refrigerante de cola', 42, 0, 10.6, 0, 0),
-  L('Pizza de mussarela', 267, 11.3, 33.5, 9.6, 2.1),
-  L('Manga', 64, 0.4, 16.7, 0.2, 1.6),
-  L('Melancia', 33, 0.9, 8.1, 0, 0.1),
-  L('Uva', 53, 0.7, 13.6, 0.2, 0.9),
-  L('Abacaxi', 48, 0.9, 12.3, 0.1, 1.0),
-  L('Morango', 30, 0.9, 6.8, 0.3, 1.7),
-  L('Pepino', 10, 0.9, 2.0, 0.1, 1.1),
-  L('Cebola', 39, 1.7, 8.9, 0.2, 2.2),
-  L('Beterraba cozida', 32, 1.3, 7.2, 0.1, 1.9),
-  L('Chuchu cozido', 19, 0.4, 4.8, 0, 1.0),
+/**
+ * Base local: TACO 4ª edição (NEPA/UNICAMP), ver foods-taco.ts. Os dois leites abaixo não têm valores
+ * na TACO; usamos referências aproximadas de rótulos comuns, digitadas à mão.
+ */
+const EXTRA: Array<[number, string, number, number, number, number, number]> = [
+  [9001, 'Leite de vaca, integral (aproximado)', 61, 3.2, 4.6, 3.3, 0],
+  [9002, 'Leite de vaca, desnatado (aproximado)', 35, 3.4, 4.9, 0.1, 0],
 ];
 
 const U = (...u: Array<[string, number]>) => u;
-const UNITS: Record<string, Array<[string, number]>> = {
-  'Ovo de galinha cozido': U(['ovo', 50]),
-  'Ovo de galinha frito': U(['ovo', 50]),
-  'Pão francês': U(['pao', 50], ['fatia', 25]),
-  'Pão de forma integral': U(['fatia', 25]),
-  'Pão de queijo': U(['unidade', 20]),
-  'Banana prata': U(['banana', 70]),
-  'Maçã com casca': U(['maca', 130]),
-  'Laranja pera': U(['laranja', 140]),
-  'Manga': U(['fatia', 80]),
-  'Melancia': U(['fatia', 200]),
-  'Mamão papaia': U(['fatia', 120]),
-  'Tomate': U(['tomate', 100]),
-  'Batata inglesa cozida': U(['batata', 100]),
-  'Queijo mussarela': U(['fatia', 15]),
-  'Queijo minas frescal': U(['fatia', 30]),
-  'Leite integral': U(['copo', 200], ['xicara', 240]),
-  'Leite desnatado': U(['copo', 200], ['xicara', 240]),
-  'Suco de laranja': U(['copo', 200]),
-  'Refrigerante de cola': U(['lata', 350], ['copo', 200]),
-  'Iogurte natural integral': U(['pote', 170]),
-  'Arroz branco cozido': U(['colher de sopa', 25], ['concha', 90]),
-  'Arroz integral cozido': U(['colher de sopa', 25], ['concha', 90]),
-  'Feijão carioca cozido': U(['concha', 100], ['colher de sopa', 25]),
-  'Feijão preto cozido': U(['concha', 100], ['colher de sopa', 25]),
-  'Aveia em flocos': U(['colher de sopa', 15]),
-  'Azeite de oliva': U(['colher de sopa', 13], ['colher de cha', 4]),
-  'Manteiga': U(['colher de cha', 5], ['colher de sopa', 15]),
-  'Açúcar refinado': U(['colher de cha', 5], ['colher de sopa', 15]),
-  'Castanha-do-pará': U(['unidade', 4]),
-  'Biscoito cream cracker': U(['unidade', 6]),
-  'Chocolate ao leite': U(['quadrado', 5]),
-  'Pizza de mussarela': U(['fatia', 110]),
-  'Peito de frango grelhado': U(['file', 120]),
-  'Tilápia grelhada': U(['file', 120]),
-  'Uva': U(['cacho', 100]),
+const COLHER_ARROZ = U(['colher de sopa', 25], ['concha', 90]);
+const COLHER_FEIJAO = U(['concha', 100], ['colher de sopa', 25]);
+const COPO = U(['copo', 200], ['xicara', 240]);
+/** Medidas caseiras por código da TACO: a primeira é a padrão quando a pessoa digita só um número. */
+const UNITS: Record<number, Array<[string, number]>> = {
+  1: COLHER_ARROZ, 3: COLHER_ARROZ, 5: COLHER_ARROZ,
+  7: U(['colher de sopa', 15]),
+  13: U(['unidade', 6]),
+  48: U(['fatia', 25]), 49: U(['fatia', 25]), 50: U(['fatia', 25]), 51: U(['fatia', 25]), 52: U(['fatia', 25]),
+  53: U(['pao', 50], ['fatia', 25]),
+  63: U(['unidade', 8]),
+  88: U(['unidade', 130]), 91: U(['unidade', 100]), 93: U(['porcao', 100]),
+  109: U(['unidade', 80]), 110: U(['unidade', 80]),
+  140: U(['unidade', 20]), 141: U(['unidade', 20]),
+  157: U(['unidade', 100]),
+  163: U(['unidade', 300]),
+  177: U(['banana', 70]), 178: U(['banana', 70]), 179: U(['banana', 80]), 180: U(['banana', 60]), 182: U(['banana', 70]),
+  197: U(['unidade', 170]), 200: U(['unidade', 170]),
+  208: U(['unidade', 140]), 214: U(['unidade', 140]), 216: U(['unidade', 140]),
+  209: COPO, 215: COPO, 217: COPO,
+  220: U(['unidade', 60]),
+  221: U(['maca', 130]), 222: U(['maca', 130]),
+  225: U(['fatia', 150]), 226: U(['fatia', 120]),
+  228: U(['unidade', 250]), 229: U(['unidade', 250]), 231: U(['unidade', 250]),
+  235: U(['fatia', 200]), 236: U(['fatia', 100]),
+  256: U(['cacho', 100]), 257: U(['cacho', 100]),
+  260: U(['colher de sopa', 13], ['colher de cha', 4]),
+  261: U(['colher de cha', 5], ['colher de sopa', 15]), 262: U(['colher de cha', 5], ['colher de sopa', 15]),
+  263: U(['colher de cha', 5], ['colher de sopa', 15]), 264: U(['colher de cha', 5], ['colher de sopa', 15]),
+  272: U(['colher de sopa', 13]), 270: U(['colher de sopa', 13]), 269: U(['colher de sopa', 13]), 268: U(['colher de sopa', 13]),
+  317: U(['file', 120]), 315: U(['file', 120]),
+  346: U(['bife', 100]), 358: U(['bife', 100]), 370: U(['bife', 100]), 377: U(['bife', 100]), 383: U(['fatia', 100]), 381: U(['fatia', 100]),
+  386: U(['unidade', 130]), 389: U(['unidade', 80]), 390: U(['unidade', 80]),
+  398: U(['unidade', 100]), 408: U(['file', 120]), 410: U(['file', 120]), 413: U(['unidade', 100]),
+  417: U(['unidade', 90]),
+  438: U(['fatia', 15]), 439: U(['fatia', 15]), 424: U(['fatia', 15]), 323: U(['fatia', 15]),
+  447: U(['colher de sopa', 15]),
+  448: U(['pote', 170]), 449: U(['pote', 170]), 451: U(['pote', 170]), 452: U(['pote', 170]),
+  453: U(['colher de sopa', 20]),
+  456: U(['colher de sopa', 10]), 459: U(['colher de sopa', 10]),
+  461: U(['fatia', 30]), 462: U(['fatia', 30]), 463: U(['fatia', 15]), 467: U(['fatia', 15]),
+  468: U(['colher de sopa', 30]),
+  480: U(['lata', 350], ['copo', 200]), 481: U(['lata', 350], ['copo', 200]), 482: U(['lata', 350], ['copo', 200]), 483: U(['lata', 350], ['copo', 200]),
+  488: U(['ovo', 50]), 489: U(['ovo', 50]), 490: U(['ovo', 50]), 485: U(['ovo', 10]),
+  484: U(['unidade', 100]),
+  491: U(['colher de sopa', 15]),
+  492: U(['colher de cha', 5], ['colher de sopa', 15]), 493: U(['colher de cha', 5], ['colher de sopa', 15]), 494: U(['colher de cha', 5], ['colher de sopa', 15]),
+  495: U(['quadrado', 5]),
+  507: U(['colher de sopa', 20]),
+  524: U(['colher de sopa', 15]),
+  533: U(['fatia', 100]),
+  557: U(['colher de sopa', 15]),
+  561: COLHER_FEIJAO, 567: COLHER_FEIJAO, 563: COLHER_FEIJAO, 565: COLHER_FEIJAO, 569: COLHER_FEIJAO, 571: COLHER_FEIJAO, 573: COLHER_FEIJAO,
+  577: U(['colher de sopa', 25]),
+  589: U(['unidade', 4]), 588: U(['unidade', 3]), 587: U(['unidade', 2]),
 };
+UNITS[9001] = COPO;
+UNITS[9002] = COPO;
 
-export const FOODS_BR: FoodPer100[] = RAW_FOODS.map((f) => ({ ...f, units: UNITS[f.name] }));
+/** Alimentos do dia a dia que aparecem primeiro nos resultados. */
+const PRIORITY = new Set([
+  3, 1, 561, 567, 488, 490, 53, 52, 182, 214, 226, 221, 235, 229, 239, 164, 163, 257,
+  410, 377, 358, 317, 408, 9001, 9002, 448, 461, 463, 91, 88, 129, 78, 157, 110, 100, 577,
+  7, 260, 262, 494, 589, 480, 495, 13, 140, 533, 495, 386, 468, 453,
+]);
+const PRIORITY_ORDER = [...PRIORITY];
+
+export const FOODS_BR: FoodPer100[] = [...TACO, ...EXTRA].map(([id, name, kcal, protein, carbs, fat, fiber]) => ({
+  name,
+  kcal,
+  protein,
+  carbs,
+  fat,
+  fiber,
+  origin: 'local' as const,
+  code: `taco-${id}`,
+  units: UNITS[id],
+}));
+
+const RANK = new Map<string, number>(
+  [...TACO, ...EXTRA].map(([id], i) => [`taco-${id}`, PRIORITY_ORDER.includes(id) ? PRIORITY_ORDER.indexOf(id) - 1000 : i]),
+);
 
 export function normalize(text: string) {
   return text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
@@ -130,15 +124,34 @@ export function stem(word: string) {
   if (w.length > 3 && w.endsWith('s')) return w.slice(0, -1);
   return w;
 }
-const stemAll = (text: string) => normalize(text).split(/\s+/).filter(Boolean).map(stem).join(' ');
+const stemAll = (text: string) => normalize(text).replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean).map(stem).join(' ');
+
+const STOPWORDS = new Set(['de', 'da', 'do', 'com', 'e', 'em', 'a', 'o']);
+const ALIASES: Record<string, string> = {
+  mucarela: 'mussarela', mozarela: 'mussarela', muzzarela: 'mussarela', mingnon: 'mignon',
+  coca: 'refrigerante cola', pepsi: 'refrigerante cola', guarana: 'refrigerante guarana',
+  frango: 'frango', bolacha: 'biscoito', macaxeira: 'mandioca', aipim: 'mandioca', pao: 'pao',
+};
 
 export function searchLocal(query: string, limit = 8): FoodPer100[] {
-  const terms = stemAll(query).split(' ').filter(Boolean);
+  const terms = stemAll(query)
+    .split(' ')
+    .filter((t) => t && !STOPWORDS.has(t))
+    .flatMap((t) => (ALIASES[t] ?? t).split(' '));
   if (!terms.length) return [];
-  return FOODS_BR.filter((f) => {
-    const n = stemAll(f.name);
-    return terms.every((t) => n.includes(t));
-  }).slice(0, limit);
+  const hits = FOODS_BR.filter((f) => {
+    const words = stemAll(f.name).split(' ');
+    return terms.every((t, i) =>
+      words.some((w) => w === t || (w.startsWith(t) && ((i === terms.length - 1 && t.length >= 3) || w.length - t.length <= 2))),
+    );
+  });
+  const score = (f: FoodPer100) => {
+    const rank = RANK.get(f.code ?? '') ?? 5000;
+    const words = f.name.split(',').length;
+    const raw = /\b(cru|crua|crus|cruas)\b/i.test(f.name) ? 3 : 0;
+    return rank < 0 ? rank : words + raw + rank / 10000;
+  };
+  return hits.sort((a, b) => score(a) - score(b)).slice(0, limit);
 }
 
 /* ---------- Open Food Facts (produtos embalados, pelo navegador) ---------- */
@@ -256,7 +269,7 @@ export function parseQuery(raw: string): ParsedQuery {
   return { name: tokens.join(' '), amount: null, unit: null };
 }
 
-const SHOW: Record<string, string> = { pao: 'pão', maca: 'maçã', file: 'filé', xicara: 'xícara', 'colher de cha': 'colher de chá' };
+const SHOW: Record<string, string> = { porcao: 'porção', pao: 'pão', maca: 'maçã', file: 'filé', xicara: 'xícara', 'colher de cha': 'colher de chá' };
 const show = (u: string) => SHOW[u] ?? u;
 
 /** Converte o que a pessoa digitou em gramas para o alimento escolhido. */
@@ -277,6 +290,6 @@ export function gramsFor(food: FoodPer100, q: ParsedQuery): { grams: number; lab
     if (first) return { grams: count * first[1], label: `${round1(count)}× ${show(first[0])}` };
     return { grams: q.amount, label: `${round1(q.amount)} g` };
   }
-  if (first) return { grams: first[1], label: `1× ${show(first[0])}` };
+  if (first && first[1] >= 50) return { grams: first[1], label: `1× ${show(first[0])}` };
   return { grams: 100, label: '100 g' };
 }

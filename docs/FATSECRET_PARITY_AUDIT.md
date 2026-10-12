@@ -116,3 +116,5 @@ Esta é a matriz inicial para orientar a implementação incremental. Não afirm
 - CI #55 aprovada no commit `f065296e1b37916618853c66c39a8a84d3dbd4dc`: 56 testes unitários, typecheck e build de produção aprovados: https://github.com/csilvadesweb/sistcs-leve/actions/runs/38274325916
 - A CI valida testes automatizados, tipos e build; não valida Supabase real, políticas RLS integradas, migração aplicada, nem experiência de produção.
 - PR #3 continua aberta e em draft no momento da verificação. Não houve merge, deploy nem aplicação de migration.
+
+- CI #56, commit `fa70a574b64f14b428654f2fc336f28deb255e50`: 58 testes unitários aprovados, TypeScript e build de produção aprovados. Inclui cobertura para tabela de exercícios ausente e para não ocultar erros de permissão: https://github.com/csilvadesweb/sistcs-leve/actions/runs/38274621015

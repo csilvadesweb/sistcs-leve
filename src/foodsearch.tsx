@@ -77,6 +77,8 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   const [query, setQuery] = useState('');
   const [manualPick, setManualPick] = useState<FoodPer100 | null>(null);
   const [gramsText, setGramsText] = useState<string | null>(null);
+  const [measureUnit, setMeasureUnit] = useState('g');
+  const [measureAmount, setMeasureAmount] = useState('100');
   const [online, setOnline] = useState<FoodPer100[]>([]);
   const [referenceFoods, setReferenceFoods] = useState<FoodPer100[]>([]);
   const [onlinePage, setOnlinePage] = useState(1);
@@ -98,6 +100,29 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   const matches = useMemo(() => (parsed.name ? searchLocal(parsed.name, 6) : []), [parsed.name]);
   const food = manualPick ?? matches[0] ?? null;
   const auto = food ? gramsFor(food, parsed) : null;
+  const measureOptions = useMemo(() => {
+    const defaults: Array<{ value: string; label: string; grams: number }> = [
+      { value: 'g', label: 'Gramas (g)', grams: 1 },
+      { value: 'colher de chá', label: 'Colher de chá', grams: 5 },
+      { value: 'colher de sobremesa', label: 'Colher de sobremesa', grams: 10 },
+      { value: 'colher de sopa', label: 'Colher de sopa', grams: 15 },
+      { value: 'colher de servir', label: 'Colher grande de servir (estimativa)', grams: 50 },
+      { value: 'xícara', label: 'Xícara', grams: 240 },
+      { value: 'copo', label: 'Copo', grams: 200 },
+      { value: 'concha', label: 'Concha', grams: 100 },
+    ];
+    const options = new Map(defaults.map((item) => [normalize(item.value), item]));
+    for (const [name, weight] of food?.units ?? []) {
+      const key = normalize(name);
+      const existing = options.get(key);
+      options.set(key, { value: name, label: name.charAt(0).toLocaleUpperCase('pt-BR') + name.slice(1), grams: weight });
+      if (existing && existing.value === 'g') continue;
+    }
+    return [...options.values()];
+  }, [food]);
+  const selectedMeasure = measureOptions.find((option) => normalize(option.value) === normalize(measureUnit)) ?? measureOptions[0]!;
+  const amountValid = decimalIsValid(measureAmount, false) && parseDecimal(measureAmount) > 0;
+  const calculatedGrams = amountValid ? parseDecimal(measureAmount) * selectedMeasure.grams : 0;
   const typedOk = gramsText !== null && decimalIsValid(gramsText, false) && parseDecimal(gramsText) <= 5000;
   const grams = gramsText !== null ? (typedOk ? parseDecimal(gramsText) : 0) : auto?.grams ?? 0;
   const gramsOk = grams > 0 && grams <= 5000;
@@ -189,6 +214,8 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   function choose(f: FoodPer100) {
     setManualPick(f);
     setGramsText(null);
+    setMeasureUnit('g');
+    setMeasureAmount('100');
     setMessage('');
   }
 
@@ -270,19 +297,32 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
               {food.origin === 'usda' && <a href={food.sourceUrl ?? 'https://tempolife.app/'} target="_blank" rel="noreferrer">Fonte dos nutrientes: USDA SR Legacy via TempoLife</a>}
             </div>
           </div>
-          <label className="fs-g-label" htmlFor="fs-g">Quantidade em gramas</label>
+          <label className="fs-g-label" htmlFor="fs-measure">Medida do alimento</label>
           <div className="fs-grams-row">
             <div className="fs-grams">
-              <input id="fs-g" className="input" inputMode="decimal" maxLength={6} value={gramsText ?? (gramsOk ? String(Math.round(grams * 10) / 10).replace('.', ',') : '')} onChange={(e) => setGramsText(e.target.value)} aria-invalid={!gramsOk} />
-              <span aria-hidden="true">g</span>
+              <input id="fs-measure-amount" className="input" inputMode="decimal" maxLength={6} aria-label="Quantidade da medida selecionada" value={measureAmount} onChange={(e) => {
+                setMeasureAmount(e.target.value);
+                const next = decimalIsValid(e.target.value, false) ? parseDecimal(e.target.value) * selectedMeasure.grams : 0;
+                setGramsText(next > 0 && next <= 5000 ? String(Math.round(next * 10) / 10) : '0');
+              }} aria-invalid={!amountValid || calculatedGrams > 5000} />
             </div>
-            <div className="fs-chips" role="group" aria-label="Quantidades rápidas">
-              {GRAM_CHIPS.map((c) => (
-                <button type="button" key={c} className={`fs-chip ${gramsOk && grams === c ? 'on' : ''}`} onClick={() => setGramsText(String(c))}>{c} g</button>
-              ))}
-            </div>
+            <select id="fs-measure" className="input" value={measureUnit} onChange={(e) => {
+              const nextUnit = e.target.value;
+              const nextMeasure = measureOptions.find((option) => normalize(option.value) === normalize(nextUnit)) ?? measureOptions[0]!;
+              setMeasureUnit(nextUnit);
+              const next = amountValid ? parseDecimal(measureAmount) * nextMeasure.grams : 0;
+              setGramsText(next > 0 && next <= 5000 ? String(Math.round(next * 10) / 10) : '0');
+            }} aria-label="Unidade de medida">
+              {measureOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+            </select>
           </div>
-          {!gramsOk && <p className="field-error" role="alert">Informe a quantidade em gramas (maior que zero, até 5000).</p>}
+          <p className="field-hint">Equivalência estimada: {decimalText(calculatedGrams)} g. Para maior precisão, escolha gramas. Colheres e utensílios variam de tamanho e densidade conforme o alimento.</p>
+          <div className="fs-chips" role="group" aria-label="Quantidades rápidas em gramas">
+            {GRAM_CHIPS.map((c) => (
+              <button type="button" key={c} className={`fs-chip ${gramsOk && grams === c ? 'on' : ''}`} onClick={() => { setMeasureUnit('g'); setMeasureAmount(String(c)); setGramsText(String(c)); }}>{c} g</button>
+            ))}
+          </div>
+          {(!amountValid || !gramsOk || calculatedGrams > 5000) && <p className="field-error" role="alert">Informe uma quantidade válida, maior que zero e de até 5000 g.</p>}
           {calc && (
             <p className="fs-calc" aria-live="polite">
               <strong>{decimalText(calc.calories)} kcal</strong>

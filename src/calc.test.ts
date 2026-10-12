@@ -73,4 +73,27 @@ describe('idade e estimativa de metas', () => {
     expect(result.ok).toBe(true);
     if (result.ok) expect(Math.abs(result.delta)).toBeLessThanOrEqual(5);
   });
+
+  it.each([
+    ['peso abaixo do limite', { weightKg: 19.9 }],
+    ['peso acima do limite', { weightKg: 400.1 }],
+    ['peso não finito', { weightKg: Number.NaN }],
+    ['altura abaixo do limite', { heightCm: 49.9 }],
+    ['altura acima do limite', { heightCm: 260.1 }],
+    ['altura não finita', { heightCm: Number.POSITIVE_INFINITY }],
+  ])('recusa %s antes de calcular metas', (_label, overrides) => {
+    const result = estimate({ ...complete, ...overrides }, '2026-10-12');
+    expect(result.ok).toBe(false);
+  });
+
+  it('recusa datas de nascimento impossíveis', () => {
+    const result = estimate({ ...complete, birthDate: '1990-02-30' }, '2026-10-12');
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.reason).toContain('data de nascimento');
+  });
+
+  it('retorna idade inválida para datas malformadas', () => {
+    expect(ageFromBirth('1990-13-01', '2026-10-12')).toBeNaN();
+    expect(ageFromBirth('1990-01-01', '2026-02-30')).toBeNaN();
+  });
 });

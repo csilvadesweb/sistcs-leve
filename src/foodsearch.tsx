@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
 import { gramsFor, lookupBarcode, normalize, parseQuery, scale, searchLocal, searchOpenFoodFacts, type FoodPer100 } from './foods-br';
@@ -80,7 +80,9 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
 
   // Tudo é derivado do que foi digitado: "2 ovos", "150 g de arroz", "1 colher de sopa de azeite".
   const parsed = parseQuery(query);
-  const matches = parsed.name ? searchLocal(parsed.name, 6) : [];
+  // Mantém a identidade dos resultados estável enquanto o nome pesquisado não muda.
+  // Isso evita reexecutar o efeito de preenchimento nutricional em cada renderização do formulário.
+  const matches = useMemo(() => (parsed.name ? searchLocal(parsed.name, 6) : []), [parsed.name]);
   const food = manualPick ?? matches[0] ?? null;
   const auto = food ? gramsFor(food, parsed) : null;
   const typedOk = gramsText !== null && decimalIsValid(gramsText, false) && parseDecimal(gramsText) <= 5000;

@@ -25,11 +25,11 @@ import { ProfileSettings } from './pages/Profile';
 
 const destinations = [
   { href: '/', label: 'Início', short: 'Início', icon: House },
-  { href: '/alimentacao', label: 'Alimentação', short: 'Alimentos', icon: Apple },
-  { href: '/registros', label: 'Registros', short: 'Registros', icon: ClipboardList },
+  { href: '/alimentacao', label: 'Alimentação', short: 'Comida', icon: Apple },
+  { href: '/registros', label: 'Registros', short: 'Evolução', icon: ClipboardList },
   { href: '/jejum', label: 'Jejum', short: 'Jejum', icon: Timer },
-  { href: '/medicamentos', label: 'Medicamentos', short: 'Remédios', icon: Pill },
-  { href: '/relatorios', label: 'Relatórios', short: 'Relatórios', icon: ChartNoAxesCombined },
+  { href: '/medicamentos', label: 'Medicamentos', short: 'Remédio', icon: Pill },
+  { href: '/relatorios', label: 'Relatórios', short: 'Gráficos', icon: ChartNoAxesCombined },
   { href: '/perfil', label: 'Perfil', short: 'Perfil', icon: CircleUserRound },
 ];
 

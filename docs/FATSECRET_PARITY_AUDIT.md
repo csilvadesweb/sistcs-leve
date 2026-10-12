@@ -111,3 +111,8 @@ Esta é a matriz inicial para orientar a implementação incremental. Não afirm
 - A leitura tolera a tabela ausente para que a aplicação existente continue abrindo, mostra aviso de ativação e desabilita gravações até a migration existir.
 - CI aprovado no commit `6e9ecc4d3aac2a81a353dc3d638ec1f8d4a44be3`: testes unitários, TypeScript e build de produção aprovados: https://github.com/csilvadesweb/sistcs-leve/actions/runs/38272967400
 - Não foi aplicada migration ao Supabase, não houve deploy nem merge. A tela depende da migration para persistência real; RLS ainda precisa de teste integrado no projeto correto.
+
+- Após incluir exercícios nos relatórios, a CI identificou uma propriedade obrigatória ausente no gráfico; corrigida no commit `f065296e1b37916618853c66c39a8a84d3dbd4dc` (`goal={null}` no gráfico de calorias estimadas de exercício).
+- CI #55 aprovada no commit `f065296e1b37916618853c66c39a8a84d3dbd4dc`: 56 testes unitários, typecheck e build de produção aprovados: https://github.com/csilvadesweb/sistcs-leve/actions/runs/38274325916
+- A CI valida testes automatizados, tipos e build; não valida Supabase real, políticas RLS integradas, migração aplicada, nem experiência de produção.
+- PR #3 continua aberta e em draft no momento da verificação. Não houve merge, deploy nem aplicação de migration.

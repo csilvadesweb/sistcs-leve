@@ -55,10 +55,24 @@ describe('persistência — falha segura ao carregar dados', () => {
     expect(result.fastingEntries).toEqual([]);
   });
 
-  it('filtra o perfil pelo identificador da conta solicitada', async () => {
+  it('filtra todas as leituras pelo identificador da conta solicitada', async () => {
     await loadAll('user-a');
 
-    const profileQuery = fromMock.mock.results[0]?.value;
-    expect(profileQuery.eq).toHaveBeenCalledWith('user_id', 'user-a');
+    const expectedTables = [
+      'profiles',
+      'food_entries',
+      'favorite_foods',
+      'water_entries',
+      'weight_entries',
+      'medications',
+      'medication_logs',
+      'progress_photos',
+      'fasting_entries',
+    ];
+    expect(fromMock.mock.calls.map(([table]) => table)).toEqual(expectedTables);
+
+    for (const call of fromMock.mock.results) {
+      expect((call.value as { eq: ReturnType<typeof vi.fn> }).eq).toHaveBeenCalledWith('user_id', 'user-a');
+    }
   });
 });

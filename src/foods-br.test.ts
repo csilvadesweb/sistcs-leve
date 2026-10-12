@@ -19,6 +19,18 @@ describe('busca local de alimentos', () => {
     expect(searchLocal('bolacha').some((f) => f.name.includes('Biscoito'))).toBe(true);
   });
 
+  it('preserves existing shortcuts for cola and guarana soft drinks', () => {
+    expect(searchLocal('coca').some((f) => f.name.includes('Refrigerante, tipo cola'))).toBe(true);
+    expect(searchLocal('pepsi').some((f) => f.name.includes('Refrigerante, tipo cola'))).toBe(true);
+    expect(searchLocal('guarana').some((f) => f.name.includes('Refrigerante, tipo guaraná'))).toBe(true);
+    expect(searchLocal('refri').some((f) => f.name.startsWith('Refrigerante'))).toBe(true);
+  });
+
+  it('keeps common food names searchable after alias normalization', () => {
+    expect(searchLocal('frango').some((f) => f.name.startsWith('Frango,'))).toBe(true);
+    expect(searchLocal('pao').some((f) => f.name.startsWith('Pão,'))).toBe(true);
+  });
+
   it('recognizes common spelling variants of mussarela', () => {
     expect(searchLocal('mucarela').some((f) => f.name.includes('mussarela'))).toBe(true);
     expect(searchLocal('mozarela').some((f) => f.name.includes('mussarela'))).toBe(true);

@@ -39,7 +39,7 @@ function saveSettings(settings: WaterReminderSettings) {
 async function showWaterNotification() {
   const options = {
     body: 'Uma pausa para beber água pode ajudar você a manter sua rotina. Registre a quantidade no SISTCS Leve.',
-    icon: \`\${import.meta.env.BASE_URL}icon-192.png\`,
+    icon: `${import.meta.env.BASE_URL}icon-192.png`,
     tag: 'sistcs-leve-water-reminder',
   };
   if ('serviceWorker' in navigator) {

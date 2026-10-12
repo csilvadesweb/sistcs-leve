@@ -128,6 +128,7 @@ const stemAll = (text: string) => normalize(text).replace(/[^a-z0-9\s]/g, ' ').s
 
 const STOPWORDS = new Set(['de', 'da', 'do', 'com', 'e', 'em', 'a', 'o']);
 const ALIASES: Record<string, string> = {
+  refri: 'refrigerante',
   mucarela: 'mussarela', mozarela: 'mussarela', muzzarela: 'mussarela', mingnon: 'mignon',
   coca: 'refrigerante cola', pepsi: 'refrigerante cola', guarana: 'refrigerante guarana',
   frango: 'frango', bolacha: 'biscoito', macaxeira: 'mandioca', aipim: 'mandioca', pao: 'pao',

@@ -17,13 +17,17 @@ function Ring({ value, goal }: { value: number; goal: number }) {
   const over = value > goal;
   return (
     <svg className="ring" viewBox="0 0 140 140" role="img" aria-label={`${decimalText((value / goal) * 100)}% da meta de calorias`}>
+      <defs>
+        <linearGradient id="ring-ok" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#5cca82" /><stop offset="1" stopColor="#137a42" /></linearGradient>
+        <linearGradient id="ring-over" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#f0d27c" /><stop offset="1" stopColor="#b98a2c" /></linearGradient>
+      </defs>
       <circle cx="70" cy="70" r={r} fill="none" stroke="#e4ebe1" strokeWidth="13" />
       <circle
-        cx="70" cy="70" r={r} fill="none" stroke={over ? '#c49a4a' : '#2f6b52'} strokeWidth="13" strokeLinecap="round"
+        cx="70" cy="70" r={r} fill="none" stroke={over ? 'url(#ring-over)' : 'url(#ring-ok)'} strokeWidth="13" strokeLinecap="round"
         strokeDasharray={`${c * pct} ${c}`} transform="rotate(-90 70 70)"
       />
-      <text x="70" y="66" textAnchor="middle" fontSize="24" fontWeight="700" fill="#263e34">{decimalText(Math.round(value))}</text>
-      <text x="70" y="86" textAnchor="middle" fontSize="11" fill="#6b7a70">de {decimalText(goal)} kcal</text>
+      <text x="70" y="66" textAnchor="middle" fontSize="24" fontWeight="700" fill="#112a1f">{decimalText(Math.round(value))}</text>
+      <text x="70" y="86" textAnchor="middle" fontSize="12" fill="#566b5d">de {decimalText(goal)} kcal</text>
     </svg>
   );
 }

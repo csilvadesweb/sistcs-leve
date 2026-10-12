@@ -124,14 +124,19 @@ a { color: var(--gold); }
 }
 
 /* ---------- estrutura ---------- */
-.app-shell { display: flex; min-height: 100dvh; }
+.app-shell { display: flex; min-height: 100dvh; max-width: 100%; }
+.app-main { flex: 1 1 auto; min-width: 0; max-width: 100%; }
+html, body { max-width: 100%; overflow-x: clip; overscroll-behavior-y: none; }
+img, svg, video { max-width: 100%; }
+button, a, input, select, textarea { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.date-short { display: none; }
 .serif-display { font-family: var(--app-font-display); letter-spacing: -.04em; }
 
 .sidebar { display: none; width: 280px; flex: 0 0 280px; min-height: 100dvh; flex-direction: column; position: sticky; top: 0; height: 100dvh; padding: 34px 20px 24px; background: linear-gradient(180deg, rgba(255, 255, 255, .95), rgba(241, 245, 238, .95)); border-right: 1px solid var(--line); backdrop-filter: blur(20px); }
 .brand-mark, .mobile-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); }
 .brand-icon { width: 40px; height: 40px; display: grid; place-items: center; color: var(--gold); background: rgba(232, 196, 108, .12); border-radius: 13px; }
 .brand-name { font-family: var(--app-font-display); font-size: 18px; font-weight: 750; letter-spacing: -.02em; line-height: 1.1; }
-.brand-name span { display: block; margin-top: 2px; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; text-transform: lowercase; letter-spacing: .32em; font-weight: 600; font-size: .66em; }
+.brand-name span { display: block; margin-top: 2px; background: linear-gradient(135deg, #c9992f, #8a6212); -webkit-background-clip: text; background-clip: text; color: transparent; text-transform: lowercase; letter-spacing: .32em; font-weight: 600; font-size: .66em; }
 .sidebar-caption { margin: 46px 12px 14px; color: var(--text-3); font-size: 13px; font-weight: 700; letter-spacing: .18em; }
 .desktop-nav { display: grid; gap: 6px; }
 .nav-link { position: relative; display: flex; align-items: center; gap: 14px; min-height: 52px; padding: 0 16px; color: var(--text-2); border-radius: 15px; text-decoration: none; font-size: 15.5px; font-weight: 600; transition: background-color .25s ease, color .25s ease, transform .25s var(--ease); }
@@ -149,7 +154,7 @@ a { color: var(--gold); }
 .mobile-brand { gap: 10px; }
 .mobile-brand .brand-icon { width: 36px; height: 36px; }
 .mobile-brand .brand-name { font-size: 16px; }
-.topbar-date { display: flex; align-items: center; gap: 8px; color: var(--text-2); text-transform: capitalize; font-size: 14px; white-space: nowrap; }
+.topbar-date { display: flex; align-items: center; gap: 8px; min-width: 0; color: var(--text-2); font-size: 14px; white-space: nowrap; }
 .topbar-date svg { color: var(--gold); }
 .stage-tag { display: none; align-items: center; padding: 9px 14px; color: var(--gold-2); background: rgba(232, 196, 108, .1); border: 1px solid var(--line); border-radius: 22px; font-size: 14px; font-weight: 700; letter-spacing: .08em; white-space: nowrap; transition: background-color .2s ease; }
 .main-content { max-width: 1130px; margin: 0 auto; padding: 36px 5vw 130px; }
@@ -258,8 +263,22 @@ a { color: var(--gold); }
   .initial-card, .orientation { max-width: 800px; }
   .profile-field-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+@media (max-width: 719px) {
+  .topbar { height: auto; min-height: 64px; padding: calc(env(safe-area-inset-top) + 8px) 16px 8px; gap: 10px; }
+  .topbar-date { flex: 1 1 auto; justify-content: flex-end; font-size: 14px; font-weight: 600; }
+  .date-long { display: none; }
+  .date-short { display: inline; }
+  .mobile-brand { flex: 0 0 auto; }
+  .main-content { padding: 20px 16px calc(112px + env(safe-area-inset-bottom)); }
+  .page-heading { min-height: 0; padding-top: 6px; }
+  .heading-copy { padding-bottom: 12px; }
+  .page-heading h1 { font-size: clamp(32px, 9.4vw, 42px); }
+  .page-intro { max-width: none; margin-top: 12px; font-size: 16px; line-height: 1.6; }
+  .heading-art { display: none; }
+  .today-card { padding: 22px 18px; border-radius: 22px; }
+  .ft-card { padding: 22px 18px; border-radius: 22px; }
+}
 @media (max-width: 420px) {
-  .topbar { height: 68px; padding: 0 16px; }
   .topbar-date { gap: 5px; font-size: 14px; }
   .topbar-date svg { width: 15px; }
   .main-content { padding: 26px 16px 130px; }

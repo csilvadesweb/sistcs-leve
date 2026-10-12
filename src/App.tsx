@@ -33,13 +33,11 @@ const destinations = [
   { href: '/perfil', label: 'Perfil', short: 'Perfil', icon: CircleUserRound },
 ];
 
-const dateLabel = new Intl.DateTimeFormat('pt-BR', {
-  timeZone: 'America/Sao_Paulo',
-  weekday: 'long',
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-}).format(new Date());
+const dateParts = (opts: Intl.DateTimeFormatOptions) =>
+  new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', ...opts }).format(new Date());
+const upperFirst = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+const dateLong = upperFirst(dateParts({ weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }));
+const dateShort = upperFirst(dateParts({ weekday: 'short', day: 'numeric', month: 'short' }).replace('.', ''));
 
 function NavLink({ href, label, text, icon: Icon, active, mobile = false }: {
   href: string;
@@ -92,7 +90,7 @@ function Shell({ children }: { children: ReactNode }) {
           </div>
           <div className="topbar-date">
             <CalendarDays size={16} aria-hidden="true" />
-            <time>{dateLabel}</time>
+            <time dateTime={new Date().toISOString().slice(0, 10)}><span className="date-long">{dateLong}</span><span className="date-short">{dateShort}</span></time>
           </div>
           <Link href="/relatorios" className="stage-tag">VER RELATÓRIOS</Link>
           <Link href="/perfil" className="topbar-avatar" aria-label="Abrir o perfil">

@@ -7,7 +7,7 @@
     "directory": "./dist"
   },
   "routes": [
-    { "pattern": "leve.sistcs.com", "custom_domain": true }
+    { "pattern": "leve.sistcs.com", "custom_domain": true, "previews_enabled": true }
   ],
   "previews": {},
   "preview_urls": true

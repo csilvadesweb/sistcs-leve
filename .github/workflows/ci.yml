@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: 22
       - run: npm install --no-audit
+      - name: Diagnose npm install failure
+        if: failure()
+        run: tail -n 120 /home/runner/.npm/_logs/*debug-0.log || true
       - name: Report dependency audit findings
         if: always()
         run: |

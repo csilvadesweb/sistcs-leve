@@ -37,6 +37,8 @@ export interface FastingEntry {
   targetHours: number;
   note: string;
 }
+export interface ExerciseEntryInput { date:string; activity:string; durationMinutes:number; caloriesBurned:number; note:string; }
+export interface ExerciseEntry extends ExerciseEntryInput { id:string; }
 
 export interface WeightEntryInput {
   date: string;
@@ -117,6 +119,8 @@ export interface AppData {
   medicationLogs: MedicationLog[];
   progressPhotos: ProgressPhoto[];
   fastingEntries: FastingEntry[];
+  exerciseEntries: ExerciseEntry[];
+  exerciseTrackingAvailable: boolean;
 }
 
 export const EMPTY_DATA: AppData = {
@@ -129,6 +133,8 @@ export const EMPTY_DATA: AppData = {
   medicationLogs: [],
   progressPhotos: [],
   fastingEntries: [],
+  exerciseEntries: [],
+  exerciseTrackingAvailable: false,
 };
 
 /* ---------- cálculos ---------- */
@@ -285,10 +291,17 @@ function fail(error: { message: string } | null, fallback: string): asserts erro
   }
 }
 
+function exerciseFromRow(r: Row): ExerciseEntry {
+ return {id:r.id,date:r.entry_date,activity:r.activity,durationMinutes:num(r.duration_minutes),caloriesBurned:num(r.calories_burned),note:r.note??''};
+}
+function isMissingRelation(error:{code?:string;message?:string}|null|undefined,table:string):boolean {
+ if(!error)return false; const m=(error.message??'').toLowerCase();
+ return error.code==='42P01'||(error.code==='PGRST205'&&m.includes(table))||(m.includes(table)&&(m.includes('does not exist')||m.includes('schema cache')));
+}
 /* ---------- leitura ---------- */
 
 export async function loadAll(userId: string): Promise<AppData> {
-  const [profile, foods, favorites, water, weights, meds, medLogs, photos, fasts] = await Promise.all([
+  const [profile, foods, favorites, water, weights, meds, medLogs, photos, fasts, exercises] = await Promise.all([
     supabase.from('profiles').select('*').eq('user_id', userId).maybeSingle(),
     supabase.from('food_entries').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
     supabase.from('favorite_foods').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
@@ -298,6 +311,7 @@ export async function loadAll(userId: string): Promise<AppData> {
     supabase.from('medication_logs').select('*').eq('user_id', userId).order('log_date', { ascending: false }),
     supabase.from('progress_photos').select('*').eq('user_id', userId).order('taken_on', { ascending: false }).order('created_at', { ascending: false }),
     supabase.from('fasting_entries').select('*').eq('user_id', userId).order('started_at', { ascending: false }).limit(200),
+    supabase.from('exercise_entries').select('*').eq('user_id', userId).order('entry_date', { ascending: false }).order('created_at', { ascending: false }).limit(500),
   ]);
   fail(profile.error, 'Não foi possível carregar o perfil.');
   fail(foods.error, 'Não foi possível carregar os alimentos.');
@@ -308,6 +322,8 @@ export async function loadAll(userId: string): Promise<AppData> {
   fail(medLogs.error, 'Não foi possível carregar o uso dos medicamentos.');
   fail(photos.error, 'Não foi possível carregar as fotos.');
   fail(fasts.error, 'Não foi possível carregar os jejuns.');
+  const exerciseTableMissing = isMissingRelation(exercises.error, 'exercise_entries');
+  if (exercises.error && !exerciseTableMissing) fail(exercises.error, 'Não foi possível carregar os exercícios.');
   return {
     profile: profile.data ? profileFromRow(profile.data) : null,
     foodEntries: (foods.data ?? []).map(foodFromRow),
@@ -318,9 +334,21 @@ export async function loadAll(userId: string): Promise<AppData> {
     medicationLogs: (medLogs.data ?? []).map(medicationLogFromRow),
     progressPhotos: (photos.data ?? []).map(photoFromRow),
     fastingEntries: (fasts.data ?? []).map(fastingFromRow),
+    exerciseEntries: exerciseTableMissing ? [] : (exercises.data ?? []).map(exerciseFromRow),
+    exerciseTrackingAvailable: !exerciseTableMissing,
   };
 }
 
+/* ---------- exercícios ---------- */
+export async function createExerciseEntry(input:ExerciseEntryInput):Promise<ExerciseEntry>{
+ const {data,error}=await supabase.from('exercise_entries').insert({entry_date:input.date,activity:input.activity,duration_minutes:input.durationMinutes,calories_burned:input.caloriesBurned,note:input.note||null}).select().single();
+ fail(error,'Não foi possível salvar o exercício. Verifique se a migration foi aplicada.'); return exerciseFromRow(data);
+}
+export async function updateExerciseEntry(id:string,input:ExerciseEntryInput):Promise<ExerciseEntry>{
+ const {data,error}=await supabase.from('exercise_entries').update({entry_date:input.date,activity:input.activity,duration_minutes:input.durationMinutes,calories_burned:input.caloriesBurned,note:input.note||null}).eq('id',id).select().single();
+ fail(error,'Não foi possível atualizar o exercício.'); return exerciseFromRow(data);
+}
+export async function deleteExerciseEntry(id:string){const {error}=await supabase.from('exercise_entries').delete().eq('id',id);fail(error,'Não foi possível excluir o exercício.');}
 /* ---------- perfil ---------- */
 
 export async function saveUserProfile(userId: string, p: UserProfile) {
@@ -613,6 +641,7 @@ export async function clearAllUserData(userId: string) {
     if (files?.length) await supabase.storage.from(bucket).remove(files.map((f) => `${userId}/${f.name}`));
   }
   const tables = [
+    'exercise_entries',
     'fasting_entries',
     'progress_photos',
     'medication_logs',
@@ -625,6 +654,7 @@ export async function clearAllUserData(userId: string) {
   ];
   for (const table of tables) {
     const { error } = await supabase.from(table).delete().eq('user_id', userId);
+    if (table === 'exercise_entries' && isMissingRelation(error, table)) continue;
     fail(error, 'Não foi possível apagar os dados.');
   }
 }

@@ -13,13 +13,15 @@ export interface FoodPer100 {
   fiber: number;
   origin: 'local' | 'off';
   code?: string;
+  /** Medidas caseiras: [nome no singular, gramas]. A primeira é a padrão quando a pessoa digita só um número. */
+  units?: Array<[string, number]>;
 }
 
 const L = (name: string, kcal: number, protein: number, carbs: number, fat: number, fiber: number): FoodPer100 => ({
   name, kcal, protein, carbs, fat, fiber, origin: 'local',
 });
 
-export const FOODS_BR: FoodPer100[] = [
+const RAW_FOODS: FoodPer100[] = [
   L('Arroz branco cozido', 128, 2.5, 28.1, 0.2, 1.6),
   L('Arroz integral cozido', 124, 2.6, 25.8, 1.0, 2.7),
   L('Feijão carioca cozido', 76, 4.8, 13.6, 0.5, 8.5),
@@ -55,17 +57,86 @@ export const FOODS_BR: FoodPer100[] = [
   L('Manteiga', 726, 0.4, 0.1, 82.4, 0),
   L('Açúcar refinado', 387, 0.3, 99.5, 0, 0),
   L('Castanha-do-pará', 643, 14.5, 15.1, 63.5, 7.9),
+  L('Ovo de galinha frito', 240, 15.6, 1.2, 18.6, 0),
+  L('Pão de queijo', 363, 5.1, 34.2, 24.6, 0.6),
+  L('Cuscuz de milho cozido', 113, 2.2, 25.3, 0.7, 2.1),
+  L('Biscoito cream cracker', 432, 10.1, 68.7, 14.4, 2.5),
+  L('Chocolate ao leite', 540, 7.2, 59.6, 30.3, 2.2),
+  L('Suco de laranja', 45, 0.7, 10.4, 0.2, 0.2),
+  L('Refrigerante de cola', 42, 0, 10.6, 0, 0),
+  L('Pizza de mussarela', 267, 11.3, 33.5, 9.6, 2.1),
+  L('Manga', 64, 0.4, 16.7, 0.2, 1.6),
+  L('Melancia', 33, 0.9, 8.1, 0, 0.1),
+  L('Uva', 53, 0.7, 13.6, 0.2, 0.9),
+  L('Abacaxi', 48, 0.9, 12.3, 0.1, 1.0),
+  L('Morango', 30, 0.9, 6.8, 0.3, 1.7),
+  L('Pepino', 10, 0.9, 2.0, 0.1, 1.1),
+  L('Cebola', 39, 1.7, 8.9, 0.2, 2.2),
+  L('Beterraba cozida', 32, 1.3, 7.2, 0.1, 1.9),
+  L('Chuchu cozido', 19, 0.4, 4.8, 0, 1.0),
 ];
+
+const U = (...u: Array<[string, number]>) => u;
+const UNITS: Record<string, Array<[string, number]>> = {
+  'Ovo de galinha cozido': U(['ovo', 50]),
+  'Ovo de galinha frito': U(['ovo', 50]),
+  'Pão francês': U(['pao', 50], ['fatia', 25]),
+  'Pão de forma integral': U(['fatia', 25]),
+  'Pão de queijo': U(['unidade', 20]),
+  'Banana prata': U(['banana', 70]),
+  'Maçã com casca': U(['maca', 130]),
+  'Laranja pera': U(['laranja', 140]),
+  'Manga': U(['fatia', 80]),
+  'Melancia': U(['fatia', 200]),
+  'Mamão papaia': U(['fatia', 120]),
+  'Tomate': U(['tomate', 100]),
+  'Batata inglesa cozida': U(['batata', 100]),
+  'Queijo mussarela': U(['fatia', 15]),
+  'Queijo minas frescal': U(['fatia', 30]),
+  'Leite integral': U(['copo', 200], ['xicara', 240]),
+  'Leite desnatado': U(['copo', 200], ['xicara', 240]),
+  'Suco de laranja': U(['copo', 200]),
+  'Refrigerante de cola': U(['lata', 350], ['copo', 200]),
+  'Iogurte natural integral': U(['pote', 170]),
+  'Arroz branco cozido': U(['colher de sopa', 25], ['concha', 90]),
+  'Arroz integral cozido': U(['colher de sopa', 25], ['concha', 90]),
+  'Feijão carioca cozido': U(['concha', 100], ['colher de sopa', 25]),
+  'Feijão preto cozido': U(['concha', 100], ['colher de sopa', 25]),
+  'Aveia em flocos': U(['colher de sopa', 15]),
+  'Azeite de oliva': U(['colher de sopa', 13], ['colher de cha', 4]),
+  'Manteiga': U(['colher de cha', 5], ['colher de sopa', 15]),
+  'Açúcar refinado': U(['colher de cha', 5], ['colher de sopa', 15]),
+  'Castanha-do-pará': U(['unidade', 4]),
+  'Biscoito cream cracker': U(['unidade', 6]),
+  'Chocolate ao leite': U(['quadrado', 5]),
+  'Pizza de mussarela': U(['fatia', 110]),
+  'Peito de frango grelhado': U(['file', 120]),
+  'Tilápia grelhada': U(['file', 120]),
+  'Uva': U(['cacho', 100]),
+};
+
+export const FOODS_BR: FoodPer100[] = RAW_FOODS.map((f) => ({ ...f, units: UNITS[f.name] }));
 
 export function normalize(text: string) {
   return text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
 }
 
+/** Singular simples para casar "ovos" com "ovo", "pães" com "pão", "colheres" com "colher". */
+export function stem(word: string) {
+  const w = normalize(word);
+  if (w.endsWith('aes')) return `${w.slice(0, -3)}ao`;
+  if (w.endsWith('oes')) return `${w.slice(0, -3)}ao`;
+  if (w.length > 3 && w.endsWith('res')) return w.slice(0, -2);
+  if (w.length > 3 && w.endsWith('s')) return w.slice(0, -1);
+  return w;
+}
+const stemAll = (text: string) => normalize(text).split(/\s+/).filter(Boolean).map(stem).join(' ');
+
 export function searchLocal(query: string, limit = 8): FoodPer100[] {
-  const terms = normalize(query).split(/\s+/).filter(Boolean);
+  const terms = stemAll(query).split(' ').filter(Boolean);
   if (!terms.length) return [];
   return FOODS_BR.filter((f) => {
-    const n = normalize(f.name);
+    const n = stemAll(f.name);
     return terms.every((t) => n.includes(t));
   }).slice(0, limit);
 }
@@ -125,4 +196,87 @@ export function scale(f: FoodPer100, grams: number) {
     fats: round1(f.fat * k),
     fiber: round1(f.fiber * k),
   };
+}
+
+
+/* ---------- Texto livre: "2 ovos", "150 g de arroz", "1 colher de sopa de azeite" ---------- */
+
+const WEIGHT_UNITS: Record<string, number> = { g: 1, gr: 1, grama: 1, kg: 1000, quilo: 1000, ml: 1, l: 1000, litro: 1000 };
+const HOME_UNITS: Record<string, number> = { 'colher de sopa': 15, 'colher de cha': 5, xicara: 240, copo: 200, concha: 100, fatia: 30, pote: 170, lata: 350, unidade: 0, un: 0 };
+
+export interface ParsedQuery {
+  name: string;
+  amount: number | null;
+  unit: string | null;
+}
+
+const NUM = /^(\d+(?:[.,]\d+)?)([a-z]*)$/;
+
+export function parseQuery(raw: string): ParsedQuery {
+  const tokens = normalize(raw).split(/\s+/).filter(Boolean);
+  const toNum = (t: string) => Number(t.replace(',', '.'));
+  const isUnit = (t: string) => stem(t) in WEIGHT_UNITS || stem(t) in HOME_UNITS || stem(t) === 'colher';
+  const takeUnit = (rest: string[]): [string | null, number] => {
+    if (!rest.length) return [null, 0];
+    if (stem(rest[0]!) === 'colher') {
+      const kind = rest[1] === 'de' && rest[2] ? stem(rest[2]) : '';
+      if (kind === 'sopa' || kind === 'cha') return [`colher de ${kind}`, 3];
+      return ['colher de sopa', 1];
+    }
+    if (isUnit(rest[0]!)) return [stem(rest[0]!), 1];
+    return [null, 0];
+  };
+
+  // Número no começo: "2 ovos", "150g arroz", "1 colher de sopa de azeite"
+  const lead = tokens[0] ? NUM.exec(tokens[0]) : null;
+  if (lead) {
+    let unit: string | null = lead[2] ? stem(lead[2]) : null;
+    let used = 1;
+    if (!unit) {
+      const [u, n] = takeUnit(tokens.slice(1));
+      unit = u;
+      used += n;
+    } else if (!(unit in WEIGHT_UNITS) && !(unit in HOME_UNITS)) {
+      return { name: tokens.slice(0).join(' '), amount: null, unit: null };
+    }
+    let rest = tokens.slice(used);
+    if (rest[0] === 'de' || rest[0] === 'do' || rest[0] === 'da') rest = rest.slice(1);
+    return { name: rest.join(' '), amount: toNum(lead[1]!), unit };
+  }
+  // Número no fim: "arroz 150", "arroz 150g", "arroz 150 g"
+  for (const span of [2, 1]) {
+    const tail = tokens.slice(-span);
+    const m = tail[0] ? NUM.exec(tail[0]) : null;
+    if (!m || tokens.length <= span) continue;
+    const unit = span === 2 ? stem(tail[1]!) : m[2] ? stem(m[2]) : null;
+    if (span === 2 && !(unit! in WEIGHT_UNITS || unit! in HOME_UNITS)) continue;
+    if (span === 1 && unit && !(unit in WEIGHT_UNITS || unit in HOME_UNITS)) continue;
+    return { name: tokens.slice(0, -span).join(' '), amount: toNum(m[1]!), unit };
+  }
+  return { name: tokens.join(' '), amount: null, unit: null };
+}
+
+const SHOW: Record<string, string> = { pao: 'pão', maca: 'maçã', file: 'filé', xicara: 'xícara', 'colher de cha': 'colher de chá' };
+const show = (u: string) => SHOW[u] ?? u;
+
+/** Converte o que a pessoa digitou em gramas para o alimento escolhido. */
+export function gramsFor(food: FoodPer100, q: ParsedQuery): { grams: number; label: string } {
+  const first = food.units?.[0];
+  const find = (u: string) => food.units?.find(([k]) => stem(k) === stem(u) || stemAll(k) === stemAll(u));
+  const count = q.amount ?? 1;
+  if (q.unit && q.unit in WEIGHT_UNITS) {
+    const g = count * WEIGHT_UNITS[q.unit]!;
+    return { grams: g, label: `${round1(count)} ${q.unit}` };
+  }
+  if (q.unit) {
+    const own = find(q.unit);
+    const g = own ? own[1] : HOME_UNITS[q.unit] || (first ? first[1] : 0);
+    if (g) return { grams: count * g, label: `${round1(count)}× ${show(q.unit)}` };
+  }
+  if (q.amount !== null && !q.unit) {
+    if (first) return { grams: count * first[1], label: `${round1(count)}× ${show(first[0])}` };
+    return { grams: q.amount, label: `${round1(q.amount)} g` };
+  }
+  if (first) return { grams: first[1], label: `1× ${show(first[0])}` };
+  return { grams: 100, label: '100 g' };
 }

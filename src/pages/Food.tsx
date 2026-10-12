@@ -74,18 +74,27 @@ const mealLabels: Record<MealType, string> = {
 const mealKeys = Object.keys(mealLabels) as MealType[];
 const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
+function mealByClock(): MealType {
+  const h = Number(new Intl.DateTimeFormat('en-GB', { hour: '2-digit', hour12: false, timeZone: 'America/Sao_Paulo' }).format(new Date())) % 24;
+  if (h >= 5 && h < 10) return 'breakfast';
+  if (h >= 10 && h < 15) return 'lunch';
+  if (h >= 15 && h < 18) return 'snack';
+  if (h >= 18 && h < 23) return 'dinner';
+  return 'other';
+}
+
 const blankFood = (date: string): FoodForm => ({
   date,
-  meal: '',
+  meal: mealByClock(),
   name: '',
   portion: '',
-  quantity: '',
+  quantity: '1',
   calories: '',
   proteins: '',
   carbohydrates: '',
   fats: '',
   fiber: '',
-  nutritionSource: '',
+  nutritionSource: 'user-estimated',
 });
 
 function foodToForm(entry: FoodEntry): FoodForm {
@@ -209,6 +218,7 @@ export function FoodTracking() {
   const [waterForm, setWaterForm] = useState<WaterForm>({ date: todayInSaoPaulo(), volumeMl: '' });
   const [waterError, setWaterError] = useState<{ date?: string; volumeMl?: string }>({});
   const [busy, setBusy] = useState(false);
+  const [manualOpen, setManualOpen] = useState(false);
 
   const entriesForDate = useMemo(
     () => data.foodEntries.filter((e) => e.date === selectedDate),
@@ -278,7 +288,10 @@ export function FoodTracking() {
     event.preventDefault();
     const errs = validateFood(foodForm);
     setFoodErrors(errs);
-    if (Object.keys(errs).length) return;
+    if (Object.keys(errs).length) {
+      if (!editingFood) setFoodFeedback({ kind: 'error', message: 'Digite o que você comeu na busca acima ou preencha os valores à mão.' });
+      return;
+    }
     const input = foodInput(foodForm);
     await run(
       async () => {
@@ -293,6 +306,8 @@ export function FoodTracking() {
       'Não foi possível salvar o alimento.',
     );
   }
+
+  const hiddenErrors = (['name', 'portion', 'quantity', 'calories', 'proteins', 'carbohydrates', 'fats', 'fiber', 'nutritionSource'] as const).some((k) => foodErrors[k]);
 
   const preview = useMemo(() => {
     const kcalPortion = decimalIsValid(foodForm.calories) ? parseDecimal(foodForm.calories) : 0;
@@ -485,6 +500,23 @@ export function FoodTracking() {
                   {mealKeys.map((m) => <option key={m} value={m}>{mealLabels[m]}</option>)}
                 </select>
               </Field>
+            </div>
+            <p className="ft-preview" aria-live="polite">
+              <strong>Este lançamento: {decimalText(preview.thisKcal)} kcal</strong>
+              <span>
+                Total do dia com ele: {decimalText(preview.dayTotal)} kcal
+                {preview.goal !== null && (preview.goal - preview.dayTotal >= 0
+                  ? ` · faltam ${decimalText(preview.goal - preview.dayTotal)} kcal para a meta de ${decimalText(preview.goal)}`
+                  : ` · ${decimalText(preview.dayTotal - preview.goal)} kcal acima da meta de ${decimalText(preview.goal)}`)}
+              </span>
+            </p>
+            <details
+              className="ft-manual"
+              open={Boolean(editingFood) || manualOpen || hiddenErrors}
+              onToggle={(e) => setManualOpen((e.currentTarget as HTMLDetailsElement).open)}
+            >
+              <summary>{editingFood ? 'Valores do lançamento' : 'Preencher à mão ou ajustar valores'}</summary>
+              <div className="ft-form-grid">
               <Field id="food-name" label="Alimento" className="ft-field" error={foodErrors.name}>
                 <input id="food-name" className="input" maxLength={120} autoComplete="off" placeholder="Nome do alimento" value={foodForm.name} onChange={setFood('name')} />
               </Field>
@@ -494,7 +526,7 @@ export function FoodTracking() {
               <Field id="food-quantity" label="Quantidade de porções" className="ft-field" error={foodErrors.quantity} hint="Vírgula decimal é aceita.">
                 <input id="food-quantity" className="input" type="text" inputMode="decimal" maxLength={24} value={foodForm.quantity} onChange={setFood('quantity')} />
               </Field>
-            </div>
+              </div>
             <fieldset className="ft-nutrients">
               <legend>Informações por porção</legend>
               <p>Informe os valores que você conhece ou estime-os. Zero também é válido.</p>
@@ -506,15 +538,6 @@ export function FoodTracking() {
                 ))}
               </div>
             </fieldset>
-            <p className="ft-preview" aria-live="polite">
-              <strong>Este lançamento: {decimalText(preview.thisKcal)} kcal</strong>
-              <span>
-                Total do dia com ele: {decimalText(preview.dayTotal)} kcal
-                {preview.goal !== null && (preview.goal - preview.dayTotal >= 0
-                  ? ` · faltam ${decimalText(preview.goal - preview.dayTotal)} kcal para a meta de ${decimalText(preview.goal)}`
-                  : ` · ${decimalText(preview.dayTotal - preview.goal)} kcal acima da meta de ${decimalText(preview.goal)}`)}
-              </span>
-            </p>
             <Field id="food-source" label="Como você informou esses valores?" className="ft-field ft-source-field" error={foodErrors.nutritionSource} hint="O aplicativo não verifica nem recomenda valores nutricionais.">
               <select id="food-source" className="input ft-select" value={foodForm.nutritionSource} onChange={setFood('nutritionSource')}>
                 <option value="">Escolha uma opção</option>
@@ -522,6 +545,7 @@ export function FoodTracking() {
                 <option value="user-estimated">Estimados por mim</option>
               </select>
             </Field>
+            </details>
             <div className="ft-form-actions">
               <Button type="submit" disabled={busy}>
                 <Save aria-hidden="true" /> {editingFood ? 'Salvar alterações' : 'Registrar alimento'}

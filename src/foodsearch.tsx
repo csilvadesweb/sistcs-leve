@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
-import { lookupBarcode, normalize, scale, searchLocal, searchOpenFoodFacts, type FoodPer100 } from './foods-br';
+import { gramsFor, lookupBarcode, normalize, parseQuery, scale, searchLocal, searchOpenFoodFacts, type FoodPer100 } from './foods-br';
 
 export interface PickedFood {
   name: string;
@@ -66,8 +66,8 @@ const GRAM_CHIPS = [50, 100, 150, 200, 300];
 
 export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   const [query, setQuery] = useState('');
-  const [grams, setGrams] = useState('100');
-  const [selected, setSelected] = useState<FoodPer100 | null>(null);
+  const [manualPick, setManualPick] = useState<FoodPer100 | null>(null);
+  const [gramsText, setGramsText] = useState<string | null>(null);
   const [online, setOnline] = useState<FoodPer100[]>([]);
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
   const [message, setMessage] = useState('');
@@ -78,25 +78,31 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   onPickRef.current = onPick;
   useEffect(() => () => abort.current?.abort(), []);
 
-  const local = searchLocal(query);
-  const gramsOk = decimalIsValid(grams, false) && parseDecimal(grams) <= 5000;
-  const g = gramsOk ? parseDecimal(grams) : 0;
-  const calc = selected && gramsOk ? scale(selected, g) : null;
+  // Tudo é derivado do que foi digitado: "2 ovos", "150 g de arroz", "1 colher de sopa de azeite".
+  const parsed = parseQuery(query);
+  const matches = parsed.name ? searchLocal(parsed.name, 6) : [];
+  const food = manualPick ?? matches[0] ?? null;
+  const auto = food ? gramsFor(food, parsed) : null;
+  const typedOk = gramsText !== null && decimalIsValid(gramsText, false) && parseDecimal(gramsText) <= 5000;
+  const grams = gramsText !== null ? (typedOk ? parseDecimal(gramsText) : 0) : auto?.grams ?? 0;
+  const gramsOk = grams > 0 && grams <= 5000;
+  const label = gramsText !== null || !auto ? `${decimalText(grams)} g` : `${auto.label} (${decimalText(Math.round(grams * 10) / 10)} g)`;
+  const calc = food && gramsOk ? scale(food, grams) : null;
 
-  // Cálculo automático: sempre que o alimento ou a quantidade mudam, os campos do formulário são recalculados.
+  // Cálculo automático: preenche o formulário toda vez que o alimento ou a quantidade mudam.
   useEffect(() => {
-    if (!selected || !gramsOk) return;
+    if (!food || !gramsOk) return;
     onPickRef.current({
-      name: selected.brand ? `${selected.name} (${selected.brand})` : selected.name,
-      portion: `${decimalText(g)} g`,
-      nutrients: scale(selected, g),
+      name: food.brand ? `${food.name} (${food.brand})` : food.name,
+      portion: label,
+      nutrients: scale(food, grams),
     });
-  }, [selected, gramsOk, g]);
+  }, [food, gramsOk, grams, label]);
 
-  // Busca de produtos embalados automática enquanto a pessoa digita (a lista local aparece na hora).
+  // Produtos embalados: busca automática enquanto a pessoa digita.
   useEffect(() => {
-    if (selected) return;
-    if (normalize(query).length < 3) {
+    if (manualPick) return;
+    if (normalize(parsed.name).length < 3) {
       setOnline([]);
       setStatus('idle');
       return;
@@ -107,7 +113,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
       abort.current = ctl;
       setStatus('loading');
       try {
-        setOnline(await searchOpenFoodFacts(query, ctl.signal));
+        setOnline(await searchOpenFoodFacts(parsed.name, ctl.signal));
         setStatus('done');
       } catch {
         if (!ctl.signal.aborted) {
@@ -115,17 +121,17 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           setStatus('error');
         }
       }
-    }, 600);
+    }, 700);
     return () => {
       window.clearTimeout(timer);
       ctl.abort();
     };
-  }, [query, selected]);
+  }, [parsed.name, manualPick]);
 
   function choose(f: FoodPer100) {
-    setSelected(f);
+    setManualPick(f);
+    setGramsText(null);
     setMessage('');
-    if (!decimalIsValid(grams, false)) setGrams('100');
   }
 
   async function byCode(raw: string) {
@@ -140,11 +146,11 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
     try {
       const f = await lookupBarcode(c, ctl.signal);
       if (!f) {
-        setOnline([]);
         setStatus('done');
-        return setMessage('Produto não encontrado. Você pode preencher os valores à mão.');
+        return setMessage('Produto não encontrado. Tente buscar pelo nome.');
       }
       choose(f);
+      setQuery(f.name);
       setStatus('done');
     } catch (e) {
       if (ctl.signal.aborted) return;
@@ -153,38 +159,66 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
     }
   }
 
+  const others = [...matches.filter((m) => m !== food), ...online.filter((o) => o !== food)];
   const row = (f: FoodPer100, key: string) => (
     <li key={key} className="fs-row">
       <div>
         <strong>{f.name}</strong>
-        <span>{f.brand ? `${f.brand} · ` : ''}{decimalText(f.kcal)} kcal · P {decimalText(f.protein)} · C {decimalText(f.carbs)} · G {decimalText(f.fat)} <em>(por 100 g)</em></span>
+        <span>{f.brand ? `${f.brand} · ` : ''}{decimalText(f.kcal)} kcal por 100 g</span>
       </div>
-      <Button variant="outline" size="sm" onClick={() => choose(f)}>Selecionar</Button>
+      <Button variant="outline" size="sm" onClick={() => choose(f)}>Usar</Button>
     </li>
   );
 
   return (
     <div className="fs-box">
       <div className="fs-head">
-        <h4><Search size={15} aria-hidden="true" /> Buscar alimento</h4>
-        <p>Digite o nome, escolha o alimento e informe a quantidade: as calorias e os nutrientes são calculados sozinhos.</p>
+        <h4><Search size={15} aria-hidden="true" /> O que você comeu?</h4>
+        <p>Digite do seu jeito, como “2 ovos”, “150 g de arroz” ou “1 banana”. O app encontra o alimento e calcula tudo sozinho.</p>
+      </div>
+      <div className="fs-bar" role="search">
+        <label className="sr-only" htmlFor="fs-q">O que você comeu</label>
+        <input
+          id="fs-q"
+          className="input fs-main"
+          type="search"
+          placeholder="Ex.: 2 ovos, 150 g de arroz, 1 banana…"
+          value={query}
+          onChange={(e) => { setQuery(e.target.value); setManualPick(null); setGramsText(null); }}
+          autoComplete="off"
+          autoFocus
+        />
+      </div>
+      <div className="fs-bar">
+        <label className="sr-only" htmlFor="fs-code">Código de barras</label>
+        <input id="fs-code" className="input" inputMode="numeric" maxLength={14} placeholder="Ou o código de barras (EAN)" value={code} onChange={(e) => setCode(e.target.value)} />
+        <Button variant="outline" size="sm" onClick={() => byCode(code)} disabled={status === 'loading'}>Consultar</Button>
+        <Button variant="outline" size="sm" onClick={() => setScanning((v) => !v)}><ScanBarcode aria-hidden="true" /> {scanning ? 'Parar' : 'Ler com a câmera'}</Button>
+      </div>
+      {scanning && <BarcodeScanner onCode={(c) => { setCode(c); void byCode(c); }} onClose={() => setScanning(false)} />}
+
+      <div aria-live="polite">
+        {message && <p className={status === 'error' ? 'field-error' : 'field-hint'}>{message}</p>}
+        {status === 'loading' && <p className="field-hint">Buscando produtos…</p>}
       </div>
 
-      {selected ? (
+      {food ? (
         <div className="fs-selected">
           <div className="fs-selected-top">
             <div>
-              <strong>{selected.name}</strong>
-              <span>{selected.brand ? `${selected.brand} · ` : ''}{decimalText(selected.kcal)} kcal por 100 g</span>
+              <strong>{food.name}</strong>
+              <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por 100 g{food.origin === 'local' ? ' · valor aproximado' : ''}</span>
             </div>
-            <Button variant="ghost" size="sm" onClick={() => { setSelected(null); setMessage(''); }}><X aria-hidden="true" /> Trocar</Button>
           </div>
-          <label className="fs-g-label" htmlFor="fs-g">Quantidade</label>
+          <label className="fs-g-label" htmlFor="fs-g">Quantidade em gramas</label>
           <div className="fs-grams-row">
-            <div className="fs-grams"><input id="fs-g" className="input" inputMode="decimal" maxLength={6} value={grams} onChange={(e) => setGrams(e.target.value)} aria-invalid={!gramsOk} /><span aria-hidden="true">g</span></div>
+            <div className="fs-grams">
+              <input id="fs-g" className="input" inputMode="decimal" maxLength={6} value={gramsText ?? (gramsOk ? String(Math.round(grams * 10) / 10).replace('.', ',') : '')} onChange={(e) => setGramsText(e.target.value)} aria-invalid={!gramsOk} />
+              <span aria-hidden="true">g</span>
+            </div>
             <div className="fs-chips" role="group" aria-label="Quantidades rápidas">
               {GRAM_CHIPS.map((c) => (
-                <button type="button" key={c} className={`fs-chip ${gramsOk && g === c ? 'on' : ''}`} onClick={() => setGrams(String(c))}>{c} g</button>
+                <button type="button" key={c} className={`fs-chip ${gramsOk && grams === c ? 'on' : ''}`} onClick={() => setGramsText(String(c))}>{c} g</button>
               ))}
             </div>
           </div>
@@ -193,43 +227,18 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
             <p className="fs-calc" aria-live="polite">
               <strong>{decimalText(calc.calories)} kcal</strong>
               <span>Proteínas {decimalText(calc.proteins)} g · Carboidratos {decimalText(calc.carbohydrates)} g · Gorduras {decimalText(calc.fats)} g · Fibras {decimalText(calc.fiber)} g</span>
-              <em>Calculado automaticamente para {decimalText(g)} g e já preenchido abaixo.</em>
+              <em>{label}: calculado automaticamente e já pronto para registrar.</em>
             </p>
           )}
         </div>
       ) : (
+        query.trim() && status !== 'loading' && <p className="field-hint">Nenhum alimento da lista com esse nome{status === 'done' ? ' nem nos produtos embalados' : ''}. Abra “Preencher à mão” abaixo.</p>
+      )}
+
+      {others.length > 0 && (
         <>
-          <div className="fs-bar" role="search">
-            <label className="sr-only" htmlFor="fs-q">Nome do alimento</label>
-            <input id="fs-q" className="input" type="search" placeholder="Ex.: arroz, banana, iogurte…" value={query} onChange={(e) => setQuery(e.target.value)} autoComplete="off" />
-          </div>
-          <div className="fs-bar">
-            <label className="sr-only" htmlFor="fs-code">Código de barras</label>
-            <input id="fs-code" className="input" inputMode="numeric" maxLength={14} placeholder="Código de barras (EAN)" value={code} onChange={(e) => setCode(e.target.value)} />
-            <Button variant="outline" size="sm" onClick={() => byCode(code)} disabled={status === 'loading'}>Consultar</Button>
-            <Button variant="outline" size="sm" onClick={() => setScanning((v) => !v)}><ScanBarcode aria-hidden="true" /> {scanning ? 'Parar' : 'Ler com a câmera'}</Button>
-          </div>
-          {scanning && <BarcodeScanner onCode={(c) => { setCode(c); void byCode(c); }} onClose={() => setScanning(false)} />}
-
-          <div aria-live="polite">
-            {message && <p className={status === 'error' ? 'field-error' : 'field-hint'}>{message}</p>}
-            {status === 'loading' && <p className="field-hint">Buscando produtos…</p>}
-            {status === 'error' && !message && <p className="field-hint">A busca de produtos embalados não respondeu. Os alimentos comuns continuam disponíveis.</p>}
-          </div>
-
-          {local.length > 0 && (
-            <>
-              <p className="fs-group">Alimentos comuns <small>valores aproximados, confira com o rótulo ou seu nutricionista</small></p>
-              <ul className="fs-list">{local.map((f) => row(f, `l-${f.name}`))}</ul>
-            </>
-          )}
-          {status === 'done' && online.length > 0 && (
-            <>
-              <p className="fs-group">Produtos embalados <small>Open Food Facts, dados colaborativos</small></p>
-              <ul className="fs-list">{online.map((f, i) => row(f, `o-${f.code ?? i}`))}</ul>
-            </>
-          )}
-          {status === 'done' && online.length === 0 && local.length === 0 && !message && <p className="field-hint">Nenhum alimento encontrado. Você pode preencher os valores à mão.</p>}
+          <p className="fs-group">{food ? 'Outras opções' : 'Resultados'} <small>toque para trocar</small></p>
+          <ul className="fs-list">{others.slice(0, 12).map((f, i) => row(f, `${f.origin}-${f.code ?? f.name}-${i}`))}</ul>
         </>
       )}
     </div>

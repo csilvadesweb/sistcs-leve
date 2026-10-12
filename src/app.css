@@ -249,3 +249,7 @@ label.btn.is-disabled { opacity: .55; pointer-events: none; }
 .ft-preview { display: grid; gap: 2px; margin: 0; padding: 11px 13px; border-radius: 10px; background: #eef5ec; }
 .ft-preview strong { color: #1f6b3d; font-size: 15px; }
 .ft-preview span { color: #30483c; font-size: 12px; }
+.fs-main { font-size: 16px; min-height: 48px; }
+.ft-manual { border: 1px dashed #cfdccd; border-radius: 12px; padding: 10px 14px; }
+.ft-manual > summary { cursor: pointer; color: #30483c; font-size: 13px; font-weight: 700; min-height: 32px; display: flex; align-items: center; }
+.ft-manual[open] > summary { margin-bottom: 12px; }

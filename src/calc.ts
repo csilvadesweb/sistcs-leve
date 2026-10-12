@@ -61,9 +61,25 @@ export type Estimate =
       waterMl: number;
     };
 
+function parseValidDate(value: string): [number, number, number] | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  const [year, month, day] = value.split('-').map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (
+    !Number.isFinite(date.getTime()) ||
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month - 1 ||
+    date.getUTCDate() !== day
+  ) return null;
+  return [year, month, day];
+}
+
 export function ageFromBirth(birth: string, today: string): number {
-  const [by, bm, bd] = birth.split('-').map(Number);
-  const [ty, tm, td] = today.split('-').map(Number);
+  const birthParts = parseValidDate(birth);
+  const todayParts = parseValidDate(today);
+  if (!birthParts || !todayParts) return Number.NaN;
+  const [by, bm, bd] = birthParts;
+  const [ty, tm, td] = todayParts;
   let age = ty - by;
   if (tm < bm || (tm === bm && td < bd)) age -= 1;
   return age;
@@ -93,6 +109,15 @@ export function estimate(input: EstimateInput, today: string): Estimate {
 
   const weight = input.weightKg as number;
   const height = input.heightCm as number;
+  if (!Number.isFinite(weight) || weight < 20 || weight > 400) {
+    return { ok: false, reason: 'Confira o peso atual (entre 20 e 400 kg).' };
+  }
+  if (!Number.isFinite(height) || height < 50 || height > 260) {
+    return { ok: false, reason: 'Confira a altura (entre 50 e 260 cm).' };
+  }
+  if (!ACTIVITY[input.activity as Activity] || !PRESETS[input.macroPreset]) {
+    return { ok: false, reason: 'Confira o nível de atividade e a distribuição de macronutrientes.' };
+  }
   const bmr = 10 * weight + 6.25 * height - 5 * age + (sex === 'male' ? 5 : -161);
   const tdee = bmr * ACTIVITY[input.activity as Activity].factor;
 

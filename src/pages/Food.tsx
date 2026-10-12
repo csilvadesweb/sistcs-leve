@@ -1,8 +1,9 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import { FoodSearch, type PickedFood } from '../foodsearch';
 import { Link } from 'wouter';
-import { Apple, Check, Droplets, Heart, Pencil, Plus, Save, Trash2, X } from 'lucide-react';
+import { Apple, Check, Copy, Droplets, Heart, Pencil, Plus, Save, Trash2, X } from 'lucide-react';
 import { useAppData } from '../session';
+import { foodEntryToInput } from '../food-actions';
 import {
   calculateFoodEntryNutrient,
   calculateFoodNutrientTotals,
@@ -332,6 +333,18 @@ export function FoodTracking() {
     );
   }
 
+  async function copyFoodEntry(entry: FoodEntry) {
+    if (entry.date === selectedDate && !window.confirm(`Copiar “${entry.name}” novamente para ${formatDate(selectedDate)}?`)) return;
+    await run(
+      async () => {
+        await createFoodEntry(foodEntryToInput(entry, selectedDate));
+        setFoodFeedback({ kind: 'success', message: `“${entry.name}” copiado para ${formatDate(selectedDate)}.` });
+      },
+      (message) => setFoodFeedback({ kind: 'error', message }),
+      'Não foi possível copiar o alimento.',
+    );
+  }
+
   async function toggleFavorite(entry: FoodEntry) {
     const existing = favoriteBySource.get(entry.id);
     await run(
@@ -587,6 +600,9 @@ export function FoodTracking() {
                         </span>
                       </div>
                       <div className="ft-record-actions">
+                        <Button variant="ghost" size="sm" onClick={() => copyFoodEntry(entry)} disabled={busy}>
+                          <Copy aria-hidden="true" /> Copiar para o dia
+                        </Button>
                         <Button variant="ghost" size="sm" onClick={() => toggleFavorite(entry)} disabled={busy} aria-pressed={favoriteBySource.has(entry.id)}>
                           <Heart aria-hidden="true" /> {favoriteBySource.has(entry.id) ? 'Salvo' : 'Favoritar'}
                         </Button>

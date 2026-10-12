@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { gramsFor, lookupBarcode, parseQuery, scale, searchLocal, searchOpenFoodFacts, type FoodPer100 } from './foods-br';
+import { gramsFor, lookupBarcode, parseQuery, scale, searchLocal, searchOpenFoodFacts, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 afterEach(() => vi.unstubAllGlobals());
 
@@ -120,6 +120,31 @@ describe('Open Food Facts — integração externa resiliente', () => {
     }]);
   });
 
+  it('pede páginas sucessivas ao Open Food Facts e informa se há mais resultados', async () => {
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ count: 61, page: 1, page_size: 30, products: [{ code: 'page1', product_name: 'Produto página 1', nutriments: { 'energy-kcal_100g': 100 } }] }) })
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ count: 61, page: 3, page_size: 30, products: [{ code: 'page3', product_name: 'Produto página 3', nutriments: { 'energy-kcal_100g': 120 } }] }) });
+    vi.stubGlobal('fetch', fetchMock);
+    await expect(searchOpenFoodFactsPage('produto paginacao', 1)).resolves.toMatchObject({ foods: [{ code: 'page1' }], hasMore: true });
+    await expect(searchOpenFoodFactsPage('produto paginacao', 3)).resolves.toMatchObject({ foods: [{ code: 'page3' }], hasMore: false });
+    expect(fetchMock.mock.calls[0]?.[0]).toContain('page=1');
+    expect(fetchMock.mock.calls[1]?.[0]).toContain('page=3');
+  });
+  it('usa apenas alimentos USDA com licença pública explícita na base genérica', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        count: 2,
+        foods: [
+          { slug: 'banana-raw', name: 'Banana, raw', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/banana-raw', per_100g: { kcal: 89, protein_g: 1.1, carbs_g: 22.8, fat_g: 0.3, fiber_g: 2.6 } },
+          { slug: 'banana-unverified', name: 'Banana curated', source: 'curated_unverified', values_license: null, per_100g: { kcal: 999, protein_g: 0, carbs_g: 0, fat_g: 0, fiber_g: 0 } },
+        ],
+      }),
+    }));
+    await expect(searchTempoLifeFoods('banana')).resolves.toEqual([expect.objectContaining({
+      name: 'Banana, raw', origin: 'usda', code: 'usda-banana-raw', kcal: 89, protein: 1.1, carbs: 22.8, fat: 0.3, fiber: 2.6, sourceLicense: 'us_public_domain',
+    })]);
+  });
   it('converte energia em kJ para kcal quando o campo direto está ausente', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
       ok: true,

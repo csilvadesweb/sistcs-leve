@@ -1,6 +1,6 @@
 /**
- * Busca de alimentos: TACO 4ª edição (valores por 100 g) + Open Food Facts para produtos embalados.
- * O app sempre deixa a pessoa conferir e ajustar os valores antes de registrar.
+ * Busca de alimentos: TACO 4ª edição, referência USDA SR Legacy licenciada e Open Food Facts para produtos embalados.
+ * A origem/licença dos dados externos é preservada e os valores devem ser conferidos antes de registrar.
  */
 import { TACO } from './foods-taco';
 
@@ -12,7 +12,9 @@ export interface FoodPer100 {
   carbs: number;
   fat: number;
   fiber: number;
-  origin: 'local' | 'off' | 'estimate';
+  origin: 'local' | 'off' | 'estimate' | 'usda';
+  sourceUrl?: string;
+  sourceLicense?: string;
   code?: string;
   /** Medidas caseiras: [nome no singular, gramas]. A primeira é a padrão quando a pessoa digita só um número. */
   units?: Array<[string, number]>;
@@ -167,6 +169,83 @@ export function searchLocal(query: string, limit = 8): FoodPer100[] {
   return hits.sort((a, b) => score(a) - score(b)).slice(0, limit);
 }
 
+/* ---------- Referências genéricas USDA via TempoLife (somente linhas licenciadas) ---------- */
+
+type TempoLifeRow = {
+  slug?: unknown;
+  name?: unknown;
+  source?: unknown;
+  values_license?: unknown;
+  url?: unknown;
+  per_100g?: { kcal?: unknown; protein_g?: unknown; carbs_g?: unknown; fat_g?: unknown; fiber_g?: unknown };
+};
+let tempoFoodsPromise: Promise<FoodPer100[]> | null = null;
+let tempoFoodsExpiresAt = 0;
+const TEMPO_FOODS_TTL_MS = 24 * 60 * 60 * 1000;
+const TEMPO_FOODS_URL = 'https://tempolife.app/datasets/foods.json';
+
+const TEMPO_QUERY_ALIASES: Record<string, string> = {
+  'arroz integral': 'brown rice', 'arroz branco': 'white rice', arroz: 'rice',
+  'carne moida': 'ground beef', 'carne bovina': 'beef', carne: 'beef',
+  'peito de frango': 'chicken breast', frango: 'chicken',
+  'leite integral': 'whole milk', 'leite desnatado': 'skim milk', leite: 'milk',
+  'batata doce': 'sweet potato', batata: 'potato',
+  feijao: 'beans', ovo: 'egg', ovos: 'eggs', pao: 'bread', 'pao integral': 'whole wheat bread',
+  maca: 'apple', banana: 'banana', tomate: 'tomato', cebola: 'onion', cenoura: 'carrot',
+  brocolis: 'broccoli', aveia: 'oats', macarrao: 'pasta', queijo: 'cheese', iogurte: 'yogurt',
+  azeite: 'olive oil', cafe: 'coffee', acucar: 'sugar', mel: 'honey', milho: 'corn',
+  morango: 'strawberry', abacate: 'avocado', manga: 'mango', salmao: 'salmon', atum: 'tuna',
+  peixe: 'fish', amendoim: 'peanuts', castanha: 'nuts', farinha: 'flour',
+};
+
+function tempoQuery(query: string): string {
+  const normalized = normalize(query).replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+  if (TEMPO_QUERY_ALIASES[normalized]) return TEMPO_QUERY_ALIASES[normalized]!;
+  return normalized.split(' ').map((word) => TEMPO_QUERY_ALIASES[word] ?? word).join(' ');
+}
+
+async function loadTempoFoods(): Promise<FoodPer100[]> {
+  if (tempoFoodsPromise && tempoFoodsExpiresAt > Date.now()) return tempoFoodsPromise;
+  tempoFoodsExpiresAt = Date.now() + TEMPO_FOODS_TTL_MS;
+  tempoFoodsPromise = fetch(TEMPO_FOODS_URL, { headers: { Accept: 'application/json' } }).then(async (res) => {
+    if (!res.ok) throw new Error('A base internacional de alimentos está indisponível.');
+    const json = await res.json();
+    const rows = Array.isArray(json.foods) ? json.foods as TempoLifeRow[] : [];
+    return rows.flatMap((row): FoodPer100[] => {
+      // Não usar linhas sem licença explícita: a base de origem mistura registros de licenças diferentes.
+      if (row.source !== 'usda_sr_legacy' || row.values_license !== 'us_public_domain') return [];
+      const name = typeof row.name === 'string' ? row.name.trim() : '';
+      const slug = typeof row.slug === 'string' ? row.slug : '';
+      const n = row.per_100g;
+      const kcal = num(n?.kcal);
+      if (!name || !slug || !n || kcal === null || kcal < 0) return [];
+      return [{
+        name, kcal: round1(kcal), protein: nonNegativeNutrient(n.protein_g),
+        carbs: nonNegativeNutrient(n.carbs_g), fat: nonNegativeNutrient(n.fat_g),
+        fiber: nonNegativeNutrient(n.fiber_g), origin: 'usda', code: `usda-${slug}`,
+        sourceUrl: typeof row.url === 'string' ? row.url : 'https://tempolife.app/',
+        sourceLicense: 'us_public_domain',
+      }];
+    });
+  }).catch((error) => {
+    tempoFoodsPromise = null;
+    tempoFoodsExpiresAt = 0;
+    throw error;
+  });
+  return tempoFoodsPromise;
+}
+
+/** Busca alimentos genéricos de referência; usa apenas valores USDA com licença pública explícita. */
+export async function searchTempoLifeFoods(query: string, limit = 20): Promise<FoodPer100[]> {
+  const translated = tempoQuery(query);
+  const terms = stemAll(translated).split(' ').filter((term) => term && !STOPWORDS.has(term));
+  if (terms.length === 0) return [];
+  const foods = await loadTempoFoods();
+  return foods.filter((food) => {
+    const words = stemAll(`${food.name} ${food.code ?? ''}`).split(' ');
+    return terms.every((term) => words.some((word) => word === term || word.startsWith(term)));
+  }).slice(0, Math.max(1, Math.min(50, limit))).map((food) => ({ ...food }));
+}
 /* ---------- Open Food Facts (produtos embalados, pelo navegador) ---------- */
 
 const OFF = 'https://world.openfoodfacts.org';
@@ -206,33 +285,47 @@ function fromOff(p: any): FoodPer100 | null {
 }
 
 // Cache apenas em memória: reduz chamadas repetidas à API pública sem persistir dados pessoais.
-const OFF_SEARCH_CACHE = new Map<string, { expiresAt: number; foods: FoodPer100[] }>();
+const OFF_SEARCH_CACHE = new Map<string, { expiresAt: number; result: { foods: FoodPer100[]; hasMore: boolean } }>();
 const OFF_SEARCH_CACHE_TTL_MS = 10 * 60 * 1000;
 const OFF_SEARCH_CACHE_MAX = 20;
 
-export async function searchOpenFoodFacts(query: string, signal?: AbortSignal): Promise<FoodPer100[]> {
+export async function searchOpenFoodFactsPage(query: string, page = 1, signal?: AbortSignal): Promise<{ foods: FoodPer100[]; hasMore: boolean }> {
   const normalizedQuery = normalize(query);
-  if (!normalizedQuery || signal?.aborted) return [];
-  const cached = OFF_SEARCH_CACHE.get(normalizedQuery);
-  if (cached && cached.expiresAt > Date.now()) return cached.foods.map((food) => ({ ...food }));
-  if (cached) OFF_SEARCH_CACHE.delete(normalizedQuery);
+  const safePage = Number.isInteger(page) && page > 0 ? page : 1;
+  if (!normalizedQuery || signal?.aborted) return { foods: [], hasMore: false };
+  const cacheKey = `${normalizedQuery}|${safePage}`;
+  const cached = OFF_SEARCH_CACHE.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now()) {
+    return { foods: cached.result.foods.map((food) => ({ ...food })), hasMore: cached.result.hasMore };
+  }
+  if (cached) OFF_SEARCH_CACHE.delete(cacheKey);
 
-  const url = `${OFF}/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=30&lc=pt&cc=br&fields=${FIELDS}`;
+  const url = `${OFF}/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page=${safePage}&page_size=30&lc=pt&cc=br&fields=${FIELDS}`;
   const res = await fetch(url, { signal });
   if (!res.ok) throw new Error('A busca de produtos está indisponível agora.');
   const json = await res.json();
-  const foods = ((json.products ?? []) as any[]).map(fromOff).filter((x): x is FoodPer100 => x !== null);
-  if (signal?.aborted) return [];
+  const products = (json.products ?? []) as any[];
+  const foods = products.map(fromOff).filter((x): x is FoodPer100 => x !== null);
+  const total = num(json.count);
+  const returnedPage = num(json.page) ?? safePage;
+  const pageSize = num(json.page_size) ?? 30;
+  const hasMore = total !== null ? returnedPage * pageSize < total : products.length >= pageSize;
+  if (signal?.aborted) return { foods: [], hasMore: false };
 
-  OFF_SEARCH_CACHE.set(normalizedQuery, { expiresAt: Date.now() + OFF_SEARCH_CACHE_TTL_MS, foods });
+  const result = { foods, hasMore };
+  OFF_SEARCH_CACHE.set(cacheKey, { expiresAt: Date.now() + OFF_SEARCH_CACHE_TTL_MS, result });
   while (OFF_SEARCH_CACHE.size > OFF_SEARCH_CACHE_MAX) {
     const oldestKey = OFF_SEARCH_CACHE.keys().next().value;
     if (oldestKey === undefined) break;
     OFF_SEARCH_CACHE.delete(oldestKey);
   }
-  return foods.map((food) => ({ ...food }));
+  return { foods: foods.map((food) => ({ ...food })), hasMore };
 }
 
+/** Compatibilidade com chamadas existentes: primeira página de produtos. */
+export async function searchOpenFoodFacts(query: string, signal?: AbortSignal): Promise<FoodPer100[]> {
+  return (await searchOpenFoodFactsPage(query, 1, signal)).foods;
+}
 export async function lookupBarcode(code: string, signal?: AbortSignal): Promise<FoodPer100 | null> {
   const res = await fetch(`${OFF}/api/v2/product/${encodeURIComponent(code)}.json?fields=${FIELDS}`, { signal });
   if (res.status === 404) return null;

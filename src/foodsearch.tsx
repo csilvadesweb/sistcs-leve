@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
-import { gramsFor, lookupBarcode, normalize, parseQuery, scale, searchLocal, searchOpenFoodFacts, type FoodPer100 } from './foods-br';
+import { gramsFor, lookupBarcode, normalize, parseQuery, scale, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 export interface PickedFood {
   name: string;
@@ -78,6 +78,10 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   const [manualPick, setManualPick] = useState<FoodPer100 | null>(null);
   const [gramsText, setGramsText] = useState<string | null>(null);
   const [online, setOnline] = useState<FoodPer100[]>([]);
+  const [referenceFoods, setReferenceFoods] = useState<FoodPer100[]>([]);
+  const [onlinePage, setOnlinePage] = useState(1);
+  const [hasMoreOnline, setHasMoreOnline] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
   const [message, setMessage] = useState('');
   const [code, setCode] = useState('');
@@ -117,9 +121,13 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
 
   // Produtos embalados: busca automática enquanto a pessoa digita.
   useEffect(() => {
+    setOnline([]);
+    setReferenceFoods([]);
+    setOnlinePage(1);
+    setHasMoreOnline(false);
+    setLoadingMore(false);
     if (manualPick) return;
     if (normalize(parsed.name).length < 3) {
-      setOnline([]);
       setStatus('idle');
       return;
     }
@@ -129,8 +137,17 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
       abort.current = ctl;
       setStatus('loading');
       try {
-        setOnline(await searchOpenFoodFacts(parsed.name, ctl.signal));
-        setStatus('done');
+        const results = await Promise.allSettled([
+          searchOpenFoodFactsPage(parsed.name, 1, ctl.signal),
+          searchTempoLifeFoods(parsed.name, 20),
+        ]);
+        if (ctl.signal.aborted) return;
+        const productResult = results[0].status === 'fulfilled' ? results[0].value : { foods: [], hasMore: false };
+        const referenceResult = results[1].status === 'fulfilled' ? results[1].value : [];
+        setOnline(productResult.foods);
+        setReferenceFoods(referenceResult);
+        setHasMoreOnline(productResult.hasMore);
+        setStatus(results.every((result) => result.status === 'rejected') ? 'error' : 'done');
       } catch {
         if (!ctl.signal.aborted) {
           setOnline([]);
@@ -143,6 +160,31 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
       ctl.abort();
     };
   }, [parsed.name, manualPick]);
+
+  async function loadMoreOnline() {
+    if (loadingMore || !hasMoreOnline || normalize(parsed.name).length < 3) return;
+    const nextPage = onlinePage + 1;
+    const ctl = new AbortController();
+    abort.current?.abort();
+    abort.current = ctl;
+    setLoadingMore(true);
+    setMessage('');
+    try {
+      const result = await searchOpenFoodFactsPage(parsed.name, nextPage, ctl.signal);
+      if (ctl.signal.aborted) return;
+      setOnline((previous) => {
+        const seen = new Set(previous.map((item) => `${item.code ?? ''}|${normalize(item.name)}|${normalize(item.brand ?? '')}`));
+        const additions = result.foods.filter((item) => !seen.has(`${item.code ?? ''}|${normalize(item.name)}|${normalize(item.brand ?? '')}`));
+        return [...previous, ...additions];
+      });
+      setOnlinePage(nextPage);
+      setHasMoreOnline(result.hasMore);
+    } catch {
+      if (!ctl.signal.aborted) setMessage('Não foi possível carregar mais produtos. Tente novamente.');
+    } finally {
+      if (!ctl.signal.aborted) setLoadingMore(false);
+    }
+  }
 
   function choose(f: FoodPer100) {
     setManualPick(f);
@@ -175,12 +217,13 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
     }
   }
 
-  const others = [...matches.filter((m) => m !== food), ...online.filter((o) => o !== food)];
+  const others = [...matches.filter((m) => m !== food), ...online.filter((o) => o !== food), ...referenceFoods.filter((r) => r !== food)];
   const row = (f: FoodPer100, key: string) => (
     <li key={key} className="fs-row">
       <div>
         <strong>{f.name}</strong>
-        <span>{f.brand ? `${f.brand} · ` : ''}{decimalText(f.kcal)} kcal por 100 g</span>
+        <span>{f.brand ? `${f.brand} · ` : ''}{decimalText(f.kcal)} kcal por 100 g{f.origin === 'usda' ? ' · USDA (referência)' : ''}</span>
+        {f.origin === 'usda' && <a href={f.sourceUrl ?? 'https://tempolife.app/'} target="_blank" rel="noreferrer">Fonte: USDA via TempoLife</a>}
       </div>
       <Button variant="outline" size="sm" onClick={() => choose(f)}>Usar</Button>
     </li>
@@ -223,7 +266,8 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           <div className="fs-selected-top">
             <div>
               <strong>{food.name}</strong>
-              <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por 100 g{food.origin === 'local' ? ' · fonte: TACO (Unicamp)' : food.origin === 'estimate' ? ' · estimativa nutricional' : ''}</span>
+              <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por 100 g{food.origin === 'local' ? ' · fonte: TACO (Unicamp)' : food.origin === 'estimate' ? ' · estimativa nutricional' : food.origin === 'usda' ? ' · USDA SR Legacy via TempoLife (referência internacional)' : ''}</span>
+              {food.origin === 'usda' && <a href={food.sourceUrl ?? 'https://tempolife.app/'} target="_blank" rel="noreferrer">Fonte dos nutrientes: USDA SR Legacy via TempoLife</a>}
             </div>
           </div>
           <label className="fs-g-label" htmlFor="fs-g">Quantidade em gramas</label>
@@ -254,8 +298,15 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
       {others.length > 0 && (
         <>
           <p className="fs-group">{food ? 'Outras opções' : 'Resultados'} <small>toque para trocar</small></p>
-          <ul className="fs-list">{others.slice(0, 12).map((f, i) => row(f, `${f.origin}-${f.code ?? f.name}-${i}`))}</ul>
+          <ul className="fs-list">{others.slice(0, Math.max(onlinePage * 12, referenceFoods.length)).map((f, i) => row(f, `${f.origin}-${f.code ?? f.name}-${i}`))}</ul>
         </>
+      )}
+      {hasMoreOnline && !manualPick && (
+        <div className="fs-more">
+          <Button variant="outline" size="sm" onClick={loadMoreOnline} disabled={loadingMore || status === 'loading'}>
+            {loadingMore ? 'Carregando produtos…' : 'Carregar mais produtos'}
+          </Button>
+        </div>
       )}
     </div>
   );

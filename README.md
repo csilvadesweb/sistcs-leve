@@ -6,7 +6,7 @@ relatórios e uma configuração personalizada que estima suas metas diárias.
 ## Telas
 
 - **Início:** resumo de hoje (calorias com anel de progresso, nutrientes, água, peso, doses) e atalho para configurar.
-- **Exercícios:** diário de atividades, duração e estimativa aproximada de calorias gastas por MET e peso corporal. Requer a migration aditiva `supabase/migrations/20261012_exercise_entries.sql`.
+- **Exercícios:** diário de atividades, duração e estimativa aproximada de calorias gastas por MET e peso corporal. Requer a migration aditiva `supabase/migrations/20261012170000_exercise_entries.sql`. A migration ainda não foi aplicada em produção; não execute `db push` até reconciliar o histórico de migrations documentado em `docs/SUPABASE_MIGRATION_AUDIT_2026-10-12.md`.
 - **Alimentação:** busca de alimentos (lista de comuns no Brasil com valores aproximados + produtos embalados do Open Food Facts), leitura de código de barras pela câmera (Chrome/Android; nos outros navegadores, digite o número), lançamentos por refeição, favoritos, total do dia e **quanto falta (ou passou) para cada meta**; água com meta e copo.
 - **Registros:** peso com gráfico, variação e progresso até o peso desejado.
 - **Registros também tem Antes e depois:** envio de fotos (antes, durante, depois), comparação lado a lado com dias e variação de peso, e galeria.

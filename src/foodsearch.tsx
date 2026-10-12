@@ -137,11 +137,17 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
       abort.current = ctl;
       setStatus('loading');
       try {
-        const result = await searchOpenFoodFactsPage(parsed.name, 1, ctl.signal);
+        const results = await Promise.allSettled([
+          searchOpenFoodFactsPage(parsed.name, 1, ctl.signal),
+          searchTempoLifeFoods(parsed.name, 20),
+        ]);
         if (ctl.signal.aborted) return;
-        setOnline(result.foods);
-        setHasMoreOnline(result.hasMore);
-        setStatus('done');
+        const productResult = results[0].status === 'fulfilled' ? results[0].value : { foods: [], hasMore: false };
+        const referenceResult = results[1].status === 'fulfilled' ? results[1].value : [];
+        setOnline(productResult.foods);
+        setReferenceFoods(referenceResult);
+        setHasMoreOnline(productResult.hasMore);
+        setStatus(results.every((result) => result.status === 'rejected') ? 'error' : 'done');
       } catch {
         if (!ctl.signal.aborted) {
           setOnline([]);

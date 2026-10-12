@@ -19,6 +19,12 @@ export interface UserProfile {
   weeklyRateKg?: number | null;
   macroPreset?: MacroPreset;
   avatarPath?: string | null;
+  navigationPreferences?: NavigationPreferences;
+}
+
+export interface NavigationPreferences {
+  order: string[];
+  labels: Record<string, string>;
 }
 
 export type PhotoKind = 'before' | 'progress' | 'after';
@@ -182,6 +188,7 @@ function profileFromRow(r: Row): UserProfile {
     weeklyRateKg: numOrNull(r.weekly_rate_kg),
     macroPreset: (r.macro_preset ?? 'balanced') as MacroPreset,
     avatarPath: r.avatar_path ?? null,
+    navigationPreferences: normalizeNavigationPreferences(r.navigation_preferences),
   };
 }
 
@@ -322,6 +329,15 @@ export async function loadAll(userId: string): Promise<AppData> {
 }
 
 /* ---------- perfil ---------- */
+
+export async function saveNavigationPreferences(userId: string, preferences: NavigationPreferences) {
+  const safePreferences = normalizeNavigationPreferences(preferences);
+  const { error } = await supabase.from('profiles').upsert(
+    { user_id: userId, navigation_preferences: safePreferences },
+    { onConflict: 'user_id' },
+  );
+  fail(error, 'Não foi possível salvar a personalização do menu.');
+}
 
 export async function saveUserProfile(userId: string, p: UserProfile) {
   const { error } = await supabase.from('profiles').upsert(

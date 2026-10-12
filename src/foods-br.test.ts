@@ -66,6 +66,17 @@ describe('searchLocal — catálogo TACO', () => {
     expect(searchLocal('maca').length).toBeGreaterThan(0);
   });
 
+  it('encontra strogonoff de carne bovina e identifica que os nutrientes são estimados', () => {
+    const results = searchLocal('strogonoff de carne');
+    expect(results).toContainEqual(expect.objectContaining({
+      name: 'Strogonoff de carne bovina (estimativa caseira)',
+      origin: 'estimate',
+      kcal: 170,
+      code: 'recipe-strogonoff-carne',
+    }));
+    expect(searchLocal('strogonoff')).toContainEqual(expect.objectContaining({ code: 'recipe-strogonoff-carne' }));
+  });
+
   it('mantém resultados determinísticos e respeita o limite solicitado', () => {
     expect(searchLocal('arroz', 5)).toEqual(searchLocal('arroz', 5));
     expect(searchLocal('arroz', 5)).toHaveLength(5);

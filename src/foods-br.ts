@@ -160,7 +160,8 @@ const TBCA_FOODS: FoodPer100[] = [
 ];
 
 export const FOODS_BR: FoodPer100[] = [
-  ...TBCA_FOODS,\n  ...[...TACO, ...EXTRA].map(([id, name, kcal, protein, carbs, fat, fiber]) => ({
+  ...TBCA_FOODS,
+  ...[...TACO, ...EXTRA].map(([id, name, kcal, protein, carbs, fat, fiber]) => ({
   name,
   kcal,
   protein,

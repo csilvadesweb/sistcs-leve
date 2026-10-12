@@ -128,9 +128,24 @@ const stemAll = (text: string) => normalize(text).replace(/[^a-z0-9\s]/g, ' ').s
 
 const STOPWORDS = new Set(['de', 'da', 'do', 'com', 'e', 'em', 'a', 'o']);
 const ALIASES: Record<string, string> = {
-  mucarela: 'mussarela', mozarela: 'mussarela', muzzarela: 'mussarela', mingnon: 'mignon',
-  coca: 'refrigerante cola', pepsi: 'refrigerante cola', guarana: 'refrigerante guarana',
-  frango: 'frango', bolacha: 'biscoito', macaxeira: 'mandioca', aipim: 'mandioca', pao: 'pao',
+  // Variações ortográficas e nomes populares usados no Brasil.
+  mucarela: 'mussarela', mozarela: 'mussarela', muzzarela: 'mussarela',
+  mingnon: 'mignon', file: 'file', bolacha: 'biscoito',
+  macaxeira: 'mandioca', aipim: 'mandioca', macarrao: 'macarrao',
+  pao: 'pao', ovo: 'ovo', ovos: 'ovo',
+  // Nomes comuns de produtos e preparações.
+  coca: 'refrigerante cola', coca-cola: 'refrigerante cola',
+  pepsi: 'refrigerante cola', guarana: 'refrigerante guarana',
+  refri: 'refrigerante', refrigerante: 'refrigerante',
+  carne moida: 'carne bovina moida', patinho: 'carne bovina',
+  acem: 'carne bovina', alcatra: 'carne bovina', contra-file: 'carne bovina',
+  peito frango: 'frango peito', file frango: 'frango file',
+  batata inglesa: 'batata inglesa', batata baroa: 'batata baroa',
+  mandioca cozida: 'mandioca cozida', feijao preto: 'feijao preto',
+  feijao carioca: 'feijao carioca', arroz branco: 'arroz tipo 1 cozido',
+  arroz integral: 'arroz integral cozido', leite integral: 'leite integral',
+  leite desnatado: 'leite desnatado', iogurte natural: 'iogurte natural',
+  queijo minas: 'queijo minas', queijo prato: 'queijo prato',
 };
 
 export function searchLocal(query: string, limit = 8): FoodPer100[] {

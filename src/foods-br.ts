@@ -1,6 +1,6 @@
 /**
- * Busca de alimentos: TACO 4ª edição (valores por 100 g) + Open Food Facts para produtos embalados.
- * O app sempre deixa a pessoa conferir e ajustar os valores antes de registrar.
+ * Busca de alimentos: TACO 4ª edição, referência USDA SR Legacy licenciada e Open Food Facts para produtos embalados.
+ * A origem/licença dos dados externos é preservada e os valores devem ser conferidos antes de registrar.
  */
 import { TACO } from './foods-taco';
 

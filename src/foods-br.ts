@@ -128,10 +128,10 @@ const stemAll = (text: string) => normalize(text).replace(/[^a-z0-9\s]/g, ' ').s
 
 const STOPWORDS = new Set(['de', 'da', 'do', 'com', 'e', 'em', 'a', 'o']);
 const ALIASES: Record<string, string> = {
-  // Variações ortográficas e nomes populares usados no Brasil.
-  mucarela: 'mussarela', mozarela: 'mussarela', muzzarela: 'mussarela',
-  mingnon: 'mignon', bolacha: 'biscoito',
-  macaxeira: 'mandioca', aipim: 'mandioca',
+  // Mantém os atalhos existentes e amplia nomes populares/variações ortográficas.
+  mucarela: 'mussarela', mozarela: 'mussarela', muzzarela: 'mussarela', mingnon: 'mignon',
+  coca: 'refrigerante cola', pepsi: 'refrigerante cola', guarana: 'refrigerante guarana',
+  frango: 'frango', bolacha: 'biscoito', macaxeira: 'mandioca', aipim: 'mandioca', pao: 'pao',
   refri: 'refrigerante',
 };
 

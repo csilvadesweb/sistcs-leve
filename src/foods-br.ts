@@ -206,31 +206,45 @@ function fromOff(p: any): FoodPer100 | null {
 }
 
 // Cache apenas em memória: reduz chamadas repetidas à API pública sem persistir dados pessoais.
-const OFF_SEARCH_CACHE = new Map<string, { expiresAt: number; foods: FoodPer100[] }>();
+const OFF_SEARCH_CACHE = new Map<string, { expiresAt: number; result: { foods: FoodPer100[]; hasMore: boolean } }>();
 const OFF_SEARCH_CACHE_TTL_MS = 10 * 60 * 1000;
-const OFF_SEARCH_CACHE_MAX = 20;
-
-export async function searchOpenFoodFacts(query: string, signal?: AbortSignal): Promise<FoodPer100[]> {
+consexport async function searchOpenFoodFactsPage(query: string, page = 1, signal?: AbortSignal): Promise<{ foods: FoodPer100[]; hasMore: boolean }> {
   const normalizedQuery = normalize(query);
-  if (!normalizedQuery || signal?.aborted) return [];
-  const cached = OFF_SEARCH_CACHE.get(normalizedQuery);
-  if (cached && cached.expiresAt > Date.now()) return cached.foods.map((food) => ({ ...food }));
-  if (cached) OFF_SEARCH_CACHE.delete(normalizedQuery);
+  const safePage = Number.isInteger(page) && page > 0 ? page : 1;
+  if (!normalizedQuery || signal?.aborted) return { foods: [], hasMore: false };
+  const cacheKey = `${normalizedQuery}|${safePage}`;
+  const cached = OFF_SEARCH_CACHE.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now()) {
+    return { foods: cached.result.foods.map((food) => ({ ...food })), hasMore: cached.result.hasMore };
+  }
+  if (cached) OFF_SEARCH_CACHE.delete(cacheKey);
 
-  const url = `${OFF}/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=30&lc=pt&cc=br&fields=${FIELDS}`;
+  const url = `${OFF}/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page=${safePage}&page_size=30&lc=pt&cc=br&fields=${FIELDS}`;
   const res = await fetch(url, { signal });
   if (!res.ok) throw new Error('A busca de produtos está indisponível agora.');
   const json = await res.json();
-  const foods = ((json.products ?? []) as any[]).map(fromOff).filter((x): x is FoodPer100 => x !== null);
-  if (signal?.aborted) return [];
+  const products = (json.products ?? []) as any[];
+  const foods = products.map(fromOff).filter((x): x is FoodPer100 => x !== null);
+  const total = num(json.count);
+  const returnedPage = num(json.page) ?? safePage;
+  const pageSize = num(json.page_size) ?? 30;
+  const hasMore = total !== null ? returnedPage * pageSize < total : products.length >= pageSize;
+  if (signal?.aborted) return { foods: [], hasMore: false };
 
-  OFF_SEARCH_CACHE.set(normalizedQuery, { expiresAt: Date.now() + OFF_SEARCH_CACHE_TTL_MS, foods });
+  const result = { foods, hasMore };
+  OFF_SEARCH_CACHE.set(cacheKey, { expiresAt: Date.now() + OFF_SEARCH_CACHE_TTL_MS, result });
   while (OFF_SEARCH_CACHE.size > OFF_SEARCH_CACHE_MAX) {
     const oldestKey = OFF_SEARCH_CACHE.keys().next().value;
     if (oldestKey === undefined) break;
     OFF_SEARCH_CACHE.delete(oldestKey);
   }
-  return foods.map((food) => ({ ...food }));
+  return { foods: foods.map((food) => ({ ...food })), hasMore };
+}
+
+/** Compatibilidade com chamadas existentes: primeira página de produtos. */
+export async function searchOpenFoodFacts(query: string, signal?: AbortSignal): Promise<FoodPer100[]> {
+  return (await searchOpenFoodFactsPage(query, 1, signal)).foods;
+}p((food) => ({ ...food }));
 }
 
 export async function lookupBarcode(code: string, signal?: AbortSignal): Promise<FoodPer100 | null> {

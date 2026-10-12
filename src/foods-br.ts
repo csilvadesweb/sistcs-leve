@@ -12,7 +12,7 @@ export interface FoodPer100 {
   carbs: number;
   fat: number;
   fiber: number;
-  origin: 'local' | 'off';
+  origin: 'local' | 'off' | 'estimate';
   code?: string;
   /** Medidas caseiras: [nome no singular, gramas]. A primeira é a padrão quando a pessoa digita só um número. */
   units?: Array<[string, number]>;
@@ -95,7 +95,8 @@ const PRIORITY = new Set([
 ]);
 const PRIORITY_ORDER = [...PRIORITY];
 
-export const FOODS_BR: FoodPer100[] = [...TACO, ...EXTRA].map(([id, name, kcal, protein, carbs, fat, fiber]) => ({
+export const FOODS_BR: FoodPer100[] = [
+  ...[...TACO, ...EXTRA].map(([id, name, kcal, protein, carbs, fat, fiber]) => ({
   name,
   kcal,
   protein,
@@ -105,7 +106,19 @@ export const FOODS_BR: FoodPer100[] = [...TACO, ...EXTRA].map(([id, name, kcal, 
   origin: 'local' as const,
   code: `taco-${id}`,
   units: UNITS[id],
-}));
+  })),
+  {
+  // Estimativa genérica de receita caseira; não é um valor oficial da TACO nem substitui rótulo/receita específica.
+  name: 'Strogonoff de carne bovina (estimativa caseira)',
+  kcal: 170,
+  protein: 12,
+  carbs: 5,
+  fat: 12,
+  fiber: 0,
+  origin: 'estimate',
+  code: 'recipe-strogonoff-carne',
+  units: [['porção', 150]],
+}];
 
 const RANK = new Map<string, number>(
   [...TACO, ...EXTRA].map(([id], i) => [`taco-${id}`, PRIORITY_ORDER.includes(id) ? PRIORITY_ORDER.indexOf(id) - 1000 : i]),

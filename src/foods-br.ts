@@ -12,7 +12,7 @@ export interface FoodPer100 {
   carbs: number;
   fat: number;
   fiber: number;
-  origin: 'local' | 'off' | 'estimate' | 'usda';
+  origin: 'local' | 'off' | 'estimate' | 'usda' | 'tbca';
   sourceUrl?: string;
   sourceLicense?: string;
   code?: string;
@@ -107,7 +107,60 @@ const PRIORITY = new Set([
 ]);
 const PRIORITY_ORDER = [...PRIORITY];
 
+/** Itens adicionais conferidos na TBCA/USP. Nutrientes por 100 g; receitas variam conforme preparo. */
+const TBCA_FOODS: FoodPer100[] = [
+  {
+    name: 'Pão de queijo, industrializado, assado (TBCA)',
+    kcal: 381, protein: 7.18, carbs: 35.6, fat: 23.4, fiber: 0.61,
+    origin: 'tbca', code: 'tbca-BRC0123B',
+    sourceUrl: 'https://www.tbca.net.br/base-dados/composicao_alimentos.php',
+    sourceLicense: 'TBCA/USP — valores consultados na base pública',
+    units: [['unidade pequena', 25], ['porção (2 unidades)', 50]],
+  },
+  {
+    name: 'Feijoada com sal (TBCA)',
+    kcal: 131, protein: 9.55, carbs: 11.7, fat: 6.21, fiber: 5.13,
+    origin: 'tbca', code: 'tbca-BRC0198T',
+    sourceUrl: 'https://www.tbca.net.br/base-dados/composicao_alimentos.php',
+    sourceLicense: 'TBCA/USP — valores consultados na base pública',
+    units: [['concha', 150], ['porção', 150]],
+  },
+  {
+    name: 'Brigadeiro caseiro com chocolate (TBCA)',
+    kcal: 387, protein: 6.31, carbs: 57.8, fat: 14.6, fiber: 0.61,
+    origin: 'tbca', code: 'tbca-BRC0190K',
+    sourceUrl: 'https://www.tbca.net.br/base-dados/composicao_alimentos.php',
+    sourceLicense: 'TBCA/USP — valores consultados na base pública',
+    units: [['unidade', 25], ['porção (4 unidades pequenas)', 100]],
+  },
+  {
+    name: 'Tapioca sem manteiga e sem recheio (TBCA)',
+    kcal: 289, protein: 0.36, carbs: 71.9, fat: 0, fiber: 0.2,
+    origin: 'tbca', code: 'tbca-BRC0906B',
+    sourceUrl: 'https://www.tbca.net.br/base-dados/composicao_alimentos.php',
+    sourceLicense: 'TBCA/USP — valores consultados na base pública',
+    units: [['unidade média', 60]],
+  },
+  {
+    name: 'Cuscuz de tapioca com coco e leite de coco (TBCA)',
+    kcal: 166, protein: 0.83, carbs: 31.8, fat: 4.02, fiber: 0.52,
+    origin: 'tbca', code: 'tbca-BRC0997B',
+    sourceUrl: 'https://www.tbca.net.br/base-dados/composicao_alimentos.php',
+    sourceLicense: 'TBCA/USP — valores consultados na base pública',
+    units: [['pedaço médio', 70]],
+  },
+  {
+    name: 'Moqueca baiana de peixe (TBCA)',
+    kcal: 132, protein: 18.6, carbs: 2.83, fat: 4.56, fiber: 1.37,
+    origin: 'tbca', code: 'tbca-BRC0121E',
+    sourceUrl: 'https://www.tbca.net.br/base-dados/composicao_alimentos.php',
+    sourceLicense: 'TBCA/USP — valores consultados na base pública',
+    units: [['concha cheia', 60], ['concha rasa', 45]],
+  },
+];
+
 export const FOODS_BR: FoodPer100[] = [
+  ...TBCA_FOODS,
   ...[...TACO, ...EXTRA].map(([id, name, kcal, protein, carbs, fat, fiber]) => ({
   name,
   kcal,
@@ -207,7 +260,11 @@ const ALIASES: Record<string, string> = {
 
 export function searchLocal(query: string, limit = 8): FoodPer100[] {
   // A TACO usa o nome oficial “Castanha-do-Brasil”; aceitar também o nome popular.
-  const searchableQuery = normalize(query).replace(/castanha[ -]+do[ -]+par[aá]/g, 'castanha do brasil');
+  const searchableQuery = normalize(query)
+    .replace(/castanha[ -]+do[ -]+par[aá]/g, 'castanha do brasil')
+    .replace(/\bpao de sal\b/g, 'pao frances')
+    .replace(/\bjerimum\b/g, 'abobora')
+    .replace(/\bbergamota\b/g, 'tangerina');
   const terms = stemAll(searchableQuery)
     .split(' ')
     .filter((t) => t && !STOPWORDS.has(t))

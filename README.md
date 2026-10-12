@@ -7,7 +7,7 @@ relatórios e uma configuração personalizada que estima suas metas diárias.
 
 - **Início:** resumo de hoje (calorias com anel de progresso, nutrientes, água, peso, doses) e atalho para configurar.
 - **Exercícios:** diário de atividades, duração e estimativa aproximada de calorias gastas por MET e peso corporal. Requer a migration aditiva `supabase/migrations/20261012170000_exercise_entries.sql`. A migration ainda não foi aplicada em produção; não execute `db push` até reconciliar o histórico de migrations documentado em `docs/SUPABASE_MIGRATION_AUDIT_2026-10-12.md`.
-- **Alimentação:** busca de alimentos com TACO (referências brasileiras), produtos embalados do Open Food Facts e referências genéricas USDA SR Legacy via TempoLife (somente registros com licença pública explícita, com atribuição à fonte; nomes podem aparecer em inglês), leitura de código de barras pela câmera (Chrome/Android; nos outros navegadores, digite o número), lançamentos por refeição, favoritos, total do dia e **quanto falta (ou passou) para cada meta**; água com meta e copo.
+- **Alimentação:** busca de alimentos com TACO e TBCA/USP (referências brasileiras), produtos embalados do Open Food Facts e referências genéricas USDA SR Legacy via TempoLife (somente registros com licença pública explícita, com atribuição à fonte; nomes podem aparecer em inglês), leitura de código de barras pela câmera (Chrome/Android; nos outros navegadores, digite o número), lançamentos por refeição, favoritos, total do dia e **quanto falta (ou passou) para cada meta**; água com meta e copo.
 - **Registros:** peso com gráfico, variação e progresso até o peso desejado.
 - **Registros também tem Antes e depois:** envio de fotos (antes, durante, depois), comparação lado a lado com dias e variação de peso, e galeria.
 - **Jejum:** protocolos 12:12 a 20:4 (ou 12 a 24 h), cronômetro com início e término, horas jejuadas, fase estimada, histórico, estatísticas e benefícios com avisos de saúde. Não é indicado para menores de 18 anos.
@@ -74,5 +74,8 @@ projeto já são o padrão. A chave publicável pode ficar no front-end. Nunca c
 - `src/charts.tsx`: gráficos em SVG, sem biblioteca.
 
 ## Base de alimentos
+
+A busca local também inclui entradas selecionadas da TBCA/USP para preparações brasileiras ausentes na lista local anterior. A auditoria de cobertura, as fontes e os próximos grupos a revisar estão em `docs/auditoria-cobertura-alimentar-brasileira-2026-10.md`. A cobertura não é exaustiva: marcas e receitas regionais variam continuamente; as novas entradas preservam códigos e atribuição da fonte.
+
 
 A busca local usa a **TACO – Tabela Brasileira de Composição de Alimentos, 4ª edição ampliada e revisada** (NEPA/UNICAMP, 2011), com 590 alimentos (`src/foods-taco.ts`, valores por 100 g). Valores "traço" foram tratados como zero. Leite integral e desnatado não têm energia na tabela e usam referências aproximadas. Medidas caseiras (ovo, fatia, colher, copo, concha…) e a prioridade dos resultados ficam em `src/foods-br.ts`. Produtos embalados vêm do Open Food Facts. Cite a fonte ao divulgar o app e confirme os termos de uso com o NEPA se for comercializá-lo.

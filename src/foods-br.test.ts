@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { gramsFor, lookupBarcode, parseQuery, scale, searchLocal, searchOpenFoodFacts, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { FOODS_BR, gramsFor, lookupBarcode, parseQuery, scale, searchLocal, searchOpenFoodFacts, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 afterEach(() => vi.unstubAllGlobals());
 
@@ -66,6 +66,12 @@ describe('searchLocal — catálogo TACO', () => {
     expect(searchLocal('maca').length).toBeGreaterThan(0);
   });
 
+  it('reconhece nomes regionais comuns para alimentos já cadastrados', () => {
+    expect(searchLocal('pão de sal', 20).some((food) => /pão, trigo, francês/i.test(food.name))).toBe(true);
+    expect(searchLocal('jerimum', 20).some((food) => /abóbora/i.test(food.name))).toBe(true);
+    expect(searchLocal('bergamota', 20).some((food) => /tangerina/i.test(food.name))).toBe(true);
+  });
+
   it('encontra strogonoff de carne bovina e identifica que os nutrientes são estimados', () => {
     const results = searchLocal('strogonoff de carne');
     expect(results).toContainEqual(expect.objectContaining({
@@ -87,6 +93,29 @@ describe('searchLocal — catálogo TACO', () => {
   });
 });
 
+
+describe('Cobertura de alimentos brasileiros — referências TBCA', () => {
+  it.each([
+    ['pão de queijo', 'tbca-BRC0123B'],
+    ['feijoada', 'tbca-BRC0198T'],
+    ['brigadeiro', 'tbca-BRC0190K'],
+    ['tapioca sem manteiga', 'tbca-BRC0906B'],
+    ['cuscuz de tapioca', 'tbca-BRC0997B'],
+    ['moqueca baiana de peixe', 'tbca-BRC0121E'],
+  ])('encontra %s na base local com referência TBCA', (query, code) => {
+    expect(searchLocal(query, 20)).toContainEqual(expect.objectContaining({ code, origin: 'tbca' }));
+  });
+
+  it('marca todas as novas entradas com fonte e valores nutricionais válidos', () => {
+    const additions = FOODS_BR.filter((food) => food.origin === 'tbca');
+    expect(additions.length).toBeGreaterThanOrEqual(6);
+    for (const food of additions) {
+      expect(food.sourceUrl).toContain('tbca.net.br');
+      expect(food.sourceLicense).toContain('TBCA/USP');
+      expect([food.kcal, food.protein, food.carbs, food.fat, food.fiber].every((n) => Number.isFinite(n) && n >= 0)).toBe(true);
+    }
+  });
+});
 
 describe('Open Food Facts — integração externa resiliente', () => {
   it('mapeia produto e nutrientes para valores por 100 g', async () => {

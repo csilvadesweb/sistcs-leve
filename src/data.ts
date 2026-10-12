@@ -290,14 +290,14 @@ function fail(error: { message: string } | null, fallback: string): asserts erro
 export async function loadAll(userId: string): Promise<AppData> {
   const [profile, foods, favorites, water, weights, meds, medLogs, photos, fasts] = await Promise.all([
     supabase.from('profiles').select('*').eq('user_id', userId).maybeSingle(),
-    supabase.from('food_entries').select('*').order('created_at', { ascending: false }),
-    supabase.from('favorite_foods').select('*').order('created_at', { ascending: false }),
-    supabase.from('water_entries').select('*').order('created_at', { ascending: false }),
-    supabase.from('weight_entries').select('*').order('entry_date', { ascending: false }).order('created_at', { ascending: false }),
-    supabase.from('medications').select('*').order('created_at', { ascending: true }),
-    supabase.from('medication_logs').select('*').order('log_date', { ascending: false }),
-    supabase.from('progress_photos').select('*').order('taken_on', { ascending: false }).order('created_at', { ascending: false }),
-    supabase.from('fasting_entries').select('*').order('started_at', { ascending: false }).limit(200),
+    supabase.from('food_entries').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
+    supabase.from('favorite_foods').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
+    supabase.from('water_entries').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
+    supabase.from('weight_entries').select('*').eq('user_id', userId).order('entry_date', { ascending: false }).order('created_at', { ascending: false }),
+    supabase.from('medications').select('*').eq('user_id', userId).order('created_at', { ascending: true }),
+    supabase.from('medication_logs').select('*').eq('user_id', userId).order('log_date', { ascending: false }),
+    supabase.from('progress_photos').select('*').eq('user_id', userId).order('taken_on', { ascending: false }).order('created_at', { ascending: false }),
+    supabase.from('fasting_entries').select('*').eq('user_id', userId).order('started_at', { ascending: false }).limit(200),
   ]);
   fail(profile.error, 'Não foi possível carregar o perfil.');
   fail(foods.error, 'Não foi possível carregar os alimentos.');

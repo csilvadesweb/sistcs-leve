@@ -53,6 +53,8 @@ describe('persistência — falha segura ao carregar dados', () => {
     expect(result.medicationLogs).toEqual([]);
     expect(result.progressPhotos).toEqual([]);
     expect(result.fastingEntries).toEqual([]);
+    expect(result.exerciseEntries).toEqual([]);
+    expect(result.exerciseTrackingAvailable).toBe(true);
   });
 
   it('filtra todas as leituras pelo identificador da conta solicitada', async () => {
@@ -68,6 +70,7 @@ describe('persistência — falha segura ao carregar dados', () => {
       'medication_logs',
       'progress_photos',
       'fasting_entries',
+      'exercise_entries',
     ];
     expect(fromMock.mock.calls.map(([table]) => table)).toEqual(expectedTables);
 

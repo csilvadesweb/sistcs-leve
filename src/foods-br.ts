@@ -46,9 +46,26 @@ const UNITS: Record<number, Array<[string, number]>> = {
   140: U(['unidade', 20]), 141: U(['unidade', 20]),
   157: U(['unidade', 100]),
   163: U(['unidade', 300]),
-  177: U(['banana', 70]), 178: U(['banana', 70]), 179: U(['banana', 80]), 180: U(['banana', 60]), 182: U(['banana', 70]),
+  // Frutas: medidas por unidade aproximada da parte comestível; o peso varia com o tamanho.
+  163: U(['unidade', 200], ['fatia', 50]), // abacate
+  164: U(['fatia', 80]), 165: U(['porção', 100]),
+  166: U(['unidade', 100]), 169: U(['unidade', 12]), 170: U(['porção', 100]),
+  171: U(['unidade', 60]), 172: U(['unidade', 65]), 173: U(['unidade', 60]),
+  177: U(['banana', 70]), 178: U(['banana', 70]), 179: U(['banana', 80]), 180: U(['banana', 60]), 181: U(['banana', 80]), 182: U(['banana', 70]),
+  184: U(['unidade', 100]), 189: U(['unidade', 100]), 190: U(['unidade', 90]),
+  194: U(['unidade', 50]), 195: U(['unidade', 50]), 196: U(['fatia', 80]),
   197: U(['unidade', 170]), 200: U(['unidade', 170]),
-  208: U(['unidade', 140]), 214: U(['unidade', 140]), 216: U(['unidade', 140]),
+  204: U(['bagos', 20]), 206: U(['unidade', 5]), 207: U(['unidade', 75]),
+  208: U(['unidade', 140]), 210: U(['unidade', 130]), 212: U(['unidade', 130]), 214: U(['unidade', 140]), 216: U(['unidade', 140]),
+  220: U(['unidade', 60]), 221: U(['maçã', 130]), 222: U(['maçã', 130]),
+  223: U(['porção', 30]), 225: U(['fatia', 150]), 226: U(['unidade', 300]),
+  228: U(['unidade', 200]), 229: U(['unidade', 200]), 231: U(['unidade', 200]),
+  232: U(['unidade', 50]), 233: U(['porção', 100]), 234: U(['copo', 200]),
+  235: U(['fatia', 200]), 236: U(['fatia', 100]), 239: U(['unidade', 12]),
+  240: U(['unidade', 30]), 244: U(['unidade', 100]), 245: U(['unidade', 100]),
+  247: U(['unidade', 10]), 248: U(['porção', 100]), 251: U(['unidade', 90]), 252: U(['copo', 200]),
+  256: U(['cacho pequeno', 100]), 257: U(['cacho pequeno', 100]), 258: U(['copo', 200]),
+  478: U(['copo', 200]), 590: U(['fatia', 40]),
   209: COPO, 215: COPO, 217: COPO,
   220: U(['unidade', 60]),
   221: U(['maca', 130]), 222: U(['maca', 130]),
@@ -128,6 +145,36 @@ const RANK = new Map<string, number>(
 
 export function normalize(text: string) {
   return text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+}
+
+/** Medidas caseiras aproximadas para frutas de bases externas que não trazem unidades. */
+export function householdUnitsForFood(food: FoodPer100): Array<[string, number]> {
+  if (food.units?.length) return food.units;
+  const name = normalize(food.name);
+  if (/ameixa.*(seca|desidratada)|prune|dried plum/.test(name)) return [['unidade', 9.5], ['porção (5 unidades)', 47.5]];
+  if (/banana/.test(name)) return [['unidade', 80]];
+  if (/maca|apple/.test(name)) return [['unidade', 180]];
+  if (/pera|pear/.test(name)) return [['unidade', 170]];
+  if (/laranja|orange/.test(name)) return [['unidade', 130]];
+  if (/tangerina|mexerica|mandarin|clementine/.test(name)) return [['unidade', 80]];
+  if (/kiwi/.test(name)) return [['unidade', 75]];
+  if (/morango|strawberr/.test(name)) return [['unidade', 12], ['porção (10 unidades)', 120]];
+  if (/uva|grape/.test(name)) return [['unidade', 5], ['cacho pequeno', 100]];
+  if (/damasco.*(seco|desidratado)|dried apricot/.test(name)) return [['unidade', 8]];
+  if (/tâmara|tamara|date, dried|dried date/.test(name)) return [['unidade', 8]];
+  if (/figo.*(seco|desidratado)|dried fig/.test(name)) return [['unidade', 20]];
+  if (/abacate|avocado/.test(name)) return [['unidade', 200], ['fatia', 50]];
+  if (/abacaxi|pineapple/.test(name)) return [['fatia', 80], ['porção', 100]];
+  if (/mam[aã]o|papaya/.test(name)) return [['fatia', 150], ['unidade pequena', 300]];
+  if (/manga|mango/.test(name)) return [['unidade', 200], ['fatia', 40]];
+  if (/melancia|watermelon/.test(name)) return [['fatia', 200]];
+  if (/mel[aã]o|cantaloupe|honeydew/.test(name)) return [['fatia', 100]];
+  if (/p[eê]ssego|peach|nectarine/.test(name)) return [['unidade', 150]];
+  if (/ameixa|plum/.test(name)) return [['unidade', 65]];
+  if (/goiaba|guava/.test(name)) return [['unidade', 170]];
+  if (/cereja|cherr/.test(name)) return [['unidade', 8]];
+  if (/framboesa|raspberr|amora|blackberr|blueberr|mirtilo/.test(name)) return [['unidade', 3], ['porção', 100]];
+  return [];
 }
 
 /** Singular simples para casar "ovos" com "ovo", "pães" com "pão", "colheres" com "colher". */

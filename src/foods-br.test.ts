@@ -1,5 +1,7 @@
-import { describe, expect, it } from 'vitest';
-import { gramsFor, parseQuery, scale, searchLocal, type FoodPer100 } from './foods-br';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { gramsFor, lookupBarcode, parseQuery, scale, searchLocal, searchOpenFoodFacts, type FoodPer100 } from './foods-br';
+
+afterEach(() => vi.unstubAllGlobals());
 
 const sample: FoodPer100 = {
   name: 'Alimento de teste',
@@ -71,5 +73,76 @@ describe('searchLocal — catálogo TACO', () => {
 
   it('retorna lista vazia para consulta sem termos úteis', () => {
     expect(searchLocal('   ')).toEqual([]);
+  });
+});
+
+
+describe('Open Food Facts — integração externa resiliente', () => {
+  it('mapeia produto e nutrientes para valores por 100 g', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        products: [{
+          code: '78912345',
+          product_name: 'Biscoito de teste',
+          brands: 'Marca A, Marca B',
+          nutriments: {
+            'energy-kcal_100g': 250,
+            proteins_100g: 5,
+            carbohydrates_100g: 40,
+            fat_100g: 8,
+            fiber_100g: 2,
+          },
+        }],
+      }),
+    }));
+    await expect(searchOpenFoodFacts('biscoito')).resolves.toMatchObject([{
+      name: 'Biscoito de teste',
+      brand: 'Marca A',
+      kcal: 250,
+      protein: 5,
+      carbs: 40,
+      fat: 8,
+      fiber: 2,
+      origin: 'off',
+      code: '78912345',
+    }]);
+  });
+
+  it('converte energia em kJ para kcal quando o campo direto está ausente', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        products: [{
+          product_name: 'Produto com energia em kJ',
+          nutriments: { energy_100g: 418.4 },
+        }],
+      }),
+    }));
+    const results = await searchOpenFoodFacts('produto');
+    expect(results[0]?.kcal).toBe(100);
+  });
+
+  it('ignora produtos sem nome ou sem energia válida', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        products: [
+          { product_name: 'Sem energia', nutriments: { proteins_100g: 3 } },
+          { nutriments: { 'energy-kcal_100g': 120 } },
+        ],
+      }),
+    }));
+    await expect(searchOpenFoodFacts('produto')).resolves.toEqual([]);
+  });
+
+  it('retorna null quando o código de barras não existe', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ status: 404, ok: false }));
+    await expect(lookupBarcode('00000000')).resolves.toBeNull();
+  });
+
+  it('expõe erro controlado quando a busca externa falha', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 503 }));
+    await expect(searchOpenFoodFacts('produto')).rejects.toThrow('A busca de produtos está indisponível agora.');
   });
 });

@@ -223,6 +223,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
       <div>
         <strong>{f.name}</strong>
         <span>{f.brand ? `${f.brand} · ` : ''}{decimalText(f.kcal)} kcal por 100 g{f.origin === 'usda' ? ' · USDA (referência)' : ''}</span>
+        {f.origin === 'usda' && <a href={f.sourceUrl ?? 'https://tempolife.app/'} target="_blank" rel="noreferrer">Fonte: USDA via TempoLife</a>}
       </div>
       <Button variant="outline" size="sm" onClick={() => choose(f)}>Usar</Button>
     </li>
@@ -266,6 +267,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
             <div>
               <strong>{food.name}</strong>
               <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por 100 g{food.origin === 'local' ? ' · fonte: TACO (Unicamp)' : food.origin === 'estimate' ? ' · estimativa nutricional' : food.origin === 'usda' ? ' · USDA SR Legacy via TempoLife (referência internacional)' : ''}</span>
+              {food.origin === 'usda' && <a href={food.sourceUrl ?? 'https://tempolife.app/'} target="_blank" rel="noreferrer">Fonte dos nutrientes: USDA SR Legacy via TempoLife</a>}
             </div>
           </div>
           <label className="fs-g-label" htmlFor="fs-g">Quantidade em gramas</label>

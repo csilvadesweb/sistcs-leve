@@ -278,3 +278,25 @@ label.btn.is-disabled { opacity: .55; pointer-events: none; }
 .exercise-actions{display:flex;flex-wrap:wrap;gap:8px}.exercise-actions button{min-height:40px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--text);font:inherit;cursor:pointer}
 .exercise-notice{border:1px solid rgba(232,196,108,.35);border-radius:14px;padding:14px 16px;background:rgba(232,196,108,.08);color:var(--text-2);line-height:1.5}
 @media(max-width:640px){.exercise-form-grid,.exercise-summary{grid-template-columns:1fr}.exercise-entry{align-items:flex-start;flex-direction:column}}
+
+
+/* Lembretes de água */
+.water-reminder-card { margin-top: 18px; padding: 24px; border: 1px solid var(--line-soft); border-radius: 24px; background: var(--surface); box-shadow: var(--shadow); }
+.water-reminder-heading { display: flex; align-items: flex-start; gap: 14px; }
+.water-reminder-icon { display: grid; flex: 0 0 auto; width: 48px; height: 48px; place-items: center; border-radius: 15px; color: var(--water, #2c93a8); background: rgba(92, 201, 220, .12); }
+.water-reminder-heading h2 { margin: 0; color: var(--text); font-size: 22px; letter-spacing: -.03em; }
+.water-reminder-heading p:last-child { margin: 6px 0 0; color: var(--text-2); font-size: 15px; line-height: 1.5; }
+.water-reminder-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+.water-reminder-field { display: grid; gap: 7px; min-width: 0; }
+.water-reminder-field label { color: var(--text); font-size: 14px; font-weight: 650; }
+.water-reminder-field select, .water-reminder-field input { width: 100%; min-width: 0; min-height: 48px; padding: 0 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); color: var(--text); font: inherit; font-size: 16px; }
+.water-reminder-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 18px; }
+.water-reminder-actions .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.water-reminder-status { color: var(--text-2); font-size: 14px; }
+.water-reminder-note, .water-reminder-feedback { margin: 14px 0 0; color: var(--text-3); font-size: 14px; line-height: 1.55; }
+.water-reminder-feedback { color: var(--text-2); }
+@media (max-width: 640px) {
+  .water-reminder-card { padding: 18px; }
+  .water-reminder-controls { grid-template-columns: 1fr; }
+  .water-reminder-heading h2 { font-size: 20px; }
+}

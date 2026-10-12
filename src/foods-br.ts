@@ -165,20 +165,28 @@ function num(v: unknown): number | null {
 }
 const round1 = (n: number) => Math.round(n * 10) / 10;
 
+function nonNegativeNutrient(value: unknown): number {
+  const parsed = num(value);
+  // Catálogos colaborativos podem conter valores negativos inválidos; nunca os propagamos ao diário.
+  return parsed === null || parsed < 0 ? 0 : round1(parsed);
+}
+
 function fromOff(p: any): FoodPer100 | null {
   const n = p?.nutriments;
   const name = String(p?.product_name ?? '').trim();
   if (!n || !name) return null;
-  const kcal = num(n['energy-kcal_100g']) ?? (num(n['energy_100g']) !== null ? num(n['energy_100g'])! / 4.184 : null);
-  if (kcal === null) return null;
+  const directKcal = num(n['energy-kcal_100g']);
+  const energyKj = num(n['energy_100g']);
+  const kcal = directKcal !== null ? directKcal : energyKj !== null ? energyKj / 4.184 : null;
+  if (kcal === null || kcal < 0) return null;
   return {
     name,
     brand: String(p.brands ?? '').split(',')[0]?.trim() || undefined,
     kcal: round1(kcal),
-    protein: round1(num(n['proteins_100g']) ?? 0),
-    carbs: round1(num(n['carbohydrates_100g']) ?? 0),
-    fat: round1(num(n['fat_100g']) ?? 0),
-    fiber: round1(num(n['fiber_100g']) ?? 0),
+    protein: nonNegativeNutrient(n['proteins_100g']),
+    carbs: nonNegativeNutrient(n['carbohydrates_100g']),
+    fat: nonNegativeNutrient(n['fat_100g']),
+    fiber: nonNegativeNutrient(n['fiber_100g']),
     origin: 'off',
     code: p.code ? String(p.code) : undefined,
   };

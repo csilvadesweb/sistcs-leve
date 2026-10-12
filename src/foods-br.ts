@@ -95,7 +95,8 @@ const PRIORITY = new Set([
 ]);
 const PRIORITY_ORDER = [...PRIORITY];
 
-export const FOODS_BR: FoodPer100[] = [...TACO, ...EXTRA].map(([id, name, kcal, protein, carbs, fat, fiber]) => ({
+export const FOODS_BR: FoodPer100[] = [
+  ...[...TACO, ...EXTRA].map(([id, name, kcal, protein, carbs, fat, fiber]) => ({
   name,
   kcal,
   protein,
@@ -105,7 +106,8 @@ export const FOODS_BR: FoodPer100[] = [...TACO, ...EXTRA].map(([id, name, kcal, 
   origin: 'local' as const,
   code: `taco-${id}`,
   units: UNITS[id],
-}), {
+  })),
+  {
   // Estimativa genérica de receita caseira; não é um valor oficial da TACO nem substitui rótulo/receita específica.
   name: 'Strogonoff de carne bovina (estimativa caseira)',
   kcal: 170,

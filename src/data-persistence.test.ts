@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const { fromMock, results } = vi.hoisted(() => ({
   fromMock: vi.fn(),
-  results: {} as Record<string, { data: unknown; error: { message: string } | null }>,
+  results: {} as Record<string, { data: unknown; error: { message: string; code?: string } | null }>,
 }));
 
 vi.mock('./supabase', () => ({
@@ -55,6 +55,21 @@ describe('persistência — falha segura ao carregar dados', () => {
     expect(result.fastingEntries).toEqual([]);
     expect(result.exerciseEntries).toEqual([]);
     expect(result.exerciseTrackingAvailable).toBe(true);
+  });
+
+  it('mantém o app carregável quando a migration opcional de exercícios ainda não existe', async () => {
+    results.exercise_entries = { data: null, error: { code: '42P01', message: 'relation exercise_entries does not exist' } };
+
+    const result = await loadAll('user-a');
+
+    expect(result.exerciseEntries).toEqual([]);
+    expect(result.exerciseTrackingAvailable).toBe(false);
+  });
+
+  it('não esconde falhas de permissão ou rede no diário de exercícios', async () => {
+    results.exercise_entries = { data: null, error: { code: '42501', message: 'permission denied' } };
+
+    await expect(loadAll('user-a')).rejects.toThrow('Não foi possível carregar os exercícios. (permission denied)');
   });
 
   it('filtra todas as leituras pelo identificador da conta solicitada', async () => {

@@ -1,29 +1,44 @@
 # Auditoria SISTCS Leve — 2026-10-12
 
 ## Escopo e limites
-Auditoria estática preliminar do repositório. Nenhuma alteração foi feita em `main`, na aplicação publicada ou no banco de dados. O acesso ao projeto Supabase `yzcmxdbnitturlbozvqu` ainda precisa ser validado; portanto, as políticas e o estado aplicado do banco não são considerados verificados. Build, typecheck e testes automatizados não foram executados neste ambiente.
+Auditoria estática do repositório e consultas somente de leitura no Supabase correto `yzcmxdbnitturlbozvqu`. Nenhuma alteração foi feita em `main`, na aplicação publicada, na configuração de Auth ou no banco de dados. Typecheck, build e testes automatizados não foram executados neste ambiente; portanto, não há alegação de que passaram.
+
+## Verificações realizadas
+
+- Projeto Supabase responde e está em estado `ACTIVE_HEALTHY`.
+- O banco registra 5 migrations aplicadas; o repositório inspecionado tem `supabase/schema.sql`, mas não expõe diretório `supabase/migrations/`. Há risco de divergência futura entre histórico do banco e versionamento. Não executar `schema.sql` como migração.
+- As 9 tabelas públicas encontradas estão com RLS habilitado.
+- As políticas consultadas de `public` limitam operações a `auth.uid() = user_id` para o usuário autenticado.
+- Os buckets `avatars` e `progress-photos` têm políticas de leitura/escrita por pasta correspondente ao usuário autenticado; não foi feito teste de upload/download com usuários reais.
+- Restrições compostas existentes impedem vincular favoritos e registros de medicamento a itens de outro usuário.
+- Consultas agregadas de integridade retornaram zero ocorrências para: favoritos ligados a registros de outro usuário, logs de medicamento ligados a medicamento de outro usuário, intervalos de jejum inválidos, registros alimentares com valores negativos/inválidos, pesos fora da faixa e tipos de foto inválidos. São verificações pontuais, não prova de ausência de todo tipo de erro.
+- Advisor de segurança: proteção contra senhas comprometidas desativada.
+- Advisors de desempenho: 2 chaves estrangeiras sem índice de cobertura e 1 índice reportado como não utilizado. Não remover índices sem avaliar consultas e carga real.
 
 ## Achados para correção/validação
 
-1. **Recuperação de senha** — a inspeção de `src/session.tsx` não identificou fluxo de recuperação por email e definição de nova senha. Confirmar os fluxos existentes antes de implementar, incluindo links expirados/inválidos e redirects permitidos.
-2. **Mensagens de autenticação** — `translateAuthError()` pode incluir a mensagem técnica original em erros não mapeados. Preferir mensagem pública genérica e logging protegido sem dados sensíveis.
-3. **Nutrientes ausentes** — em `src/foods-br.ts`, a função `fromOff` aparenta converter nutrientes ausentes em zero. Preservar a diferença entre valor zero confirmado e dado indisponível.
-4. **Isolamento de registros de medicamentos** — o schema de referência `supabase/schema.sql` mostra RLS de `medication_logs` por `user_id`; é necessário verificar se também é garantido que `medication_id` pertence ao mesmo usuário. Não executar o schema de referência como migração.
-5. **Cobertura de testes** — `package.json` não aparenta declarar script de testes automatizados. Confirmar os scripts completos e adicionar cobertura apropriada antes de alterações funcionais.
+1. **Recuperação de senha** — a inspeção de `src/session.tsx` não identificou fluxo de recuperação por email e definição de nova senha. Confirmar fluxos existentes antes de implementar, incluindo links expirados/inválidos e redirects permitidos.
+2. **Mensagens de autenticação** — `translateAuthError()` pode incluir mensagem técnica original em erros não mapeados. Preferir mensagem pública genérica e logging protegido sem dados sensíveis.
+3. **Nutrientes ausentes** — em `src/foods-br.ts`, `fromOff` aparenta converter nutrientes ausentes em zero. Preservar a diferença entre valor zero confirmado e dado indisponível; requer decisão de UX/modelo de dados antes de alterar.
+4. **Histórico de migrations** — banco tem 5 migrations registradas, mas o repositório consultado não tem `supabase/migrations/`. Reconciliar o histórico de forma aditiva e revisada, sem editar/reaplicar migrations já aplicadas e sem recriar o banco.
+5. **Cobertura de testes** — `package.json` não declara script de testes automatizados. Adicionar cobertura para autenticação, nutrientes ausentes, cálculos e isolamento de usuário antes de alterações funcionais.
 6. **Cálculos de saúde** — testar casos-limite e regressões de `src/calc.ts` antes de mudar fórmulas ou metas.
-7. **PWA/offline** — verificar em navegador/dispositivo real atualização do service worker, uso offline e que dados de saúde autenticados não sejam armazenados em cache público.
-8. **RLS e estado real** — políticas, permissões e migrations aplicadas não foram confirmadas no projeto remoto. Fazer leitura somente depois que o acesso ao projeto correto estiver autorizado.
+7. **PWA/offline** — revisar o service worker gerado e testar em navegador/dispositivo real; confirmar que dados de saúde autenticados não sejam armazenados em cache público.
+8. **Proteção de senhas comprometidas** — recomendação do advisor. Não ativada nesta auditoria porque pode alterar a experiência de cadastro/login e requer validação/planejamento.
 
-## Plano de validação
-- Instalar dependências e executar typecheck, lint (se configurado), build e testes.
-- Criar testes de regressão para autenticação, importação de nutrientes ausentes, cálculos e isolamento por usuário.
-- Validar migrations aplicadas e advisors de segurança/performance no projeto Supabase correto.
-- Revisar alterações na branch isolada e abrir PR para revisão; não publicar automaticamente.
-- Fazer smoke tests de produção sem alterar dados reais, depois de revisar os resultados.
+## Próximas etapas recomendadas
+
+1. Executar `npm ci`, typecheck e build num ambiente com dependências e rede disponíveis; registrar resultados reais.
+2. Criar testes de regressão para autenticação, importação de nutrientes ausentes, cálculos e isolamento por usuário.
+3. Reconciliar as 5 migrations aplicadas com arquivos versionados em branch separada, sem aplicar alterações remotas.
+4. Corrigir os dois avisos de índices somente após verificar planos/consultas; não remover o índice não utilizado sem evidência.
+5. Planejar a ativação da proteção contra senhas comprometidas após avaliar impacto em usuários.
+6. Revisar alterações por PR antes de qualquer publicação; smoke tests de produção devem evitar alterar dados reais.
 
 ## Status
-- Branch de auditoria isolada: criada.
-- Código funcional: ainda não alterado.
-- Banco de dados: nenhuma alteração.
-- Produção/Cloudflare: nenhuma alteração.
-- Testes: pendentes de execução.
+- Acesso ao projeto Supabase correto: confirmado.
+- Consultas remotas: somente leitura.
+- Código funcional: não alterado.
+- `main`: não alterada.
+- Banco, Auth, Storage e produção: nenhuma alteração.
+- Build/typecheck/testes: pendentes de execução.

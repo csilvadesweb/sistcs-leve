@@ -45,7 +45,6 @@ const UNITS: Record<number, Array<[string, number]>> = {
   109: U(['unidade', 80]), 110: U(['unidade', 80]),
   140: U(['unidade', 20]), 141: U(['unidade', 20]),
   157: U(['unidade', 100]),
-  163: U(['unidade', 300]),
   // Frutas: medidas por unidade aproximada da parte comestível; o peso varia com o tamanho.
   163: U(['unidade', 200], ['fatia', 50]), // abacate
   164: U(['fatia', 80]), 165: U(['porção', 100]),
@@ -67,12 +66,6 @@ const UNITS: Record<number, Array<[string, number]>> = {
   256: U(['cacho pequeno', 100]), 257: U(['cacho pequeno', 100]), 258: U(['copo', 200]),
   478: U(['copo', 200]), 590: U(['fatia', 40]),
   209: COPO, 215: COPO, 217: COPO,
-  220: U(['unidade', 60]),
-  221: U(['maca', 130]), 222: U(['maca', 130]),
-  225: U(['fatia', 150]), 226: U(['fatia', 120]),
-  228: U(['unidade', 250]), 229: U(['unidade', 250]), 231: U(['unidade', 250]),
-  235: U(['fatia', 200]), 236: U(['fatia', 100]),
-  256: U(['cacho', 100]), 257: U(['cacho', 100]),
   260: U(['colher de sopa', 13], ['colher de cha', 4]),
   261: U(['colher de cha', 5], ['colher de sopa', 15]), 262: U(['colher de cha', 5], ['colher de sopa', 15]),
   263: U(['colher de cha', 5], ['colher de sopa', 15]), 264: U(['colher de cha', 5], ['colher de sopa', 15]),

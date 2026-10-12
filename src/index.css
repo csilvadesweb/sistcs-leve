@@ -515,3 +515,30 @@ body::before, body::after { display: none; }
   .ft-week-day span { font-size: 11px; }
   .ft-week-day strong { font-size: 16px; }
 }
+
+
+/* Diário alimentar: hierarquia compacta inspirada em diários de calorias móveis */
+.ft-diary-heading { min-height: 0; margin: 0 0 16px; padding: 0; }
+.ft-diary-heading h1 { margin: 0; color: #26352b; font-family: var(--app-font-sans); font-size: clamp(26px, 6vw, 34px); font-weight: 750; letter-spacing: -.035em; line-height: 1.15; }
+.ft-diary-heading p { margin: 6px 0 0; color: #68766c; font-size: 14px; }
+.ft-calorie-overview { margin: 0 0 18px; padding: 18px; border: 1px solid #e0e9e2; border-radius: 14px; background: #fff; box-shadow: 0 2px 8px rgba(27, 68, 40, .035); }
+.ft-calorie-main { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; color: #526459; }
+.ft-calorie-main span { flex-basis: 100%; font-size: 13px; font-weight: 600; }
+.ft-calorie-main strong { color: #218548; font-size: 36px; font-weight: 750; letter-spacing: -.04em; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.ft-calorie-main small, .ft-calorie-stats small { font-size: 12px; font-weight: 500; }
+.ft-calorie-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.ft-calorie-stats > div { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; border-radius: 10px; background: #f5f8f5; }
+.ft-calorie-stats span { color: #66756a; font-size: 12px; }
+.ft-calorie-stats strong { color: #26352b; font-size: 16px; font-variant-numeric: tabular-nums; }
+.ft-calorie-progress { height: 6px; margin-top: 14px; overflow: hidden; border-radius: 999px; background: #e8efe9; }
+.ft-calorie-progress span { display: block; height: 100%; border-radius: inherit; background: #218548; transition: width .2s ease; }
+.ft-meal-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.ft-meal-heading > div { display: flex; flex-direction: column; gap: 3px; }
+.ft-meal-heading > div > span { color: #68766c; font-size: 12px; font-variant-numeric: tabular-nums; }
+.ft-meal-heading .btn { flex: 0 0 auto; min-height: 34px; padding: 6px 10px; font-size: 12px; }
+.ft-meal-group { background: #fff; }
+@media (max-width: 420px) {
+  .ft-calorie-overview { padding: 15px; }
+  .ft-calorie-main strong { font-size: 32px; }
+  .ft-meal-heading .btn { gap: 4px; padding: 6px 8px; }
+}

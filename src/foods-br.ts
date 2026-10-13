@@ -363,6 +363,8 @@ function fromOff(p: any): FoodPer100 | null {
     fiber: nonNegativeNutrient(n['fiber_100g']),
     origin: 'off',
     code: p.code ? String(p.code) : undefined,
+    sourceUrl: p.code ? `${OFF}/product/${encodeURIComponent(String(p.code))}` : OFF,
+    sourceLicense: 'ODbL-1.0; Database Contents License',
   };
 }
 

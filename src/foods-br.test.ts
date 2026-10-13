@@ -140,6 +140,23 @@ describe('Cobertura de preparações brasileiras estimadas', () => {
   });
 });
 
+
+describe('origem dos valores aproximados', () => {
+  it.each([
+    ['leite integral', 'estimate-extra-9001'],
+    ['leite desnatado', 'estimate-extra-9002'],
+  ])('não classifica %s como registro da TACO', (query, code) => {
+    expect(searchLocal(query, 20)).toContainEqual(expect.objectContaining({
+      code,
+      origin: 'estimate',
+    }));
+    expect(FOODS_BR).toContainEqual(expect.objectContaining({
+      code,
+      origin: 'estimate',
+    }));
+  });
+});
+
 describe('normalização de entrada do código de barras', () => {
   it('preserva até 14 dígitos ao colar código formatado com separadores', () => {
     expect(normalizeBarcodeInput('1-2345 6789-0123')).toBe('1234567890123');

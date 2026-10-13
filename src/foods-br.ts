@@ -112,7 +112,7 @@ const PRIORITY = new Set([
 ]);
 const PRIORITY_ORDER = [...PRIORITY];
 
-/** Itens adicionais conferidos na TBCA/USP. Nutrientes por 100 g; receitas variam conforme preparo. */
+/** Estimativas caseiras adicionais, não transcrições verificadas da TBCA/USP. Valores por 100 g; receitas variam conforme preparo. */
 const BRAZILIAN_ESTIMATES: FoodPer100[] = [
   { name: 'Pão de queijo, assado (estimativa)', kcal: 330, protein: 6, carbs: 35, fat: 18, fiber: 1, origin: 'estimate', code: 'estimate-br-pao-de-queijo', units: [['unidade pequena', 25], ['porção (2 unidades)', 50]] },
   { name: 'Feijoada (estimativa caseira)', kcal: 150, protein: 10, carbs: 12, fat: 7, fiber: 5, origin: 'estimate', code: 'estimate-br-feijoada', units: [['concha', 150], ['porção', 150]] },
@@ -137,8 +137,8 @@ export const FOODS_BR: FoodPer100[] = [
   carbs,
   fat,
   fiber,
-  origin: 'local' as const,
-  code: `taco-${id}`,
+  origin: id >= 9000 ? 'estimate' as const : 'local' as const,
+  code: id >= 9000 ? `estimate-extra-${id}` : `taco-${id}`,
   units: UNITS[id],
   })),
   {
@@ -155,7 +155,7 @@ export const FOODS_BR: FoodPer100[] = [
 }];
 
 const RANK = new Map<string, number>(
-  [...TACO, ...EXTRA].map(([id], i) => [`taco-${id}`, PRIORITY_ORDER.includes(id) ? PRIORITY_ORDER.indexOf(id) - 1000 : i]),
+  [...TACO, ...EXTRA].map(([id], i) => [id >= 9000 ? `estimate-extra-${id}` : `taco-${id}`, PRIORITY_ORDER.includes(id) ? PRIORITY_ORDER.indexOf(id) - 1000 : i]),
 );
 
 export function normalize(text: string) {

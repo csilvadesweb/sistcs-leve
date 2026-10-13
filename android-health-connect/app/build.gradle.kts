@@ -4,7 +4,7 @@ plugins {
 }
 android {
     namespace = "com.sistcs.leve.activitysync"
-    compileSdk = 35
+    compileSdk = 36
     defaultConfig {
         applicationId = "com.sistcs.leve.activitysync"
         minSdk = 28

@@ -18,9 +18,9 @@ describe('catálogo de receitas', () => {
     expect(results.every((recipe) => recipe.category === 'Vegetariana')).toBe(true);
   });
 
-  it('prioriza receitas brasileiras e fitness e oferece filtros dedicados', () => {
+  it('prioriza receitas Fitness antes das brasileiras e oferece filtros dedicados', () => {
     const all = filterRecipes(RECIPES, '');
-    expect(all[0].tags).toContain('Brasileira');
+    expect(all[0].tags).toContain('Fitness');
     expect(filterRecipes(RECIPES, '', 'Brasileira').every((recipe) => recipe.tags?.includes('Brasileira'))).toBe(true);
     expect(filterRecipes(RECIPES, '', 'Fitness').every((recipe) => recipe.tags?.includes('Fitness'))).toBe(true);
   });

@@ -547,7 +547,7 @@ export const RECIPES: Recipe[] = [
     nutritionNote: 'Estimativa editorial por porção, calculada a partir de valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
   },
   {
-    id: 'frango-pure-abobora', name: 'Frango grelhado com purê de abóbora', category: 'Almoço e jantar', tags: ["Fitness","Brasileira"],
+    id: 'frango-pure-abobora', name: 'Frango grelhado com purê de abóbora e azeite de ervas', category: 'Almoço e jantar', tags: ["Fitness","Brasileira"],
     description: 'Refeição equilibrada com frango grelhado e acompanhamento de preparo caseiro.',
     minutes: 25, servings: 1,
     ingredients: ["130 g de peito de frango cozido", "220 g de abóbora cozida amassada", "1 colher de chá de azeite", "alho, limão, ervas e sal moderado a gosto"],

@@ -52,3 +52,8 @@ Nenhuma das fontes encontradas é simultaneamente completa para todos os aliment
 ### Melhoria de busca regional
 
 A normalização local aceita sinônimos regionais adicionais (por exemplo, *mexerica*, *batata salsa*, *mandioquinha*, *pão cacetinho* e *feijão de corda/macassa*) e os direciona a registros existentes equivalentes, sem criar novos valores nutricionais ou remover alimentos.
+
+
+## Atualização de busca USDA (13/10/2026)
+
+A busca externa já utiliza somente linhas identificadas como USDA SR Legacy e com licença explícita `us_public_domain`, mantendo a origem e URL da fonte. A normalização agora traduz mais consultas brasileiras comuns para termos de referência em inglês (mandioca/macaxeira/aipim, feijão preto/fradinho, couve, quiabo, fubá/polvilho/tapioca e outros). Isso **melhora a descoberta dos registros licenciados existentes**, mas não transforma valores USDA em medições brasileiras nem substitui os alimentos regionais ausentes. Para itens sem equivalência confiável, deve-se usar receita própria validada ou autorização do titular.

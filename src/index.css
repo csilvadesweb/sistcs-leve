@@ -571,3 +571,17 @@ body::before, body::after { display: none; }
 .fast-method-card p { margin: 10px 0; color: var(--text-2); font-size: 14px; line-height: 1.55; }
 .fast-method-card small { color: var(--text-3); font-size: 12px; line-height: 1.45; }
 @media (max-width: 640px) { .fast-method-grid { grid-template-columns: 1fr; } .fast-method-top { flex-wrap: wrap; } }
+
+
+/* Navegação por abas compactas para diário alimentar e hidratação */
+.ft-meal-tabs { display: flex; gap: 8px; margin: 16px 0; padding: 4px; overflow-x: auto; border: 1px solid var(--line-soft, #e1e7e2); border-radius: 14px; background: var(--surface-muted, #f5f8f5); scrollbar-width: thin; }
+.ft-meal-tabs button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; flex: 0 0 auto; min-height: 40px; padding: 9px 13px; border: 1px solid transparent; border-radius: 10px; background: transparent; color: var(--text-2, #526459); font: inherit; font-size: 13px; font-weight: 650; white-space: nowrap; cursor: pointer; }
+.ft-meal-tabs button.is-active { border-color: var(--line-soft, #dce6de); background: var(--surface, #fff); color: var(--text, #26352b); box-shadow: 0 2px 8px rgba(27, 68, 40, .06); }
+.ft-meal-tabs button span { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; background: #e8efe9; color: #3e5a46; font-size: 11px; font-variant-numeric: tabular-nums; }
+.ft-meal-summary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
+.ft-meal-summary-card { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; min-width: 0; padding: 16px; border: 1px solid var(--line-soft, #e1e7e2); border-radius: 14px; background: var(--surface, #fff); color: var(--text, #26352b); text-align: left; cursor: pointer; }
+.ft-meal-summary-card span { color: var(--text-2, #68766c); font-size: 12px; }
+.ft-meal-summary-card strong { font-size: 18px; font-variant-numeric: tabular-nums; }
+.ft-meal-summary-card small { color: var(--text-2, #68766c); font-size: 12px; }
+.ft-water-tabs { margin-top: 12px; }
+@media (max-width: 420px) { .ft-meal-summary-grid { gap: 8px; } .ft-meal-summary-card { padding: 13px 11px; } .ft-meal-summary-card strong { font-size: 16px; } .ft-meal-tabs button { padding-inline: 11px; } }

@@ -6,6 +6,7 @@ import {
   shouldSendWaterReminder,
   type WaterReminderSettings,
 } from './water-reminders';
+import { playWaterReminderSound, prepareWaterReminderAudio } from './water-reminder-sound';
 
 const SETTINGS_KEY = 'sistcs-leve-water-reminders-v1';
 const LAST_SENT_KEY = 'sistcs-leve-water-reminders-last-sent-v1';
@@ -77,8 +78,13 @@ export function WaterReminders() {
       if (!shouldSendWaterReminder(settings, now, lastSent)) return;
       try {
         await showWaterNotification();
+        const soundPlayed = settings.soundEnabled ? await playWaterReminderSound() : false;
         window.localStorage.setItem(LAST_SENT_KEY, String(now.getTime()));
-        setMessage('Lembrete enviado. O próximo respeitará o intervalo escolhido.');
+        setMessage(settings.soundEnabled && !soundPlayed
+          ? 'Notificação enviada. O navegador bloqueou o som; toque em “Testar som” para liberar o áudio.'
+          : soundPlayed
+            ? 'Lembrete enviado com som. O próximo respeitará o intervalo escolhido.'
+            : 'Lembrete enviado sem som. O próximo respeitará o intervalo escolhido.');
       } catch {
         setMessage('Não foi possível mostrar a notificação. Confira as permissões do navegador.');
       }
@@ -89,6 +95,8 @@ export function WaterReminders() {
   }, [settings, permission]);
 
   async function enableReminders() {
+    // Criar/desbloquear o contexto de áudio durante o toque do usuário respeita as regras de autoplay.
+    const audioReadyPromise = prepareWaterReminderAudio();
     if (permission === 'unsupported') {
       setMessage('Este navegador não oferece notificações. Tente instalar o app ou usar um navegador compatível.');
       return;
@@ -107,10 +115,20 @@ export function WaterReminders() {
       }
       setSettings((current) => ({ ...current, enabled: true }));
       window.localStorage.setItem(LAST_SENT_KEY, String(Date.now()));
-      setMessage('Lembretes ativados enquanto o SISTCS Leve estiver aberto e ativo.');
+      const audioReady = await audioReadyPromise;
+      setMessage(audioReady && settings.soundEnabled
+        ? 'Lembretes ativados com som enquanto o SISTCS Leve estiver aberto e ativo.'
+        : 'Lembretes ativados. Para liberar o som, toque em “Testar som”; o sistema também pode silenciar notificações.');
     } catch {
       setMessage('Não foi possível solicitar permissão para notificações neste navegador.');
     }
+  }
+
+  async function testReminderSound() {
+    const played = await playWaterReminderSound();
+    setMessage(played
+      ? 'Teste de som concluído. O volume e o modo silencioso do aparelho continuam sob controle do sistema.'
+      : 'Não foi possível tocar o som. Confira o volume, o modo silencioso e as permissões do navegador.');
   }
 
   function disableReminders() {
@@ -157,7 +175,14 @@ export function WaterReminders() {
         )}
         <span className="water-reminder-status" role="status">{settings.enabled ? 'Ativo neste dispositivo' : 'Desativado'}</span>
       </div>
-      <p className="water-reminder-note">Importante: por enquanto, os lembretes funcionam enquanto o app estiver aberto e ativo. O navegador pode suspender tarefas em segundo plano; notificações garantidas com o app fechado exigem Web Push e configuração adicional.</p>
+      <div className="water-reminder-actions">
+        <label className="water-reminder-sound-option">
+          <input type="checkbox" checked={settings.soundEnabled} onChange={(event) => setSettings((current) => ({ ...current, soundEnabled: event.target.checked }))} />
+          Tocar som nos lembretes
+        </label>
+        <button className="btn btn-outline btn-sm" type="button" onClick={() => void testReminderSound()}>Testar som</button>
+      </div>
+      <p className="water-reminder-note">Importante: o som é reproduzido enquanto a página está ativa e o navegador permite áudio. O som da notificação do sistema depende do volume, modo silencioso e configurações de notificação do Android. Os lembretes não são garantidos com o app fechado; isso exige Web Push e configuração adicional.</p>
       {message && <p className="water-reminder-feedback" role="status">{message}</p>}
     </section>
   );

@@ -3,6 +3,7 @@ export type WaterReminderSettings = {
   intervalMinutes: 30 | 60 | 90 | 120;
   startTime: string;
   endTime: string;
+  soundEnabled: boolean;
 };
 
 export const DEFAULT_WATER_REMINDER_SETTINGS: WaterReminderSettings = {
@@ -10,6 +11,7 @@ export const DEFAULT_WATER_REMINDER_SETTINGS: WaterReminderSettings = {
   intervalMinutes: 60,
   startTime: '09:00',
   endTime: '21:00',
+  soundEnabled: true,
 };
 
 const ALLOWED_INTERVALS = new Set([30, 60, 90, 120]);
@@ -25,6 +27,8 @@ export function normalizeWaterReminderSettings(value: unknown): WaterReminderSet
     intervalMinutes: (ALLOWED_INTERVALS.has(interval) ? interval : 60) as WaterReminderSettings['intervalMinutes'],
     startTime: validTime(input.startTime) ? input.startTime : DEFAULT_WATER_REMINDER_SETTINGS.startTime,
     endTime: validTime(input.endTime) ? input.endTime : DEFAULT_WATER_REMINDER_SETTINGS.endTime,
+    // Configurações antigas não tinham este campo; manter som ativado por padrão sem perder preferências existentes.
+    soundEnabled: input.soundEnabled !== false,
   };
 }
 

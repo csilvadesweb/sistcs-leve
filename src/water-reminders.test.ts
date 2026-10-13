@@ -6,6 +6,7 @@ import {
   shouldSendWaterReminder,
 } from './water-reminders';
 
+// Compatibilidade: preferências antigas não tinham soundEnabled; a normalização adiciona o padrão.
 describe('preferências dos lembretes de água', () => {
   it('usa padrões seguros quando não há configuração salva', () => {
     expect(normalizeWaterReminderSettings(null)).toEqual(DEFAULT_WATER_REMINDER_SETTINGS);
@@ -13,9 +14,14 @@ describe('preferências dos lembretes de água', () => {
 
   it('normaliza intervalos e horários inválidos sem lançar exceção', () => {
     expect(normalizeWaterReminderSettings({ enabled: true, intervalMinutes: 5, startTime: '99:99', endTime: 'x' }))
-      .toEqual({ enabled: true, intervalMinutes: 60, startTime: '09:00', endTime: '21:00' });
+      .toEqual({ enabled: true, intervalMinutes: 60, startTime: '09:00', endTime: '21:00', soundEnabled: true });
   });
 });
+
+  it('mantém compatibilidade com preferências antigas e permite desativar o som', () => {
+    expect(normalizeWaterReminderSettings({ enabled: true, intervalMinutes: 30, startTime: '08:00', endTime: '20:00' }).soundEnabled).toBe(true);
+    expect(normalizeWaterReminderSettings({ soundEnabled: false }).soundEnabled).toBe(false);
+  });
 
 describe('janela de lembretes', () => {
   it('inclui o início e exclui o fim da janela diurna', () => {
@@ -31,7 +37,7 @@ describe('janela de lembretes', () => {
 });
 
 describe('frequência de notificações', () => {
-  const settings = { enabled: true, intervalMinutes: 60 as const, startTime: '09:00', endTime: '21:00' };
+  const settings = { enabled: true, intervalMinutes: 60 as const, startTime: '09:00', endTime: '21:00', soundEnabled: true };
 
   it('não notifica se estiver desativado, fora do horário ou sem registro anterior', () => {
     const now = new Date(2026, 0, 1, 10, 0);

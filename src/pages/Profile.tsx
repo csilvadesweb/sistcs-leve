@@ -119,6 +119,7 @@ export function ProfileSettings() {
   const [errors, setErrors] = useState<Partial<Record<FormKey, string>>>({});
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [busy, setBusy] = useState(false);
+  const [activeProfileTab, setActiveProfileTab] = useState<'dados' | 'metas'>('dados');
   const [legacy, setLegacy] = useState(() => readLegacyData());
   const avatarInput = useRef<HTMLInputElement>(null);
   const avatarPath = data.profile?.avatarPath ?? null;
@@ -343,6 +344,17 @@ export function ProfileSettings() {
 
           <InstallCard />
 
+          <div className="progressive-tabs" role="tablist" aria-label="Seções do perfil">
+            <button type="button" role="tab" aria-selected={activeProfileTab === 'dados'} className={`progressive-tab ${activeProfileTab === 'dados' ? 'is-active' : ''}`} onClick={() => setActiveProfileTab('dados')}>
+              Dados pessoais
+            </button>
+            <button type="button" role="tab" aria-selected={activeProfileTab === 'metas'} className={`progressive-tab ${activeProfileTab === 'metas' ? 'is-active' : ''}`} onClick={() => setActiveProfileTab('metas')}>
+              Metas e preferências
+            </button>
+          </div>
+
+          {activeProfileTab === 'dados' && (
+            <>
           <div className="avatar-edit">
             <Avatar path={avatarPath} name={form.displayName} size={88} />
             <div>
@@ -460,6 +472,11 @@ export function ProfileSettings() {
             )}
           </div>
 
+          </>
+          )}
+
+          {activeProfileTab === 'metas' && (
+            <>
           <div className="profile-subsection">
             <div className="profile-subsection-heading">
               <h3>Metas pessoais</h3>
@@ -516,6 +533,8 @@ export function ProfileSettings() {
               </div>
             </Field>
           </div>
+            </>
+          )}
 
           <div className="profile-form-actions">
             <Button type="submit" disabled={busy || loading}>

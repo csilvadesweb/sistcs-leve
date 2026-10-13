@@ -435,15 +435,16 @@ body::before, body::after { display: none; }
   scroll-padding-inline: 6px;
   touch-action: pan-x;
 }
-.mobile-nav.is-reordering { overflow-x: auto; cursor: grabbing; }
-.mobile-nav .nav-link-mobile { cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: none; transition: background-color .16s ease, color .16s ease, opacity .16s ease, transform .16s ease, box-shadow .16s ease; }
+.mobile-nav.is-reordering { overflow-x: auto; cursor: grabbing; touch-action: none; }
+.mobile-nav .nav-link-mobile { cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: pan-x; transition: background-color .16s ease, color .16s ease, opacity .16s ease, transform .16s ease, box-shadow .16s ease; }
 .mobile-nav .nav-link-pressing { transform: scale(.94); background: #f5ecd6; box-shadow: 0 0 0 2px rgba(154, 108, 18, .22); }
 .mobile-nav.is-reordering .nav-link-mobile { touch-action: none; }
 .mobile-nav .nav-link-dragging { z-index: 2; opacity: .78; transform: scale(1.06); background: #eaf5ed; box-shadow: 0 5px 16px rgba(26, 65, 39, .16); cursor: grabbing; }
 .mobile-nav .nav-link-mobile:focus-visible { outline: 2px solid #218548; outline-offset: 2px; }
 .mobile-nav::-webkit-scrollbar { display: none; }
 .nav-link-mobile {
-  flex: 0 0 68px;
+  /* Mostra cinco destinos por vez; os demais continuam acessíveis por rolagem horizontal. */
+  flex: 0 0 calc((100vw - 48px) / 5);
   min-width: 0;
   min-height: 54px;
   gap: 3px;

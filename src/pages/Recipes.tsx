@@ -38,6 +38,8 @@ export function Recipes() {
   const [feedback, setFeedback] = useState<{ id: string; message: string; error?: boolean } | null>(null);
   const [planDay, setPlanDay] = useState<string>(WEEK_DAYS[0]);
   const [planMeal, setPlanMeal] = useState<MealType>('lunch');
+  const [planRecipeQuery, setPlanRecipeQuery] = useState('');
+  const [planRecipeId, setPlanRecipeId] = useState('');
   const [planItems, setPlanItems] = useState<PlannedMeal[]>(() => {
     try {
       const raw = window.localStorage.getItem(`sistcs-leve-meal-plan-v1:${user.id}`);
@@ -70,7 +72,21 @@ export function Recipes() {
       meal: planMeal,
       recipeId: recipe.id,
     }]);
+    setShoppingOpen(false);
     setFeedback({ id: recipe.id, message: `Adicionada ao planejamento: ${planDay}, ${MEAL_LABELS[planMeal]}.` });
+  }
+
+  const planRecipeOptions = useMemo(
+    () => filterRecipes(RECIPES, planRecipeQuery, 'Todas').slice(0, 50),
+    [planRecipeQuery],
+  );
+
+  function addSelectedRecipeToPlan() {
+    const recipe = RECIPES.find((candidate) => candidate.id === planRecipeId);
+    if (!recipe) return;
+    addToPlan(recipe);
+    setPlanRecipeQuery('');
+    setPlanRecipeId('');
   }
 
   const plannedWithRecipes = resolvePlannedMeals(planItems, RECIPES);
@@ -133,20 +149,43 @@ export function Recipes() {
             </select>
           </label>
         </div>
+        <div className="meal-plan-add-recipe">
+          <div className="meal-plan-recipe-fields">
+            <label htmlFor="meal-plan-recipe-search">Buscar receita ou ingrediente
+              <input
+                id="meal-plan-recipe-search"
+                type="search"
+                value={planRecipeQuery}
+                onChange={(event) => { setPlanRecipeQuery(event.target.value); setPlanRecipeId(''); }}
+                placeholder="Ex.: omelete, frango, aveia…"
+                autoComplete="off"
+              />
+            </label>
+            <label htmlFor="meal-plan-recipe-select">Receita
+              <select id="meal-plan-recipe-select" value={planRecipeId} onChange={(event) => setPlanRecipeId(event.target.value)}>
+                <option value="">Selecione uma receita</option>
+                {planRecipeOptions.map((recipe) => <option key={recipe.id} value={recipe.id}>{recipe.name}</option>)}
+              </select>
+            </label>
+          </div>
+          <button className="recipe-plan-button" type="button" disabled={!planRecipeId} onClick={addSelectedRecipeToPlan}>
+            <Plus size={16} aria-hidden="true" /> Adicionar ao dia e refeição escolhidos
+          </button>
+        </div>
         {plannedWithRecipes.length ? <div className="meal-plan-list">
           {WEEK_DAYS.filter((day) => plannedWithRecipes.some((item) => item.day === day)).map((day) => <section className="meal-plan-day" key={day}>
             <h3>{day}</h3>
             {plannedWithRecipes.filter((item) => item.day === day).map((item) => <div className="meal-plan-item" key={item.id}>
               <div><strong>{item.recipe.name}</strong><span>{MEAL_LABELS[item.meal]} · {item.recipe.nutrientsPerServing.calories} kcal estimadas/porção</span></div>
-              <button type="button" className="meal-plan-remove" aria-label={`Remover ${item.recipe.name} de ${day}`} onClick={() => setPlanItems((items) => items.filter((entry) => entry.id !== item.id))}>Remover</button>
+              <button type="button" className="meal-plan-remove" aria-label={`Remover ${item.recipe.name} de ${day}`} onClick={() => { setPlanItems((items) => items.filter((entry) => entry.id !== item.id)); setShoppingOpen(false); }}>Remover</button>
             </div>)}
           </section>)}
-        </div> : <p className="meal-plan-empty">Seu planejamento está vazio. Escolha um dia e uma refeição e adicione receitas abaixo.</p>}
+        </div> : <p className="meal-plan-empty">Seu planejamento está vazio. Escolha o dia e a refeição, busque uma receita no campo acima e toque em “Adicionar ao dia e refeição escolhidos”.</p>}
         <div className="shopping-list-actions">
           <button className="recipe-details-button" type="button" disabled={!plannedWithRecipes.length} aria-expanded={shoppingOpen} onClick={() => setShoppingOpen((open) => !open)}>{shoppingOpen ? 'Ocultar lista de compras' : 'Gerar lista de compras'}</button>
-          {planItems.length > 0 && <button type="button" className="meal-plan-clear" onClick={() => setPlanItems([])}>Limpar semana</button>}
+          {planItems.length > 0 && <button type="button" className="meal-plan-clear" onClick={() => { setPlanItems([]); setShoppingOpen(false); }}>Limpar semana</button>}
         </div>
-        {shoppingOpen && <div className="shopping-list" aria-live="polite">
+        {shoppingOpen && plannedWithRecipes.length > 0 && <div className="shopping-list" aria-live="polite">
           <h3>Lista de compras</h3>
           <p>Ingredientes das {plannedWithRecipes.length} refeições planejadas. Ingredientes com a mesma descrição foram agrupados; confira as quantidades para o número de porções desejado.</p>
           <ul>{shoppingIngredients.map((entry) => <li key={entry.ingredient}><span>{entry.ingredient}</span>{entry.count > 1 && <small>usado em {entry.count} receitas</small>}</li>)}</ul>

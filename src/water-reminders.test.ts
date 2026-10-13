@@ -6,6 +6,7 @@ import {
   shouldSendWaterReminder,
 } from './water-reminders';
 
+// Compatibilidade: preferências antigas não tinham soundEnabled; a normalização adiciona o padrão.
 describe('preferências dos lembretes de água', () => {
   it('usa padrões seguros quando não há configuração salva', () => {
     expect(normalizeWaterReminderSettings(null)).toEqual(DEFAULT_WATER_REMINDER_SETTINGS);

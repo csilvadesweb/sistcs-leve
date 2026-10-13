@@ -260,6 +260,8 @@ function Shell({ children }: { children: ReactNode }) {
               className={`nav-link nav-link-mobile ${location === href ? 'nav-link-active' : ''} ${pressingHref === href ? 'nav-link-pressing' : ''} ${draggingHref === href ? 'nav-link-dragging' : ''}`}
               onPointerDown={(event) => startNavPointer(event, href)}
               onClick={handleNavClick}
+              onContextMenu={(event) => event.preventDefault()}
+              onDragStart={(event) => event.preventDefault()}
             >
               <Icon aria-hidden="true" strokeWidth={location === href ? 2.1 : 1.7} />
               <span>{navigationPreferences?.labels?.[href]?.trim() || short}</span>

@@ -4021,7 +4021,7 @@ export const RECIPES: Recipe[] = [
     minutes: 25, servings: 1,
     ingredients: ["130 g de soja cozida", "80 g de couve refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
     steps: ["Prepare couve refogada conforme necessário, cozinhando até atingir a textura desejada.", "Tempere soja cozida com alho com alho, ervas e limão; aqueça ou asse até ficar bem preparado.", "Combine os componentes e sirva uma porção; ajuste os temperos sem excesso de sal."],
-    nutrientsPerServing: { calories: 285, proteins: 25, carbohydrates: 22, fats: 16, fiber: 12 },
+    nutrientsPerServing: { calories: 332, proteins: 25, carbohydrates: 22, fats: 16, fiber: 12 },
     nutritionNote: 'Estimativa editorial por porção com valores médios dos ingredientes; marcas e método de preparo alteram os valores. Não é análise laboratorial.',
   },
   {
@@ -4084,7 +4084,7 @@ export const RECIPES: Recipe[] = [
     minutes: 25, servings: 1,
     ingredients: ["130 g de soja cozida", "150 g de brócolis, cenoura e couve-flor", "alho, limão, cheiro-verde e sal moderado a gosto"],
     steps: ["Prepare brócolis, cenoura e couve-flor conforme necessário, cozinhando até atingir a textura desejada.", "Tempere soja cozida com alho com alho, ervas e limão; aqueça ou asse até ficar bem preparado.", "Combine os componentes e sirva uma porção; ajuste os temperos sem excesso de sal."],
-    nutrientsPerServing: { calories: 290, proteins: 26, carbohydrates: 26, fats: 14, fiber: 13 },
+    nutrientsPerServing: { calories: 334, proteins: 26, carbohydrates: 26, fats: 14, fiber: 13 },
     nutritionNote: 'Estimativa editorial por porção com valores médios dos ingredientes; marcas e método de preparo alteram os valores. Não é análise laboratorial.',
   },
   {

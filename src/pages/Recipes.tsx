@@ -17,6 +17,8 @@ const meals: Array<{ value: MealType; label: string }> = [
   { value: 'other', label: 'Outros' },
 ];
 
+const PAGE_SIZE = 24;
+
 export function Recipes() {
   const { reload, user } = useAppData();
   const [query, setQuery] = useState('');
@@ -46,6 +48,7 @@ export function Recipes() {
     }
   });
   const [shoppingOpen, setShoppingOpen] = useState(false);
+  const [visible, setVisible] = useState(PAGE_SIZE);
   useEffect(() => {
     try { window.localStorage.setItem(`sistcs-leve-meal-plan-v1:${user.id}`, JSON.stringify(planItems)); } catch { /* storage unavailable: planner remains usable for this session */ }
   }, [planItems, user.id]);
@@ -53,6 +56,8 @@ export function Recipes() {
     try { window.localStorage.setItem(`sistcs-leve-recipe-favorites-v1:${user.id}`, JSON.stringify(favorites)); } catch { /* favorites remain available for this session */ }
   }, [favorites, user.id]);
   const recipes = useMemo(() => filterRecipes(RECIPES, query, category).filter((recipe) => !favoritesOnly || favorites.includes(recipe.id)), [query, category, favoritesOnly, favorites]);
+
+  useEffect(() => { setVisible(PAGE_SIZE); }, [query, category, favoritesOnly]);
 
   function toggleFavorite(recipeId: string) {
     setFavorites((current) => toggleFavoriteId(current, recipeId, RECIPES.map((recipe) => recipe.id)));
@@ -108,7 +113,7 @@ export function Recipes() {
 
       <section className="recipes-intro">
         <div className="recipes-intro-icon"><UtensilsCrossed size={22} /></div>
-        <div><strong>Comida de verdade, do seu jeito</strong><p>Receitas práticas para seus objetivos. Os valores nutricionais são estimativas por porção.</p><p className="recipe-nutrition-note">Catálogo atual: {RECIPES.length} receitas únicas nesta versão. Meta de expansão: 1.400, priorizando Fitness e depois receitas brasileiras. O catálogo só cresce após validar licença, duplicatas e dados nutricionais.</p></div>
+        <div><strong>Comida de verdade, do seu jeito</strong><p>Receitas práticas para seus objetivos. Os valores nutricionais são estimativas por porção.</p><p className="recipe-nutrition-note">{RECIPES.length} receitas. Favoritas e planejamento semanal ficam salvos apenas neste aparelho.</p></div>
       </section>
 
       <section className="meal-planner-panel" aria-labelledby="meal-planner-title">
@@ -168,8 +173,8 @@ export function Recipes() {
       </div>
 
       <div className="recipes-results" role="status">{recipes.length} {recipes.length === 1 ? 'receita encontrada' : 'receitas encontradas'}</div>
-      {recipes.length ? <div className="recipes-grid">
-        {recipes.map((recipe) => {
+      {recipes.length ? <><div className="recipes-grid">
+        {recipes.slice(0, visible).map((recipe) => {
           const amount = servings[recipe.id] ?? 1;
           const nutrients = scaleRecipeNutrients(recipe.nutrientsPerServing, amount);
           const isExpanded = expanded === recipe.id;
@@ -201,7 +206,9 @@ export function Recipes() {
             {feedback?.id === recipe.id && <p className={feedback.error ? 'ft-feedback ft-feedback-error' : 'ft-feedback recipe-feedback'} role={feedback.error ? 'alert' : 'status'}>{feedback.message}</p>}
           </article>;
         })}
-      </div> : <section className="ft-card recipes-empty"><CookingPot size={26} /><h2>{favoritesOnly ? 'Você ainda não tem receitas favoritas' : 'Nenhuma receita encontrada'}</h2><p>{favoritesOnly ? 'Toque na estrela de uma receita para salvá-la aqui.' : 'Tente outro nome ou selecione “Todas”.'}</p></section>}
+      </div>
+      {recipes.length > visible && <div className="recipes-more"><button type="button" className="btn" onClick={() => setVisible((v) => v + PAGE_SIZE)}>Mostrar mais receitas ({recipes.length - visible} restantes)</button></div>}
+      </> : <section className="ft-card recipes-empty"><CookingPot size={26} /><h2>{favoritesOnly ? 'Você ainda não tem receitas favoritas' : 'Nenhuma receita encontrada'}</h2><p>{favoritesOnly ? 'Toque na estrela de uma receita para salvá-la aqui.' : 'Tente outro nome ou selecione “Todas”.'}</p></section>}
     </div>
   );
 }

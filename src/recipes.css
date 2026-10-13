@@ -77,3 +77,5 @@
 .recipe-favorite-button.is-favorite { border-color:rgba(232,196,108,.7); color:var(--gold-2); background:rgba(232,196,108,.12); }
 .recipe-favorite-button:focus-visible,.favorites-filter:focus-visible { outline:2px solid var(--gold-2); outline-offset:3px; }
 .recipes-categories .favorites-filter { display:inline-flex; align-items:center; justify-content:center; gap:6px; }
+
+.recipes-more { display: flex; justify-content: center; margin: 22px 0 8px; }

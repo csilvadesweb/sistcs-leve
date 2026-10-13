@@ -31,7 +31,8 @@ export function PrivacyPolicy() {
           registros. Fotos ficam em armazenamento privado. O aplicativo é entregue pela Cloudflare.
         </p>
 
-        <h2>5. Serviços externos</h2>
+        <h2>5. Dados salvos no aparelho e serviços externos</h2>
+        <p>Receitas favoritas e o planejamento semanal ficam apenas no navegador do seu aparelho (não vão para a nuvem).</p>
         <p>
           Ao buscar alimentos por nome ou código de barras fora da tabela local, o texto buscado pode ser enviado ao Open Food
           Facts. Nenhum dado de identificação seu é enviado nessa busca.

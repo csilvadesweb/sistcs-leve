@@ -57,6 +57,7 @@ export function Recipes() {
   const [recipePdfError, setRecipePdfError] = useState<{ id: string; message: string } | null>(null);
   const [shoppingPdfError, setShoppingPdfError] = useState<string | null>(null);
   const [visible, setVisible] = useState(PAGE_SIZE);
+  const [activeRecipesTab, setActiveRecipesTab] = useState<'recipes' | 'planner'>('recipes');
   useEffect(() => {
     try { window.localStorage.setItem(`sistcs-leve-meal-plan-v1:${user.id}`, JSON.stringify(planItems)); } catch { /* storage unavailable: planner remains usable for this session */ }
   }, [planItems, user.id]);
@@ -164,6 +165,16 @@ export function Recipes() {
         <div><strong>Comida de verdade, do seu jeito</strong><p>Receitas práticas para seus objetivos. Os valores nutricionais são estimativas por porção.</p><p className="recipe-nutrition-note">{RECIPES.length} receitas. Favoritas e planejamento semanal ficam salvos apenas neste aparelho.</p></div>
       </section>
 
+      <div className="recipes-tabs" role="tablist" aria-label="Seções de receitas">
+        <button type="button" role="tab" id="recipes-tab-explore" aria-selected={activeRecipesTab === 'recipes'} aria-controls="recipes-panel-explore" className={activeRecipesTab === 'recipes' ? 'recipes-tab is-active' : 'recipes-tab'} onClick={() => setActiveRecipesTab('recipes')}>
+          <CookingPot size={17} aria-hidden="true" /> Explorar receitas
+        </button>
+        <button type="button" role="tab" id="recipes-tab-planner" aria-selected={activeRecipesTab === 'planner'} aria-controls="recipes-panel-planner" className={activeRecipesTab === 'planner' ? 'recipes-tab is-active' : 'recipes-tab'} onClick={() => setActiveRecipesTab('planner')}>
+          <CheckCircle2 size={17} aria-hidden="true" /> Planejamento semanal <span className="recipes-tab-count">{planItems.length}</span>
+        </button>
+      </div>
+
+      {activeRecipesTab === 'planner' && <div id="recipes-panel-planner" role="tabpanel" aria-labelledby="recipes-tab-planner">
       <section className="meal-planner-panel" aria-labelledby="meal-planner-title">
         <div className="meal-planner-heading">
           <div><p className="eyebrow">ORGANIZE SUA SEMANA</p><h2 id="meal-planner-title">Planejador de refeições</h2><p>Escolha o dia e a refeição; depois adicione qualquer receita ao planejamento.</p></div>
@@ -229,6 +240,9 @@ export function Recipes() {
         </div>}
       </section>
 
+      </div>}
+
+      {activeRecipesTab === 'recipes' && <div id="recipes-panel-explore" role="tabpanel" aria-labelledby="recipes-tab-explore">
       <div className="recipes-controls">
         <label className="recipes-search">
           <Search size={19} aria-hidden="true" />
@@ -286,6 +300,7 @@ export function Recipes() {
       </div>
       {recipes.length > visible && <div className="recipes-more"><button type="button" className="btn" onClick={() => setVisible((v) => v + PAGE_SIZE)}>Mostrar mais receitas ({recipes.length - visible} restantes)</button></div>}
       </> : <section className="ft-card recipes-empty"><CookingPot size={26} /><h2>{favoritesOnly ? 'Você ainda não tem receitas favoritas' : 'Nenhuma receita encontrada'}</h2><p>{favoritesOnly ? 'Toque na estrela de uma receita para salvá-la aqui.' : 'Tente outro nome ou selecione “Todas”.'}</p></section>}
+      </div>}
     </div>
   );
 }

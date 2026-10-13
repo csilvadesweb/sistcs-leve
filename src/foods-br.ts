@@ -12,6 +12,8 @@ export interface FoodPer100 {
   carbs: number;
   fat: number;
   fiber: number;
+  /** Base nutricional usada pelo rótulo: 100 g para sólidos ou 100 ml para bebidas. */
+  basis?: '100g' | '100ml';
   /** Nutrientes adicionais do rótulo; ausente significa que a fonte não informou o valor. */
   saturatedFat?: number;
   sugars?: number;
@@ -392,26 +394,43 @@ function fromOff(p: any): FoodPer100 | null {
   const n = p?.nutriments;
   const name = String(p?.product_name ?? '').trim();
   if (!n || !name) return null;
-  const directKcal = num(n['energy-kcal_100g']);
-  const energyKj = num(n['energy_100g']);
+
+  // Muitos rótulos de bebidas informam nutrientes por 100 ml, não por 100 g.
+  // Aceitamos essa base somente quando a energia por 100 g não foi informada,
+  // preservando a unidade original para não descartar refrigerantes, sucos e leites.
+  const kcal100g = num(n['energy-kcal_100g']);
+  const kj100g = num(n['energy_100g']);
+  const kcal100ml = num(n['energy-kcal_100ml']);
+  const kj100ml = num(n['energy_100ml']);
+  const useMl = (kcal100g === null && kj100g === null) && (kcal100ml !== null || kj100ml !== null);
+  const directKcal = useMl ? kcal100ml : kcal100g;
+  const energyKj = useMl ? kj100ml : kj100g;
+  const suffix = useMl ? '100ml' : '100g';
   const kcal = directKcal !== null ? directKcal : energyKj !== null ? energyKj / 4.184 : null;
   if (kcal === null || kcal < 0) return null;
+  const nutrient = (key: string) => n[`${key}_${suffix}`];
+  const protein = nutrient('proteins');
+  const carbs = nutrient('carbohydrates');
+  const fat = nutrient('fat');
+  const fiber = nutrient('fiber');
+  const sodium = num(nutrient('sodium'));
   return {
     name,
     brand: String(p.brands ?? '').split(',')[0]?.trim() || undefined,
     kcal: round1(kcal),
-    protein: nonNegativeNutrient(n['proteins_100g']),
-    carbs: nonNegativeNutrient(n['carbohydrates_100g']),
-    fat: nonNegativeNutrient(n['fat_100g']),
-    fiber: nonNegativeNutrient(n['fiber_100g']),
-    saturatedFat: optionalNutrient(n['saturated-fat_100g']),
-    sugars: optionalNutrient(n['sugars_100g']),
-    sodiumMg: num(n['sodium_100g']) === null || num(n['sodium_100g'])! < 0 ? undefined : round1(num(n['sodium_100g'])! * 1000),
+    ...(useMl ? { basis: '100ml' as const, units: [['copo', 200] as [string, number], ['lata', 350], ['garrafa', 500]] } : {}),
+    protein: nonNegativeNutrient(protein),
+    carbs: nonNegativeNutrient(carbs),
+    fat: nonNegativeNutrient(fat),
+    fiber: nonNegativeNutrient(fiber),
+    saturatedFat: optionalNutrient(nutrient('saturated-fat')),
+    sugars: optionalNutrient(nutrient('sugars')),
+    sodiumMg: sodium === null || sodium < 0 ? undefined : round1(sodium * 1000),
     reportedNutrients: {
-      protein: num(n['proteins_100g']) !== null && num(n['proteins_100g'])! >= 0,
-      carbs: num(n['carbohydrates_100g']) !== null && num(n['carbohydrates_100g'])! >= 0,
-      fat: num(n['fat_100g']) !== null && num(n['fat_100g'])! >= 0,
-      fiber: num(n['fiber_100g']) !== null && num(n['fiber_100g'])! >= 0,
+      protein: num(protein) !== null && num(protein)! >= 0,
+      carbs: num(carbs) !== null && num(carbs)! >= 0,
+      fat: num(fat) !== null && num(fat)! >= 0,
+      fiber: num(fiber) !== null && num(fiber)! >= 0,
     },
     origin: 'off',
     code: p.code ? String(p.code) : undefined,

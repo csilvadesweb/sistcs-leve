@@ -343,6 +343,42 @@ describe('Open Food Facts — integração externa resiliente', () => {
     ]);
   });
 
+  it('lê bebidas com tabela nutricional informada por 100 ml', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        status: 1,
+        product: {
+          code: '7890000000000',
+          product_name: 'Bebida de teste',
+          brands: 'Marca Bebidas',
+          nutriments: {
+            'energy-kcal_100ml': 42,
+            proteins_100ml: 0.5,
+            carbohydrates_100ml: 10,
+            fat_100ml: 0,
+            fiber_100ml: 0,
+            sugars_100ml: 9.5,
+            sodium_100ml: 0.02,
+          },
+        },
+      }),
+    }));
+    await expect(lookupBarcode('7890000000000')).resolves.toMatchObject({
+      name: 'Bebida de teste',
+      basis: '100ml',
+      kcal: 42,
+      protein: 0.5,
+      carbs: 10,
+      fat: 0,
+      fiber: 0,
+      sugars: 9.5,
+      sodiumMg: 20,
+      units: [['copo', 200], ['lata', 350], ['garrafa', 500]],
+      origin: 'off',
+    });
+  });
+
   it('preserva nutrientes adicionais e distingue valores ausentes de zero', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({
       status: 1,

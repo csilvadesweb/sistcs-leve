@@ -167,9 +167,9 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   const gramsOk = grams > 0 && grams <= 5000;
   const label =
     gramsText !== null || !auto
-      ? `${decimalText(grams)} g`
+      ? `${decimalText(grams)} ${food?.basis === '100ml' ? 'ml' : 'g'}`
       : auto.label.includes('×')
-        ? `${auto.label} (${decimalText(Math.round(grams * 10) / 10)} g)`
+        ? `${auto.label} (${decimalText(Math.round(grams * 10) / 10)} ${food?.basis === '100ml' ? 'ml' : 'g'})`
         : auto.label;
   const calc = food && gramsOk ? scale(food, grams) : null;
 
@@ -288,7 +288,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
     <li key={key} className="fs-row">
       <div>
         <strong>{f.name}</strong>
-        <span>{f.brand ? `${f.brand} · ` : ''}{decimalText(f.kcal)} kcal por 100 g{f.origin === 'usda' ? ' · USDA (referência)' : ''}</span>
+        <span>{f.brand ? `${f.brand} · ` : ''}{decimalText(f.kcal)} kcal por {f.basis === '100ml' ? '100 ml' : '100 g'}{f.origin === 'usda' ? ' · USDA (referência)' : ''}</span>
         {f.origin === 'usda' && <a href={f.sourceUrl ?? 'https://tempolife.app/'} target="_blank" rel="noreferrer">Fonte: USDA via TempoLife</a>}
         {f.origin === 'off' && <a href={f.sourceUrl ?? 'https://world.openfoodfacts.org/'} target="_blank" rel="noreferrer">Fonte: Open Food Facts · licença ODbL / DCL</a>}
       </div>

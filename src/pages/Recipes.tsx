@@ -7,6 +7,7 @@ import { filterRecipes, RECIPES, scaleRecipeNutrients, type Recipe, type RecipeF
 import { buildShoppingList, resolvePlannedMeals, validatePlannedMeals, WEEK_DAYS, type PlannedMeal } from '../meal-plan';
 import { toggleFavoriteId, validateFavoriteIds } from '../recipe-favorites';
 import { downloadShoppingListPdf } from '../shopping-list-pdf';
+import { downloadRecipePdf } from '../recipe-pdf';
 
 const MEAL_LABELS: Record<MealType, string> = { breakfast: 'Café da manhã', lunch: 'Almoço', snack: 'Lanche', dinner: 'Jantar', other: 'Outros' };
 const categories: RecipeFilter[] = ['Fitness', 'Brasileira', 'Todas', 'Café da manhã', 'Almoço e jantar', 'Lanches', 'Vegetariana'];
@@ -52,6 +53,8 @@ export function Recipes() {
   });
   const [shoppingOpen, setShoppingOpen] = useState(false);
   const [shoppingPdfBusy, setShoppingPdfBusy] = useState(false);
+  const [recipePdfBusyId, setRecipePdfBusyId] = useState<string | null>(null);
+  const [recipePdfError, setRecipePdfError] = useState<{ id: string; message: string } | null>(null);
   const [shoppingPdfError, setShoppingPdfError] = useState<string | null>(null);
   const [visible, setVisible] = useState(PAGE_SIZE);
   useEffect(() => {
@@ -105,6 +108,19 @@ export function Recipes() {
       setShoppingPdfError(error instanceof Error ? error.message : 'Não foi possível baixar o PDF. Tente novamente.');
     } finally {
       setShoppingPdfBusy(false);
+    }
+  }
+
+  async function downloadRecipe(recipe: Recipe) {
+    if (recipePdfBusyId) return;
+    setRecipePdfBusyId(recipe.id);
+    setRecipePdfError(null);
+    try {
+      await downloadRecipePdf(recipe, servings[recipe.id] ?? 1);
+    } catch (error) {
+      setRecipePdfError({ id: recipe.id, message: error instanceof Error ? error.message : 'Não foi possível baixar a receita em PDF.' });
+    } finally {
+      setRecipePdfBusyId(null);
     }
   }
 
@@ -251,6 +267,8 @@ export function Recipes() {
               <input type="number" min="0.25" max="20" step="0.25" value={amount} onChange={(event) => setServings((current) => ({ ...current, [recipe.id]: Math.min(20, Math.max(0.25, Number(event.target.value) || 0.25)) }))} />
             </label>
             <button className="recipe-details-button" type="button" aria-expanded={isExpanded} onClick={() => setExpanded(isExpanded ? null : recipe.id)}>{isExpanded ? 'Ocultar preparo' : 'Ver ingredientes e preparo'}</button>
+            <button className="recipe-download-button" type="button" disabled={recipePdfBusyId !== null} onClick={() => void downloadRecipe(recipe)}><Download size={16} aria-hidden="true" />{recipePdfBusyId === recipe.id ? 'Preparando PDF…' : 'Baixar receita em PDF'}</button>
+            {recipePdfError?.id === recipe.id && <p className="ft-feedback ft-feedback-error" role="alert">{recipePdfError.message}</p>}
             <button className="recipe-plan-button" type="button" onClick={() => addToPlan(recipe)}>Adicionar ao planejamento semanal</button>
             {isExpanded && <div className="recipe-details">
               <h3>Ingredientes</h3><ul>{recipe.ingredients.map((ingredient) => <li key={ingredient}>{ingredient}</li>)}</ul>

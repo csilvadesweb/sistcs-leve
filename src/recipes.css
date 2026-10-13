@@ -69,9 +69,16 @@
 .shopping-list ul { display:grid; gap:0; margin:0; padding:0; list-style:none; }
 .shopping-list li { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:9px 0; border-top:1px solid var(--line-soft); color:var(--text); font-size:14px; }
 .shopping-list li small { color:var(--text-3); font-size:11px; text-align:right; }
-.meal-plan-print { display:inline-flex; align-items:center; justify-content:center; gap:9px; margin-top:14px; min-height:46px; padding:0 16px; border:1px solid var(--gold-2); border-radius:12px; background:var(--green-700); color:#fff; font:inherit; font-size:13px; font-weight:750; cursor:pointer; box-shadow:0 5px 14px rgb(23 61 50 / 14%); }
+.meal-plan-print { display:inline-flex; align-items:center; justify-content:center; gap:9px; margin-top:14px; min-height:46px; padding:0 16px; border:1px solid var(--gold-2); border-radius:12px; background:var(--green-700); color:#102d25; font:inherit; font-size:13px; font-weight:750; cursor:pointer; box-shadow:0 5px 14px rgb(23 61 50 / 14%); }
 .meal-plan-print:disabled { opacity:.65; cursor:wait; box-shadow:none; }
 .recipe-plan-button { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; min-height:44px; padding:8px 12px; border:1px solid var(--line); border-radius:12px; background:var(--surface-2); color:var(--text); font:inherit; font-size:13px; font-weight:700; cursor:pointer; }
 .recipe-plan-button:hover,.meal-plan-print:hover { border-color:var(--gold-2); }
 .recipe-plan-button:focus-visible,.meal-plan-remove:focus-visible,.meal-plan-clear:focus-visible,.meal-plan-print:focus-visible { outline:2px solid var(--gold-2); outline-offset:3px; }
 @media(max-width:520px) { .meal-planner-panel { padding:15px; } .meal-planner-heading { flex-direction:column; } .meal-plan-choices,.meal-plan-recipe-fields { grid-template-columns:1fr; } .meal-plan-item { align-items:flex-start; } }
+
+/* Downloads with high contrast on aqua/green surfaces. */
+.meal-plan-print { color: #102d25; }
+.recipe-download-button { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; min-height:44px; margin-top:8px; padding:8px 12px; border:1px solid rgba(23,61,50,.22); border-radius:12px; background:#e2f0e9; color:#102d25; font:inherit; font-size:13px; font-weight:750; cursor:pointer; }
+.recipe-download-button:hover { background:#d3e8dd; border-color:#173d32; }
+.recipe-download-button:disabled { opacity:.65; cursor:wait; }
+.recipe-download-button:focus-visible { outline:2px solid #173d32; outline-offset:3px; }

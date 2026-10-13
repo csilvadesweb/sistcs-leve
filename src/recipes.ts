@@ -530,7 +530,7 @@ export const RECIPES: Recipe[] = [
     nutritionNote: 'Estimativa editorial por porção; depende do tamanho da maçã e do iogurte.',
   },
   {
-    id: 'pao-queijo-tapioca', name: 'Pão de queijo de frigideira', category: 'Lanches', tags: ['Brasileira'],
+    id: 'pao-queijo-tapioca', name: 'Tapioca com queijo minas e orégano', category: 'Lanches', tags: ['Brasileira'],
     description: 'Lanche inspirado no pão de queijo, preparado em frigideira.', minutes: 10, servings: 1,
     ingredients: ['1 ovo', '30 g de goma de tapioca', '25 g de queijo minas ralado', '1 colher de sopa de iogurte natural'],
     steps: ['Misture o ovo, a goma, o queijo e o iogurte.', 'Despeje em frigideira antiaderente em fogo baixo.', 'Tampe até firmar, vire com cuidado e doure o outro lado.'],

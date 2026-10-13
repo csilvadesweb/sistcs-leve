@@ -157,7 +157,7 @@ export const FOODS_BR: FoodPer100[] = [
 },
   {
     // Valores de referência por 100 g; conferir o rótulo da embalagem específica.
-    name: 'Iogurte Grego Protein (estimativa)',
+    name: 'Vigor Grego Protein (estimativa)',
     brand: 'Vigor',
     kcal: 76,
     protein: 10,

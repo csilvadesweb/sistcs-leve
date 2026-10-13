@@ -70,6 +70,12 @@ describe('searchLocal — catálogo TACO', () => {
     expect(searchLocal('pão de sal', 20).some((food) => /pão, trigo, francês/i.test(food.name))).toBe(true);
     expect(searchLocal('jerimum', 20).some((food) => /abóbora/i.test(food.name))).toBe(true);
     expect(searchLocal('bergamota', 20).some((food) => /tangerina/i.test(food.name))).toBe(true);
+    expect(searchLocal('mexerica', 20).some((food) => /tangerina/i.test(food.name))).toBe(true);
+    expect(searchLocal('batata salsa', 20).some((food) => /batata, baroa/i.test(food.name))).toBe(true);
+    expect(searchLocal('mandioquinha', 20).some((food) => /batata, baroa/i.test(food.name))).toBe(true);
+    expect(searchLocal('pão cacetinho', 20).some((food) => /pão, trigo, francês/i.test(food.name))).toBe(true);
+    expect(searchLocal('feijão de corda', 20).some((food) => /feijão, fradinho/i.test(food.name))).toBe(true);
+    expect(searchLocal('feijão macassa', 20).some((food) => /feijão, fradinho/i.test(food.name))).toBe(true);
   });
 
   it('encontra strogonoff de carne bovina e identifica que os nutrientes são estimados', () => {

@@ -69,7 +69,8 @@
 .shopping-list ul { display:grid; gap:0; margin:0; padding:0; list-style:none; }
 .shopping-list li { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:9px 0; border-top:1px solid var(--line-soft); color:var(--text); font-size:14px; }
 .shopping-list li small { color:var(--text-3); font-size:11px; text-align:right; }
-.meal-plan-print { display:inline-flex; align-items:center; justify-content:center; gap:9px; margin-top:14px; min-height:46px; padding:0 16px; border:1px solid var(--gold-2); border-radius:12px; background:var(--green-700); color:#fff; font:inherit; font-size:13px; font-weight:750; cursor:pointer; box-shadow:0 5px 14px rgb(23 61 50 / 14%); }\n.meal-plan-print:disabled { opacity:.65; cursor:wait; box-shadow:none; }
+.meal-plan-print { display:inline-flex; align-items:center; justify-content:center; gap:9px; margin-top:14px; min-height:46px; padding:0 16px; border:1px solid var(--gold-2); border-radius:12px; background:var(--green-700); color:#fff; font:inherit; font-size:13px; font-weight:750; cursor:pointer; box-shadow:0 5px 14px rgb(23 61 50 / 14%); }
+.meal-plan-print:disabled { opacity:.65; cursor:wait; box-shadow:none; }
 .recipe-plan-button { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; min-height:44px; padding:8px 12px; border:1px solid var(--line); border-radius:12px; background:var(--surface-2); color:var(--text); font:inherit; font-size:13px; font-weight:700; cursor:pointer; }
 .recipe-plan-button:hover,.meal-plan-print:hover { border-color:var(--gold-2); }
 .recipe-plan-button:focus-visible,.meal-plan-remove:focus-visible,.meal-plan-clear:focus-visible,.meal-plan-print:focus-visible { outline:2px solid var(--gold-2); outline-offset:3px; }

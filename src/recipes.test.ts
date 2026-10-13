@@ -12,6 +12,19 @@ describe('catálogo de receitas', () => {
     }
   });
 
+  it('mantém IDs e nomes únicos e nutrientes não negativos', () => {
+    const ids = RECIPES.map((recipe) => recipe.id);
+    const names = RECIPES.map((recipe) => recipe.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR').replace(/[^a-z0-9]+/g, ' ').trim());
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(new Set(names).size).toBe(names.length);
+    for (const recipe of RECIPES) {
+      for (const nutrient of Object.values(recipe.nutrientsPerServing)) {
+        expect(Number.isFinite(nutrient)).toBe(true);
+        expect(nutrient).toBeGreaterThanOrEqual(0);
+      }
+    }
+  });
+
   it('filtra por categoria', () => {
     const results = filterRecipes(RECIPES, '', 'Vegetariana');
     expect(results.length).toBeGreaterThan(0);

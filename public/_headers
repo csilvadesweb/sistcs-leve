@@ -1,9 +1,11 @@
-# Cloudflare Pages e Netlify leem este arquivo.
+# Cloudflare (Workers assets/Pages) e Netlify leem este arquivo.
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(self), microphone=(), geolocation=()
   X-Frame-Options: DENY
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co https://*.openfoodfacts.org; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.openfoodfacts.org; worker-src 'self'; manifest-src 'self'; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
 
 # O service worker e o manifesto nunca podem ficar presos em cache, senão as atualizações não chegam.
 /sw.js

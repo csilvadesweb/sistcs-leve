@@ -1,7 +1,7 @@
 /* Service worker do SISTCS Leve.
  * Só guarda arquivos do próprio app (tela inicial, scripts, estilos, imagens) para abrir rápido e sem internet.
  * Nada de dados de saúde é guardado aqui: Supabase, Open Food Facts e fontes passam direto pela rede. */
-const VERSION = 'v3';
+const VERSION = 'v4';
 const SHELL = `sistcs-shell-${VERSION}`;
 const RUNTIME = `sistcs-runtime-${VERSION}`;
 const MAX_RUNTIME_ENTRIES = 80;

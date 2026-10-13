@@ -542,3 +542,10 @@ body::before, body::after { display: none; }
   .ft-calorie-main strong { font-size: 32px; }
   .ft-meal-heading .btn { gap: 4px; padding: 6px 8px; }
 }
+
+.auth-consent { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.5; color: var(--text-2, var(--text)); }
+.auth-consent input { margin-top: 3px; width: 18px; height: 18px; flex: none; accent-color: var(--leaf); }
+.auth-forgot { align-self: center; font-size: 14px; }
+.privacy-doc { max-width: 720px; text-align: left; }
+.privacy-doc h2 { margin: 22px 0 6px; font-size: 17px; }
+.privacy-doc p { margin: 0 0 8px; line-height: 1.65; font-size: 15px; }

@@ -84,3 +84,9 @@ A busca local combina entradas selecionadas de alimentos e preparações brasile
 - **Auditoria de fontes e cobertura:** `docs/auditoria-cobertura-alimentar-brasileira-2026-10.md`.
 
 A lista local existente está em `src/foods-taco.ts` e usa valores por 100 g; medidas caseiras e prioridade dos resultados ficam em `src/foods-br.ts`. Produtos embalados são consultados no Open Food Facts. A cobertura e as licenças devem ser revistas antes de ampliar o catálogo.
+
+## Segurança e privacidade
+- Política de Privacidade (LGPD) pública em `#/privacidade`; aceite obrigatório no cadastro.
+- Recuperação de senha por e-mail (`resetPasswordForEmail` + tela de nova senha).
+- Cabeçalhos de segurança e CSP em `public/_headers`.
+- Pendente no painel do Supabase (não dá para fazer por código): Site URL/Redirect URL `https://leve.sistcs.com`, SMTP próprio e Leaked Password Protection.

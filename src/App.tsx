@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { Suspense, lazy, type ReactNode } from 'react';
 import {
   Apple,
   CalendarDays,
@@ -16,14 +16,15 @@ import { useHashLocation } from 'wouter/use-hash-location';
 import { AuthGate, useAppData } from './session';
 import { Avatar } from './photos';
 import { PwaBanners } from './pwa';
-import { Home } from './pages/Home';
-import { FoodTracking } from './pages/Food';
-import { Records } from './pages/Records';
-import { Medications } from './pages/Medications';
-import { Fasting } from './pages/Fasting';
-import { Reports } from './pages/Reports';
-import { Exercises } from './pages/Exercises';
-import { ProfileSettings } from './pages/Profile';
+
+const Home = lazy(() => import('./pages/Home').then((m) => ({ default: m.Home })));
+const FoodTracking = lazy(() => import('./pages/Food').then((m) => ({ default: m.FoodTracking })));
+const Records = lazy(() => import('./pages/Records').then((m) => ({ default: m.Records })));
+const Medications = lazy(() => import('./pages/Medications').then((m) => ({ default: m.Medications })));
+const Fasting = lazy(() => import('./pages/Fasting').then((m) => ({ default: m.Fasting })));
+const Reports = lazy(() => import('./pages/Reports').then((m) => ({ default: m.Reports })));
+const Exercises = lazy(() => import('./pages/Exercises').then((m) => ({ default: m.Exercises })));
+const ProfileSettings = lazy(() => import('./pages/Profile').then((m) => ({ default: m.ProfileSettings })));
 
 const destinations = [
   { href: '/', label: 'Início', short: 'Início', icon: House },
@@ -139,6 +140,7 @@ export default function App() {
     <AuthGate>
       <WouterRouter hook={useHashLocation}>
         <Shell>
+          <Suspense fallback={<p className="auth-loading" role="status">Carregando…</p>}>
           <Switch>
             <Route path="/" component={Home} />
             <Route path="/alimentacao" component={FoodTracking} />
@@ -150,6 +152,7 @@ export default function App() {
             <Route path="/perfil" component={ProfileSettings} />
             <Route component={NotFound} />
           </Switch>
+          </Suspense>
         </Shell>
       </WouterRouter>
     </AuthGate>

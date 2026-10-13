@@ -666,6 +666,7 @@ export function ProfileSettings() {
             Apagar todos os meus dados
           </Button>
         </div>
+        <p className="profile-data-scope"><a href="#/privacidade" className="link-button">Ler a Política de Privacidade</a></p>
         <p className="profile-data-scope">
           A exclusão remove os dados deste app da sua conta e pede confirmação antes de apagar. Sua conta de acesso continua existindo.
         </p>

@@ -155,7 +155,7 @@ export const FOODS_BR: FoodPer100[] = [
 }];
 
 const RANK = new Map<string, number>(
-  [...TACO, ...EXTRA].map(([id], i) => [`taco-${id}`, PRIORITY_ORDER.includes(id) ? PRIORITY_ORDER.indexOf(id) - 1000 : i]),
+  [...TACO, ...EXTRA].map(([id], i) => [id >= 9000 ? `estimate-extra-${id}` : `taco-${id}`, PRIORITY_ORDER.includes(id) ? PRIORITY_ORDER.indexOf(id) - 1000 : i]),
 );
 
 export function normalize(text: string) {

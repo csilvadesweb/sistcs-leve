@@ -53,8 +53,6 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (url.pathname !== "/api/ai/chat") return withCors(json({ error: "Rota não encontrada." }, 404));
   if (request.method !== "POST") return withCors(json({ error: "Método não permitido." }, 405));
   if (!(await authenticatedUser(request, env))) return withCors(json({ error: "Entre na sua conta para usar o assistente." }, 401));
-  if (!env.GEMINI_API_KEY) return withCors(json({ error: "O assistente ainda precisa ser configurado pelo administrador. As demais funções continuam disponíveis." }, 503));
-
   let payload: { message?: unknown; history?: unknown };
   try {
     payload = await request.json() as typeof payload;
@@ -65,6 +63,8 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
     return withCors(json({ error: "Escreva uma pergunta para continuar." }, 400));
   }
   if (payload.message.length > 4000) return withCors(json({ error: "A mensagem deve ter no máximo 4.000 caracteres." }, 413));
+
+  if (!env.GEMINI_API_KEY) return withCors(json({ error: "O assistente ainda precisa ser configurado pelo administrador. As demais funções continuam disponíveis." }, 503));
 
   const history = Array.isArray(payload.history)
     ? payload.history.slice(-8).flatMap((item) => {

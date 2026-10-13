@@ -406,7 +406,7 @@ function fromOff(p: any): FoodPer100 | null {
     fiber: nonNegativeNutrient(n['fiber_100g']),
     saturatedFat: optionalNutrient(n['saturated-fat_100g']),
     sugars: optionalNutrient(n['sugars_100g']),
-    sodiumMg: optionalNutrient(n['sodium_100g']) === undefined ? undefined : round1(optionalNutrient(n['sodium_100g'])! * 1000),
+    sodiumMg: num(n['sodium_100g']) === null || num(n['sodium_100g'])! < 0 ? undefined : round1(num(n['sodium_100g'])! * 1000),
     reportedNutrients: {
       protein: num(n['proteins_100g']) !== null && num(n['proteins_100g'])! >= 0,
       carbs: num(n['carbohydrates_100g']) !== null && num(n['carbohydrates_100g'])! >= 0,

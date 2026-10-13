@@ -12,6 +12,11 @@ export interface FoodPer100 {
   carbs: number;
   fat: number;
   fiber: number;
+  /** Nutrientes adicionais do rótulo; ausente significa que a fonte não informou o valor. */
+  saturatedFat?: number;
+  sugars?: number;
+  sodiumMg?: number;
+  reportedNutrients?: { protein: boolean; carbs: boolean; fat: boolean; fiber: boolean };
   origin: 'local' | 'off' | 'estimate' | 'usda';
   sourceUrl?: string;
   sourceLicense?: string;
@@ -372,6 +377,10 @@ function num(v: unknown): number | null {
   return typeof n === 'number' && Number.isFinite(n) ? n : null;
 }
 const round1 = (n: number) => Math.round(n * 10) / 10;
+function optionalNutrient(value: unknown): number | undefined {
+  const parsed = num(value);
+  return parsed === null || parsed < 0 ? undefined : round1(parsed);
+}
 
 function nonNegativeNutrient(value: unknown): number {
   const parsed = num(value);
@@ -395,6 +404,15 @@ function fromOff(p: any): FoodPer100 | null {
     carbs: nonNegativeNutrient(n['carbohydrates_100g']),
     fat: nonNegativeNutrient(n['fat_100g']),
     fiber: nonNegativeNutrient(n['fiber_100g']),
+    saturatedFat: optionalNutrient(n['saturated-fat_100g']),
+    sugars: optionalNutrient(n['sugars_100g']),
+    sodiumMg: num(n['sodium_100g']) === null || num(n['sodium_100g'])! < 0 ? undefined : round1(num(n['sodium_100g'])! * 1000),
+    reportedNutrients: {
+      protein: num(n['proteins_100g']) !== null && num(n['proteins_100g'])! >= 0,
+      carbs: num(n['carbohydrates_100g']) !== null && num(n['carbohydrates_100g'])! >= 0,
+      fat: num(n['fat_100g']) !== null && num(n['fat_100g'])! >= 0,
+      fiber: num(n['fiber_100g']) !== null && num(n['fiber_100g'])! >= 0,
+    },
     origin: 'off',
     code: p.code ? String(p.code) : undefined,
     sourceUrl: p.code ? `${OFF}/product/${encodeURIComponent(String(p.code))}` : OFF,

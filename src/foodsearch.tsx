@@ -338,6 +338,20 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
               {food.origin === 'off' && <a href={food.sourceUrl ?? 'https://world.openfoodfacts.org/'} target="_blank" rel="noreferrer">Fonte do produto: Open Food Facts · licença ODbL / DCL</a>}
             </div>
           </div>
+          {food.origin === 'off' && <section className="fs-nutrition-details" aria-label="Tabela nutricional por 100 gramas">
+            <strong>Tabela nutricional por 100 g</strong>
+            <dl>
+              <div><dt>Energia</dt><dd>{decimalText(food.kcal)} kcal</dd></div>
+              <div><dt>Proteínas</dt><dd>{food.reportedNutrients?.protein === false ? 'Não informado' : `${decimalText(food.protein)} g`}</dd></div>
+              <div><dt>Carboidratos</dt><dd>{food.reportedNutrients?.carbs === false ? 'Não informado' : `${decimalText(food.carbs)} g`}</dd></div>
+              <div><dt>Gorduras totais</dt><dd>{food.reportedNutrients?.fat === false ? 'Não informado' : `${decimalText(food.fat)} g`}</dd></div>
+              <div><dt>Gorduras saturadas</dt><dd>{food.saturatedFat === undefined ? 'Não informado' : `${decimalText(food.saturatedFat)} g`}</dd></div>
+              <div><dt>Fibra alimentar</dt><dd>{food.reportedNutrients?.fiber === false ? 'Não informado' : `${decimalText(food.fiber)} g`}</dd></div>
+              <div><dt>Açúcares</dt><dd>{food.sugars === undefined ? 'Não informado' : `${decimalText(food.sugars)} g`}</dd></div>
+              <div><dt>Sódio</dt><dd>{food.sodiumMg === undefined ? 'Não informado' : `${decimalText(food.sodiumMg)} mg`}</dd></div>
+            </dl>
+            {food.reportedNutrients && Object.values(food.reportedNutrients).some((available) => !available) && <p>Alguns nutrientes não foram informados pela fonte; o cálculo desses itens pode ficar incompleto.</p>}
+          </section>}
           <label className="fs-g-label" htmlFor="fs-measure">Medida do alimento</label>
           <div className="fs-grams-row">
             <div className="fs-grams">

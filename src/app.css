@@ -346,3 +346,13 @@ label.btn.is-disabled { opacity: .55; pointer-events: none; }
   .scanner-viewport video { min-height: 220px; }
 }
 @media (prefers-reduced-motion: reduce) { .scanner-overlay i { animation: none; } }
+
+/* Tabela nutricional do produto lido por código de barras */
+.fs-nutrition-details { margin: 12px 0 16px; padding: 14px; border: 1px solid var(--line, rgba(232,196,108,.28)); border-radius: 14px; background: var(--surface-soft, rgba(232,196,108,.06)); }
+.fs-nutrition-details > strong { display: block; margin-bottom: 10px; }
+.fs-nutrition-details dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; }
+.fs-nutrition-details dl > div { min-width: 0; padding: 8px 10px; border-radius: 9px; background: var(--surface, rgba(0,0,0,.04)); }
+.fs-nutrition-details dt { font-size: .82rem; opacity: .78; }
+.fs-nutrition-details dd { margin: 3px 0 0; font-weight: 700; overflow-wrap: anywhere; }
+.fs-nutrition-details p { margin: 10px 0 0; font-size: .82rem; opacity: .82; }
+@media (max-width: 420px) { .fs-nutrition-details dl { grid-template-columns: 1fr; } }

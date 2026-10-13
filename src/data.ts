@@ -185,7 +185,11 @@ export function reorderNavigationItem(order: string[], draggedHref: string, targ
 export function normalizeNavigationPreferences(value: unknown): NavigationPreferences {
   const input = value && typeof value === 'object' ? value as Partial<NavigationPreferences> : {};
   const requestedOrder = Array.isArray(input.order) ? input.order.filter((item): item is string => typeof item === 'string') : [];
-  const order = [...new Set([...requestedOrder.filter((item) => DEFAULT_NAVIGATION_ORDER.includes(item)), ...DEFAULT_NAVIGATION_ORDER])];
+  const order = [...new Set(requestedOrder.filter((item) => DEFAULT_NAVIGATION_ORDER.includes(item)))];
+  const missing = DEFAULT_NAVIGATION_ORDER.filter((item) => !order.includes(item));
+  const profileIndex = order.indexOf('/perfil');
+  if (profileIndex >= 0) order.splice(profileIndex, 0, ...missing.filter((item) => item !== '/perfil'));
+  else order.push(...missing);
   const labels: Record<string, string> = {};
   if (input.labels && typeof input.labels === 'object') {
     for (const [key, label] of Object.entries(input.labels)) {

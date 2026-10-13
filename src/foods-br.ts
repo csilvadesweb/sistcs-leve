@@ -201,6 +201,20 @@ export function householdUnitsForFood(food: FoodPer100): Array<[string, number]>
   if (/pizza/.test(name)) return [['fatia', 100]];
   if (/castanha|am[eê]ndoa|noz|amendoim|nut|almond|walnut|peanut/.test(name)) return [['porção (um punhado)', 30]];
   if (/lata|canned/.test(name) && /atum|sardinha|milho|ervilha|tuna|sardine|corn|peas/.test(name)) return [['lata drenada (aprox.)', 120]];
+  // Medidas de alimentos básicos para resultados internacionais que não incluem porções.
+  // São aproximações domésticas; o peso real varia com o utensílio, compactação e preparo.
+  if (/flour|farinha|starch|amido|fuba|cornmeal|sugar|a[cç][uú]car|\\bsalt\\b|\\bsal\\b/.test(name)) return [['colher de sopa rasa', 12], ['xícara', 120], ['porção', 10]];
+  if (/rice|arroz/.test(name)) return [['colher de sopa cheia', 25], ['xícara cozida', 160], ['porção', 100]];
+  if (/beans|feij[aã]o|lentil|lentilha|chickpea|gr[aã]o de bico|pea soup/.test(name)) return [['concha média', 100], ['colher de sopa', 25], ['porção', 100]];
+  if (/pasta|macarr[aã]o|spaghetti|noodle/.test(name)) return [['pegador (cozido)', 80], ['xícara cozida', 140], ['porção', 100]];
+  if (/oatmeal|aveia|porridge|granola|cereal/.test(name)) return [['colher de sopa', 10], ['xícara', 80], ['porção', 30]];
+
+  if (/olive oil|vegetable oil|azeite|oil,/.test(name)) return [['colher de chá', 5], ['colher de sopa', 13]];
+  if (/milk|leite|juice|suco|water|[aá]gua|coffee|caf[eé]|tea,|ch[aá]/.test(name)) return [['copo', 200], ['xícara', 240], ['colher de sopa', 15]];
+  if (/potato|batata|sweet potato|mandioca|cassava|yam|inhame/.test(name)) return [['unidade média', 130], ['colher de sopa (amassado)', 25], ['porção', 100]];
+  if (/chicken|frango|beef|carne|pork|porco|fish|peixe|salmon|salm[aã]o|tuna|atum/.test(name)) return [['filé médio', 120], ['porção', 100]];
+  if (/lettuce|alface|spinach|espinafre|couve|greens|broccoli|br[oó]colis/.test(name)) return [['xícara picada', 35], ['porção', 50]];
+  if (/tomato|tomate|onion|cebola|carrot|cenoura|cucumber|pepino/.test(name)) return [['unidade média', 100], ['porção', 50]];
   return [];
 }
 

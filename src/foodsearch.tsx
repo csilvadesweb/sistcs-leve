@@ -271,7 +271,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
       const f = await lookupBarcode(c, ctl.signal);
       if (!f) {
         setStatus('done');
-        return setMessage('Produto não encontrado. Tente buscar pelo nome.');
+        return setMessage('Esse código não está no catálogo online. Pesquise “Vigor Grego Protein” ou “Danone Mais Proteínas Morango” no campo acima; produtos do catálogo local também podem ser encontrados pelo nome.');
       }
       choose(f);
       setQuery(f.name);

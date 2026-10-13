@@ -96,24 +96,24 @@ describe('searchLocal — catálogo TACO', () => {
 
 describe('Cobertura de preparações brasileiras estimadas', () => {
   it.each([
-    ['pão de queijo', 'estimate-pao-de-queijo'],
-    ['feijoada', 'estimate-feijoada'],
-    ['brigadeiro', 'estimate-brigadeiro'],
-    ['tapioca sem recheio', 'estimate-tapioca'],
-    ['cuscuz de tapioca', 'estimate-cuscuz-tapioca'],
-    ['moqueca de peixe', 'estimate-moqueca-peixe'],
-    ['esfiha', 'estimate-esfiha'],
-    ['bolo de cenoura', 'estimate-bolo-cenoura'],
-    ['bolo de cenoura com cobertura de chocolate', 'estimate-bolo-cenoura-chocolate'],
-    ['pamonha com coco', 'estimate-pamonha-coco'],
-    ['coxinha de frango', 'estimate-coxinha-frango'],
-    ['pastel frito', 'estimate-pastel-frito'],
+    ['pão de queijo', 'estimate-br-pao-de-queijo'],
+    ['feijoada', 'estimate-br-feijoada'],
+    ['brigadeiro', 'estimate-br-brigadeiro'],
+    ['tapioca sem recheio', 'estimate-br-tapioca'],
+    ['cuscuz de tapioca', 'estimate-br-cuscuz-tapioca'],
+    ['moqueca de peixe', 'estimate-br-moqueca-peixe'],
+    ['esfiha', 'estimate-br-esfiha'],
+    ['bolo de cenoura', 'estimate-br-bolo-cenoura'],
+    ['bolo de cenoura com cobertura de chocolate', 'estimate-br-bolo-cenoura-chocolate'],
+    ['pamonha com coco', 'estimate-br-pamonha-coco'],
+    ['coxinha de frango', 'estimate-br-coxinha-frango'],
+    ['pastel frito', 'estimate-br-pastel-frito'],
   ])('encontra %s e identifica os valores como estimativas', (query, code) => {
     expect(searchLocal(query, 20)).toContainEqual(expect.objectContaining({ code, origin: 'estimate' }));
   });
 
   it('mantém valores numéricos válidos e medidas caseiras nas preparações estimadas', () => {
-    const additions = FOODS_BR.filter((food) => food.code?.startsWith('estimate-'));
+    const additions = FOODS_BR.filter((food) => food.code?.startsWith('estimate-br-'));
     expect(additions).toHaveLength(12);
     for (const food of additions) {
       expect([food.kcal, food.protein, food.carbs, food.fat, food.fiber].every((n) => Number.isFinite(n) && n >= 0)).toBe(true);

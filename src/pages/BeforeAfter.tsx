@@ -61,6 +61,8 @@ export function BeforeAfter() {
     await run(
       async () => {
         await deleteProgressPhoto(p);
+        if (leftId === p.id) setLeftId('');
+        if (rightId === p.id) setRightId('');
         setFeedback({ kind: 'success', message: 'Foto excluída.' });
       },
       (message) => setFeedback({ kind: 'error', message }),
@@ -131,6 +133,15 @@ export function BeforeAfter() {
                       {formatDate(p.date)}{weightOn(p.date) ? ` · ${weightOn(p.date)}` : ''}
                       {p.note ? <><br />{p.note}</> : null}
                     </figcaption>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => void remove(p)}
+                      disabled={busy}
+                      aria-label={`Excluir foto ${KIND_LABEL[p.kind].toLowerCase()} de ${formatDate(p.date)}`}
+                    >
+                      <Trash2 aria-hidden="true" /> Excluir foto
+                    </Button>
                   </>
                 )}
               </figure>

@@ -13,6 +13,7 @@ const average = (values: number[]) => (values.length ? values.reduce((a, b) => a
 export function Reports() {
   const { data, loading, error: loadError } = useAppData();
   const [range, setRange] = useState<(typeof RANGES)[number]>(7);
+  const [activeReportTab, setActiveReportTab] = useState<'summary' | 'food' | 'movement' | 'wellbeing'>('summary');
   const today = todayInSaoPaulo();
   const goals = data.profile?.goals ?? null;
 
@@ -99,6 +100,13 @@ export function Reports() {
       </div>
       <p className="ft-explainer" style={{ marginLeft: 0 }}>{formatDate(days[0])} a {formatDate(days[days.length - 1])}</p>
 
+      <div className="progressive-tabs" role="tablist" aria-label="Seções dos relatórios">
+        <button type="button" role="tab" aria-selected={activeReportTab === 'summary'} aria-controls="report-panel-summary" className={activeReportTab === 'summary' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveReportTab('summary')}>Resumo</button>
+        <button type="button" role="tab" aria-selected={activeReportTab === 'food'} aria-controls="report-panel-food" className={activeReportTab === 'food' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveReportTab('food')}>Alimentação</button>
+        <button type="button" role="tab" aria-selected={activeReportTab === 'movement'} aria-controls="report-panel-movement" className={activeReportTab === 'movement' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveReportTab('movement')}>Movimento</button>
+        <button type="button" role="tab" aria-selected={activeReportTab === 'wellbeing'} aria-controls="report-panel-wellbeing" className={activeReportTab === 'wellbeing' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveReportTab('wellbeing')}>Água e peso</button>
+      </div>
+      {activeReportTab === 'summary' && <div id="report-panel-summary" role="tabpanel">
       <section className="stat-grid stat-grid-3" aria-label="Resumo do período">
         {stats.map((s) => (
           <div className="stat" key={s.label}>
@@ -109,6 +117,8 @@ export function Reports() {
         ))}
       </section>
 
+      </div>}
+      {activeReportTab === 'food' && <div id="report-panel-food" role="tabpanel">
       <section className="ft-card" aria-labelledby="kcal-title">
         <p className="ft-kicker">ALIMENTAÇÃO</p>
         <h2 className="rep-title" id="kcal-title">Calorias por dia</h2>
@@ -124,6 +134,8 @@ export function Reports() {
         )}
       </section>
 
+      </div>}
+      {activeReportTab === 'movement' && <div id="report-panel-movement" role="tabpanel">
       <section className="ft-card" aria-labelledby="exercise-title">
         <p className="ft-kicker">MOVIMENTO</p>
         <h2 className="rep-title" id="exercise-title">Calorias de exercício por dia</h2>
@@ -139,6 +151,8 @@ export function Reports() {
         <p className="ft-cup-note">Calorias de exercício são estimativas e não representam o gasto energético total do dia.</p>
       </section>
 
+      </div>}
+      {activeReportTab === 'wellbeing' && <div id="report-panel-wellbeing" role="tabpanel">
       <section className="ft-card" aria-labelledby="water-title">
         <p className="ft-kicker">HIDRATAÇÃO</p>
         <h2 className="rep-title" id="water-title">Água por dia</h2>
@@ -172,6 +186,7 @@ export function Reports() {
         )}
       </section>
 
+      </div>}
       <p className="ft-privacy-note">Os relatórios são só um espelho do que você anotou e não oferecem orientação médica.</p>
     </div>
   );

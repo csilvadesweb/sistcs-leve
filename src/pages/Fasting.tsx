@@ -50,6 +50,7 @@ export function Fasting() {
   const [startedEarlier, setStartedEarlier] = useState('');
   const [editStart, setEditStart] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<Feedback>(null);
+  const [activeFastingTab, setActiveFastingTab] = useState<'timer' | 'protocols' | 'history' | 'benefits'>('timer');
 
   const fasts = data.fastingEntries;
   const active = fasts.find((f) => !f.endedAt) ?? null;
@@ -159,6 +160,14 @@ export function Fasting() {
         <p className={`ft-feedback ft-feedback-${feedback.kind}`} role={feedback.kind === 'error' ? 'alert' : 'status'} aria-live="polite">{feedback.message}</p>
       )}
 
+      <div className="progressive-tabs" role="tablist" aria-label="Seções de jejum">
+        <button type="button" role="tab" aria-selected={activeFastingTab === 'timer'} aria-controls="fast-panel-timer" className={activeFastingTab === 'timer' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveFastingTab('timer')}><Timer size={17} aria-hidden="true" /> Cronômetro</button>
+        <button type="button" role="tab" aria-selected={activeFastingTab === 'protocols'} aria-controls="fast-panel-protocols" className={activeFastingTab === 'protocols' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveFastingTab('protocols')}>Protocolos</button>
+        <button type="button" role="tab" aria-selected={activeFastingTab === 'history'} aria-controls="fast-panel-history" className={activeFastingTab === 'history' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveFastingTab('history')}><Clock size={17} aria-hidden="true" /> Histórico</button>
+        <button type="button" role="tab" aria-selected={activeFastingTab === 'benefits'} aria-controls="fast-panel-benefits" className={activeFastingTab === 'benefits' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveFastingTab('benefits')}>Informações</button>
+      </div>
+
+      {activeFastingTab === 'timer' && <div id="fast-panel-timer" role="tabpanel">
       <section className="ft-card fast-card" aria-labelledby="fast-timer-title">
         <div className="ft-section-heading">
           <div className="ft-section-mark"><Timer size={19} aria-hidden="true" /></div>
@@ -228,6 +237,8 @@ export function Fasting() {
         )}
       </section>
 
+      </div>}
+      {activeFastingTab === 'protocols' && <div id="fast-panel-protocols" role="tabpanel">
       <section className="ft-card" aria-labelledby="fast-methods-title">
         <div className="ft-section-heading">
           <div className="ft-section-mark"><HeartPulse size={19} aria-hidden="true" /></div>
@@ -246,6 +257,8 @@ export function Fasting() {
         <p className="fast-warning" role="note"><TriangleAlert size={16} aria-hidden="true" /><span><strong>Importante:</strong> não é necessário prolongar o jejum para obter benefícios. Evite jejuns de 20–24 horas, OMAD, 5:2 ou dias alternados sem avaliação profissional. Pare se houver tontura, tremores, fraqueza, confusão ou mal-estar.</span></p>
       </section>
 
+      </div>}
+      {activeFastingTab === 'history' && <div id="fast-panel-history" role="tabpanel">
       <section className="stat-grid" aria-label="Resumo dos jejuns">
         <div className="stat"><span>Últimos 7 dias</span><strong>{week.length} <small>{week.length === 1 ? 'jejum' : 'jejuns'}</small></strong><small>encerrados</small></div>
         <div className="stat"><span>Duração média</span><strong>{done.length ? durationText(avg) : '—'}</strong><small>{done.length ? `em ${done.length} jejuns` : 'sem jejuns encerrados'}</small></div>
@@ -284,6 +297,8 @@ export function Fasting() {
         )}
       </section>
 
+      </div>}
+      {activeFastingTab === 'benefits' && <div id="fast-panel-benefits" role="tabpanel">
       <section className="ft-card" aria-labelledby="fast-benefits-title">
         <div className="ft-section-heading">
           <div className="ft-section-mark"><HeartPulse size={19} aria-hidden="true" /></div>
@@ -306,6 +321,7 @@ export function Fasting() {
           </span>
         </p>
       </section>
+      </div>}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { Button, Field, decimalIsValid, decimalInputText, decimalText } from './ui';
+import { Button, Field, dateDaysAgoInSaoPaulo, decimalIsValid, decimalInputText, decimalText } from './ui';
 
 describe('componentes básicos da interface', () => {
   it('mantém o tipo e as classes padrão do botão sem submit acidental', () => {
@@ -74,5 +74,18 @@ describe('formatação numérica brasileira usada nos formulários', () => {
   it('mantém a apresentação numérica no padrão pt-BR', () => {
     expect(decimalText(1234.5)).toBe('1.234,5');
     expect(decimalInputText(12.5)).toBe('12,5');
+  });
+});
+
+
+describe('datas de calendário no fuso de São Paulo', () => {
+  it('calcula o limite de seis dias pelo calendário local, perto da meia-noite brasileira', () => {
+    expect(dateDaysAgoInSaoPaulo(6, new Date('2026-10-13T02:30:00.000Z'))).toBe('2026-10-06');
+  });
+
+  it('não permite que dias negativos ou inválidos avancem o limite para o futuro', () => {
+    const now = new Date('2026-10-13T15:00:00.000Z');
+    expect(dateDaysAgoInSaoPaulo(-2, now)).toBe('2026-10-13');
+    expect(dateDaysAgoInSaoPaulo(Number.NaN, now)).toBe('2026-10-13');
   });
 });

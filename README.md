@@ -3,10 +3,14 @@
 App de acompanhamento com dados na nuvem: alimentação com metas e "quanto falta", água, peso, medicamentos,
 relatórios e uma configuração personalizada que estima suas metas diárias.
 
+## Fontes e licença dos dados nutricionais
+
+Consulte `docs/FOOD_DATA_SOURCES_AND_LICENSES.md` antes de importar, redistribuir ou ampliar qualquer catálogo. A base TACO é mantida como referência atual, mas sua redistribuição deve ser confirmada com a fonte titular antes de qualquer pacote comercial. Dados USDA FoodData Central são CC0; Open Food Facts exige cumprimento da ODbL/DbCL, atribuição e avaliação de share-alike. Nenhuma importação em massa ou migration de produção deve ser feita sem revisão e testes.
+
 ## Telas
 
 - **Início:** resumo de hoje (calorias com anel de progresso, nutrientes, água, peso, doses) e atalho para configurar.
-- **Exercícios:** diário de atividades, duração e estimativa aproximada de calorias gastas por MET e peso corporal. Requer a migration aditiva `supabase/migrations/20261012170000_exercise_entries.sql`. A migration ainda não foi aplicada em produção; não execute `db push` até reconciliar o histórico de migrations documentado em `docs/SUPABASE_MIGRATION_AUDIT_2026-10-12.md`.
+- **Exercícios:** diário de atividades, duração e estimativa aproximada de calorias gastas por MET e peso corporal. Requer a migration aditiva `supabase/migrations/20261012195153_exercise_entries.sql`. A migration ainda não foi aplicada em produção; não execute `db push` até reconciliar o histórico de migrations documentado em `docs/SUPABASE_MIGRATION_AUDIT_2026-10-12.md`.
 - **Alimentação:** busca local de alimentos e preparações brasileiras, produtos embalados do Open Food Facts e referências USDA SR Legacy via TempoLife (priorizar registros com licença pública explícita e atribuição; nomes podem aparecer em inglês), leitura de código de barras pela câmera (Chrome/Android; nos outros navegadores, digite o número), lançamentos por refeição, favoritos, total do dia e **quanto falta (ou passou) para cada meta**; água com meta e copo. Os valores aproximados são identificados como estimativas.
 - **Registros:** peso com gráfico, variação e progresso até o peso desejado.
 - **Registros também tem Antes e depois:** envio de fotos (antes, durante, depois), comparação lado a lado com dias e variação de peso, e galeria.

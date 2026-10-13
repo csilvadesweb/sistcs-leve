@@ -252,6 +252,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
         <strong>{f.name}</strong>
         <span>{f.brand ? `${f.brand} · ` : ''}{decimalText(f.kcal)} kcal por 100 g{f.origin === 'usda' ? ' · USDA (referência)' : ''}</span>
         {f.origin === 'usda' && <a href={f.sourceUrl ?? 'https://tempolife.app/'} target="_blank" rel="noreferrer">Fonte: USDA via TempoLife</a>}
+        {f.origin === 'off' && <a href={f.sourceUrl ?? 'https://world.openfoodfacts.org/'} target="_blank" rel="noreferrer">Fonte: Open Food Facts · licença ODbL / DCL</a>}
       </div>
       <Button variant="outline" size="sm" onClick={() => choose(f)}>Usar</Button>
     </li>
@@ -296,6 +297,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
               <strong>{food.name}</strong>
               <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por 100 g{food.origin === 'local' ? ' · fonte: TACO (Unicamp)' : food.origin === 'estimate' ? ' · estimativa nutricional (valor aproximado)' : food.origin === 'usda' ? ' · USDA SR Legacy via TempoLife (referência internacional)' : ''}</span>
               {food.origin === 'usda' && <a href={food.sourceUrl ?? 'https://tempolife.app/'} target="_blank" rel="noreferrer">Fonte dos nutrientes: USDA SR Legacy via TempoLife</a>}
+              {food.origin === 'off' && <a href={food.sourceUrl ?? 'https://world.openfoodfacts.org/'} target="_blank" rel="noreferrer">Fonte do produto: Open Food Facts · licença ODbL / DCL</a>}
             </div>
           </div>
           <label className="fs-g-label" htmlFor="fs-measure">Medida do alimento</label>

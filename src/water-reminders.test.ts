@@ -36,7 +36,7 @@ describe('janela de lembretes', () => {
 });
 
 describe('frequência de notificações', () => {
-  const settings = { enabled: true, intervalMinutes: 60 as const, startTime: '09:00', endTime: '21:00' };
+  const settings = { enabled: true, intervalMinutes: 60 as const, startTime: '09:00', endTime: '21:00', soundEnabled: true };
 
   it('não notifica se estiver desativado, fora do horário ou sem registro anterior', () => {
     const now = new Date(2026, 0, 1, 10, 0);

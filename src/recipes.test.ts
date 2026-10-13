@@ -18,14 +18,24 @@ describe('catálogo de receitas', () => {
     expect(results.every((recipe) => recipe.category === 'Vegetariana')).toBe(true);
   });
 
-  it('prioriza receitas brasileiras, depois Fitness, e oferece filtros dedicados', () => {
+  it('prioriza Fitness primeiro, receitas brasileiras em seguida, e oferece filtros dedicados', () => {
     const all = filterRecipes(RECIPES, '');
-    const firstNonBrazilian = all.findIndex((recipe) => !recipe.tags?.includes('Brasileira'));
     expect(all.length).toBe(RECIPES.length);
-    expect(all[0].tags).toContain('Brasileira');
-    expect(firstNonBrazilian).toBeGreaterThanOrEqual(0);
-    expect(all.slice(0, firstNonBrazilian).every((recipe) => recipe.tags?.includes('Brasileira'))).toBe(true);
-    expect(all.slice(firstNonBrazilian).every((recipe) => !recipe.tags?.includes('Brasileira'))).toBe(true);
+    const firstNonFitness = all.findIndex((recipe) => !recipe.tags?.includes('Fitness'));
+    expect(all[0].tags).toContain('Fitness');
+    expect(firstNonFitness).toBeGreaterThanOrEqual(0);
+    expect(all.slice(0, firstNonFitness).every((recipe) => recipe.tags?.includes('Fitness'))).toBe(true);
+
+    const fitnessOnly = all.filter((recipe) => recipe.tags?.includes('Fitness'));
+    const brazilianOnly = all.filter((recipe) => recipe.tags?.includes('Brasileira') && !recipe.tags?.includes('Fitness'));
+    const neither = all.filter((recipe) => !recipe.tags?.includes('Fitness') && !recipe.tags?.includes('Brasileira'));
+    const lastFitnessIndex = Math.max(...fitnessOnly.map((recipe) => all.indexOf(recipe)));
+    const firstBrazilianOnlyIndex = brazilianOnly.length ? Math.min(...brazilianOnly.map((recipe) => all.indexOf(recipe))) : -1;
+    const firstNeitherIndex = neither.length ? Math.min(...neither.map((recipe) => all.indexOf(recipe))) : -1;
+    if (firstBrazilianOnlyIndex >= 0) expect(lastFitnessIndex).toBeLessThan(firstBrazilianOnlyIndex);
+    if (firstNeitherIndex >= 0 && firstBrazilianOnlyIndex >= 0) expect(firstBrazilianOnlyIndex).toBeLessThan(firstNeitherIndex);
+    if (firstNeitherIndex >= 0 && firstBrazilianOnlyIndex < 0) expect(lastFitnessIndex).toBeLessThan(firstNeitherIndex);
+
     expect(filterRecipes(RECIPES, '', 'Brasileira').every((recipe) => recipe.tags?.includes('Brasileira'))).toBe(true);
     expect(filterRecipes(RECIPES, '', 'Fitness').every((recipe) => recipe.tags?.includes('Fitness'))).toBe(true);
   });

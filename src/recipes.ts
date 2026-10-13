@@ -432,7 +432,7 @@ export function filterRecipes(recipes: Recipe[], query: string, category: Recipe
     return haystack.includes(normalized);
   });
   if (category !== 'Todas') return filtered;
-  const priority = (recipe: Recipe) => recipe.tags?.includes('Brasileira') ? 0 : recipe.tags?.includes('Fitness') ? 1 : 2;
+  const priority = (recipe: Recipe) => recipe.tags?.includes('Fitness') ? 0 : recipe.tags?.includes('Brasileira') ? 1 : 2;
   return filtered.map((recipe, index) => ({ recipe, index }))
     .sort((a, b) => priority(a.recipe) - priority(b.recipe) || a.index - b.index)
     .map(({ recipe }) => recipe);

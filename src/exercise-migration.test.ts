@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import migration from '../supabase/migrations/20261012170000_exercise_entries.sql?raw';
+import migration from '../supabase/migrations/20261012195153_exercise_entries.sql?raw';
 
 describe('contrato da migration do diário de exercícios', () => {
   it('cria a tabela de forma aditiva e preserva os dados existentes', () => {

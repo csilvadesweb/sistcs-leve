@@ -24,10 +24,10 @@ describe('planejamento semanal e lista de compras', () => {
     expect(resolved[0].recipe.name).toBe('Aveia com banana e iogurte');
   });
 
-  it('agrupa descrições de ingredientes repetidas e conta ocorrências sem inventar somas de quantidade', () => {
+  it('soma quantidades explícitas repetidas e conta ocorrências sem converter medidas ambíguas', () => {
     const resolved = resolvePlannedMeals(validatePlannedMeals(plan, RECIPES), RECIPES);
     const shopping = buildShoppingList(resolved);
-    expect(shopping.find((entry) => entry.ingredient === '40 g de aveia em flocos')?.count).toBe(2);
+    expect(shopping.find((entry) => entry.ingredient === '80 g de Aveia em flocos')?.count).toBe(2);
     expect(shopping.map((entry) => entry.ingredient)).toEqual([...shopping.map((entry) => entry.ingredient)].sort((a, b) => a.localeCompare(b, 'pt-BR')));
   });
 

@@ -7,7 +7,7 @@ import { filterRecipes, RECIPES, scaleRecipeNutrients, type Recipe, type RecipeF
 import { buildShoppingList, resolvePlannedMeals, validatePlannedMeals, WEEK_DAYS, type PlannedMeal } from '../meal-plan';
 
 const MEAL_LABELS: Record<MealType, string> = { breakfast: 'Café da manhã', lunch: 'Almoço', snack: 'Lanche', dinner: 'Jantar', other: 'Outros' };
-const categories: RecipeFilter[] = ['Brasileira', 'Fitness', 'Todas', 'Café da manhã', 'Almoço e jantar', 'Lanches', 'Vegetariana'];
+const categories: RecipeFilter[] = ['Fitness', 'Brasileira', 'Todas', 'Café da manhã', 'Almoço e jantar', 'Lanches', 'Vegetariana'];
 const meals: Array<{ value: MealType; label: string }> = [
   { value: 'breakfast', label: 'Café da manhã' },
   { value: 'lunch', label: 'Almoço' },

@@ -96,6 +96,8 @@ describe('searchLocal — catálogo TACO', () => {
     expect(householdUnitsForFood({ ...sample, name: 'Chicken breast, cooked', units: undefined })[0]).toEqual(['filé médio', 120]);
     expect(householdUnitsForFood({ ...sample, name: 'Olive oil', units: undefined })[0]).toEqual(['colher de chá', 5]);
     expect(householdUnitsForFood({ ...sample, name: 'Milk, whole', units: undefined })[0]).toEqual(['copo', 200]);
+    expect(householdUnitsForFood({ ...sample, name: 'Salmon, cooked', units: undefined })[0]).toEqual(['filé médio', 120]);
+    expect(householdUnitsForFood({ ...sample, name: 'Rice flour', units: undefined })[0]).toEqual(['colher de sopa rasa', 12]);
   });
 
   it('mantém resultados determinísticos e respeita o limite solicitado', () => {

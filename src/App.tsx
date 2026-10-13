@@ -10,6 +10,7 @@ import {
   Dumbbell,
   Pill,
   Timer,
+  CookingPot,
 } from 'lucide-react';
 import { Link, Route, Router as WouterRouter, Switch, useLocation } from 'wouter';
 import { useHashLocation } from 'wouter/use-hash-location';
@@ -25,10 +26,12 @@ const Fasting = lazy(() => import('./pages/Fasting').then((m) => ({ default: m.F
 const Reports = lazy(() => import('./pages/Reports').then((m) => ({ default: m.Reports })));
 const Exercises = lazy(() => import('./pages/Exercises').then((m) => ({ default: m.Exercises })));
 const ProfileSettings = lazy(() => import('./pages/Profile').then((m) => ({ default: m.ProfileSettings })));
+const Recipes = lazy(() => import('./pages/Recipes').then((m) => ({ default: m.Recipes })));
 
 const destinations = [
   { href: '/', label: 'Início', short: 'Início', icon: House },
   { href: '/alimentacao', label: 'Alimentação', short: 'Comida', icon: Apple },
+  { href: '/receitas', label: 'Receitas', short: 'Receitas', icon: CookingPot },
   { href: '/exercicios', label: 'Exercícios', short: 'Exercícios', icon: Dumbbell },
   { href: '/registros', label: 'Registros', short: 'Evolução', icon: ClipboardList },
   { href: '/jejum', label: 'Jejum', short: 'Jejum', icon: Timer },
@@ -144,6 +147,7 @@ export default function App() {
           <Switch>
             <Route path="/" component={Home} />
             <Route path="/alimentacao" component={FoodTracking} />
+            <Route path="/receitas" component={Recipes} />
             <Route path="/exercicios" component={Exercises} />
             <Route path="/registros" component={Records} />
             <Route path="/jejum" component={Fasting} />

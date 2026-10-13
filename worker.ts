@@ -96,10 +96,29 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
     });
     if (response.status === 429) return withCors(json({ error: "O limite gratuito da IA foi atingido por enquanto. Tente novamente mais tarde." }, 429));
     if (!response.ok) {
-      // Do not expose provider details or API keys to clients.
-      return withCors(json({ error: response.status === 401 || response.status === 403
-        ? "A chave do assistente precisa ser verificada pelo administrador."
-        : "O assistente está temporariamente indisponível. Tente novamente mais tarde." }, 502));
+      // Log only the provider status and a short, sanitized error message; never log credentials or prompts.
+      let providerCode = "";
+      let providerMessage = "";
+      try {
+        const providerError = await response.clone().json() as { error?: { status?: unknown; message?: unknown } };
+        if (typeof providerError.error?.status === "string") providerCode = providerError.error.status.slice(0, 80);
+        if (typeof providerError.error?.message === "string") providerMessage = providerError.error.message.replace(/[\r\n]+/g, " ").slice(0, 240);
+      } catch {
+        // Keep the response generic if the provider did not return JSON.
+      }
+      console.warn("SISTCS Leve Gemini provider rejected request", {
+        httpStatus: response.status,
+        providerCode,
+        providerMessage,
+      });
+      const clientMessage = response.status === 401 || response.status === 403
+        ? "A chave do Gemini foi recusada ou não tem permissão. O administrador precisa verificar a chave e o acesso à API."
+        : response.status === 404
+          ? "O modelo Gemini configurado não foi encontrado. O administrador precisa revisar a configuração do modelo."
+          : response.status === 400
+            ? "O Gemini recusou o formato da solicitação. Tente novamente; se persistir, o administrador deve revisar a configuração."
+            : "O assistente está temporariamente indisponível. Tente novamente mais tarde.";
+      return withCors(json({ error: clientMessage }, 502));
     }
     const result = await response.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> };
     const answer = result.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("").trim();

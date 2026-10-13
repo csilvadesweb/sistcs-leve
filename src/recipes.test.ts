@@ -18,7 +18,7 @@ describe('catálogo de receitas', () => {
     expect(results.every((recipe) => recipe.category === 'Vegetariana')).toBe(true);
   });
 
-  it('prioriza receitas brasileiras, depois Fitness, e oferece filtros dedicados', () => {
+  it('prioriza Fitness primeiro, receitas brasileiras em seguida, e oferece filtros dedicados', () => {
     const all = filterRecipes(RECIPES, '');
     const firstNonBrazilian = all.findIndex((recipe) => !recipe.tags?.includes('Brasileira'));
     expect(all.length).toBe(RECIPES.length);

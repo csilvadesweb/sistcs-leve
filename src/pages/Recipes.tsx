@@ -5,6 +5,7 @@ import { createFoodEntry, type MealType } from '../data';
 import { decimalText, todayInSaoPaulo } from '../ui';
 import { filterRecipes, RECIPES, scaleRecipeNutrients, type Recipe, type RecipeCategory } from '../recipes';
 import { buildShoppingList, resolvePlannedMeals, validatePlannedMeals, WEEK_DAYS, type PlannedMeal } from '../meal-plan';
+import { toggleFavoriteId, validateFavoriteIds } from '../recipe-favorites';
 
 const MEAL_LABELS: Record<MealType, string> = { breakfast: 'Café da manhã', lunch: 'Almoço', snack: 'Lanche', dinner: 'Jantar', other: 'Outros' };
 const categories: Array<RecipeCategory | 'Todas'> = ['Todas', 'Café da manhã', 'Almoço e jantar', 'Lanches', 'Vegetariana'];
@@ -25,7 +26,7 @@ export function Recipes() {
     try {
       const raw = window.localStorage.getItem(`sistcs-leve-recipe-favorites-v1:${user.id}`);
       const parsed: unknown = raw ? JSON.parse(raw) : [];
-      return Array.isArray(parsed) ? parsed.filter((id): id is string => typeof id === 'string' && RECIPES.some((recipe) => recipe.id === id)) : [];
+      return validateFavoriteIds(parsed, RECIPES.map((recipe) => recipe.id));
     } catch { return []; }
   });
   const [meal, setMeal] = useState<MealType>('lunch');
@@ -54,7 +55,7 @@ export function Recipes() {
   const recipes = useMemo(() => filterRecipes(RECIPES, query, category).filter((recipe) => !favoritesOnly || favorites.includes(recipe.id)), [query, category, favoritesOnly, favorites]);
 
   function toggleFavorite(recipeId: string) {
-    setFavorites((current) => current.includes(recipeId) ? current.filter((id) => id !== recipeId) : [...current, recipeId]);
+    setFavorites((current) => toggleFavoriteId(current, recipeId, RECIPES.map((recipe) => recipe.id)));
   }
 
   function addToPlan(recipe: Recipe) {

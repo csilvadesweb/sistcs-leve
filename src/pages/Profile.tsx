@@ -10,8 +10,6 @@ import {
   readLegacyData,
   removeAvatar,
   saveUserProfile,
-  saveNavigationPreferences,
-  type NavigationPreferences,
   setAvatar,
   weightSummary,
   type GoalKey,
@@ -33,19 +31,6 @@ import { Avatar, resizeImage } from '../photos';
 import { InstallCard } from '../pwa';
 import { HealthActivityCard } from '../components/HealthActivityCard';
 import { Button, Field, decimalInputText, decimalText, readError, todayInSaoPaulo } from '../ui';
-
-const menuItems = [
-  { href: '/', label: 'Início' },
-  { href: '/alimentacao', label: 'Alimentação' },
-  { href: '/receitas', label: 'Receitas' },
-  { href: '/assistente', label: 'Assistente IA' },
-  { href: '/exercicios', label: 'Exercícios' },
-  { href: '/registros', label: 'Registros' },
-  { href: '/jejum', label: 'Jejum' },
-  { href: '/medicamentos', label: 'Medicamentos' },
-  { href: '/relatorios', label: 'Relatórios' },
-  { href: '/perfil', label: 'Perfil' },
-] as const;
 
 const goalFields: Array<{ key: GoalKey; label: string; unit: string }> = [
   { key: 'calories', label: 'Calorias', unit: 'kcal' },
@@ -136,11 +121,6 @@ export function ProfileSettings() {
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [busy, setBusy] = useState(false);
   const [legacy, setLegacy] = useState(() => readLegacyData());
-  const [menuPreferences, setMenuPreferences] = useState<NavigationPreferences>(() => ({
-    order: ['/', '/alimentacao', '/receitas', '/assistente', '/exercicios', '/registros', '/jejum', '/medicamentos', '/relatorios', '/perfil'],
-    labels: {},
-  }));
-  const [menuBusy, setMenuBusy] = useState(false);
   const avatarInput = useRef<HTMLInputElement>(null);
   const avatarPath = data.profile?.avatarPath ?? null;
 
@@ -178,14 +158,6 @@ export function ProfileSettings() {
   useEffect(() => {
     setForm(profileToForm(data.profile));
   }, [data.profile]);
-
-  useEffect(() => {
-    const saved = data.profile?.navigationPreferences;
-    if (saved) setMenuPreferences({
-      order: [...saved.order],
-      labels: { ...saved.labels },
-    });
-  }, [data.profile?.navigationPreferences]);
 
   const latestWeight = useMemo(() => weightSummary(data.weightEntries).latest, [data.weightEntries]);
   const today = todayInSaoPaulo();
@@ -340,28 +312,6 @@ export function ProfileSettings() {
       setFeedback({ kind: 'error', message: readError(e, 'Não foi possível importar os dados.') });
     } finally {
       setBusy(false);
-    }
-  }
-
-  async function saveMenuPreferences() {
-    const labels = Object.fromEntries(
-      menuItems.map((item) => [item.href, (menuPreferences.labels[item.href] ?? item.label).trim().slice(0, 30)]),
-    );
-    if (menuItems.some((item) => !labels[item.href])) {
-      setFeedback({ kind: 'error', message: 'Cada opção precisa ter um nome.' });
-      return;
-    }
-    setMenuBusy(true);
-    try {
-      const preferences = { order: menuPreferences.order, labels };
-      await saveNavigationPreferences(user.id, preferences);
-      setMenuPreferences(preferences);
-      await reload();
-      setFeedback({ kind: 'success', message: 'Menu personalizado salvo na sua conta.' });
-    } catch (e) {
-      setFeedback({ kind: 'error', message: readError(e, 'Não foi possível salvar o menu.') });
-    } finally {
-      setMenuBusy(false);
     }
   }
 
@@ -567,47 +517,6 @@ export function ProfileSettings() {
                 <span className="profile-unit" aria-hidden="true">ml</span>
               </div>
             </Field>
-          </div>
-
-          <div className="profile-subsection menu-customization" aria-labelledby="menu-customization-title">
-            <div className="profile-subsection-heading">
-              <h3 id="menu-customization-title">Personalizar menu</h3>
-              <p>Personalize os nomes das áreas. Para reorganizar a barra principal no celular, pressione um ícone e arraste-o para a posição desejada. Os endereços e as funções originais permanecem intactos.</p>
-            </div>
-            <div className="menu-preferences-list">
-              {menuItems
-                .slice()
-                .sort((a, b) => menuPreferences.order.indexOf(a.href) - menuPreferences.order.indexOf(b.href))
-                .map((item, index) => (
-                  <div className="menu-preference-row" key={item.href}>
-                    <div className="menu-preference-order" aria-hidden="true">{index + 1}</div>
-                    <Field id={`menu-label-${item.href.replace(/[^a-z]/g, '')}`} label={item.label} className="profile-field">
-                      <input
-                        id={`menu-label-${item.href.replace(/[^a-z]/g, '')}`}
-                        className="input"
-                        type="text"
-                        maxLength={30}
-                        value={menuPreferences.labels[item.href] ?? item.label}
-                        onChange={(event) => setMenuPreferences((current) => ({
-                          ...current,
-                          labels: { ...current.labels, [item.href]: event.target.value },
-                        }))}
-                      />
-                    </Field>
-
-                  </div>
-                ))}
-            </div>
-            <div className="profile-form-actions">
-              <Button type="button" onClick={saveMenuPreferences} disabled={menuBusy || loading}>
-                <Save aria-hidden="true" />
-                {menuBusy ? 'Salvando menu…' : 'Salvar personalização do menu'}
-              </Button>
-              <Button type="button" variant="outline" disabled={menuBusy} onClick={() => setMenuPreferences({
-                order: menuItems.map((item) => item.href),
-                labels: {},
-              })}>Restaurar padrão</Button>
-            </div>
           </div>
 
           <div className="profile-form-actions">

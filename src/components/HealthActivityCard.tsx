@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Activity, RefreshCw, Smartphone } from 'lucide-react';
 import { supabase } from '../supabase';
+import { dateDaysAgoInSaoPaulo, todayInSaoPaulo } from '../ui';
 
 type HealthRecord = {
   id: string;
@@ -13,10 +14,6 @@ type HealthRecord = {
   activity_name: string | null;
   synced_at: string;
 };
-
-function todayInBrazil() {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
-}
 
 function isMissingTable(error: { code?: string; message?: string }) {
   const message = (error.message ?? '').toLowerCase();
@@ -41,7 +38,7 @@ export function HealthActivityCard() {
     const { data, error: queryError } = await supabase
       .from('health_activity_records')
       .select('id,record_type,record_date,start_time,end_time,value,unit,activity_name,synced_at')
-      .gte('record_date', new Date(Date.now() - 6 * 86400000).toISOString().slice(0, 10))
+      .gte('record_date', dateDaysAgoInSaoPaulo(6))
       .order('record_date', { ascending: false })
       .order('start_time', { ascending: false })
       .limit(100);
@@ -58,7 +55,7 @@ export function HealthActivityCard() {
 
   useEffect(() => { void load(); }, [load]);
 
-  const today = todayInBrazil();
+  const today = todayInSaoPaulo();
   const todaySteps = records.find((record) => record.record_type === 'daily_steps' && record.record_date === today);
   const sessions = records.filter((record) => record.record_type === 'exercise_session');
 

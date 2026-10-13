@@ -78,6 +78,20 @@ export function todayInSaoPaulo() {
   return `${get('year')}-${get('month')}-${get('day')}`;
 }
 
+/** Retorna uma data de calendário em São Paulo, sem converter datas locais por UTC. */
+export function dateDaysAgoInSaoPaulo(days: number, now: Date = new Date()) {
+  const safeDays = Number.isFinite(days) ? Math.max(0, Math.floor(days)) : 0;
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Sao_Paulo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(now);
+  const get = (type: string) => Number(parts.find((p) => p.type === type)?.value);
+  const date = new Date(Date.UTC(get('year'), get('month') - 1, get('day') - safeDays));
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}`;
+}
+
 export function formatDate(date: string) {
   if (!date) return '';
   const [year, month, day] = date.split('-').map(Number);

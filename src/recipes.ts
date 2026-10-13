@@ -384,7 +384,7 @@ export const RECIPES: Recipe[] = [
     nutritionNote: 'Estimativa por porção; pão e teor de gordura da carne mudam os valores.',
   },
   {
-    id: 'polenta-molho-lentilha', name: 'Polenta com molho de lentilha', category: 'Almoço e jantar', tags: ['Brasileira', 'Vegetariana'],
+    id: 'polenta-molho-lentilha', name: 'Polenta com molho de lentilha', category: 'Almoço e jantar', tags: ['Brasileira'],
     description: 'Polenta cremosa com molho de lentilhas e tomate.', minutes: 30, servings: 2,
     ingredients: ['100 g de fubá', '500 ml de água', '200 g de lentilha cozida', '200 g de tomate triturado', 'Alho, cebola e ervas a gosto'],
     steps: ['Cozinhe o fubá na água mexendo até engrossar.', 'Refogue alho e cebola, adicione tomate e lentilha.', 'Sirva o molho sobre a polenta.'],

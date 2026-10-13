@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { FOODS_BR, gramsFor, lookupBarcode, parseQuery, scale, searchLocal, searchOpenFoodFacts, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { FOODS_BR, gramsFor, lookupBarcode, normalizeBarcodeInput, parseQuery, scale, searchLocal, searchOpenFoodFacts, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 afterEach(() => vi.unstubAllGlobals());
 
@@ -137,6 +137,19 @@ describe('Cobertura de preparações brasileiras estimadas', () => {
       expect([food.kcal, food.protein, food.carbs, food.fat, food.fiber].every((n) => Number.isFinite(n) && n >= 0)).toBe(true);
       expect(food.units?.length).toBeGreaterThan(0);
     }
+  });
+});
+
+describe('normalização de entrada do código de barras', () => {
+  it('preserva até 14 dígitos ao colar código formatado com separadores', () => {
+    expect(normalizeBarcodeInput('1-2345 6789-0123')).toBe('1234567890123');
+    expect(normalizeBarcodeInput(' 789 123 456 78901 ')).toBe('78912345678901');
+  });
+
+  it('remove caracteres não numéricos e limita a 14 dígitos sem truncar antes da limpeza', () => {
+    expect(normalizeBarcodeInput('789.123.456.78901')).toBe('78912345678901');
+    expect(normalizeBarcodeInput('123456789012345678')).toBe('12345678901234');
+    expect(normalizeBarcodeInput('sem código')).toBe('');
   });
 });
 

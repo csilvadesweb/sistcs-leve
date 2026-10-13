@@ -89,6 +89,15 @@ describe('searchLocal — catálogo TACO', () => {
     expect(searchLocal('strogonoff')).toContainEqual(expect.objectContaining({ code: 'recipe-strogonoff-carne' }));
   });
 
+  it('fornece medidas caseiras úteis para alimentos de referência sem porções cadastradas', async () => {
+    const { householdUnitsForFood } = await import('./foods-br');
+    expect(householdUnitsForFood({ ...sample, name: 'Rice, white, cooked', units: undefined })[0]).toEqual(['colher de sopa cheia', 25]);
+    expect(householdUnitsForFood({ ...sample, name: 'Beans, black, cooked', units: undefined })[0]).toEqual(['concha média', 100]);
+    expect(householdUnitsForFood({ ...sample, name: 'Chicken breast, cooked', units: undefined })[0]).toEqual(['filé médio', 120]);
+    expect(householdUnitsForFood({ ...sample, name: 'Olive oil', units: undefined })[0]).toEqual(['colher de chá', 5]);
+    expect(householdUnitsForFood({ ...sample, name: 'Milk, whole', units: undefined })[0]).toEqual(['copo', 200]);
+  });
+
   it('mantém resultados determinísticos e respeita o limite solicitado', () => {
     expect(searchLocal('arroz', 5)).toEqual(searchLocal('arroz', 5));
     expect(searchLocal('arroz', 5)).toHaveLength(5);

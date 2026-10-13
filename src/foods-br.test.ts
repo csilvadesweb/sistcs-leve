@@ -151,6 +151,8 @@ describe('Open Food Facts — integração externa resiliente', () => {
       fiber: 2,
       origin: 'off',
       code: '78912345',
+      sourceUrl: 'https://world.openfoodfacts.org/product/78912345',
+      sourceLicense: 'ODbL-1.0; Database Contents License',
     }]);
   });
 

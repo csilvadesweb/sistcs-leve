@@ -585,3 +585,59 @@ body::before, body::after { display: none; }
 .ft-meal-summary-card small { color: var(--text-2, #68766c); font-size: 12px; }
 .ft-water-tabs { margin-top: 12px; }
 @media (max-width: 420px) { .ft-meal-summary-grid { gap: 8px; } .ft-meal-summary-card { padding: 13px 11px; } .ft-meal-summary-card strong { font-size: 16px; } .ft-meal-tabs button { padding-inline: 11px; } }
+
+
+/* Navegação por abas nas telas extensas de receitas. */
+.recipes-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 6px;
+  margin: 0 0 20px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  scrollbar-width: thin;
+}
+.recipes-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  flex: 1 0 max-content;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-2);
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+  transition: color .2s ease, background .2s ease, border-color .2s ease;
+}
+.recipes-tab:hover { background: var(--surface-2); color: var(--text); }
+.recipes-tab.is-active {
+  color: var(--gold-2);
+  background: linear-gradient(135deg, rgba(232, 196, 108, .24), rgba(232, 196, 108, .08));
+  border-color: var(--line);
+}
+.recipes-tab-count {
+  display: inline-grid;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 750;
+}
+.recipes-tab:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+@media (max-width: 480px) {
+  .recipes-tabs { gap: 5px; padding: 5px; }
+  .recipes-tab { min-height: 46px; padding: 0 12px; font-size: 14px; }
+}

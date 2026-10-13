@@ -79,6 +79,7 @@ function Shell({ children }: { children: ReactNode }) {
   const savedOrderKey = navigationPreferences?.order.join('|') ?? '';
   const [mobileOrder, setMobileOrder] = useState<string[]>(() => navigationPreferences?.order ?? defaultOrder);
   const [draggingHref, setDraggingHref] = useState<string | null>(null);
+  const [pressingHref, setPressingHref] = useState<string | null>(null);
   const [navSaveStatus, setNavSaveStatus] = useState('');
   const navRef = useRef<HTMLElement | null>(null);
   const dragRef = useRef<{
@@ -90,6 +91,7 @@ function Shell({ children }: { children: ReactNode }) {
     originalOrder: string[];
     latestOrder: string[];
     suppressClick: boolean;
+    holdTimer: number | null;
   } | null>(null);
 
   useEffect(() => {
@@ -106,7 +108,7 @@ function Shell({ children }: { children: ReactNode }) {
 
   function startNavPointer(event: ReactPointerEvent<HTMLAnchorElement>, href: string) {
     if (event.button !== 0 || dragRef.current?.active) return;
-    dragRef.current = {
+    const drag = {
       pointerId: event.pointerId,
       href,
       startX: event.clientX,
@@ -115,7 +117,17 @@ function Shell({ children }: { children: ReactNode }) {
       originalOrder: [...mobileOrder],
       latestOrder: [...mobileOrder],
       suppressClick: false,
+      holdTimer: null as number | null,
     };
+    dragRef.current = drag;
+    setPressingHref(href);
+    drag.holdTimer = window.setTimeout(() => {
+      if (dragRef.current !== drag) return;
+      drag.active = true;
+      setPressingHref(null);
+      setDraggingHref(href);
+      navRef.current?.setPointerCapture?.(event.pointerId);
+    }, 450);
     setNavSaveStatus('');
   }
 
@@ -123,10 +135,12 @@ function Shell({ children }: { children: ReactNode }) {
     const drag = dragRef.current;
     if (!drag || drag.pointerId !== event.pointerId) return;
     if (!drag.active) {
-      if (Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) < 8) return;
-      drag.active = true;
-      setDraggingHref(drag.href);
-      navRef.current?.setPointerCapture?.(event.pointerId);
+      if (Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) > 10) {
+        if (drag.holdTimer !== null) window.clearTimeout(drag.holdTimer);
+        setPressingHref(null);
+        dragRef.current = null;
+      }
+      return;
     }
     event.preventDefault();
     const over = document.elementFromPoint(event.clientX, event.clientY)?.closest<HTMLElement>('[data-nav-href]');
@@ -150,11 +164,14 @@ function Shell({ children }: { children: ReactNode }) {
     const drag = dragRef.current;
     if (!drag || drag.pointerId !== event.pointerId) return;
     if (!drag.active) {
+      if (drag.holdTimer !== null) window.clearTimeout(drag.holdTimer);
+      setPressingHref(null);
       dragRef.current = null;
       return;
     }
     event.preventDefault();
     drag.suppressClick = true;
+    if (drag.holdTimer !== null) window.clearTimeout(drag.holdTimer);
     dragRef.current = drag;
     setDraggingHref(null);
     try {
@@ -175,7 +192,9 @@ function Shell({ children }: { children: ReactNode }) {
   function cancelNavPointer(event: ReactPointerEvent<HTMLElement>) {
     const drag = dragRef.current;
     if (!drag || drag.pointerId !== event.pointerId) return;
+    if (drag.holdTimer !== null) window.clearTimeout(drag.holdTimer);
     if (drag.active) setMobileOrder(drag.originalOrder);
+    setPressingHref(null);
     setDraggingHref(null);
     dragRef.current = null;
   }
@@ -236,9 +255,9 @@ function Shell({ children }: { children: ReactNode }) {
               href={href}
               data-nav-href={href}
               draggable={false}
-              aria-label={`${label}. Pressione e arraste para reorganizar.`}
+              aria-label={`${label}. Mantenha pressionado por um instante e, quando o ícone destacar, arraste para reorganizar.`}
               aria-current={location === href ? 'page' : undefined}
-              className={`nav-link nav-link-mobile ${location === href ? 'nav-link-active' : ''} ${draggingHref === href ? 'nav-link-dragging' : ''}`}
+              className={`nav-link nav-link-mobile ${location === href ? 'nav-link-active' : ''} ${pressingHref === href ? 'nav-link-pressing' : ''} ${draggingHref === href ? 'nav-link-dragging' : ''}`}
               onPointerDown={(event) => startNavPointer(event, href)}
               onClick={handleNavClick}
             >

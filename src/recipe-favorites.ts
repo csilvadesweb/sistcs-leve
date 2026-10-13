@@ -1,5 +1,3 @@
-const VALID_IDS = new Set<string>();
-
 /** Validates persisted favorite IDs against the current catalog. */
 export function validateFavoriteIds(value: unknown, validRecipeIds: readonly string[]): string[] {
   if (!Array.isArray(value)) return [];

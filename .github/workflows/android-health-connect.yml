@@ -37,3 +37,10 @@ jobs:
       - name: Compile and test Android companion
         working-directory: android-health-connect
         run: gradle --no-daemon test assembleDebug
+      - name: Publish debug APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sistcs-leve-health-connect-debug
+          path: android-health-connect/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 7

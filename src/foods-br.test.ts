@@ -184,6 +184,13 @@ describe('Open Food Facts — integração externa resiliente', () => {
           { slug: 'black-eyed-peas-cooked', name: 'Cowpeas, common, mature seeds, cooked', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/black-eyed-peas-cooked', per_100g: { kcal: 116, protein_g: 7.7, carbs_g: 20.8, fat_g: 0.5, fiber_g: 6.5 } },
           { slug: 'collard-greens', name: 'Collards, cooked', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/collard-greens', per_100g: { kcal: 33, protein_g: 2.7, carbs_g: 5.7, fat_g: 0.7, fiber_g: 4 } },
           { slug: 'okra-raw', name: 'Okra, raw', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/okra-raw', per_100g: { kcal: 33, protein_g: 1.9, carbs_g: 7.5, fat_g: 0.2, fiber_g: 3.2 } },
+          { slug: 'yam-raw', name: 'Yam, raw', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/yam-raw', per_100g: { kcal: 118, protein_g: 1.5, carbs_g: 27.9, fat_g: 0.2, fiber_g: 4.1 } },
+          { slug: 'chayote-raw', name: 'Chayote, raw', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/chayote-raw', per_100g: { kcal: 19, protein_g: 0.8, carbs_g: 4.5, fat_g: 0.1, fiber_g: 1.7 } },
+          { slug: 'zucchini-raw', name: 'Squash, summer, zucchini, includes skin, raw', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/zucchini-raw', per_100g: { kcal: 17, protein_g: 1.2, carbs_g: 3.1, fat_g: 0.3, fiber_g: 1 } },
+          { slug: 'cauliflower-raw', name: 'Cauliflower, raw', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/cauliflower-raw', per_100g: { kcal: 25, protein_g: 1.9, carbs_g: 5, fat_g: 0.3, fiber_g: 2 } },
+          { slug: 'cabbage-raw', name: 'Cabbage, raw', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/cabbage-raw', per_100g: { kcal: 25, protein_g: 1.3, carbs_g: 5.8, fat_g: 0.1, fiber_g: 2.5 } },
+          { slug: 'parsley-root-raw', name: 'Parsley root, raw', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/parsley-root-raw', per_100g: { kcal: 55, protein_g: 2.3, carbs_g: 12.3, fat_g: 0.6, fiber_g: 4.3 } },
+          { slug: 'pinto-beans-cooked', name: 'Beans, pinto, mature seeds, cooked', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/pinto-beans-cooked', per_100g: { kcal: 143, protein_g: 9, carbs_g: 26.2, fat_g: 0.7, fiber_g: 9 } },
           { slug: 'banana-unverified', name: 'Banana curated', source: 'curated_unverified', values_license: null, per_100g: { kcal: 999, protein_g: 0, carbs_g: 0, fat_g: 0, fiber_g: 0 } },
         ],
       }),
@@ -205,6 +212,27 @@ describe('Open Food Facts — integração externa resiliente', () => {
     })]);
     await expect(searchTempoLifeFoods('quiabo')).resolves.toEqual([expect.objectContaining({
       name: 'Okra, raw', code: 'usda-okra-raw',
+    })]);
+    await expect(searchTempoLifeFoods('inhame')).resolves.toEqual([expect.objectContaining({
+      name: 'Yam, raw', code: 'usda-yam-raw',
+    })]);
+    await expect(searchTempoLifeFoods('chuchu')).resolves.toEqual([expect.objectContaining({
+      name: 'Chayote, raw', code: 'usda-chayote-raw',
+    })]);
+    await expect(searchTempoLifeFoods('abobrinha')).resolves.toEqual([expect.objectContaining({
+      name: 'Squash, summer, zucchini, includes skin, raw', code: 'usda-zucchini-raw',
+    })]);
+    await expect(searchTempoLifeFoods('couve-flor')).resolves.toEqual([expect.objectContaining({
+      name: 'Cauliflower, raw', code: 'usda-cauliflower-raw',
+    })]);
+    await expect(searchTempoLifeFoods('repolho')).resolves.toEqual([expect.objectContaining({
+      name: 'Cabbage, raw', code: 'usda-cabbage-raw',
+    })]);
+    await expect(searchTempoLifeFoods('mandioquinha')).resolves.toEqual([expect.objectContaining({
+      name: 'Parsley root, raw', code: 'usda-parsley-root-raw',
+    })]);
+    await expect(searchTempoLifeFoods('feijão carioca')).resolves.toEqual([expect.objectContaining({
+      name: 'Beans, pinto, mature seeds, cooked', code: 'usda-pinto-beans-cooked',
     })]);
   });
   it('converte energia em kJ para kcal quando o campo direto está ausente', async () => {

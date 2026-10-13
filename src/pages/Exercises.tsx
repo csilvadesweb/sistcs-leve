@@ -4,6 +4,7 @@ import {useAppData} from '../session';
 import {createExerciseEntry,deleteExerciseEntry,updateExerciseEntry,type ExerciseEntry,type ExerciseEntryInput} from '../data';
 import {EXERCISE_ACTIVITIES,estimateExerciseCalories,validateExerciseInput} from '../exercise';
 import {decimalText,todayInSaoPaulo} from '../ui';
+import {HealthActivityCard} from '../components/HealthActivityCard';
 type FormState={date:string;activityId:string;duration:string;weight:string;note:string};
 const blank=(date:string,weight:number|null):FormState=>({date,activityId:'walking_brisk',duration:'30',weight:weight?String(weight):'',note:''});
 export function Exercises(){
@@ -17,6 +18,7 @@ async function submit(event:FormEvent){event.preventDefault();const a=EXERCISE_A
 async function remove(e:ExerciseEntry){if(!window.confirm('Excluir o registro de '+e.activity+'?'))return;setBusy(true);try{await deleteExerciseEntry(e.id);await reload();setFeedback({kind:'success',message:'Registro excluído.'})}catch(err){setFeedback({kind:'error',message:err instanceof Error?err.message:'Não foi possível excluir.'})}finally{setBusy(false)}}
 return <div className="ft-page page-enter"><header className="ft-heading"><div><p className="eyebrow"><span className="eyebrow-dot"/>MOVIMENTO E ENERGIA</p><h1 className="serif-display">Exercícios</h1><p>Registre atividades e acompanhe uma estimativa de energia gasta.</p></div><div className="ft-heading-icon" aria-hidden="true"><Dumbbell size={29}/></div></header>
 {loadError&&<p className="ft-feedback ft-feedback-error" role="alert">{loadError}</p>}{loading&&<p role="status">Carregando registros…</p>}
+<HealthActivityCard />
 {!data.exerciseTrackingAvailable&&<div className="exercise-notice" role="status"><strong>Ativação pendente.</strong> A tabela ainda não existe no banco conectado. Aplique <code>supabase/migrations/20261012_exercise_entries.sql</code> no projeto correto para habilitar gravação. Dados existentes não são removidos.</div>}
 <section className="exercise-summary"><div><span>Calorias estimadas</span><strong>{decimalText(calories)} kcal</strong></div><div><span>Tempo ativo</span><strong>{minutes} min</strong></div><div><span>Atividades</span><strong>{entries.length}</strong></div></section>
 <section className="ft-card"><div className="ft-card-heading"><div><p className="ft-kicker">HISTÓRICO DIÁRIO</p><h2 className="rep-title">Seus exercícios</h2></div><button className="btn" type="button" onClick={newEntry} disabled={!data.exerciseTrackingAvailable||busy}><Plus size={17}/> Adicionar</button></div>

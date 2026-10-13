@@ -108,7 +108,7 @@ export function Recipes() {
 
       <section className="recipes-intro">
         <div className="recipes-intro-icon"><UtensilsCrossed size={22} /></div>
-        <div><strong>Comida de verdade, do seu jeito</strong><p>Receitas iniciais com ingredientes comuns no Brasil. Os valores nutricionais são estimativas por porção.</p></div>
+        <div><strong>Comida de verdade, do seu jeito</strong><p>Receitas práticas para seus objetivos. Os valores nutricionais são estimativas por porção.</p><p className="recipe-nutrition-note">Catálogo atual: {RECIPES.length} receitas únicas nesta versão. Meta de expansão: 1.400, priorizando Fitness e depois receitas brasileiras. O catálogo só cresce após validar licença, duplicatas e dados nutricionais.</p></div>
       </section>
 
       <section className="meal-planner-panel" aria-labelledby="meal-planner-title">

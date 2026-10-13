@@ -9,6 +9,8 @@ import {
   createDataExport,
   fastHours,
   lastDays,
+  normalizeNavigationPreferences,
+  reorderNavigationItem,
   weightSummary,
   type FoodEntry,
   type WeightEntry,
@@ -115,5 +117,30 @@ describe('jejum e exportação', () => {
     expect(exported).toMatchObject({ app: 'SISTCS Leve', formatVersion: 3, data });
     expect(Number.isNaN(Date.parse(exported.exportedAt))).toBe(false);
     expect(data.foodEntries).toEqual(entries);
+  });
+});
+
+
+describe('personalização da navegação', () => {
+  it('preserva todas as áreas, inclusive receitas, assistente e exercícios', () => {
+    const preferences = normalizeNavigationPreferences({ order: ['/assistente', '/receitas', '/assistente', '/rota-inexistente'] });
+    expect(preferences.order).toEqual([
+      '/assistente', '/receitas', '/', '/alimentacao', '/exercicios',
+      '/registros', '/jejum', '/medicamentos', '/relatorios', '/perfil',
+    ]);
+    expect(new Set(preferences.order).size).toBe(10);
+  });
+
+  it('move apenas o destino solicitado e não altera a ordem original', () => {
+    const original = ['/', '/alimentacao', '/receitas', '/assistente'];
+    expect(reorderNavigationItem(original, '/assistente', '/alimentacao')).toEqual([
+      '/', '/assistente', '/alimentacao', '/receitas',
+    ]);
+    expect(original).toEqual(['/', '/alimentacao', '/receitas', '/assistente']);
+  });
+
+  it('ignora destinos inexistentes sem perder itens válidos', () => {
+    expect(reorderNavigationItem(['/', '/alimentacao'], '/desconhecido', '/')).toEqual(['/', '/alimentacao']);
+    expect(reorderNavigationItem(['/', '/alimentacao'], '/alimentacao', '/desconhecido')).toEqual(['/', '/alimentacao']);
   });
 });

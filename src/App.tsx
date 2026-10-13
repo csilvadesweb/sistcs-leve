@@ -1,4 +1,4 @@
-import { Suspense, lazy, type ReactNode } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import {
   Apple,
   CalendarDays,
@@ -18,6 +18,7 @@ import { useHashLocation } from 'wouter/use-hash-location';
 import { AuthGate, useAppData } from './session';
 import { Avatar } from './photos';
 import { PwaBanners } from './pwa';
+import { reorderNavigationItem, saveNavigationPreferences } from './data';
 
 const Home = lazy(() => import('./pages/Home').then((m) => ({ default: m.Home })));
 const FoodTracking = lazy(() => import('./pages/Food').then((m) => ({ default: m.FoodTracking })));
@@ -72,17 +73,119 @@ function NavLink({ href, label, text, icon: Icon, active, mobile = false }: {
 
 function Shell({ children }: { children: ReactNode }) {
   const [location] = useLocation();
-  const { data } = useAppData();
+  const { data, user } = useAppData();
   const navigationPreferences = data.profile?.navigationPreferences;
+  const defaultOrder = destinations.map((item) => item.href);
+  const savedOrderKey = navigationPreferences?.order.join('|') ?? '';
+  const [mobileOrder, setMobileOrder] = useState<string[]>(() => navigationPreferences?.order ?? defaultOrder);
+  const [draggingHref, setDraggingHref] = useState<string | null>(null);
+  const [navSaveStatus, setNavSaveStatus] = useState('');
+  const navRef = useRef<HTMLElement | null>(null);
+  const dragRef = useRef<{
+    pointerId: number;
+    href: string;
+    startX: number;
+    startY: number;
+    active: boolean;
+    originalOrder: string[];
+    latestOrder: string[];
+    suppressClick: boolean;
+  } | null>(null);
+
+  useEffect(() => {
+    if (navigationPreferences?.order) setMobileOrder([...navigationPreferences.order]);
+  }, [savedOrderKey]);
+
   const orderedDestinations = [...destinations]
     .sort((a, b) => {
-      const order = navigationPreferences?.order ?? [];
-      const ai = order.indexOf(a.href);
-      const bi = order.indexOf(b.href);
-      return (ai < 0 ? destinations.findIndex((d) => d.href === a.href) : ai)
-        - (bi < 0 ? destinations.findIndex((d) => d.href === b.href) : bi);
+      const ai = mobileOrder.indexOf(a.href);
+      const bi = mobileOrder.indexOf(b.href);
+      return (ai < 0 ? defaultOrder.indexOf(a.href) : ai) - (bi < 0 ? defaultOrder.indexOf(b.href) : bi);
     })
     .map((item) => ({ ...item, label: navigationPreferences?.labels?.[item.href]?.trim() || item.label }));
+
+  function startNavPointer(event: ReactPointerEvent<HTMLAnchorElement>, href: string) {
+    if (event.button !== 0 || dragRef.current?.active) return;
+    dragRef.current = {
+      pointerId: event.pointerId,
+      href,
+      startX: event.clientX,
+      startY: event.clientY,
+      active: false,
+      originalOrder: [...mobileOrder],
+      latestOrder: [...mobileOrder],
+      suppressClick: false,
+    };
+    setNavSaveStatus('');
+  }
+
+  function moveNavPointer(event: ReactPointerEvent<HTMLElement>) {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    if (!drag.active) {
+      if (Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) < 8) return;
+      drag.active = true;
+      setDraggingHref(drag.href);
+      navRef.current?.setPointerCapture?.(event.pointerId);
+    }
+    event.preventDefault();
+    const over = document.elementFromPoint(event.clientX, event.clientY)?.closest<HTMLElement>('[data-nav-href]');
+    const targetHref = over?.dataset.navHref;
+    if (targetHref && targetHref !== drag.href) {
+      const next = reorderNavigationItem(drag.latestOrder, drag.href, targetHref);
+      if (next.some((href, index) => href !== drag.latestOrder[index])) {
+        drag.latestOrder = next;
+        setMobileOrder(next);
+      }
+    }
+    const nav = navRef.current;
+    if (nav) {
+      const bounds = nav.getBoundingClientRect();
+      if (event.clientX < bounds.left + 26) nav.scrollLeft -= 12;
+      else if (event.clientX > bounds.right - 26) nav.scrollLeft += 12;
+    }
+  }
+
+  async function finishNavPointer(event: ReactPointerEvent<HTMLElement>) {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    if (!drag.active) {
+      dragRef.current = null;
+      return;
+    }
+    event.preventDefault();
+    drag.suppressClick = true;
+    dragRef.current = drag;
+    setDraggingHref(null);
+    try {
+      const labels = navigationPreferences?.labels ?? {};
+      await saveNavigationPreferences(user.id, { order: drag.latestOrder, labels });
+      setNavSaveStatus('Ordem do menu salva na sua conta.');
+    } catch {
+      setMobileOrder(drag.originalOrder);
+      setNavSaveStatus('Não foi possível salvar a ordem do menu. A ordem anterior foi restaurada.');
+    } finally {
+      dragRef.current = { ...drag, active: false, suppressClick: true };
+      window.setTimeout(() => {
+        if (dragRef.current?.suppressClick) dragRef.current = null;
+      }, 0);
+    }
+  }
+
+  function cancelNavPointer(event: ReactPointerEvent<HTMLElement>) {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    if (drag.active) setMobileOrder(drag.originalOrder);
+    setDraggingHref(null);
+    dragRef.current = null;
+  }
+
+  function handleNavClick(event: ReactMouseEvent<HTMLAnchorElement>) {
+    if (dragRef.current?.suppressClick) {
+      event.preventDefault();
+      dragRef.current = null;
+    }
+  }
 
   return (
     <div className="app-shell">
@@ -119,10 +222,31 @@ function Shell({ children }: { children: ReactNode }) {
         </header>
         <PwaBanners />
         <main className="main-content" id="conteudo-principal">{children}</main>
-        <nav className="mobile-nav" aria-label="Navegação principal">
-          {orderedDestinations.map(({ href, label, short, icon }) => (
-            <NavLink key={href} href={href} label={label} text={navigationPreferences?.labels?.[href]?.trim() || short} icon={icon} active={location === href} mobile />
+        <nav
+          ref={navRef}
+          className={`mobile-nav ${draggingHref ? 'is-reordering' : ''}`}
+          aria-label="Navegação principal"
+          onPointerMove={moveNavPointer}
+          onPointerUp={(event) => { void finishNavPointer(event); }}
+          onPointerCancel={cancelNavPointer}
+        >
+          {orderedDestinations.map(({ href, label, short, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              data-nav-href={href}
+              draggable={false}
+              aria-label={`${label}. Pressione e arraste para reorganizar.`}
+              aria-current={location === href ? 'page' : undefined}
+              className={`nav-link nav-link-mobile ${location === href ? 'nav-link-active' : ''} ${draggingHref === href ? 'nav-link-dragging' : ''}`}
+              onPointerDown={(event) => startNavPointer(event, href)}
+              onClick={handleNavClick}
+            >
+              <Icon aria-hidden="true" strokeWidth={location === href ? 2.1 : 1.7} />
+              <span>{navigationPreferences?.labels?.[href]?.trim() || short}</span>
+            </Link>
           ))}
+          <span className="sr-only" role="status" aria-live="polite">{navSaveStatus}</span>
         </nav>
       </div>
     </div>

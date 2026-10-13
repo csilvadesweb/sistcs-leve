@@ -1,10 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CookingPot, Clock3, Search, Users, UtensilsCrossed, Plus, CheckCircle2 } from 'lucide-react';
 import { useAppData } from '../session';
 import { createFoodEntry, type MealType } from '../data';
 import { decimalText, todayInSaoPaulo } from '../ui';
 import { filterRecipes, RECIPES, scaleRecipeNutrients, type Recipe, type RecipeCategory } from '../recipes';
 
+const WEEK_DAYS = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'] as const;
+type PlannedMeal = { id: string; day: string; meal: MealType; recipeId: string };
+const MEAL_LABELS: Record<MealType, string> = { breakfast: 'Café da manhã', lunch: 'Almoço', snack: 'Lanche', dinner: 'Jantar', other: 'Outros' };
 const categories: Array<RecipeCategory | 'Todas'> = ['Todas', 'Café da manhã', 'Almoço e jantar', 'Lanches', 'Vegetariana'];
 const meals: Array<{ value: MealType; label: string }> = [
   { value: 'breakfast', label: 'Café da manhã' },
@@ -15,7 +18,7 @@ const meals: Array<{ value: MealType; label: string }> = [
 ];
 
 export function Recipes() {
-  const { reload } = useAppData();
+  const { reload, user } = useAppData();
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState<RecipeCategory | 'Todas'>('Todas');
   const [meal, setMeal] = useState<MealType>('lunch');
@@ -23,7 +26,48 @@ export function Recipes() {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<{ id: string; message: string; error?: boolean } | null>(null);
+  const [planDay, setPlanDay] = useState<string>(WEEK_DAYS[0]);
+  const [planMeal, setPlanMeal] = useState<MealType>('lunch');
+  const [planItems, setPlanItems] = useState<PlannedMeal[]>(() => {
+    try {
+      const raw = window.localStorage.getItem(`sistcs-leve-meal-plan-v1:${user.id}`);
+      const parsed: unknown = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed.filter((item): item is PlannedMeal =>
+        item && typeof item.id === 'string' && WEEK_DAYS.includes(item.day) &&
+        ['breakfast', 'lunch', 'snack', 'dinner', 'other'].includes(item.meal) &&
+        typeof item.recipeId === 'string' && RECIPES.some((recipe) => recipe.id === item.recipeId)
+      ) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [shoppingOpen, setShoppingOpen] = useState(false);
+  useEffect(() => {
+    try { window.localStorage.setItem(`sistcs-leve-meal-plan-v1:${user.id}`, JSON.stringify(planItems)); } catch { /* storage unavailable: planner remains usable for this session */ }
+  }, [planItems, user.id]);
   const recipes = useMemo(() => filterRecipes(RECIPES, query, category), [query, category]);
+
+  function addToPlan(recipe: Recipe) {
+    setPlanItems((items) => [...items, {
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+      day: planDay,
+      meal: planMeal,
+      recipeId: recipe.id,
+    }]);
+    setFeedback({ id: recipe.id, message: `Adicionada ao planejamento: ${planDay}, ${MEAL_LABELS[planMeal]}.` });
+  }
+
+  const plannedWithRecipes = planItems
+    .map((item) => ({ ...item, recipe: RECIPES.find((recipe) => recipe.id === item.recipeId) }))
+    .filter((item): item is PlannedMeal & { recipe: Recipe } => Boolean(item.recipe));
+  const shoppingIngredients = plannedWithRecipes.reduce<Array<{ ingredient: string; count: number }>>((list, item) => {
+    for (const ingredient of item.recipe.ingredients) {
+      const existing = list.find((entry) => entry.ingredient.toLocaleLowerCase('pt-BR') === ingredient.toLocaleLowerCase('pt-BR'));
+      if (existing) existing.count += 1;
+      else list.push({ ingredient, count: 1 });
+    }
+    return list;
+  }, []).sort((a, b) => a.ingredient.localeCompare(b.ingredient, 'pt-BR'));
 
   async function addToDiary(recipe: Recipe) {
     const amount = servings[recipe.id] ?? 1;
@@ -65,6 +109,44 @@ export function Recipes() {
         <div><strong>Comida de verdade, do seu jeito</strong><p>Receitas iniciais com ingredientes comuns no Brasil. Os valores nutricionais são estimativas por porção.</p></div>
       </section>
 
+      <section className="meal-planner-panel" aria-labelledby="meal-planner-title">
+        <div className="meal-planner-heading">
+          <div><p className="eyebrow">ORGANIZE SUA SEMANA</p><h2 id="meal-planner-title">Planejador de refeições</h2><p>Escolha o dia e a refeição nos controles abaixo dos filtros; depois adicione uma receita ao planejamento.</p></div>
+          <span className="meal-plan-count">{planItems.length} {planItems.length === 1 ? 'refeição' : 'refeições'}</span>
+        </div>
+        <div className="meal-plan-choices">
+          <label>Dia
+            <select value={planDay} onChange={(event) => setPlanDay(event.target.value)}>
+              {WEEK_DAYS.map((day) => <option key={day} value={day}>{day}</option>)}
+            </select>
+          </label>
+          <label>Refeição
+            <select value={planMeal} onChange={(event) => setPlanMeal(event.target.value as MealType)}>
+              {meals.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+            </select>
+          </label>
+        </div>
+        {plannedWithRecipes.length ? <div className="meal-plan-list">
+          {WEEK_DAYS.filter((day) => plannedWithRecipes.some((item) => item.day === day)).map((day) => <section className="meal-plan-day" key={day}>
+            <h3>{day}</h3>
+            {plannedWithRecipes.filter((item) => item.day === day).map((item) => <div className="meal-plan-item" key={item.id}>
+              <div><strong>{item.recipe.name}</strong><span>{MEAL_LABELS[item.meal]} · {item.recipe.nutrientsPerServing.calories} kcal estimadas/porção</span></div>
+              <button type="button" className="meal-plan-remove" aria-label={`Remover ${item.recipe.name} de ${day}`} onClick={() => setPlanItems((items) => items.filter((entry) => entry.id !== item.id))}>Remover</button>
+            </div>)}
+          </section>)}
+        </div> : <p className="meal-plan-empty">Seu planejamento está vazio. Escolha um dia e uma refeição e adicione receitas abaixo.</p>}
+        <div className="shopping-list-actions">
+          <button className="recipe-details-button" type="button" disabled={!plannedWithRecipes.length} aria-expanded={shoppingOpen} onClick={() => setShoppingOpen((open) => !open)}>{shoppingOpen ? 'Ocultar lista de compras' : 'Gerar lista de compras'}</button>
+          {planItems.length > 0 && <button type="button" className="meal-plan-clear" onClick={() => setPlanItems([])}>Limpar semana</button>}
+        </div>
+        {shoppingOpen && <div className="shopping-list" aria-live="polite">
+          <h3>Lista de compras</h3>
+          <p>Ingredientes das {plannedWithRecipes.length} refeições planejadas. Ingredientes com a mesma descrição foram agrupados; confira as quantidades para o número de porções desejado.</p>
+          <ul>{shoppingIngredients.map((entry) => <li key={entry.ingredient}><span>{entry.ingredient}</span>{entry.count > 1 && <small>usado em {entry.count} receitas</small>}</li>)}</ul>
+          <button type="button" className="meal-plan-print" onClick={() => window.print()}>Imprimir / salvar em PDF</button>
+        </div>}
+      </section>
+
       <div className="recipes-controls">
         <label className="recipes-search">
           <Search size={19} aria-hidden="true" />
@@ -102,6 +184,7 @@ export function Recipes() {
               <input type="number" min="0.25" max="20" step="0.25" value={amount} onChange={(event) => setServings((current) => ({ ...current, [recipe.id]: Math.min(20, Math.max(0.25, Number(event.target.value) || 0.25)) }))} />
             </label>
             <button className="recipe-details-button" type="button" aria-expanded={isExpanded} onClick={() => setExpanded(isExpanded ? null : recipe.id)}>{isExpanded ? 'Ocultar preparo' : 'Ver ingredientes e preparo'}</button>
+            <button className="recipe-plan-button" type="button" onClick={() => addToPlan(recipe)}>Adicionar ao planejamento semanal</button>
             {isExpanded && <div className="recipe-details">
               <h3>Ingredientes</h3><ul>{recipe.ingredients.map((ingredient) => <li key={ingredient}>{ingredient}</li>)}</ul>
               <h3>Modo de preparo</h3><ol>{recipe.steps.map((step) => <li key={step}>{step}</li>)}</ol>

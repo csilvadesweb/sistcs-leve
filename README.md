@@ -90,3 +90,7 @@ A lista local existente está em `src/foods-taco.ts` e usa valores por 100 g; me
 - Recuperação de senha por e-mail (`resetPasswordForEmail` + tela de nova senha).
 - Cabeçalhos de segurança e CSP em `public/_headers`.
 - Pendente no painel do Supabase (não dá para fazer por código): Site URL/Redirect URL `https://leve.sistcs.com`, SMTP próprio e Leaked Password Protection.
+
+## Custo zero
+Cloudflare Workers (assets estáticos), Supabase Free, Open Food Facts, GitHub Actions e Google Fonts têm plano gratuito.
+O workflow `keepalive` evita a pausa do projeto Supabase por inatividade. Limites do Supabase Free: 500 MB de banco, 1 GB de arquivos (fotos), 50 mil usuários ativos/mês.

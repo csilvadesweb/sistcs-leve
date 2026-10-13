@@ -48,7 +48,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
   if (request.method === "OPTIONS") return withCors(new Response(null, { status: 204 }));
   if (url.pathname === "/api/ai/status" && request.method === "GET") {
-    return withCors(json({ available: Boolean(env.GEMINI_API_KEY), model: env.GEMINI_MODEL || "gemini-2.5-flash-lite" }));
+    return withCors(json({ available: Boolean(env.GEMINI_API_KEY), model: env.GEMINI_MODEL || "gemini-3.5-flash-lite" }));
   }
   if (url.pathname !== "/api/ai/chat") return withCors(json({ error: "Rota não encontrada." }, 404));
   if (request.method !== "POST") return withCors(json({ error: "Método não permitido." }, 405));
@@ -84,7 +84,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   ].join("\n");
 
   try {
-    const model = (env.GEMINI_MODEL || "gemini-2.5-flash-lite").trim();
+    const model = (env.GEMINI_MODEL || "gemini-3.5-flash-lite").trim();
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST",
       headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },

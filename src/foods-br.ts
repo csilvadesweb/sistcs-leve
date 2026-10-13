@@ -445,11 +445,14 @@ export async function searchOpenFoodFacts(query: string, signal?: AbortSignal): 
   return (await searchOpenFoodFactsPage(query, 1, signal)).foods;
 }
 export async function lookupBarcode(code: string, signal?: AbortSignal): Promise<FoodPer100 | null> {
-  const res = await fetch(`${OFF}/api/v2/product/${encodeURIComponent(code)}.json?fields=${FIELDS}`, { signal });
+  // Leitores e campos manuais podem inserir espaços ou hífens; não enviar caracteres inesperados à API.
+  const normalizedCode = code.trim().replace(/[\s-]/g, '');
+  if (!normalizedCode || !/^\d+$/.test(normalizedCode) || signal?.aborted) return null;
+  const res = await fetch(`${OFF}/api/v2/product/${encodeURIComponent(normalizedCode)}.json?fields=${FIELDS}`, { signal });
   if (res.status === 404) return null;
   if (!res.ok) throw new Error('A consulta de código de barras está indisponível agora.');
   const json = await res.json();
-  return json.status === 1 ? fromOff({ ...json.product, code }) : null;
+  return json.status === 1 ? fromOff({ ...json.product, code: normalizedCode }) : null;
 }
 
 export function scale(f: FoodPer100, grams: number) {

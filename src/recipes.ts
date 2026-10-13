@@ -1436,6 +1436,1306 @@ export const RECIPES: Recipe[] = [
     steps: ['Prepare o acompanhamento conforme os ingredientes e mantenha os vegetais higienizados.', 'Cozinhe ou aqueça sardinha assada até atingir o ponto seguro, usando temperos a gosto.', 'Monte o prato com o acompanhamento e ajuste o tempero sem excesso de sal.'],
     nutrientsPerServing: { calories: 438, proteins: 32, carbohydrates: 31, fats: 21, fiber: 5 },
     nutritionNote: 'Estimativa editorial por porção, calculada a partir de valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-frango-limao-arroz-couve', name: "Frango desfiado ao limão e ervas com arroz integral e couve", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com frango desfiado ao limão e ervas e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["130 g de peito de frango cozido e desfiado", "100 g de arroz integral cozido", "80 g de couve refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de arroz integral cozido e 80 g de couve refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere frango desfiado ao limão e ervas com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 381, proteins: 45, carbohydrates: 31, fats: 9, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-frango-limao-abobora-gratinada', name: "Frango desfiado ao limão e ervas com abóbora assada e páprica", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com frango desfiado ao limão e ervas e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["130 g de peito de frango cozido e desfiado", "200 g de abóbora assada", "1 colher de chá de azeite", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 200 g de abóbora assada e 1 colher de chá de azeite conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere frango desfiado ao limão e ervas com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 326, proteins: 42, carbohydrates: 20, fats: 11, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-frango-limao-inhame-salada', name: "Frango desfiado ao limão e ervas com inhame cozido e salada", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com frango desfiado ao limão e ervas e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["130 g de peito de frango cozido e desfiado", "150 g de inhame cozido", "folhas e tomate (100 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de inhame cozido e folhas e tomate (100 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere frango desfiado ao limão e ervas com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 401, proteins: 44, carbohydrates: 40, fats: 7, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-frango-limao-feijao-arroz', name: "Frango desfiado ao limão e ervas com arroz e feijão caseiros", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com frango desfiado ao limão e ervas e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["130 g de peito de frango cozido e desfiado", "90 g de arroz cozido", "90 g de feijão carioca cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 90 g de arroz cozido e 90 g de feijão carioca cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere frango desfiado ao limão e ervas com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 426, proteins: 47, carbohydrates: 42, fats: 8, fiber: 8 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-frango-limao-quinoa-abobrinha', name: "Frango desfiado ao limão e ervas com quinoa e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com frango desfiado ao limão e ervas e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["130 g de peito de frango cozido e desfiado", "100 g de quinoa cozida", "120 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de quinoa cozida e 120 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere frango desfiado ao limão e ervas com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 381, proteins: 46, carbohydrates: 27, fats: 10, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-frango-limao-polenta-rucula', name: "Frango desfiado ao limão e ervas com polenta mole e rúcula", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com frango desfiado ao limão e ervas e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["130 g de peito de frango cozido e desfiado", "160 g de polenta cozida", "rúcula e tomate (80 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 160 g de polenta cozida e rúcula e tomate (80 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere frango desfiado ao limão e ervas com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 366, proteins: 44, carbohydrates: 30, fats: 8, fiber: 4 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-frango-limao-cuscuz-ervilha', name: "Frango desfiado ao limão e ervas com cuscuz de milho e ervilha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com frango desfiado ao limão e ervas e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["130 g de peito de frango cozido e desfiado", "120 g de cuscuz de milho cozido", "50 g de ervilha cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 120 g de cuscuz de milho cozido e 50 g de ervilha cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere frango desfiado ao limão e ervas com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 396, proteins: 46, carbohydrates: 35, fats: 8, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-frango-limao-macarrao-abobrinha', name: "Frango desfiado ao limão e ervas com macarrão integral e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com frango desfiado ao limão e ervas e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["130 g de peito de frango cozido e desfiado", "110 g de macarrão integral cozido", "100 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 110 g de macarrão integral cozido e 100 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere frango desfiado ao limão e ervas com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 401, proteins: 47, carbohydrates: 34, fats: 9, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-frango-limao-mandioquinha-cenoura', name: "Frango desfiado ao limão e ervas com purê de mandioquinha e cenoura", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com frango desfiado ao limão e ervas e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["130 g de peito de frango cozido e desfiado", "150 g de mandioquinha cozida", "80 g de cenoura cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de mandioquinha cozida e 80 g de cenoura cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere frango desfiado ao limão e ervas com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 391, proteins: 43, carbohydrates: 38, fats: 8, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-frango-limao-salada-milho', name: "Frango desfiado ao limão e ervas com salada crocante e milho", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com frango desfiado ao limão e ervas e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["130 g de peito de frango cozido e desfiado", "folhas, pepino e tomate (150 g)", "60 g de milho cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare folhas, pepino e tomate (150 g) e 60 g de milho cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere frango desfiado ao limão e ervas com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 316, proteins: 44, carbohydrates: 19, fats: 8, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-patinho-paprica-arroz-couve', name: "Patinho moído com páprica com arroz integral e couve", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com patinho moído com páprica e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de patinho moído cozido", "100 g de arroz integral cozido", "80 g de couve refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de arroz integral cozido e 80 g de couve refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere patinho moído com páprica com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 426, proteins: 37, carbohydrates: 31, fats: 18, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-patinho-paprica-abobora-gratinada', name: "Patinho moído com páprica com abóbora assada e páprica", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com patinho moído com páprica e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de patinho moído cozido", "200 g de abóbora assada", "1 colher de chá de azeite", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 200 g de abóbora assada e 1 colher de chá de azeite conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere patinho moído com páprica com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 371, proteins: 34, carbohydrates: 20, fats: 20, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-patinho-paprica-inhame-salada', name: "Patinho moído com páprica com inhame cozido e salada", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com patinho moído com páprica e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de patinho moído cozido", "150 g de inhame cozido", "folhas e tomate (100 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de inhame cozido e folhas e tomate (100 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere patinho moído com páprica com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 446, proteins: 36, carbohydrates: 40, fats: 16, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-patinho-paprica-feijao-arroz', name: "Patinho moído com páprica com arroz e feijão caseiros", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com patinho moído com páprica e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de patinho moído cozido", "90 g de arroz cozido", "90 g de feijão carioca cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 90 g de arroz cozido e 90 g de feijão carioca cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere patinho moído com páprica com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 471, proteins: 39, carbohydrates: 42, fats: 17, fiber: 8 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-patinho-paprica-quinoa-abobrinha', name: "Patinho moído com páprica com quinoa e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com patinho moído com páprica e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de patinho moído cozido", "100 g de quinoa cozida", "120 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de quinoa cozida e 120 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere patinho moído com páprica com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 426, proteins: 38, carbohydrates: 27, fats: 19, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-patinho-paprica-polenta-rucula', name: "Patinho moído com páprica com polenta mole e rúcula", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com patinho moído com páprica e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de patinho moído cozido", "160 g de polenta cozida", "rúcula e tomate (80 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 160 g de polenta cozida e rúcula e tomate (80 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere patinho moído com páprica com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 411, proteins: 36, carbohydrates: 30, fats: 17, fiber: 4 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-patinho-paprica-cuscuz-ervilha', name: "Patinho moído com páprica com cuscuz de milho e ervilha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com patinho moído com páprica e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de patinho moído cozido", "120 g de cuscuz de milho cozido", "50 g de ervilha cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 120 g de cuscuz de milho cozido e 50 g de ervilha cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere patinho moído com páprica com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 441, proteins: 38, carbohydrates: 35, fats: 17, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-patinho-paprica-macarrao-abobrinha', name: "Patinho moído com páprica com macarrão integral e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com patinho moído com páprica e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de patinho moído cozido", "110 g de macarrão integral cozido", "100 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 110 g de macarrão integral cozido e 100 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere patinho moído com páprica com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 446, proteins: 39, carbohydrates: 34, fats: 18, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-patinho-paprica-mandioquinha-cenoura', name: "Patinho moído com páprica com purê de mandioquinha e cenoura", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com patinho moído com páprica e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de patinho moído cozido", "150 g de mandioquinha cozida", "80 g de cenoura cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de mandioquinha cozida e 80 g de cenoura cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere patinho moído com páprica com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 436, proteins: 35, carbohydrates: 38, fats: 17, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-patinho-paprica-salada-milho', name: "Patinho moído com páprica com salada crocante e milho", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com patinho moído com páprica e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de patinho moído cozido", "folhas, pepino e tomate (150 g)", "60 g de milho cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare folhas, pepino e tomate (150 g) e 60 g de milho cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere patinho moído com páprica com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 361, proteins: 36, carbohydrates: 19, fats: 17, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tilapia-alho-arroz-couve', name: "Tilápia assada com alho com arroz integral e couve", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tilápia assada com alho e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tilápia assada", "100 g de arroz integral cozido", "80 g de couve refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de arroz integral cozido e 80 g de couve refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tilápia assada com alho com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 356, proteins: 44, carbohydrates: 31, fats: 8, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tilapia-alho-abobora-gratinada', name: "Tilápia assada com alho com abóbora assada e páprica", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tilápia assada com alho e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tilápia assada", "200 g de abóbora assada", "1 colher de chá de azeite", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 200 g de abóbora assada e 1 colher de chá de azeite conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tilápia assada com alho com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 301, proteins: 41, carbohydrates: 20, fats: 10, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tilapia-alho-inhame-salada', name: "Tilápia assada com alho com inhame cozido e salada", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tilápia assada com alho e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tilápia assada", "150 g de inhame cozido", "folhas e tomate (100 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de inhame cozido e folhas e tomate (100 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tilápia assada com alho com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 376, proteins: 43, carbohydrates: 40, fats: 6, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tilapia-alho-feijao-arroz', name: "Tilápia assada com alho com arroz e feijão caseiros", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tilápia assada com alho e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tilápia assada", "90 g de arroz cozido", "90 g de feijão carioca cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 90 g de arroz cozido e 90 g de feijão carioca cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tilápia assada com alho com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 401, proteins: 46, carbohydrates: 42, fats: 7, fiber: 8 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tilapia-alho-quinoa-abobrinha', name: "Tilápia assada com alho com quinoa e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tilápia assada com alho e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tilápia assada", "100 g de quinoa cozida", "120 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de quinoa cozida e 120 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tilápia assada com alho com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 356, proteins: 45, carbohydrates: 27, fats: 9, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tilapia-alho-polenta-rucula', name: "Tilápia assada com alho com polenta mole e rúcula", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tilápia assada com alho e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tilápia assada", "160 g de polenta cozida", "rúcula e tomate (80 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 160 g de polenta cozida e rúcula e tomate (80 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tilápia assada com alho com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 341, proteins: 43, carbohydrates: 30, fats: 7, fiber: 4 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tilapia-alho-cuscuz-ervilha', name: "Tilápia assada com alho com cuscuz de milho e ervilha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tilápia assada com alho e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tilápia assada", "120 g de cuscuz de milho cozido", "50 g de ervilha cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 120 g de cuscuz de milho cozido e 50 g de ervilha cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tilápia assada com alho com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 371, proteins: 45, carbohydrates: 35, fats: 7, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tilapia-alho-macarrao-abobrinha', name: "Tilápia assada com alho com macarrão integral e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tilápia assada com alho e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tilápia assada", "110 g de macarrão integral cozido", "100 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 110 g de macarrão integral cozido e 100 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tilápia assada com alho com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 376, proteins: 46, carbohydrates: 34, fats: 8, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tilapia-alho-mandioquinha-cenoura', name: "Tilápia assada com alho com purê de mandioquinha e cenoura", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tilápia assada com alho e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tilápia assada", "150 g de mandioquinha cozida", "80 g de cenoura cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de mandioquinha cozida e 80 g de cenoura cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tilápia assada com alho com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 366, proteins: 42, carbohydrates: 38, fats: 7, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tilapia-alho-salada-milho', name: "Tilápia assada com alho com salada crocante e milho", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tilápia assada com alho e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tilápia assada", "folhas, pepino e tomate (150 g)", "60 g de milho cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare folhas, pepino e tomate (150 g) e 60 g de milho cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tilápia assada com alho com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 291, proteins: 43, carbohydrates: 19, fats: 7, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-atum-limao-arroz-couve', name: "Atum temperado com limão com arroz integral e couve", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com atum temperado com limão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de atum em água escorrido", "100 g de arroz integral cozido", "80 g de couve refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de arroz integral cozido e 80 g de couve refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere atum temperado com limão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 306, proteins: 36, carbohydrates: 31, fats: 5, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-atum-limao-abobora-gratinada', name: "Atum temperado com limão com abóbora assada e páprica", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com atum temperado com limão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de atum em água escorrido", "200 g de abóbora assada", "1 colher de chá de azeite", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 200 g de abóbora assada e 1 colher de chá de azeite conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere atum temperado com limão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 251, proteins: 33, carbohydrates: 20, fats: 7, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-atum-limao-inhame-salada', name: "Atum temperado com limão com inhame cozido e salada", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com atum temperado com limão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de atum em água escorrido", "150 g de inhame cozido", "folhas e tomate (100 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de inhame cozido e folhas e tomate (100 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere atum temperado com limão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 326, proteins: 35, carbohydrates: 40, fats: 3, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-atum-limao-feijao-arroz', name: "Atum temperado com limão com arroz e feijão caseiros", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com atum temperado com limão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de atum em água escorrido", "90 g de arroz cozido", "90 g de feijão carioca cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 90 g de arroz cozido e 90 g de feijão carioca cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere atum temperado com limão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 351, proteins: 38, carbohydrates: 42, fats: 4, fiber: 8 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-atum-limao-quinoa-abobrinha', name: "Atum temperado com limão com quinoa e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com atum temperado com limão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de atum em água escorrido", "100 g de quinoa cozida", "120 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de quinoa cozida e 120 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere atum temperado com limão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 306, proteins: 37, carbohydrates: 27, fats: 6, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-atum-limao-polenta-rucula', name: "Atum temperado com limão com polenta mole e rúcula", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com atum temperado com limão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de atum em água escorrido", "160 g de polenta cozida", "rúcula e tomate (80 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 160 g de polenta cozida e rúcula e tomate (80 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere atum temperado com limão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 291, proteins: 35, carbohydrates: 30, fats: 4, fiber: 4 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-atum-limao-cuscuz-ervilha', name: "Atum temperado com limão com cuscuz de milho e ervilha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com atum temperado com limão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de atum em água escorrido", "120 g de cuscuz de milho cozido", "50 g de ervilha cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 120 g de cuscuz de milho cozido e 50 g de ervilha cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere atum temperado com limão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 321, proteins: 37, carbohydrates: 35, fats: 4, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-atum-limao-macarrao-abobrinha', name: "Atum temperado com limão com macarrão integral e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com atum temperado com limão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de atum em água escorrido", "110 g de macarrão integral cozido", "100 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 110 g de macarrão integral cozido e 100 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere atum temperado com limão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 326, proteins: 38, carbohydrates: 34, fats: 5, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-atum-limao-mandioquinha-cenoura', name: "Atum temperado com limão com purê de mandioquinha e cenoura", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com atum temperado com limão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de atum em água escorrido", "150 g de mandioquinha cozida", "80 g de cenoura cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de mandioquinha cozida e 80 g de cenoura cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere atum temperado com limão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 316, proteins: 34, carbohydrates: 38, fats: 4, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-atum-limao-salada-milho', name: "Atum temperado com limão com salada crocante e milho", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com atum temperado com limão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de atum em água escorrido", "folhas, pepino e tomate (150 g)", "60 g de milho cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare folhas, pepino e tomate (150 g) e 60 g de milho cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere atum temperado com limão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 241, proteins: 35, carbohydrates: 19, fats: 4, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-ovo-cebolinha-arroz-couve', name: "Ovos mexidos com cebolinha com arroz integral e couve", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com ovos mexidos com cebolinha e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["2 ovos", "100 g de arroz integral cozido", "80 g de couve refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de arroz integral cozido e 80 g de couve refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere ovos mexidos com cebolinha com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 311, proteins: 18, carbohydrates: 32, fats: 14, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-ovo-cebolinha-abobora-gratinada', name: "Ovos mexidos com cebolinha com abóbora assada e páprica", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com ovos mexidos com cebolinha e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["2 ovos", "200 g de abóbora assada", "1 colher de chá de azeite", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 200 g de abóbora assada e 1 colher de chá de azeite conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere ovos mexidos com cebolinha com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 256, proteins: 15, carbohydrates: 21, fats: 16, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-ovo-cebolinha-inhame-salada', name: "Ovos mexidos com cebolinha com inhame cozido e salada", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com ovos mexidos com cebolinha e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["2 ovos", "150 g de inhame cozido", "folhas e tomate (100 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de inhame cozido e folhas e tomate (100 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere ovos mexidos com cebolinha com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 331, proteins: 17, carbohydrates: 41, fats: 12, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-ovo-cebolinha-feijao-arroz', name: "Ovos mexidos com cebolinha com arroz e feijão caseiros", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com ovos mexidos com cebolinha e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["2 ovos", "90 g de arroz cozido", "90 g de feijão carioca cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 90 g de arroz cozido e 90 g de feijão carioca cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere ovos mexidos com cebolinha com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 356, proteins: 20, carbohydrates: 43, fats: 13, fiber: 8 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-ovo-cebolinha-quinoa-abobrinha', name: "Ovos mexidos com cebolinha com quinoa e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com ovos mexidos com cebolinha e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["2 ovos", "100 g de quinoa cozida", "120 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de quinoa cozida e 120 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere ovos mexidos com cebolinha com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 311, proteins: 19, carbohydrates: 28, fats: 15, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-ovo-cebolinha-polenta-rucula', name: "Ovos mexidos com cebolinha com polenta mole e rúcula", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com ovos mexidos com cebolinha e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["2 ovos", "160 g de polenta cozida", "rúcula e tomate (80 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 160 g de polenta cozida e rúcula e tomate (80 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere ovos mexidos com cebolinha com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 296, proteins: 17, carbohydrates: 31, fats: 13, fiber: 4 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-ovo-cebolinha-cuscuz-ervilha', name: "Ovos mexidos com cebolinha com cuscuz de milho e ervilha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com ovos mexidos com cebolinha e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["2 ovos", "120 g de cuscuz de milho cozido", "50 g de ervilha cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 120 g de cuscuz de milho cozido e 50 g de ervilha cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere ovos mexidos com cebolinha com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 326, proteins: 19, carbohydrates: 36, fats: 13, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-ovo-cebolinha-macarrao-abobrinha', name: "Ovos mexidos com cebolinha com macarrão integral e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com ovos mexidos com cebolinha e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["2 ovos", "110 g de macarrão integral cozido", "100 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 110 g de macarrão integral cozido e 100 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere ovos mexidos com cebolinha com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 331, proteins: 20, carbohydrates: 35, fats: 14, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-ovo-cebolinha-mandioquinha-cenoura', name: "Ovos mexidos com cebolinha com purê de mandioquinha e cenoura", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com ovos mexidos com cebolinha e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["2 ovos", "150 g de mandioquinha cozida", "80 g de cenoura cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de mandioquinha cozida e 80 g de cenoura cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere ovos mexidos com cebolinha com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 321, proteins: 16, carbohydrates: 39, fats: 13, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-ovo-cebolinha-salada-milho', name: "Ovos mexidos com cebolinha com salada crocante e milho", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com ovos mexidos com cebolinha e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["2 ovos", "folhas, pepino e tomate (150 g)", "60 g de milho cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare folhas, pepino e tomate (150 g) e 60 g de milho cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere ovos mexidos com cebolinha com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 246, proteins: 17, carbohydrates: 20, fats: 13, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tofu-gengibre-arroz-couve', name: "Tofu dourado com gengibre com arroz integral e couve", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tofu dourado com gengibre e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tofu firme", "100 g de arroz integral cozido", "80 g de couve refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de arroz integral cozido e 80 g de couve refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tofu dourado com gengibre com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 346, proteins: 24, carbohydrates: 35, fats: 15, fiber: 8 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tofu-gengibre-abobora-gratinada', name: "Tofu dourado com gengibre com abóbora assada e páprica", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tofu dourado com gengibre e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tofu firme", "200 g de abóbora assada", "1 colher de chá de azeite", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 200 g de abóbora assada e 1 colher de chá de azeite conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tofu dourado com gengibre com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 291, proteins: 21, carbohydrates: 24, fats: 17, fiber: 7 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tofu-gengibre-inhame-salada', name: "Tofu dourado com gengibre com inhame cozido e salada", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tofu dourado com gengibre e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tofu firme", "150 g de inhame cozido", "folhas e tomate (100 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de inhame cozido e folhas e tomate (100 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tofu dourado com gengibre com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 366, proteins: 23, carbohydrates: 44, fats: 13, fiber: 8 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tofu-gengibre-feijao-arroz', name: "Tofu dourado com gengibre com arroz e feijão caseiros", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tofu dourado com gengibre e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tofu firme", "90 g de arroz cozido", "90 g de feijão carioca cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 90 g de arroz cozido e 90 g de feijão carioca cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tofu dourado com gengibre com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 391, proteins: 26, carbohydrates: 46, fats: 14, fiber: 10 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tofu-gengibre-quinoa-abobrinha', name: "Tofu dourado com gengibre com quinoa e abobrinha", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tofu dourado com gengibre e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tofu firme", "100 g de quinoa cozida", "120 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de quinoa cozida e 120 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tofu dourado com gengibre com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 346, proteins: 25, carbohydrates: 31, fats: 16, fiber: 7 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tofu-gengibre-polenta-rucula', name: "Tofu dourado com gengibre com polenta mole e rúcula", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tofu dourado com gengibre e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tofu firme", "160 g de polenta cozida", "rúcula e tomate (80 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 160 g de polenta cozida e rúcula e tomate (80 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tofu dourado com gengibre com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 331, proteins: 23, carbohydrates: 34, fats: 14, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tofu-gengibre-cuscuz-ervilha', name: "Tofu dourado com gengibre com cuscuz de milho e ervilha", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tofu dourado com gengibre e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tofu firme", "120 g de cuscuz de milho cozido", "50 g de ervilha cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 120 g de cuscuz de milho cozido e 50 g de ervilha cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tofu dourado com gengibre com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 361, proteins: 25, carbohydrates: 39, fats: 14, fiber: 7 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tofu-gengibre-macarrao-abobrinha', name: "Tofu dourado com gengibre com macarrão integral e abobrinha", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tofu dourado com gengibre e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tofu firme", "110 g de macarrão integral cozido", "100 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 110 g de macarrão integral cozido e 100 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tofu dourado com gengibre com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 366, proteins: 26, carbohydrates: 38, fats: 15, fiber: 8 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tofu-gengibre-mandioquinha-cenoura', name: "Tofu dourado com gengibre com purê de mandioquinha e cenoura", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tofu dourado com gengibre e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tofu firme", "150 g de mandioquinha cozida", "80 g de cenoura cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de mandioquinha cozida e 80 g de cenoura cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tofu dourado com gengibre com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 356, proteins: 22, carbohydrates: 42, fats: 14, fiber: 8 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-tofu-gengibre-salada-milho', name: "Tofu dourado com gengibre com salada crocante e milho", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tofu dourado com gengibre e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["150 g de tofu firme", "folhas, pepino e tomate (150 g)", "60 g de milho cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare folhas, pepino e tomate (150 g) e 60 g de milho cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tofu dourado com gengibre com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 281, proteins: 23, carbohydrates: 23, fats: 14, fiber: 7 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lombo-laranja-arroz-couve', name: "Lombo suíno assado com laranja com arroz integral e couve", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lombo suíno assado com laranja e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de lombo suíno magro assado", "100 g de arroz integral cozido", "80 g de couve refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de arroz integral cozido e 80 g de couve refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lombo suíno assado com laranja com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 396, proteins: 37, carbohydrates: 31, fats: 14, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lombo-laranja-abobora-gratinada', name: "Lombo suíno assado com laranja com abóbora assada e páprica", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lombo suíno assado com laranja e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de lombo suíno magro assado", "200 g de abóbora assada", "1 colher de chá de azeite", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 200 g de abóbora assada e 1 colher de chá de azeite conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lombo suíno assado com laranja com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 341, proteins: 34, carbohydrates: 20, fats: 16, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lombo-laranja-inhame-salada', name: "Lombo suíno assado com laranja com inhame cozido e salada", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lombo suíno assado com laranja e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de lombo suíno magro assado", "150 g de inhame cozido", "folhas e tomate (100 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de inhame cozido e folhas e tomate (100 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lombo suíno assado com laranja com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 416, proteins: 36, carbohydrates: 40, fats: 12, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lombo-laranja-feijao-arroz', name: "Lombo suíno assado com laranja com arroz e feijão caseiros", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lombo suíno assado com laranja e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de lombo suíno magro assado", "90 g de arroz cozido", "90 g de feijão carioca cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 90 g de arroz cozido e 90 g de feijão carioca cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lombo suíno assado com laranja com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 441, proteins: 39, carbohydrates: 42, fats: 13, fiber: 8 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lombo-laranja-quinoa-abobrinha', name: "Lombo suíno assado com laranja com quinoa e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lombo suíno assado com laranja e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de lombo suíno magro assado", "100 g de quinoa cozida", "120 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de quinoa cozida e 120 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lombo suíno assado com laranja com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 396, proteins: 38, carbohydrates: 27, fats: 15, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lombo-laranja-polenta-rucula', name: "Lombo suíno assado com laranja com polenta mole e rúcula", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lombo suíno assado com laranja e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de lombo suíno magro assado", "160 g de polenta cozida", "rúcula e tomate (80 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 160 g de polenta cozida e rúcula e tomate (80 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lombo suíno assado com laranja com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 381, proteins: 36, carbohydrates: 30, fats: 13, fiber: 4 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lombo-laranja-cuscuz-ervilha', name: "Lombo suíno assado com laranja com cuscuz de milho e ervilha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lombo suíno assado com laranja e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de lombo suíno magro assado", "120 g de cuscuz de milho cozido", "50 g de ervilha cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 120 g de cuscuz de milho cozido e 50 g de ervilha cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lombo suíno assado com laranja com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 411, proteins: 38, carbohydrates: 35, fats: 13, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lombo-laranja-macarrao-abobrinha', name: "Lombo suíno assado com laranja com macarrão integral e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lombo suíno assado com laranja e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de lombo suíno magro assado", "110 g de macarrão integral cozido", "100 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 110 g de macarrão integral cozido e 100 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lombo suíno assado com laranja com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 416, proteins: 39, carbohydrates: 34, fats: 14, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lombo-laranja-mandioquinha-cenoura', name: "Lombo suíno assado com laranja com purê de mandioquinha e cenoura", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lombo suíno assado com laranja e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de lombo suíno magro assado", "150 g de mandioquinha cozida", "80 g de cenoura cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de mandioquinha cozida e 80 g de cenoura cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lombo suíno assado com laranja com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 406, proteins: 35, carbohydrates: 38, fats: 13, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lombo-laranja-salada-milho', name: "Lombo suíno assado com laranja com salada crocante e milho", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lombo suíno assado com laranja e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de lombo suíno magro assado", "folhas, pepino e tomate (150 g)", "60 g de milho cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare folhas, pepino e tomate (150 g) e 60 g de milho cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lombo suíno assado com laranja com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 331, proteins: 36, carbohydrates: 19, fats: 13, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-feijao-tutu-arroz-couve', name: "Tutu leve de feijão com arroz integral e couve", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tutu leve de feijão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de feijão carioca cozido amassado", "100 g de arroz integral cozido", "80 g de couve refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de arroz integral cozido e 80 g de couve refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tutu leve de feijão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 376, proteins: 17, carbohydrates: 65, fats: 7, fiber: 17 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-feijao-tutu-abobora-gratinada', name: "Tutu leve de feijão com abóbora assada e páprica", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tutu leve de feijão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de feijão carioca cozido amassado", "200 g de abóbora assada", "1 colher de chá de azeite", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 200 g de abóbora assada e 1 colher de chá de azeite conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tutu leve de feijão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 321, proteins: 14, carbohydrates: 54, fats: 9, fiber: 16 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-feijao-tutu-inhame-salada', name: "Tutu leve de feijão com inhame cozido e salada", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tutu leve de feijão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de feijão carioca cozido amassado", "150 g de inhame cozido", "folhas e tomate (100 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de inhame cozido e folhas e tomate (100 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tutu leve de feijão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 396, proteins: 16, carbohydrates: 74, fats: 5, fiber: 17 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-feijao-tutu-feijao-arroz', name: "Tutu leve de feijão com arroz e feijão caseiros", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tutu leve de feijão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de feijão carioca cozido amassado", "90 g de arroz cozido", "90 g de feijão carioca cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 90 g de arroz cozido e 90 g de feijão carioca cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tutu leve de feijão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 421, proteins: 19, carbohydrates: 76, fats: 6, fiber: 19 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-feijao-tutu-quinoa-abobrinha', name: "Tutu leve de feijão com quinoa e abobrinha", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tutu leve de feijão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de feijão carioca cozido amassado", "100 g de quinoa cozida", "120 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de quinoa cozida e 120 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tutu leve de feijão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 376, proteins: 18, carbohydrates: 61, fats: 8, fiber: 16 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-feijao-tutu-polenta-rucula', name: "Tutu leve de feijão com polenta mole e rúcula", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tutu leve de feijão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de feijão carioca cozido amassado", "160 g de polenta cozida", "rúcula e tomate (80 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 160 g de polenta cozida e rúcula e tomate (80 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tutu leve de feijão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 361, proteins: 16, carbohydrates: 64, fats: 6, fiber: 15 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-feijao-tutu-cuscuz-ervilha', name: "Tutu leve de feijão com cuscuz de milho e ervilha", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tutu leve de feijão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de feijão carioca cozido amassado", "120 g de cuscuz de milho cozido", "50 g de ervilha cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 120 g de cuscuz de milho cozido e 50 g de ervilha cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tutu leve de feijão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 391, proteins: 18, carbohydrates: 69, fats: 6, fiber: 16 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-feijao-tutu-macarrao-abobrinha', name: "Tutu leve de feijão com macarrão integral e abobrinha", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tutu leve de feijão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de feijão carioca cozido amassado", "110 g de macarrão integral cozido", "100 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 110 g de macarrão integral cozido e 100 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tutu leve de feijão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 396, proteins: 19, carbohydrates: 68, fats: 7, fiber: 17 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-feijao-tutu-mandioquinha-cenoura', name: "Tutu leve de feijão com purê de mandioquinha e cenoura", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tutu leve de feijão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de feijão carioca cozido amassado", "150 g de mandioquinha cozida", "80 g de cenoura cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de mandioquinha cozida e 80 g de cenoura cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tutu leve de feijão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 386, proteins: 15, carbohydrates: 72, fats: 6, fiber: 17 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-feijao-tutu-salada-milho', name: "Tutu leve de feijão com salada crocante e milho", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com tutu leve de feijão e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de feijão carioca cozido amassado", "folhas, pepino e tomate (150 g)", "60 g de milho cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare folhas, pepino e tomate (150 g) e 60 g de milho cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere tutu leve de feijão com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 311, proteins: 16, carbohydrates: 53, fats: 6, fiber: 16 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lentilha-cominho-arroz-couve', name: "Lentilha com cominho e tomate com arroz integral e couve", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lentilha com cominho e tomate e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de lentilha cozida", "100 g de arroz integral cozido", "80 g de couve refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de arroz integral cozido e 80 g de couve refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lentilha com cominho e tomate com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 351, proteins: 19, carbohydrates: 63, fats: 5, fiber: 19 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lentilha-cominho-abobora-gratinada', name: "Lentilha com cominho e tomate com abóbora assada e páprica", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lentilha com cominho e tomate e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de lentilha cozida", "200 g de abóbora assada", "1 colher de chá de azeite", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 200 g de abóbora assada e 1 colher de chá de azeite conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lentilha com cominho e tomate com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 296, proteins: 16, carbohydrates: 52, fats: 7, fiber: 18 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lentilha-cominho-inhame-salada', name: "Lentilha com cominho e tomate com inhame cozido e salada", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lentilha com cominho e tomate e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de lentilha cozida", "150 g de inhame cozido", "folhas e tomate (100 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de inhame cozido e folhas e tomate (100 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lentilha com cominho e tomate com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 371, proteins: 18, carbohydrates: 72, fats: 3, fiber: 19 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lentilha-cominho-feijao-arroz', name: "Lentilha com cominho e tomate com arroz e feijão caseiros", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lentilha com cominho e tomate e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de lentilha cozida", "90 g de arroz cozido", "90 g de feijão carioca cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 90 g de arroz cozido e 90 g de feijão carioca cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lentilha com cominho e tomate com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 396, proteins: 21, carbohydrates: 74, fats: 4, fiber: 21 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lentilha-cominho-quinoa-abobrinha', name: "Lentilha com cominho e tomate com quinoa e abobrinha", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lentilha com cominho e tomate e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de lentilha cozida", "100 g de quinoa cozida", "120 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de quinoa cozida e 120 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lentilha com cominho e tomate com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 351, proteins: 20, carbohydrates: 59, fats: 6, fiber: 18 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lentilha-cominho-polenta-rucula', name: "Lentilha com cominho e tomate com polenta mole e rúcula", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lentilha com cominho e tomate e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de lentilha cozida", "160 g de polenta cozida", "rúcula e tomate (80 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 160 g de polenta cozida e rúcula e tomate (80 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lentilha com cominho e tomate com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 336, proteins: 18, carbohydrates: 62, fats: 4, fiber: 17 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lentilha-cominho-cuscuz-ervilha', name: "Lentilha com cominho e tomate com cuscuz de milho e ervilha", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lentilha com cominho e tomate e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de lentilha cozida", "120 g de cuscuz de milho cozido", "50 g de ervilha cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 120 g de cuscuz de milho cozido e 50 g de ervilha cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lentilha com cominho e tomate com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 366, proteins: 20, carbohydrates: 67, fats: 4, fiber: 18 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lentilha-cominho-macarrao-abobrinha', name: "Lentilha com cominho e tomate com macarrão integral e abobrinha", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lentilha com cominho e tomate e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de lentilha cozida", "110 g de macarrão integral cozido", "100 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 110 g de macarrão integral cozido e 100 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lentilha com cominho e tomate com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 371, proteins: 21, carbohydrates: 66, fats: 5, fiber: 19 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lentilha-cominho-mandioquinha-cenoura', name: "Lentilha com cominho e tomate com purê de mandioquinha e cenoura", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lentilha com cominho e tomate e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de lentilha cozida", "150 g de mandioquinha cozida", "80 g de cenoura cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de mandioquinha cozida e 80 g de cenoura cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lentilha com cominho e tomate com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 361, proteins: 17, carbohydrates: 70, fats: 4, fiber: 19 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-lentilha-cominho-salada-milho', name: "Lentilha com cominho e tomate com salada crocante e milho", category: 'Vegetariana', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com lentilha com cominho e tomate e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["160 g de lentilha cozida", "folhas, pepino e tomate (150 g)", "60 g de milho cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare folhas, pepino e tomate (150 g) e 60 g de milho cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere lentilha com cominho e tomate com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 286, proteins: 18, carbohydrates: 51, fats: 4, fiber: 18 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-sardinha-tomate-arroz-couve', name: "Sardinha ao tomate e cheiro-verde com arroz integral e couve", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com sardinha ao tomate e cheiro-verde e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de sardinha assada", "100 g de arroz integral cozido", "80 g de couve refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de arroz integral cozido e 80 g de couve refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere sardinha ao tomate e cheiro-verde com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 416, proteins: 34, carbohydrates: 31, fats: 18, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-sardinha-tomate-abobora-gratinada', name: "Sardinha ao tomate e cheiro-verde com abóbora assada e páprica", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com sardinha ao tomate e cheiro-verde e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de sardinha assada", "200 g de abóbora assada", "1 colher de chá de azeite", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 200 g de abóbora assada e 1 colher de chá de azeite conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere sardinha ao tomate e cheiro-verde com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 361, proteins: 31, carbohydrates: 20, fats: 20, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-sardinha-tomate-inhame-salada', name: "Sardinha ao tomate e cheiro-verde com inhame cozido e salada", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com sardinha ao tomate e cheiro-verde e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de sardinha assada", "150 g de inhame cozido", "folhas e tomate (100 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de inhame cozido e folhas e tomate (100 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere sardinha ao tomate e cheiro-verde com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 436, proteins: 33, carbohydrates: 40, fats: 16, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-sardinha-tomate-feijao-arroz', name: "Sardinha ao tomate e cheiro-verde com arroz e feijão caseiros", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com sardinha ao tomate e cheiro-verde e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de sardinha assada", "90 g de arroz cozido", "90 g de feijão carioca cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 90 g de arroz cozido e 90 g de feijão carioca cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere sardinha ao tomate e cheiro-verde com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 461, proteins: 36, carbohydrates: 42, fats: 17, fiber: 8 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-sardinha-tomate-quinoa-abobrinha', name: "Sardinha ao tomate e cheiro-verde com quinoa e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com sardinha ao tomate e cheiro-verde e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de sardinha assada", "100 g de quinoa cozida", "120 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 100 g de quinoa cozida e 120 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere sardinha ao tomate e cheiro-verde com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 416, proteins: 35, carbohydrates: 27, fats: 19, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-sardinha-tomate-polenta-rucula', name: "Sardinha ao tomate e cheiro-verde com polenta mole e rúcula", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com sardinha ao tomate e cheiro-verde e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de sardinha assada", "160 g de polenta cozida", "rúcula e tomate (80 g)", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 160 g de polenta cozida e rúcula e tomate (80 g) conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere sardinha ao tomate e cheiro-verde com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 401, proteins: 33, carbohydrates: 30, fats: 17, fiber: 4 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-sardinha-tomate-cuscuz-ervilha', name: "Sardinha ao tomate e cheiro-verde com cuscuz de milho e ervilha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com sardinha ao tomate e cheiro-verde e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de sardinha assada", "120 g de cuscuz de milho cozido", "50 g de ervilha cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 120 g de cuscuz de milho cozido e 50 g de ervilha cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere sardinha ao tomate e cheiro-verde com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 431, proteins: 35, carbohydrates: 35, fats: 17, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-sardinha-tomate-macarrao-abobrinha', name: "Sardinha ao tomate e cheiro-verde com macarrão integral e abobrinha", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com sardinha ao tomate e cheiro-verde e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de sardinha assada", "110 g de macarrão integral cozido", "100 g de abobrinha refogada", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 110 g de macarrão integral cozido e 100 g de abobrinha refogada conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere sardinha ao tomate e cheiro-verde com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 436, proteins: 36, carbohydrates: 34, fats: 18, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-sardinha-tomate-mandioquinha-cenoura', name: "Sardinha ao tomate e cheiro-verde com purê de mandioquinha e cenoura", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com sardinha ao tomate e cheiro-verde e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de sardinha assada", "150 g de mandioquinha cozida", "80 g de cenoura cozida", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare 150 g de mandioquinha cozida e 80 g de cenoura cozida conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere sardinha ao tomate e cheiro-verde com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 426, proteins: 32, carbohydrates: 38, fats: 17, fiber: 6 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
+  },
+  {
+    id: 'b2-sardinha-tomate-salada-milho', name: "Sardinha ao tomate e cheiro-verde com salada crocante e milho", category: 'Almoço e jantar', tags: ['Fitness', 'Brasileira'],
+    description: "Refeição caseira com sardinha ao tomate e cheiro-verde e acompanhamento de vegetais ou grãos.",
+    minutes: 25, servings: 1,
+    ingredients: ["120 g de sardinha assada", "folhas, pepino e tomate (150 g)", "60 g de milho cozido", "alho, limão, cheiro-verde e sal moderado a gosto"],
+    steps: [
+      "Prepare folhas, pepino e tomate (150 g) e 60 g de milho cozido conforme os ingredientes, cozinhando até ficar macio.",
+      "Tempere sardinha ao tomate e cheiro-verde com alho, limão e ervas; cozinhe completamente ou aqueça até ficar bem quente.",
+      'Monte a porção com o acompanhamento e ajuste os temperos sem excesso de sal.'
+    ],
+    nutrientsPerServing: { calories: 351, proteins: 33, carbohydrates: 19, fats: 17, fiber: 5 },
+    nutritionNote: 'Estimativa editorial por porção, calculada com valores médios dos ingredientes; marcas, cortes e preparo alteram os valores. Não é análise laboratorial.',
   }
 ];
 

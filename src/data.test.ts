@@ -131,6 +131,17 @@ describe('personalização da navegação', () => {
     expect(new Set(preferences.order).size).toBe(10);
   });
 
+  it('adiciona áreas novas antes do Perfil em preferências antigas', () => {
+    const legacy = normalizeNavigationPreferences({
+      order: ['/', '/alimentacao', '/registros', '/jejum', '/medicamentos', '/relatorios', '/perfil'],
+    });
+    expect(legacy.order).toEqual([
+      '/', '/alimentacao', '/registros', '/jejum', '/medicamentos', '/relatorios',
+      '/receitas', '/assistente', '/exercicios', '/perfil',
+    ]);
+    expect(legacy.order.at(-1)).toBe('/perfil');
+  });
+
   it('move apenas o destino solicitado e não altera a ordem original', () => {
     const original = ['/', '/alimentacao', '/receitas', '/assistente'];
     expect(reorderNavigationItem(original, '/assistente', '/alimentacao')).toEqual([

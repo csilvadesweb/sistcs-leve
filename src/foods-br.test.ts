@@ -179,12 +179,32 @@ describe('Open Food Facts — integração externa resiliente', () => {
         count: 2,
         foods: [
           { slug: 'banana-raw', name: 'Banana, raw', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/banana-raw', per_100g: { kcal: 89, protein_g: 1.1, carbs_g: 22.8, fat_g: 0.3, fiber_g: 2.6 } },
+          { slug: 'cassava-raw', name: 'Cassava, raw', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/cassava-raw', per_100g: { kcal: 160, protein_g: 1.4, carbs_g: 38.1, fat_g: 0.3, fiber_g: 1.8 } },
+          { slug: 'black-beans-cooked', name: 'Beans, black, mature seeds, cooked', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/black-beans-cooked', per_100g: { kcal: 132, protein_g: 8.9, carbs_g: 23.7, fat_g: 0.5, fiber_g: 8.7 } },
+          { slug: 'black-eyed-peas-cooked', name: 'Cowpeas, common, mature seeds, cooked', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/black-eyed-peas-cooked', per_100g: { kcal: 116, protein_g: 7.7, carbs_g: 20.8, fat_g: 0.5, fiber_g: 6.5 } },
+          { slug: 'collard-greens', name: 'Collards, cooked', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/collard-greens', per_100g: { kcal: 33, protein_g: 2.7, carbs_g: 5.7, fat_g: 0.7, fiber_g: 4 } },
+          { slug: 'okra-raw', name: 'Okra, raw', source: 'usda_sr_legacy', values_license: 'us_public_domain', url: 'https://tempolife.app/calories/okra-raw', per_100g: { kcal: 33, protein_g: 1.9, carbs_g: 7.5, fat_g: 0.2, fiber_g: 3.2 } },
           { slug: 'banana-unverified', name: 'Banana curated', source: 'curated_unverified', values_license: null, per_100g: { kcal: 999, protein_g: 0, carbs_g: 0, fat_g: 0, fiber_g: 0 } },
         ],
       }),
     }));
     await expect(searchTempoLifeFoods('banana')).resolves.toEqual([expect.objectContaining({
       name: 'Banana, raw', origin: 'usda', code: 'usda-banana-raw', kcal: 89, protein: 1.1, carbs: 22.8, fat: 0.3, fiber: 2.6, sourceLicense: 'us_public_domain',
+    })]);
+    await expect(searchTempoLifeFoods('mandioca')).resolves.toEqual([expect.objectContaining({
+      name: 'Cassava, raw', code: 'usda-cassava-raw', origin: 'usda',
+    })]);
+    await expect(searchTempoLifeFoods('feijão preto')).resolves.toEqual([expect.objectContaining({
+      name: 'Beans, black, mature seeds, cooked', code: 'usda-black-beans-cooked',
+    })]);
+    await expect(searchTempoLifeFoods('feijão fradinho')).resolves.toEqual([expect.objectContaining({
+      name: 'Cowpeas, common, mature seeds, cooked', code: 'usda-black-eyed-peas-cooked',
+    })]);
+    await expect(searchTempoLifeFoods('couve manteiga')).resolves.toEqual([expect.objectContaining({
+      name: 'Collards, cooked', code: 'usda-collard-greens',
+    })]);
+    await expect(searchTempoLifeFoods('quiabo')).resolves.toEqual([expect.objectContaining({
+      name: 'Okra, raw', code: 'usda-okra-raw',
     })]);
   });
   it('converte energia em kJ para kcal quando o campo direto está ausente', async () => {

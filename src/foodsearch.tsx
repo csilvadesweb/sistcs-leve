@@ -15,59 +15,97 @@ function BarcodeScanner({ onCode, onClose }: { onCode: (code: string) => void; o
   const video = useRef<HTMLVideoElement>(null);
   const lastCodeRef = useRef<{ code: string; at: number } | null>(null);
   const [error, setError] = useState('');
-  // Guarda o callback mais recente para a câmera não reiniciar a cada renderização do pai.
+  const [cameraReady, setCameraReady] = useState(false);
+  const [detected, setDetected] = useState(false);
   const onCodeRef = useRef(onCode);
   onCodeRef.current = onCode;
 
   useEffect(() => {
     const Ctor = (window as any).BarcodeDetector as (new (o: { formats: string[] }) => Detector) | undefined;
-    if (!Ctor || !navigator.mediaDevices?.getUserMedia) {
-      setError('Este navegador não lê códigos de barras pela câmera. Digite o número do código.');
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setError('A câmera exige conexão segura (HTTPS) e permissão do navegador. Você também pode digitar o código abaixo.');
+      return;
+    }
+    if (!Ctor) {
+      setError('A leitura pela câmera não é compatível com este navegador. Digite o número do código abaixo.');
       return;
     }
     let stream: MediaStream | null = null;
     let timer = 0;
     let stopped = false;
-    const detector = new Ctor({ formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e'] });
+    let detecting = false;
+    let delivered = false;
+    let detector: Detector;
+    try {
+      detector = new Ctor({ formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e'] });
+    } catch {
+      setError('Este dispositivo não oferece os formatos de leitura necessários. Digite o código abaixo.');
+      return;
+    }
     navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: 'environment' }, audio: false })
-      .then((s) => {
+      .getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false })
+      .then(async (s) => {
         if (stopped) return s.getTracks().forEach((t) => t.stop());
         stream = s;
         const el = video.current;
-        if (!el) return;
+        if (!el) return s.getTracks().forEach((t) => t.stop());
         el.srcObject = s;
-        void el.play();
+        try {
+          await el.play();
+          if (!stopped) setCameraReady(true);
+        } catch {
+          setError('Não foi possível iniciar a prévia da câmera. Confira a permissão e tente novamente.');
+          return;
+        }
         timer = window.setInterval(async () => {
+          if (stopped || detecting || delivered || el.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return;
+          detecting = true;
           try {
             const found = await detector.detect(el);
             const code = found[0]?.rawValue?.trim();
             if (!stopped && code) {
               const previous = lastCodeRef.current;
-              // BarcodeDetector encontra o mesmo código em muitos quadros seguidos.
-              // Evita disparar várias consultas para o mesmo produto em sequência.
               if (previous?.code === code && Date.now() - previous.at < 2500) return;
               lastCodeRef.current = { code, at: Date.now() };
+              delivered = true;
+              setDetected(true);
               onCodeRef.current(code);
             }
           } catch {
-            /* quadro sem código: tenta de novo */
+            // Um quadro pode não conter código legível; continua tentando.
+          } finally {
+            detecting = false;
           }
-        }, 350);
+        }, 300);
       })
-      .catch(() => setError('Não foi possível usar a câmera. Verifique a permissão ou digite o número do código.'));
+      .catch(() => setError('Não foi possível acessar a câmera. Permita o acesso nas configurações do navegador ou digite o código abaixo.'));
     return () => {
       stopped = true;
       window.clearInterval(timer);
-      stream?.getTracks().forEach((t) => t.stop());
+      stream?.getTracks().forEach((track) => track.stop());
+      const el = video.current;
+      if (el) el.srcObject = null;
     };
   }, []);
 
   return (
-    <div className="scanner">
-      {error ? <p className="field-error" role="alert">{error}</p> : <video ref={video} muted playsInline aria-label="Câmera para ler o código de barras" />}
-      <Button variant="ghost" size="sm" onClick={onClose}><X aria-hidden="true" /> Fechar câmera</Button>
-    </div>
+    <section className="scanner scanner-premium" aria-label="Leitor de código de barras">
+      <div className="scanner-heading">
+        <span className="scanner-heading-icon"><ScanBarcode size={20} aria-hidden="true" /></span>
+        <div>
+          <strong>Leitor de produtos</strong>
+          <p>{error ? 'Use a busca manual como alternativa.' : detected ? 'Código detectado. Consultando o catálogo…' : cameraReady ? 'Centralize o código de barras na moldura.' : 'Preparando a câmera traseira…'}</p>
+        </div>
+        <span className={error ? 'scanner-status scanner-status-warning' : cameraReady ? 'scanner-status scanner-status-live' : 'scanner-status'}>{error ? 'Manual' : cameraReady ? 'Ao vivo' : 'Iniciando'}</span>
+      </div>
+      <div className="scanner-viewport">
+        <video ref={video} muted playsInline aria-label="Prévia da câmera traseira para ler o código de barras" />
+        {!error && <div className="scanner-overlay" aria-hidden="true"><span /><span /><span /><span /><i /></div>}
+        {error && <div className="scanner-fallback"><ScanBarcode size={34} aria-hidden="true" /><p>{error}</p></div>}
+      </div>
+      <p className="scanner-tip">Dica: mantenha o rótulo iluminado, firme e a poucos centímetros da câmera. A leitura depende do suporte do navegador.</p>
+      <Button variant="outline" size="sm" onClick={onClose}><X aria-hidden="true" /> Fechar leitor</Button>
+    </section>
   );
 }
 

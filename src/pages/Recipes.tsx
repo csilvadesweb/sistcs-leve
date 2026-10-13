@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { CookingPot, Clock3, Search, Users, UtensilsCrossed, Plus, CheckCircle2 } from 'lucide-react';
+import { CookingPot, Clock3, Search, Users, UtensilsCrossed, Plus, CheckCircle2, Star } from 'lucide-react';
 import { useAppData } from '../session';
 import { createFoodEntry, type MealType } from '../data';
 import { decimalText, todayInSaoPaulo } from '../ui';
 import { filterRecipes, RECIPES, scaleRecipeNutrients, type Recipe, type RecipeCategory } from '../recipes';
 import { buildShoppingList, resolvePlannedMeals, validatePlannedMeals, WEEK_DAYS, type PlannedMeal } from '../meal-plan';
+import { toggleFavoriteId, validateFavoriteIds } from '../recipe-favorites';
 
 const MEAL_LABELS: Record<MealType, string> = { breakfast: 'Café da manhã', lunch: 'Almoço', snack: 'Lanche', dinner: 'Jantar', other: 'Outros' };
 const categories: Array<RecipeCategory | 'Todas'> = ['Todas', 'Café da manhã', 'Almoço e jantar', 'Lanches', 'Vegetariana'];
@@ -20,6 +21,14 @@ export function Recipes() {
   const { reload, user } = useAppData();
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState<RecipeCategory | 'Todas'>('Todas');
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    try {
+      const raw = window.localStorage.getItem(`sistcs-leve-recipe-favorites-v1:${user.id}`);
+      const parsed: unknown = raw ? JSON.parse(raw) : [];
+      return validateFavoriteIds(parsed, RECIPES.map((recipe) => recipe.id));
+    } catch { return []; }
+  });
   const [meal, setMeal] = useState<MealType>('lunch');
   const [servings, setServings] = useState<Record<string, number>>({});
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -40,7 +49,14 @@ export function Recipes() {
   useEffect(() => {
     try { window.localStorage.setItem(`sistcs-leve-meal-plan-v1:${user.id}`, JSON.stringify(planItems)); } catch { /* storage unavailable: planner remains usable for this session */ }
   }, [planItems, user.id]);
-  const recipes = useMemo(() => filterRecipes(RECIPES, query, category), [query, category]);
+  useEffect(() => {
+    try { window.localStorage.setItem(`sistcs-leve-recipe-favorites-v1:${user.id}`, JSON.stringify(favorites)); } catch { /* favorites remain available for this session */ }
+  }, [favorites, user.id]);
+  const recipes = useMemo(() => filterRecipes(RECIPES, query, category).filter((recipe) => !favoritesOnly || favorites.includes(recipe.id)), [query, category, favoritesOnly, favorites]);
+
+  function toggleFavorite(recipeId: string) {
+    setFavorites((current) => toggleFavoriteId(current, recipeId, RECIPES.map((recipe) => recipe.id)));
+  }
 
   function addToPlan(recipe: Recipe) {
     setPlanItems((items) => [...items, {
@@ -147,7 +163,8 @@ export function Recipes() {
       </div>
 
       <div className="recipes-categories" aria-label="Filtrar receitas por categoria">
-        {categories.map((item) => <button key={item} type="button" className={category === item ? 'is-active' : ''} aria-pressed={category === item} onClick={() => setCategory(item)}>{item}</button>)}
+        {categories.map((item) => <button key={item} type="button" className={category === item && !favoritesOnly ? 'is-active' : ''} aria-pressed={category === item && !favoritesOnly} onClick={() => { setCategory(item); setFavoritesOnly(false); }}>{item}</button>)}
+        <button type="button" className={favoritesOnly ? 'is-active favorites-filter' : 'favorites-filter'} aria-pressed={favoritesOnly} onClick={() => setFavoritesOnly((value) => !value)}><Star size={15} fill={favoritesOnly ? 'currentColor' : 'none'} /> Favoritas ({favorites.length})</button>
       </div>
 
       <div className="recipes-results" role="status">{recipes.length} {recipes.length === 1 ? 'receita encontrada' : 'receitas encontradas'}</div>
@@ -157,7 +174,7 @@ export function Recipes() {
           const nutrients = scaleRecipeNutrients(recipe.nutrientsPerServing, amount);
           const isExpanded = expanded === recipe.id;
           return <article className="recipe-card" key={recipe.id}>
-            <div className="recipe-card-top"><span className="recipe-category">{recipe.category}</span><span className="recipe-time"><Clock3 size={14} /> {recipe.minutes} min</span></div>
+            <div className="recipe-card-top"><span className="recipe-category">{recipe.category}</span><div className="recipe-card-meta"><span className="recipe-time"><Clock3 size={14} /> {recipe.minutes} min</span><button type="button" className={`recipe-favorite-button${favorites.includes(recipe.id) ? ' is-favorite' : ''}`} aria-label={favorites.includes(recipe.id) ? `Remover ${recipe.name} das favoritas` : `Adicionar ${recipe.name} às favoritas`} aria-pressed={favorites.includes(recipe.id)} onClick={() => toggleFavorite(recipe.id)}><Star size={18} fill={favorites.includes(recipe.id) ? 'currentColor' : 'none'} /></button></div></div>
             <h2>{recipe.name}</h2>
             <p className="recipe-description">{recipe.description}</p>
             <div className="recipe-nutrients">
@@ -184,7 +201,7 @@ export function Recipes() {
             {feedback?.id === recipe.id && <p className={feedback.error ? 'ft-feedback ft-feedback-error' : 'ft-feedback recipe-feedback'} role={feedback.error ? 'alert' : 'status'}>{feedback.message}</p>}
           </article>;
         })}
-      </div> : <section className="ft-card recipes-empty"><CookingPot size={26} /><h2>Nenhuma receita encontrada</h2><p>Tente outro nome ou selecione “Todas”.</p></section>}
+      </div> : <section className="ft-card recipes-empty"><CookingPot size={26} /><h2>{favoritesOnly ? 'Você ainda não tem receitas favoritas' : 'Nenhuma receita encontrada'}</h2><p>{favoritesOnly ? 'Toque na estrela de uma receita para salvá-la aqui.' : 'Tente outro nome ou selecione “Todas”.'}</p></section>}
     </div>
   );
 }

@@ -1,56 +1,31 @@
-# Auditoria de cobertura alimentar brasileira — fase 1
+# Auditoria de cobertura alimentar brasileira — licenças e qualidade
 
 Data: 12/10/2026
 
-## Escopo e limite honesto
+## Resultado da revisão
 
-A base local existente contém 590 registros derivados da TACO 4ª edição, complementados por busca de produtos embalados do Open Food Facts e referências genéricas USDA SR Legacy com licença pública explícita. Isso não equivale a uma lista exaustiva de tudo que se come no Brasil: receitas regionais, variações de preparo, marcas e produtos novos são praticamente ilimitados. A meta é ampliar a cobertura de forma rastreável, sem inventar valores como se fossem oficiais.
+A meta é manter a busca funcional sem introduzir dados cuja autorização comercial não esteja clara. A página oficial da TBCA/USP informa que a divulgação de dados é estimulada sem fins comerciais, que usos comerciais exigem contato com os coordenadores e que não é permitida a reprodução total ou parcial nem a comercialização do material. Por isso, os 12 registros que reproduziam referências da TBCA foram removidos do catálogo executável e substituídos por estimativas genéricas de preparações brasileiras, identificadas explicitamente como estimativas. Elas não são dados oficiais, variam conforme receita e porção e não devem ser usadas como substituto de rótulos ou receitas pesadas.
 
-## O que entrou nesta fase
+Fonte oficial TBCA/USP: https://fcf.usp.br/tbca/
 
-Foram adicionadas doze entradas da TBCA/USP à busca local, com código de referência, link da fonte e valores por 100 g:
+## Fontes gratuitas para uso comercial
 
-| Alimento | Referência TBCA | Medida inicial |
-|---|---|---|
-| Pão de queijo industrializado assado | BRC0123B | unidade pequena (25 g) |
-| Feijoada com sal | BRC0198T | porção/concha (150 g) |
-| Brigadeiro caseiro com chocolate | BRC0190K | unidade (25 g) |
-| Tapioca sem manteiga e sem recheio | BRC0906B | unidade média (60 g) |
-| Cuscuz de tapioca com coco e leite de coco | BRC0997B | pedaço médio (70 g) |
-| Moqueca baiana de peixe | BRC0121E | concha (45–60 g) |
+- **USDA FoodData Central**: dados declarados em domínio público/CC0 1.0; preferir registros cuja origem e licença estejam explícitas. https://fdc.nal.usda.gov/
+- **Open Food Facts**: base ODbL, com atribuição e obrigações de compartilhamento pela mesma licença para a base derivada; imagens de produtos têm condições próprias. Não copiar imagens automaticamente nem presumir que todos os campos tenham direitos idênticos. https://world.openfoodfacts.org/terms-of-use
+- **TACO/NEPA-UNICAMP**: o NEPA disponibiliza a tabela publicamente, mas não foi localizada uma licença explícita e inequívoca para redistribuição comercial dos 590 registros embutidos neste app. A disponibilidade pública, sozinha, não confirma autorização comercial. É necessária confirmação escrita do titular ou um plano de substituição compatível com zero regressão.
 
-Os valores são os da preparação descrita pela TBCA; marcas, receita, tamanho e quantidade de óleo/açúcar podem alterar os nutrientes. As medidas caseiras são estimativas de peso e não devem ser tratadas como universais.
+Fontes:
+- USDA FoodData Central — licenciamento: https://fdc.nal.usda.gov/
+- Open Food Facts — licenças e reutilização: https://github.com/openfoodfacts/openfoodfacts-server/blob/main/docs/api/tutorials/license-be-on-the-legal-side.md
+- NEPA/UNICAMP — publicações TACO: https://nepa.unicamp.br/publicacoes/
 
-Fontes de referência:
-- TBCA/USP: https://www.tbca.net.br/base-dados/composicao_alimentos_calculaveis.php
-- TACO/NEPA-UNICAMP: https://nepa.unicamp.br/tabela-brasileira-de-composicao-de-alimentos-4a-edicao/
-- IBGE, POF 2017–2018 — consumo alimentar: https://www.ibge.gov.br/estatisticas/multidominio/condicoes-de-vida-desigualdade-e-pobreza/24786-pesquisa-de-orcamentos-familiares-2.html
+## Proteção contra regressão
 
-## Matriz de cobertura a revisar
+- Nenhuma migration, dado de usuário, autenticação ou fluxo de registro foi alterado.
+- As 12 preparações continuam pesquisáveis, agora com códigos próprios e origem `estimate`.
+- A interface deve distinguir claramente estimativas de dados oficiais.
+- Testes devem cobrir busca, valores numéricos válidos e medidas caseiras.
 
-| Grupo | Cobertura já identificada | Próxima verificação |
-|---|---|---|
-| Arroz, feijões, cereais, farinhas e massas | Diversas formas cruas/cozidas na TACO | Variedades regionais, cuscuz de arroz, polvilho e preparações |
-| Carnes, aves, ovos, pescados e frutos do mar | Muitos cortes e preparações na TACO | Carne de sol, churrasco por corte, peixes regionais e preparos |
-| Leite, queijos e derivados | Leites, queijos e iogurtes; produtos embalados via OFF | Queijos regionais, coalhada, requeijão e marcas faltantes |
-| Frutas, verduras e legumes | Muitas espécies e estados de preparo na TACO | Frutas regionais/sazonais, PANCs, tubérculos e variedades locais |
-| Pratos brasileiros e regionais | Acarajé, arroz carreteiro, baião de dois, barreado, cuscuz, feijão tropeiro, maniçoba, tacacá, vatapá e outros na TACO | Preparações regionais adicionais, receitas por recheio e variações de tamanho/preparo |
-| Doces e sobremesas | Doces da TACO e produtos de marca via OFF | Brigadeiros e doces regionais, outros bolos caseiros e sobremesas com receita identificada |
-| Bebidas | Café, chás, sucos e refrigerantes em várias formas | Bebidas regionais e produtos embalados ausentes |
-| Industrializados e marcas | Open Food Facts com busca paginada e código de barras | Qualidade, duplicatas, rótulos incompletos e cobertura de marcas brasileiras |
+## Limitação importante
 
-A matriz é uma lista de auditoria, não uma afirmação de que todos os itens de cada grupo já estão cobertos.
-
-## Regras de qualidade
-
-1. Priorizar registros oficiais/identificáveis (TBCA, TACO e rótulos) e preservar fonte/código.
-2. Distinguir alimento cru, cozido, assado, frito, drenado e receita preparada.
-3. Não misturar preparação com ingrediente nem substituir a composição de marca por uma média sem avisar.
-4. Não duplicar um alimento existente só por diferença de grafia; usar aliases quando forem sinônimos.
-5. Não inventar macros para preencher lacunas. Quando só houver estimativa, identificar como estimativa.
-6. Validar busca por nome comum, acentos/sinônimos, código de referência, medidas caseiras e cálculo de nutrientes.
-7. Nenhuma migration ou alteração de dados de usuários é necessária para esta expansão do catálogo local.
-
-## Próxima etapa recomendada
-
-Fazer comparação estruturada com os grupos e microdados de consumo da POF/IBGE, revisar entradas da TBCA que não estejam representadas, e adicionar em lotes pequenos com testes de busca e fonte. Para produtos de marca, continuar a usar a busca paginada do Open Food Facts, sem copiar toda a base externa para o app.
+Esta alteração elimina a dependência dos 12 registros TBCA, mas **não libera automaticamente o catálogo TACO já existente para uso comercial**. O próximo passo seguro é obter autorização escrita da NEPA/UNICAMP ou substituir os registros em lotes por dados com licença explícita, validando cada lote antes de remover os dados atuais.

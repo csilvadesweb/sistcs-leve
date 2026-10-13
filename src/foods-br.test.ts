@@ -94,31 +94,30 @@ describe('searchLocal — catálogo TACO', () => {
 });
 
 
-describe('Cobertura de alimentos brasileiros — referências TBCA', () => {
+describe('Cobertura de preparações brasileiras estimadas', () => {
   it.each([
-    ['pão de queijo', 'tbca-BRC0123B'],
-    ['feijoada', 'tbca-BRC0198T'],
-    ['brigadeiro', 'tbca-BRC0190K'],
-    ['tapioca sem manteiga', 'tbca-BRC0906B'],
-    ['cuscuz de tapioca', 'tbca-BRC0997B'],
-    ['moqueca baiana de peixe', 'tbca-BRC0121E'],
-    ['esfiha', 'tbca-BRC0439A'],
-    ['bolo de cenoura', 'tbca-BRC0461A'],
-    ['bolo de cenoura com cobertura de chocolate', 'tbca-BRC1071A'],
-    ['pamonha com coco', 'tbca-BRC1051A'],
-    ['coxinha de frango industrializada', 'tbca-BRC0100F'],
-    ['pastel frito caseiro', 'tbca-BRC0165A'],
-  ])('encontra %s na base local com referência TBCA', (query, code) => {
-    expect(searchLocal(query, 20)).toContainEqual(expect.objectContaining({ code, origin: 'tbca' }));
+    ['pão de queijo', 'estimate-br-pao-de-queijo'],
+    ['feijoada', 'estimate-br-feijoada'],
+    ['brigadeiro', 'estimate-br-brigadeiro'],
+    ['tapioca sem recheio', 'estimate-br-tapioca'],
+    ['cuscuz de tapioca', 'estimate-br-cuscuz-tapioca'],
+    ['moqueca de peixe', 'estimate-br-moqueca-peixe'],
+    ['esfiha', 'estimate-br-esfiha'],
+    ['bolo de cenoura', 'estimate-br-bolo-cenoura'],
+    ['bolo de cenoura com cobertura de chocolate', 'estimate-br-bolo-cenoura-chocolate'],
+    ['pamonha com coco', 'estimate-br-pamonha-coco'],
+    ['coxinha de frango', 'estimate-br-coxinha-frango'],
+    ['pastel frito', 'estimate-br-pastel-frito'],
+  ])('encontra %s e identifica os valores como estimativas', (query, code) => {
+    expect(searchLocal(query, 20)).toContainEqual(expect.objectContaining({ code, origin: 'estimate' }));
   });
 
-  it('marca todas as novas entradas com fonte e valores nutricionais válidos', () => {
-    const additions = FOODS_BR.filter((food) => food.origin === 'tbca');
-    expect(additions.length).toBeGreaterThanOrEqual(12);
+  it('mantém valores numéricos válidos e medidas caseiras nas preparações estimadas', () => {
+    const additions = FOODS_BR.filter((food) => food.code?.startsWith('estimate-br-'));
+    expect(additions).toHaveLength(12);
     for (const food of additions) {
-      expect(food.sourceUrl).toContain('tbca.net.br');
-      expect(food.sourceLicense).toContain('TBCA/USP');
       expect([food.kcal, food.protein, food.carbs, food.fat, food.fiber].every((n) => Number.isFinite(n) && n >= 0)).toBe(true);
+      expect(food.units?.length).toBeGreaterThan(0);
     }
   });
 });

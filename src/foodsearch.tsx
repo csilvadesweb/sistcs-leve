@@ -167,9 +167,9 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   const gramsOk = grams > 0 && grams <= 5000;
   const label =
     gramsText !== null || !auto
-      ? `${decimalText(grams)} g`
+      ? `${decimalText(grams)} ${food?.basis === '100ml' ? 'ml' : 'g'}`
       : auto.label.includes('×')
-        ? `${auto.label} (${decimalText(Math.round(grams * 10) / 10)} g)`
+        ? `${auto.label} (${decimalText(Math.round(grams * 10) / 10)} ${food?.basis === '100ml' ? 'ml' : 'g'})`
         : auto.label;
   const calc = food && gramsOk ? scale(food, grams) : null;
 

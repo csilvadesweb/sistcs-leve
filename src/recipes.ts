@@ -426,7 +426,7 @@ export const RECIPES: Recipe[] = [
     nutritionNote: 'Estimativa editorial por porção; confira marcas e quantidades para maior precisão.',
   },
   {
-    id: 'panqueca-banana-aveia', name: 'Panqueca de banana e aveia', category: 'Café da manhã', tags: ['Fitness'],
+    id: 'panqueca-banana-aveia-proteica', name: 'Panqueca fitness de banana e aveia', category: 'Café da manhã', tags: ['Fitness'],
     description: 'Panqueca rápida sem açúcar adicionado, com banana madura.', minutes: 12, servings: 1,
     ingredients: ['1 banana média', '1 ovo', '25 g de aveia em flocos', 'Canela a gosto'],
     steps: ['Amasse a banana e misture com o ovo, a aveia e a canela.', 'Coloque pequenas porções em frigideira antiaderente aquecida.', 'Doure dos dois lados em fogo baixo e sirva.'],
@@ -482,7 +482,7 @@ export const RECIPES: Recipe[] = [
     nutritionNote: 'Estimativa editorial por porção; os valores dependem do peso final e do óleo utilizado.',
   },
   {
-    id: 'omelete-espinafre-ricota', name: 'Omelete de espinafre com ricota', category: 'Almoço e jantar', tags: ['Fitness'],
+    id: 'omelete-espinafre-ricota-fit', name: 'Omelete fit de espinafre e ricota', category: 'Almoço e jantar', tags: ['Fitness'],
     description: 'Ovos com folhas e ricota para uma refeição sem carne.', minutes: 12, servings: 1,
     ingredients: ['2 ovos', '50 g de ricota', '1 xícara de espinafre', '1 colher de chá de azeite', 'Pimenta e noz-moscada a gosto'],
     steps: ['Refogue rapidamente o espinafre com parte do azeite.', 'Bata os ovos e misture a ricota esfarelada e os temperos.', 'Adicione o espinafre e cozinhe em frigideira até firmar.'],
@@ -498,7 +498,7 @@ export const RECIPES: Recipe[] = [
     nutritionNote: 'Estimativa editorial por porção; o tofu e o molho variam entre marcas.',
   },
   {
-    id: 'feijao-tropeiro-leve', name: 'Feijão-tropeiro leve', category: 'Almoço e jantar', tags: ['Brasileira'],
+    id: 'feijao-tropeiro-leve-com-couve', name: 'Feijão-tropeiro leve com couve', category: 'Almoço e jantar', tags: ['Brasileira'],
     description: 'Versão caseira com feijão, couve e ovo, moderando a gordura.', minutes: 25, servings: 2,
     ingredients: ['250 g de feijão cozido e escorrido', '2 ovos', '60 g de couve fatiada', '30 g de farinha de mandioca', '1 colher de chá de azeite', 'Alho e cebola a gosto'],
     steps: ['Refogue alho e cebola com o azeite e acrescente a couve.', 'Adicione os ovos e mexa até cozinharem.', 'Misture o feijão e a farinha, aqueça e divida em duas porções.'],
@@ -522,7 +522,7 @@ export const RECIPES: Recipe[] = [
     nutritionNote: 'Estimativa editorial por porção; o óleo efetivamente consumido altera o valor energético.',
   },
   {
-    id: 'maca-assada-canela', name: 'Maçã assada com canela e iogurte', category: 'Lanches', tags: ['Fitness'],
+    id: 'maca-assada-iogurte-natural', name: 'Maçã assada com canela e iogurte natural leve', category: 'Lanches', tags: ['Fitness'],
     description: 'Sobremesa simples com fruta assada e iogurte natural.', minutes: 20, servings: 1,
     ingredients: ['1 maçã média', '100 g de iogurte natural', 'Canela a gosto'],
     steps: ['Corte a maçã ao meio e retire as sementes.', 'Polvilhe canela e asse até amaciar.', 'Sirva com iogurte natural.'],

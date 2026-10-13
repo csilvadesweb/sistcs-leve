@@ -44,3 +44,7 @@
 .sr-only {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(max-width:640px){.ai-hero{align-items:flex-start;flex-wrap:wrap;padding:19px;gap:13px}.ai-hero-icon{width:48px;height:48px;border-radius:15px}.ai-status{margin-left:61px;margin-top:-8px}.ai-messages{padding:15px;max-height:55vh}.ai-message{max-width:100%}.ai-compose{padding:12px;gap:8px}.ai-compose button{padding:0 12px}.ai-compose button span{display:none}.ai-chat-heading{padding:14px}.ai-suggestions{justify-content:stretch}.ai-suggestions button{width:100%;text-align:center}}
 @media(prefers-reduced-motion:reduce){.ai-thinking span{animation:none}.ai-suggestions button{transition:none}}
+
+.ai-status-pending { border-color: rgba(255,213,128,.4); color: #ffe3a3; }
+.ai-status-pending span { background: #e9b957; }
+.ai-setup-note { margin: -8px 0 20px; padding: 13px 16px; border: 1px solid rgba(185,138,44,.3); border-radius: 14px; background: rgba(232,196,108,.09); color: var(--text-2); font-size: 14px; line-height: 1.6; }

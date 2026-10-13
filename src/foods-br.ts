@@ -446,7 +446,7 @@ export async function searchOpenFoodFacts(query: string, signal?: AbortSignal): 
 }
 /** Normaliza entrada de leitores/cópia antes de limitar o campo visual a 14 dígitos. */
 export function normalizeBarcodeInput(raw: string): string {
-  return raw.replace(/\\D/g, '').slice(0, 14);
+  return raw.replace(/\D/g, '').slice(0, 14);
 }
 
 export async function lookupBarcode(code: string, signal?: AbortSignal): Promise<FoodPer100 | null> {

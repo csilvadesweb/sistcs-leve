@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
-import { gramsFor, householdUnitsForFood, lookupBarcode, normalize, parseQuery, scale, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 export interface PickedFood {
   name: string;
@@ -279,7 +279,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
       </div>
       <div className="fs-bar">
         <label className="sr-only" htmlFor="fs-code">Código de barras</label>
-        <input id="fs-code" className="input" inputMode="numeric" maxLength={14} placeholder="Ou o código de barras (EAN)" value={code} onChange={(e) => setCode(e.target.value)} />
+        <input id="fs-code" className="input" inputMode="numeric" placeholder="Ou o código de barras (EAN)" value={code} onChange={(e) => setCode(normalizeBarcodeInput(e.target.value))} />
         <Button variant="outline" size="sm" onClick={() => byCode(code)} disabled={status === 'loading'}>Consultar</Button>
         <Button variant="outline" size="sm" onClick={() => setScanning((v) => !v)}><ScanBarcode aria-hidden="true" /> {scanning ? 'Parar' : 'Ler com a câmera'}</Button>
       </div>

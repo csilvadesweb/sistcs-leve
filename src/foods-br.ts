@@ -154,7 +154,36 @@ export const FOODS_BR: FoodPer100[] = [
   origin: 'estimate',
   code: 'recipe-strogonoff-carne',
   units: [['porção', 150]],
-}];
+},
+  {
+    // Valores de referência por 100 g; conferir o rótulo da embalagem específica.
+    name: 'Iogurte Grego Protein (estimativa)',
+    brand: 'Vigor',
+    kcal: 76,
+    protein: 10,
+    carbs: 5.7,
+    fat: 0,
+    fiber: 0,
+    origin: 'estimate',
+    code: '996025214174',
+    sourceUrl: 'https://www.fatsecret.com.br/',
+    units: [['pote', 100]],
+  },
+  {
+    // Valores de referência para a versão morango de 160 g; conferir a embalagem.
+    name: 'Danone Mais Proteínas Morango (estimativa)',
+    brand: 'Danone',
+    kcal: 56.875,
+    protein: 6.25,
+    carbs: 5.6875,
+    fat: 1,
+    fiber: 0,
+    origin: 'estimate',
+    code: '7891025124573',
+    sourceUrl: 'https://www.fatsecret.com.br/calorias-nutri%C3%A7%C3%A3o/danone/mais-prote%C3%ADnas-morango/1-unidade',
+    units: [['pote', 160]],
+  }
+];
 
 const RANK = new Map<string, number>(
   [...TACO, ...EXTRA].map(([id], i) => [id >= 9000 ? `estimate-extra-${id}` : `taco-${id}`, PRIORITY_ORDER.includes(id) ? PRIORITY_ORDER.indexOf(id) - 1000 : i]),
@@ -490,6 +519,9 @@ export async function lookupBarcode(code: string, signal?: AbortSignal): Promise
   // Leitores e campos manuais podem inserir espaços ou hífens; não enviar caracteres inesperados à API.
   const normalizedCode = code.trim().replace(/[\s-]/g, '');
   if (!normalizedCode || !/^\d+$/.test(normalizedCode) || signal?.aborted) return null;
+  // Produtos cadastrados localmente continuam disponíveis se não existirem no Open Food Facts.
+  const localMatch = FOODS_BR.find((food) => food.code === normalizedCode);
+  if (localMatch) return { ...localMatch };
   const res = await fetch(`${OFF}/api/v2/product/${encodeURIComponent(normalizedCode)}.json?fields=${FIELDS}`, { signal });
   if (res.status === 404) return null;
   if (!res.ok) throw new Error('A consulta de código de barras está indisponível agora.');

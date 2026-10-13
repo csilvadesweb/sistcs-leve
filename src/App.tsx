@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import {
   Apple,
   CalendarDays,
@@ -18,7 +18,7 @@ import { useHashLocation } from 'wouter/use-hash-location';
 import { AuthGate, useAppData } from './session';
 import { Avatar } from './photos';
 import { PwaBanners } from './pwa';
-import { saveNavigationPreferences } from './data';
+import { reorderNavigationItem, saveNavigationPreferences } from './data';
 
 const Home = lazy(() => import('./pages/Home').then((m) => ({ default: m.Home })));
 const FoodTracking = lazy(() => import('./pages/Food').then((m) => ({ default: m.FoodTracking })));
@@ -132,12 +132,8 @@ function Shell({ children }: { children: ReactNode }) {
     const over = document.elementFromPoint(event.clientX, event.clientY)?.closest<HTMLElement>('[data-nav-href]');
     const targetHref = over?.dataset.navHref;
     if (targetHref && targetHref !== drag.href) {
-      const from = drag.latestOrder.indexOf(drag.href);
-      const to = drag.latestOrder.indexOf(targetHref);
-      if (from >= 0 && to >= 0) {
-        const next = [...drag.latestOrder];
-        next.splice(from, 1);
-        next.splice(to, 0, drag.href);
+      const next = reorderNavigationItem(drag.latestOrder, drag.href, targetHref);
+      if (next.some((href, index) => href !== drag.latestOrder[index])) {
         drag.latestOrder = next;
         setMobileOrder(next);
       }
@@ -181,7 +177,7 @@ function Shell({ children }: { children: ReactNode }) {
     dragRef.current = null;
   }
 
-  function handleNavClick(event: React.MouseEvent<HTMLAnchorElement>) {
+  function handleNavClick(event: ReactMouseEvent<HTMLAnchorElement>) {
     if (dragRef.current?.suppressClick) {
       event.preventDefault();
       dragRef.current = null;

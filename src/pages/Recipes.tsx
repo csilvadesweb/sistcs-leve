@@ -111,7 +111,7 @@ export function Recipes() {
 
       <section className="meal-planner-panel" aria-labelledby="meal-planner-title">
         <div className="meal-planner-heading">
-          <div><p className="eyebrow">ORGANIZE SUA SEMANA</p><h2 id="meal-planner-title">Planejador de refeições</h2><p>Escolha o dia e a refeição nos controles abaixo dos filtros; depois adicione uma receita ao planejamento.</p></div>
+          <div><p className="eyebrow">ORGANIZE SUA SEMANA</p><h2 id="meal-planner-title">Planejador de refeições</h2><p>Escolha o dia e a refeição; depois adicione qualquer receita ao planejamento.</p></div>
           <span className="meal-plan-count">{planItems.length} {planItems.length === 1 ? 'refeição' : 'refeições'}</span>
         </div>
         <div className="meal-plan-choices">

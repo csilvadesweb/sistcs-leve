@@ -31,6 +31,34 @@ describe('planejamento semanal e lista de compras', () => {
     expect(shopping.map((entry) => entry.ingredient)).toEqual([...shopping.map((entry) => entry.ingredient)].sort((a, b) => a.localeCompare(b, 'pt-BR')));
   });
 
+  it('soma apenas quantidades com o mesmo nome e unidade explícita', () => {
+    const customRecipes = [
+      { ...RECIPES[0], id: 'grams-a', ingredients: ['40 g de aveia em flocos', '100 ml de leite'] },
+      { ...RECIPES[0], id: 'grams-b', ingredients: ['40 g de aveia em flocos', '0,5 l de leite'] },
+    ];
+    const meals = [
+      { id: 'x', day: WEEK_DAYS[0], meal: 'breakfast' as const, recipeId: 'grams-a' },
+      { id: 'y', day: WEEK_DAYS[1], meal: 'snack' as const, recipeId: 'grams-b' },
+    ];
+    const shopping = buildShoppingList(resolvePlannedMeals(meals, customRecipes));
+    expect(shopping.find((entry) => entry.ingredient === '80 g de Aveia em flocos')?.count).toBe(2);
+    expect(shopping.find((entry) => entry.ingredient === '100 ml de Leite')?.count).toBe(1);
+    expect(shopping.find((entry) => entry.ingredient === '0,5 l de Leite')?.count).toBe(1);
+  });
+
+  it('mantém ingredientes sem quantidade/unidade explícita separados, sem inferir somas', () => {
+    const customRecipes = [
+      { ...RECIPES[0], id: 'household-a', ingredients: ['1 banana média'] },
+      { ...RECIPES[0], id: 'household-b', ingredients: ['2 bananas médias'] },
+    ];
+    const meals = [
+      { id: 'x', day: WEEK_DAYS[0], meal: 'breakfast' as const, recipeId: 'household-a' },
+      { id: 'y', day: WEEK_DAYS[1], meal: 'snack' as const, recipeId: 'household-b' },
+    ];
+    const shopping = buildShoppingList(resolvePlannedMeals(meals, customRecipes));
+    expect(shopping).toHaveLength(2);
+  });
+
   it('não modifica o planejamento de entrada ao gerar a lista de compras', () => {
     const valid = validatePlannedMeals(plan, RECIPES);
     const snapshot = structuredClone(valid);

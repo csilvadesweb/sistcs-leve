@@ -1,4 +1,6 @@
 export type RecipeCategory = 'Café da manhã' | 'Almoço e jantar' | 'Lanches' | 'Vegetariana';
+export type RecipeTag = 'Brasileira' | 'Fitness';
+export type RecipeFilter = RecipeCategory | RecipeTag | 'Todas';
 
 export interface RecipeNutrients {
   calories: number;
@@ -12,6 +14,7 @@ export interface Recipe {
   id: string;
   name: string;
   category: RecipeCategory;
+  tags?: RecipeTag[];
   description: string;
   minutes: number;
   servings: number;
@@ -31,6 +34,7 @@ export const RECIPES: Recipe[] = [
     id: 'overnight-aveia-banana',
     name: 'Aveia com banana e iogurte',
     category: 'Café da manhã',
+    tags: ['Fitness'],
     description: 'Preparação simples para deixar pronta na geladeira.',
     minutes: 5, servings: 1,
     ingredients: ['40 g de aveia em flocos', '1 banana média (80 g comestíveis)', '170 g de iogurte natural', 'Canela a gosto'],
@@ -42,6 +46,7 @@ export const RECIPES: Recipe[] = [
     id: 'omelete-tomate',
     name: 'Omelete de tomate',
     category: 'Café da manhã',
+    tags: ['Fitness'],
     description: 'Ovos com tomate e temperos, feitos em poucos minutos.',
     minutes: 10, servings: 1,
     ingredients: ['2 ovos', '1/2 tomate médio', '1 colher de chá de azeite', 'Sal e cheiro-verde a gosto'],
@@ -53,6 +58,7 @@ export const RECIPES: Recipe[] = [
     id: 'tapioca-queijo',
     name: 'Tapioca com queijo',
     category: 'Café da manhã',
+    tags: ['Brasileira'],
     description: 'Clássico rápido com recheio simples.',
     minutes: 8, servings: 1,
     ingredients: ['60 g de goma de tapioca hidratada', '30 g de queijo minas', 'Orégano a gosto'],
@@ -64,6 +70,7 @@ export const RECIPES: Recipe[] = [
     id: 'arroz-feijao-frango',
     name: 'Prato brasileiro: arroz, feijão e frango',
     category: 'Almoço e jantar',
+    tags: ['Brasileira', 'Fitness'],
     description: 'Combinação caseira com proteína e acompanhamentos.',
     minutes: 25, servings: 1,
     ingredients: ['100 g de arroz cozido', '100 g de feijão cozido', '120 g de peito de frango grelhado', 'Salada de folhas e tomate a gosto'],
@@ -75,6 +82,7 @@ export const RECIPES: Recipe[] = [
     id: 'salada-grao-de-bico',
     name: 'Salada de grão-de-bico',
     category: 'Vegetariana',
+    tags: ['Fitness'],
     description: 'Salada fria com leguminosa, tomate e limão.',
     minutes: 15, servings: 1,
     ingredients: ['150 g de grão-de-bico cozido', '1 tomate médio', '1/4 de cebola', '1 colher de chá de azeite', 'Limão e cheiro-verde a gosto'],
@@ -86,6 +94,7 @@ export const RECIPES: Recipe[] = [
     id: 'sanduiche-frango',
     name: 'Sanduíche de frango e salada',
     category: 'Lanches',
+    tags: ['Fitness'],
     description: 'Lanche prático com pão, frango e vegetais.',
     minutes: 10, servings: 1,
     ingredients: ['2 fatias de pão integral', '80 g de frango cozido desfiado', '2 folhas de alface', '2 rodelas de tomate', '1 colher de sopa de iogurte natural'],
@@ -97,6 +106,7 @@ export const RECIPES: Recipe[] = [
     id: 'iogurte-fruta-castanhas',
     name: 'Iogurte com fruta e castanhas',
     category: 'Lanches',
+    tags: ['Fitness'],
     description: 'Combinação rápida para um lanche.',
     minutes: 3, servings: 1,
     ingredients: ['170 g de iogurte natural', '1 maçã pequena picada', '10 g de castanhas sem sal'],
@@ -108,6 +118,7 @@ export const RECIPES: Recipe[] = [
     id: 'mingau-aveia',
     name: 'Mingau de aveia com canela',
     category: 'Café da manhã',
+    tags: ['Fitness'],
     description: 'Mingau quente com poucos ingredientes.',
     minutes: 7, servings: 1,
     ingredients: ['30 g de aveia em flocos', '200 ml de leite', 'Canela a gosto'],
@@ -119,6 +130,7 @@ export const RECIPES: Recipe[] = [
     id: 'legumes-ovo',
     name: 'Legumes salteados com ovo',
     category: 'Vegetariana',
+    tags: ['Fitness'],
     description: 'Uma opção colorida para almoço leve ou jantar.',
     minutes: 15, servings: 1,
     ingredients: ['1 ovo', '100 g de abobrinha', '80 g de cenoura', '1 colher de chá de azeite', 'Alho e ervas a gosto'],
@@ -130,6 +142,7 @@ export const RECIPES: Recipe[] = [
     id: 'vitamina-banana',
     name: 'Vitamina de banana',
     category: 'Lanches',
+    tags: ['Fitness'],
     description: 'Bebida cremosa sem açúcar adicionado.',
     minutes: 4, servings: 1,
     ingredients: ['1 banana média', '200 ml de leite', 'Canela a gosto'],
@@ -141,6 +154,7 @@ export const RECIPES: Recipe[] = [
     id: 'macarrao-tomate',
     name: 'Macarrão com molho de tomate',
     category: 'Almoço e jantar',
+    tags: ['Brasileira'],
     description: 'Massa com molho simples de tomate e ervas.',
     minutes: 20, servings: 1,
     ingredients: ['150 g de macarrão cozido', '120 g de tomate triturado', '1 colher de chá de azeite', 'Alho e manjericão a gosto'],
@@ -152,6 +166,7 @@ export const RECIPES: Recipe[] = [
     id: 'creme-abacate-cacau',
     name: 'Creme de abacate com cacau',
     category: 'Lanches',
+    tags: ['Fitness'],
     description: 'Sobremesa cremosa com cacau sem açúcar.',
     minutes: 5, servings: 1,
     ingredients: ['100 g de abacate', '1 colher de chá de cacau em pó sem açúcar', 'Canela a gosto'],
@@ -161,16 +176,24 @@ export const RECIPES: Recipe[] = [
   },
 ];
 
-export function filterRecipes(recipes: Recipe[], query: string, category: RecipeCategory | 'Todas' = 'Todas'): Recipe[] {
+export function filterRecipes(recipes: Recipe[], query: string, category: RecipeFilter = 'Todas'): Recipe[] {
   const normalized = query.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
-  return recipes.filter((recipe) => {
-    const matchesCategory = category === 'Todas' || recipe.category === category;
+  const filtered = recipes.filter((recipe) => {
+    const matchesCategory = category === 'Todas'
+      || recipe.category === category
+      || (category === 'Brasileira' && recipe.tags?.includes('Brasileira'))
+      || (category === 'Fitness' && recipe.tags?.includes('Fitness'));
     if (!matchesCategory) return false;
     if (!normalized) return true;
-    const haystack = [recipe.name, recipe.description, recipe.category, ...recipe.ingredients]
+    const haystack = [recipe.name, recipe.description, recipe.category, ...(recipe.tags ?? []), ...recipe.ingredients]
       .join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
     return haystack.includes(normalized);
   });
+  if (category !== 'Todas') return filtered;
+  const priority = (recipe: Recipe) => recipe.tags?.includes('Brasileira') ? 0 : recipe.tags?.includes('Fitness') ? 1 : 2;
+  return filtered.map((recipe, index) => ({ recipe, index }))
+    .sort((a, b) => priority(a.recipe) - priority(b.recipe) || a.index - b.index)
+    .map(({ recipe }) => recipe);
 }
 
 export function scaleRecipeNutrients(nutrients: RecipeNutrients, servings: number): RecipeNutrients {

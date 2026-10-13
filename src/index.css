@@ -549,3 +549,15 @@ body::before, body::after { display: none; }
 .privacy-doc { max-width: 720px; text-align: left; }
 .privacy-doc h2 { margin: 22px 0 6px; font-size: 17px; }
 .privacy-doc p { margin: 0 0 8px; line-height: 1.65; font-size: 15px; }
+
+/* Guia ampliado de protocolos de jejum */
+.fast-method-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+.fast-method-card { min-width: 0; padding: 16px; border: 1px solid var(--line-soft); border-radius: 16px; background: var(--surface); }
+.fast-method-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.fast-method-top strong { font-family: var(--app-font-display); font-size: 16px; line-height: 1.35; }
+.fast-method-level, .fast-method-caution { display: inline-flex; flex: 0 0 auto; align-items: center; padding: 4px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+.fast-method-level { background: rgba(31, 154, 82, .1); color: var(--leaf-2); }
+.fast-method-caution { background: rgba(194, 58, 43, .1); color: var(--danger); }
+.fast-method-card p { margin: 10px 0; color: var(--text-2); font-size: 14px; line-height: 1.55; }
+.fast-method-card small { color: var(--text-3); font-size: 12px; line-height: 1.45; }
+@media (max-width: 640px) { .fast-method-grid { grid-template-columns: 1fr; } .fast-method-top { flex-wrap: wrap; } }

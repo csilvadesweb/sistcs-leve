@@ -309,6 +309,22 @@ export function ProfileSettings() {
     }
   }
 
+  async function deleteAccount() {
+    const typed = window.prompt(
+      'Isto exclui DEFINITIVAMENTE sua conta, seus registros e suas fotos. Para confirmar, digite EXCLUIR.',
+    );
+    if (typed?.trim().toUpperCase() !== 'EXCLUIR') return;
+    setBusy(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('delete-account', { method: 'POST' });
+      if (error || !data?.ok) throw new Error('delete-account');
+      await supabase.auth.signOut();
+    } catch (e) {
+      setFeedback({ kind: 'error', message: readError(e, 'Não foi possível excluir a conta. Tente de novo ou escreva para privacidade@sistcs.com.') });
+      setBusy(false);
+    }
+  }
+
   async function importLegacy() {
     if (!legacy) return;
     setBusy(true);
@@ -664,6 +680,10 @@ export function ProfileSettings() {
           <Button type="button" variant="destructive" onClick={deleteData} disabled={busy}>
             <Trash2 aria-hidden="true" />
             Apagar todos os meus dados
+          </Button>
+          <Button type="button" variant="destructive" onClick={deleteAccount} disabled={busy}>
+            <Trash2 aria-hidden="true" />
+            Excluir minha conta
           </Button>
         </div>
         <p className="profile-data-scope"><a href="#/privacidade" className="link-button">Ler a Política de Privacidade</a></p>

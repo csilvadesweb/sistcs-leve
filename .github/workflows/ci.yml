@@ -1,36 +1,17 @@
-name: CI
-
+name: ci
 on:
-  workflow_dispatch:
-  pull_request:
-    branches: [main]
   push:
     branches: [main]
-
-permissions:
-  contents: read
-
-concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
+  pull_request:
 jobs:
-  build:
-    name: Typecheck and production build
+  verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - name: Install dependencies
-        run: npm install --no-audit --no-fund
-      - name: Unit tests
-        run: npm test
-      - name: Typecheck
-        run: npm run typecheck
-      - name: Build
-        run: npm run build
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm test
+      - run: npx vite build

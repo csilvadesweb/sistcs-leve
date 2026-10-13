@@ -40,7 +40,7 @@ export function PrivacyPolicy() {
         <h2>6. Seus direitos</h2>
         <p>
           Em Perfil → “Privacidade e seus dados” você pode <strong>exportar</strong> tudo em JSON e{' '}
-          <strong>apagar</strong> todos os seus registros. Para excluir também a conta de acesso, correção ou qualquer outro
+          <strong>apagar</strong> todos os seus registros. Em “Excluir minha conta” você apaga a conta, os registros e as fotos de forma definitiva. Para correção ou qualquer outro
           pedido previsto na LGPD, escreva para o contato abaixo.
         </p>
 

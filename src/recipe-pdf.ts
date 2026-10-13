@@ -4,7 +4,7 @@ const PAGE_WIDTH = 1240;
 const PAGE_HEIGHT = 1754;
 
 function wrapText(ctx: CanvasRenderingContext2D, value: string, maxWidth: number): string[] {
-  const words = value.split(/\\s+/).filter(Boolean);
+  const words = value.split(/\s+/).filter(Boolean);
   const lines: string[] = [];
   let line = '';
   for (const word of words) {
@@ -29,24 +29,24 @@ function concatBytes(parts: Uint8Array[]): Uint8Array {
 function makePdf(jpeg: Uint8Array): Uint8Array {
   const encoder = new TextEncoder();
   const ascii = (value: string) => encoder.encode(value);
-  const content = ascii('q\\n595 0 0 842 0 0 cm\\n/Im0 Do\\nQ\\n');
+  const content = ascii('q\n595 0 0 842 0 0 cm\n/Im0 Do\nQ\n');
   const objects: Uint8Array[] = [
     ascii('<< /Type /Catalog /Pages 2 0 R >>'),
     ascii('<< /Type /Pages /Kids [3 0 R] /Count 1 >>'),
     ascii('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>'),
-    concatBytes([ascii(`<< /Type /XObject /Subtype /Image /Width ${PAGE_WIDTH} /Height ${PAGE_HEIGHT} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\\nstream\\n`), jpeg, ascii('\\nendstream')]),
-    concatBytes([ascii(`<< /Length ${content.length} >>\\nstream\\n`), content, ascii('endstream')]),
+    concatBytes([ascii(`<< /Type /XObject /Subtype /Image /Width ${PAGE_WIDTH} /Height ${PAGE_HEIGHT} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`), jpeg, ascii('\nendstream')]),
+    concatBytes([ascii(`<< /Length ${content.length} >>\nstream\n`), content, ascii('endstream')]),
   ];
-  const parts: Uint8Array[] = [ascii('%PDF-1.4\\n%âãÏÓ\\n')];
+  const parts: Uint8Array[] = [ascii('%PDF-1.4\n%âãÏÓ\n')];
   const offsets = [0];
   let offset = parts[0].length;
   objects.forEach((object, index) => {
     offsets.push(offset);
-    const wrapped = concatBytes([ascii(`${index + 1} 0 obj\\n`), object, ascii('\\nendobj\\n')]);
+    const wrapped = concatBytes([ascii(`${index + 1} 0 obj\n`), object, ascii('\nendobj\n')]);
     parts.push(wrapped); offset += wrapped.length;
   });
   const xrefOffset = offset;
-  parts.push(ascii(['xref', `0 ${objects.length + 1}`, '0000000000 65535 f ', ...offsets.slice(1).map((position) => `${String(position).padStart(10, '0')} 00000 n `), 'trailer', `<< /Size ${objects.length + 1} /Root 1 0 R >>`, 'startxref', String(xrefOffset), '%%EOF', ''].join('\\n')));
+  parts.push(ascii(['xref', `0 ${objects.length + 1}`, '0000000000 65535 f ', ...offsets.slice(1).map((position) => `${String(position).padStart(10, '0')} 00000 n `), 'trailer', `<< /Size ${objects.length + 1} /Root 1 0 R >>`, 'startxref', String(xrefOffset), '%%EOF', ''].join('\n')));
   return concatBytes(parts);
 }
 
@@ -125,7 +125,7 @@ export async function downloadRecipePdf(recipe: Recipe, servings = 1): Promise<v
   const pdf = makePdf(new Uint8Array(await jpeg.arrayBuffer()));
   const url = URL.createObjectURL(new Blob([pdf], { type: 'application/pdf' }));
   const anchor = document.createElement('a');
-  const safeName = recipe.name.normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'receita';
+  const safeName = recipe.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'receita';
   anchor.href = url;
   anchor.download = `sistcs-leve-receita-${safeName}.pdf`;
   anchor.style.display = 'none'; document.body.appendChild(anchor); anchor.click(); anchor.remove();

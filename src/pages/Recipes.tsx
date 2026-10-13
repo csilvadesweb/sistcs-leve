@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { CookingPot, Clock3, Search, Users, UtensilsCrossed, Plus, CheckCircle2, Star } from 'lucide-react';
+import { CookingPot, Clock3, Search, Users, UtensilsCrossed, Plus, CheckCircle2, Star, Download } from 'lucide-react';
 import { useAppData } from '../session';
 import { createFoodEntry, type MealType } from '../data';
 import { decimalText, todayInSaoPaulo } from '../ui';
 import { filterRecipes, RECIPES, scaleRecipeNutrients, type Recipe, type RecipeFilter } from '../recipes';
 import { buildShoppingList, resolvePlannedMeals, validatePlannedMeals, WEEK_DAYS, type PlannedMeal } from '../meal-plan';
 import { toggleFavoriteId, validateFavoriteIds } from '../recipe-favorites';
+import { downloadShoppingListPdf } from '../shopping-list-pdf';
 
 const MEAL_LABELS: Record<MealType, string> = { breakfast: 'Café da manhã', lunch: 'Almoço', snack: 'Lanche', dinner: 'Jantar', other: 'Outros' };
 const categories: RecipeFilter[] = ['Fitness', 'Brasileira', 'Todas', 'Café da manhã', 'Almoço e jantar', 'Lanches', 'Vegetariana'];
@@ -50,6 +51,8 @@ export function Recipes() {
     }
   });
   const [shoppingOpen, setShoppingOpen] = useState(false);
+  const [shoppingPdfBusy, setShoppingPdfBusy] = useState(false);
+  const [shoppingPdfError, setShoppingPdfError] = useState<string | null>(null);
   const [visible, setVisible] = useState(PAGE_SIZE);
   useEffect(() => {
     try { window.localStorage.setItem(`sistcs-leve-meal-plan-v1:${user.id}`, JSON.stringify(planItems)); } catch { /* storage unavailable: planner remains usable for this session */ }
@@ -91,6 +94,19 @@ export function Recipes() {
 
   const plannedWithRecipes = resolvePlannedMeals(planItems, RECIPES);
   const shoppingIngredients = buildShoppingList(plannedWithRecipes);
+
+  async function downloadShoppingList() {
+    if (shoppingPdfBusy || !shoppingIngredients.length) return;
+    setShoppingPdfBusy(true);
+    setShoppingPdfError(null);
+    try {
+      await downloadShoppingListPdf(shoppingIngredients, plannedWithRecipes.length);
+    } catch (error) {
+      setShoppingPdfError(error instanceof Error ? error.message : 'Não foi possível baixar o PDF. Tente novamente.');
+    } finally {
+      setShoppingPdfBusy(false);
+    }
+  }
 
   async function addToDiary(recipe: Recipe) {
     const amount = servings[recipe.id] ?? 1;
@@ -189,7 +205,11 @@ export function Recipes() {
           <h3>Lista de compras</h3>
           <p>Ingredientes das {plannedWithRecipes.length} refeições planejadas. Ingredientes com a mesma descrição foram agrupados; confira as quantidades para o número de porções desejado.</p>
           <ul>{shoppingIngredients.map((entry) => <li key={entry.ingredient}><span>{entry.ingredient}</span>{entry.count > 1 && <small>usado em {entry.count} receitas</small>}</li>)}</ul>
-          <button type="button" className="meal-plan-print" onClick={() => window.print()}>Imprimir / salvar em PDF</button>
+          <button type="button" className="meal-plan-print" onClick={() => void downloadShoppingList()} disabled={shoppingPdfBusy || !shoppingIngredients.length}>
+            {shoppingPdfBusy ? <Clock3 size={17} aria-hidden="true" /> : <Download size={17} aria-hidden="true" />}
+            {shoppingPdfBusy ? 'Preparando PDF…' : 'Baixar lista em PDF'}
+          </button>
+          {shoppingPdfError && <p className="ft-feedback ft-feedback-error" role="alert">{shoppingPdfError}</p>}
         </div>}
       </section>
 

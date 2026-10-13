@@ -20,7 +20,7 @@ Escopo: fontes identificadas para formar um catálogo internacional comercializ�
 ## Regras obrigatórias de importação
 
 1. Cada registro precisa de `sourceName`, `sourceUrl`, `licenseId` e `attribution`.
-2. Permitir somente `CC-BY-4.0`, `CC-BY-SA-4.0`, `CC-BY-SA-3.0` quando a cadeia de direitos estiver documentada, ou `PUBLIC-DOMAIN` com fonte comprovada. A allowlist técnica não substitui revisão documental.
+2. O validador permite somente `CC-BY-4.0`, `CC-BY-SA-4.0` e `PUBLIC-DOMAIN`. `CC-BY-SA-3.0` não está habilitada para importação automática neste momento; qualquer futura inclusão exige revisão explícita da cadeia de direitos, atualização coordenada do validador e teste. A allowlist técnica não substitui revisão documental.
 3. Tradução é adaptação: respeitar atribuição e ShareAlike quando aplicável.
 4. Não importar fotografias automaticamente; validar licença e atribuição de cada imagem separadamente.
 5. Deduplicar por ID da fonte, slug normalizado e similaridade de nome/ingredientes; tradução ou variação trivial não conta como receita única.

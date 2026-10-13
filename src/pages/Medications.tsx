@@ -32,6 +32,7 @@ export function Medications() {
   const [form, setForm] = useState<MedForm>(blankForm);
   const [errors, setErrors] = useState<{ name?: string; dose?: string; times?: string; notes?: string }>({});
   const [feedback, setFeedback] = useState<Feedback>(null);
+  const [activeMedicationTab, setActiveMedicationTab] = useState<'today' | 'manage'>('today');
 
   const taken = useMemo(() => {
     const set = new Set<string>();
@@ -130,6 +131,11 @@ export function Medications() {
       {loadError && <p className="ft-feedback ft-feedback-error" role="alert">{loadError}</p>}
       {loading && <p className="ft-feedback" role="status">Carregando seus medicamentos…</p>}
 
+      <div className="progressive-tabs" role="tablist" aria-label="Seções de medicamentos">
+        <button type="button" role="tab" aria-selected={activeMedicationTab === 'today'} aria-controls="med-panel-today" className={activeMedicationTab === 'today' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveMedicationTab('today')}><Check size={17} aria-hidden="true" /> Doses do dia</button>
+        <button type="button" role="tab" aria-selected={activeMedicationTab === 'manage'} aria-controls="med-panel-manage" className={activeMedicationTab === 'manage' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveMedicationTab('manage')}><Pill size={17} aria-hidden="true" /> Meus medicamentos <span className="progressive-tab-count">{data.medications.length}</span></button>
+      </div>
+      {activeMedicationTab === 'today' && <div id="med-panel-today" role="tabpanel">
       <section className="ft-date-card" aria-label="Dia das doses">
         <div>
           <label htmlFor="med-date">Consultando o dia</label>
@@ -187,6 +193,8 @@ export function Medications() {
         )}
       </section>
 
+      </div>}
+      {activeMedicationTab === 'manage' && <div id="med-panel-manage" role="tabpanel">
       <section className="ft-card" aria-labelledby="meds-title">
         <div className="ft-section-heading">
           <div className="ft-section-mark"><Pill size={19} aria-hidden="true" /></div>
@@ -280,6 +288,7 @@ export function Medications() {
         ))}
       </section>
 
+      </div>}
       <p className="ft-privacy-note">
         Este espaço é só um lembrete pessoal. Siga sempre a orientação de quem prescreveu o medicamento. Em caso de dúvida, fale com seu médico ou farmacêutico.
       </p>

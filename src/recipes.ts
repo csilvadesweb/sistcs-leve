@@ -482,7 +482,7 @@ export const RECIPES: Recipe[] = [
     nutritionNote: 'Estimativa editorial por porção; os valores dependem do peso final e do óleo utilizado.',
   },
   {
-    id: 'omelete-espinafre-ricota', name: 'Omelete de espinafre com ricota', category: 'Almoço e jantar', tags: ['Fitness', 'Vegetariana'],
+    id: 'omelete-espinafre-ricota', name: 'Omelete de espinafre com ricota', category: 'Almoço e jantar', tags: ['Fitness'],
     description: 'Ovos com folhas e ricota para uma refeição sem carne.', minutes: 12, servings: 1,
     ingredients: ['2 ovos', '50 g de ricota', '1 xícara de espinafre', '1 colher de chá de azeite', 'Pimenta e noz-moscada a gosto'],
     steps: ['Refogue rapidamente o espinafre com parte do azeite.', 'Bata os ovos e misture a ricota esfarelada e os temperos.', 'Adicione o espinafre e cozinhe em frigideira até firmar.'],

@@ -11,6 +11,7 @@ import {
   Pill,
   Timer,
   CookingPot,
+  Sparkles,
 } from 'lucide-react';
 import { Link, Route, Router as WouterRouter, Switch, useLocation } from 'wouter';
 import { useHashLocation } from 'wouter/use-hash-location';
@@ -27,11 +28,13 @@ const Reports = lazy(() => import('./pages/Reports').then((m) => ({ default: m.R
 const Exercises = lazy(() => import('./pages/Exercises').then((m) => ({ default: m.Exercises })));
 const ProfileSettings = lazy(() => import('./pages/Profile').then((m) => ({ default: m.ProfileSettings })));
 const Recipes = lazy(() => import('./pages/Recipes').then((m) => ({ default: m.Recipes })));
+const Assistant = lazy(() => import('./pages/Assistant').then((m) => ({ default: m.Assistant })));
 
 const destinations = [
   { href: '/', label: 'Início', short: 'Início', icon: House },
   { href: '/alimentacao', label: 'Alimentação', short: 'Comida', icon: Apple },
   { href: '/receitas', label: 'Receitas', short: 'Receitas', icon: CookingPot },
+  { href: '/assistente', label: 'Assistente IA', short: 'IA', icon: Sparkles },
   { href: '/exercicios', label: 'Exercícios', short: 'Exercícios', icon: Dumbbell },
   { href: '/registros', label: 'Registros', short: 'Evolução', icon: ClipboardList },
   { href: '/jejum', label: 'Jejum', short: 'Jejum', icon: Timer },
@@ -148,6 +151,7 @@ export default function App() {
             <Route path="/" component={Home} />
             <Route path="/alimentacao" component={FoodTracking} />
             <Route path="/receitas" component={Recipes} />
+            <Route path="/assistente" component={Assistant} />
             <Route path="/exercicios" component={Exercises} />
             <Route path="/registros" component={Records} />
             <Route path="/jejum" component={Fasting} />

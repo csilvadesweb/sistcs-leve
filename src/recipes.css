@@ -38,3 +38,36 @@
 .recipes-empty h2,.recipes-empty p { margin:0; }
 @media(max-width:680px) { .recipes-controls,.recipes-grid { grid-template-columns:1fr; } .recipe-card { padding:17px; } }
 @media(max-width:380px) { .recipe-nutrients { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+
+.meal-planner-panel { display:grid; gap:15px; padding:20px; border:1px solid var(--line-soft); border-radius:22px; background:var(--surface); box-shadow:var(--shadow); }
+.meal-planner-heading { display:flex; justify-content:space-between; align-items:flex-start; gap:14px; }
+.meal-planner-heading .eyebrow { margin:0 0 5px; color:var(--gold-2); font-size:11px; font-weight:800; letter-spacing:.08em; }
+.meal-planner-heading h2 { margin:0; color:var(--text); font-size:22px; letter-spacing:-.02em; }
+.meal-planner-heading p:not(.eyebrow) { margin:7px 0 0; color:var(--text-2); font-size:14px; line-height:1.5; }
+.meal-plan-count { flex:0 0 auto; padding:7px 10px; border-radius:999px; background:var(--surface-2); color:var(--text-2); font-size:12px; font-weight:700; }
+.meal-plan-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.meal-plan-choices label { display:grid; gap:6px; color:var(--text-2); font-size:13px; font-weight:650; }
+.meal-plan-choices select { width:100%; min-height:46px; padding:0 12px; border:1px solid var(--line); border-radius:13px; background:var(--surface); color:var(--text); font:inherit; }
+.meal-plan-list { display:grid; gap:14px; }
+.meal-plan-day { padding:13px; border:1px solid var(--line-soft); border-radius:15px; }
+.meal-plan-day h3 { margin:0 0 8px; color:var(--text); font-size:15px; }
+.meal-plan-item { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; border-top:1px solid var(--line-soft); }
+.meal-plan-item > div { display:grid; gap:4px; min-width:0; }
+.meal-plan-item strong { color:var(--text); font-size:14px; }
+.meal-plan-item span { color:var(--text-3); font-size:12px; }
+.meal-plan-remove,.meal-plan-clear { border:0; background:transparent; color:var(--gold-2); font:inherit; font-size:12px; font-weight:750; cursor:pointer; }
+.meal-plan-empty { margin:0; color:var(--text-3); font-size:14px; line-height:1.5; }
+.shopping-list-actions { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-top:1px solid var(--line-soft); padding-top:9px; }
+.shopping-list-actions .recipe-details-button { width:auto; margin:0; }
+.shopping-list { padding:15px; border-radius:15px; background:var(--surface-2); }
+.shopping-list h3 { margin:0; color:var(--text); font-size:17px; }
+.shopping-list p { margin:7px 0 12px; color:var(--text-3); font-size:12px; line-height:1.5; }
+.shopping-list ul { display:grid; gap:0; margin:0; padding:0; list-style:none; }
+.shopping-list li { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:9px 0; border-top:1px solid var(--line-soft); color:var(--text); font-size:14px; }
+.shopping-list li small { color:var(--text-3); font-size:11px; text-align:right; }
+.meal-plan-print { margin-top:14px; min-height:42px; padding:0 14px; border:1px solid var(--line); border-radius:12px; background:var(--surface); color:var(--text); font:inherit; font-size:13px; font-weight:700; cursor:pointer; }
+.recipe-plan-button { display:block; width:100%; min-height:42px; padding:8px 10px; border:1px solid var(--line); border-radius:12px; background:var(--surface-2); color:var(--text); font:inherit; font-size:13px; font-weight:700; cursor:pointer; }
+.recipe-plan-button:hover,.meal-plan-print:hover { border-color:var(--gold-2); }
+.recipe-plan-button:focus-visible,.meal-plan-remove:focus-visible,.meal-plan-clear:focus-visible,.meal-plan-print:focus-visible { outline:2px solid var(--gold-2); outline-offset:3px; }
+@media(max-width:520px) { .meal-planner-panel { padding:15px; } .meal-planner-heading { flex-direction:column; } .meal-plan-choices { grid-template-columns:1fr; } .meal-plan-item { align-items:flex-start; } }
+@media print { .sidebar,.topbar,.mobile-nav,.recipes-controls,.recipes-categories,.recipe-card,.shopping-list-actions,.meal-plan-print { display:none !important; } .meal-planner-panel { border:0; box-shadow:none; } .shopping-list { display:block !important; } body { background:white !important; color:black !important; } }

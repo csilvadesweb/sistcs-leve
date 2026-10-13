@@ -38,6 +38,14 @@ describe('catálogo de receitas', () => {
     }
   });
 
+  it('mantém as calorias coerentes com a energia estimada dos macronutrientes', () => {
+    for (const recipe of RECIPES) {
+      const { calories, proteins, carbohydrates, fats } = recipe.nutrientsPerServing;
+      const energyFromMacros = proteins * 4 + carbohydrates * 4 + fats * 9;
+      expect(Math.abs(calories - energyFromMacros)).toBeLessThanOrEqual(Math.max(35, calories * 0.15));
+    }
+  });
+
   it('filtra por categoria', () => {
     const results = filterRecipes(RECIPES, '', 'Vegetariana');
     expect(results.length).toBeGreaterThan(0);

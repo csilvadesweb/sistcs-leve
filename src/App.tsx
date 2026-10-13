@@ -166,6 +166,9 @@ function Shell({ children }: { children: ReactNode }) {
       setNavSaveStatus('Não foi possível salvar a ordem do menu. A ordem anterior foi restaurada.');
     } finally {
       dragRef.current = { ...drag, active: false, suppressClick: true };
+      window.setTimeout(() => {
+        if (dragRef.current?.suppressClick) dragRef.current = null;
+      }, 0);
     }
   }
 

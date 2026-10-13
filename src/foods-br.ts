@@ -203,7 +203,7 @@ export function householdUnitsForFood(food: FoodPer100): Array<[string, number]>
   if (/lata|canned/.test(name) && /atum|sardinha|milho|ervilha|tuna|sardine|corn|peas/.test(name)) return [['lata drenada (aprox.)', 120]];
   // Medidas de alimentos básicos para resultados internacionais que não incluem porções.
   // São aproximações domésticas; o peso real varia com o utensílio, compactação e preparo.
-  if (/flour|farinha|starch|amido|fuba|cornmeal|sugar|a[cç][uú]car|\\bsalt\\b|\\bsal\\b/.test(name)) return [['colher de sopa rasa', 12], ['xícara', 120], ['porção', 10]];
+  if (/flour|farinha|starch|amido|fuba|cornmeal|sugar|a[cç][uú]car|\bsalt\b|\bsal\b/.test(name)) return [['colher de sopa rasa', 12], ['xícara', 120], ['porção', 10]];
   if (/rice|arroz/.test(name)) return [['colher de sopa cheia', 25], ['xícara cozida', 160], ['porção', 100]];
   if (/beans|feij[aã]o|lentil|lentilha|chickpea|gr[aã]o de bico|pea soup/.test(name)) return [['concha média', 100], ['colher de sopa', 25], ['porção', 100]];
   if (/pasta|macarr[aã]o|spaghetti|noodle/.test(name)) return [['pegador (cozido)', 80], ['xícara cozida', 140], ['porção', 100]];

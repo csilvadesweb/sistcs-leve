@@ -18,6 +18,13 @@ describe('catálogo de receitas', () => {
     expect(results.every((recipe) => recipe.category === 'Vegetariana')).toBe(true);
   });
 
+  it('prioriza receitas brasileiras e fitness e oferece filtros dedicados', () => {
+    const all = filterRecipes(RECIPES, '');
+    expect(all[0].tags).toContain('Brasileira');
+    expect(filterRecipes(RECIPES, '', 'Brasileira').every((recipe) => recipe.tags?.includes('Brasileira'))).toBe(true);
+    expect(filterRecipes(RECIPES, '', 'Fitness').every((recipe) => recipe.tags?.includes('Fitness'))).toBe(true);
+  });
+
   it('busca sem diferenciar maiúsculas e acentos e inclui ingredientes', () => {
     expect(filterRecipes(RECIPES, 'banana').some((recipe) => recipe.id === 'overnight-aveia-banana')).toBe(true);
     expect(filterRecipes(RECIPES, 'MACARRAO').some((recipe) => recipe.id === 'macarrao-tomate')).toBe(true);

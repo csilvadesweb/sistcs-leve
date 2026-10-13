@@ -224,6 +224,7 @@ export function FoodTracking() {
   const [selectedMealTab, setSelectedMealTab] = useState<MealType | 'summary'>('summary');
   const [editingFood, setEditingFood] = useState<FoodEntry | null>(null);
   const [waterEditorOpen, setWaterEditorOpen] = useState(false);
+  const [selectedWaterTab, setSelectedWaterTab] = useState<'summary' | 'history'>('summary');
   const [editingWater, setEditingWater] = useState<WaterEntry | null>(null);
   const [foodFeedback, setFoodFeedback] = useState<Feedback>(null);
   const [waterFeedback, setWaterFeedback] = useState<Feedback>(null);
@@ -705,46 +706,25 @@ export function FoodTracking() {
           </p>
         )}
 
-        <div className="ft-water-summary">
-          <div>
-            <span>Total registrado neste dia</span>
-            <strong>{decimalText(waterTotal)} <small>ml</small></strong>
+        <nav className="ft-meal-tabs ft-water-tabs" aria-label="Seções de hidratação" role="tablist">
+          <button type="button" role="tab" aria-selected={selectedWaterTab === 'summary'} className={selectedWaterTab === 'summary' ? 'is-active' : ''} onClick={() => setSelectedWaterTab('summary')}>Resumo</button>
+          <button type="button" role="tab" aria-selected={selectedWaterTab === 'history'} className={selectedWaterTab === 'history' ? 'is-active' : ''} onClick={() => setSelectedWaterTab('history')}>Registros <span>{waterForDate.length}</span></button>
+        </nav>
+        {selectedWaterTab === 'summary' && <>
+          <div className="ft-water-summary">
+            <div><span>Total registrado neste dia</span><strong>{decimalText(waterTotal)} <small>ml</small></strong></div>
+            {waterGoal !== null ? (
+              <div className="ft-water-goal">
+                <span>Meta pessoal configurada</span><strong>{decimalText(waterGoal)} ml</strong><span>{decimalText((waterTotal / waterGoal) * 100)}% da meta</span>
+                <span>{waterTotal > waterGoal ? `${decimalText(waterTotal - waterGoal)} ml acima da meta` : waterTotal === waterGoal ? 'Meta atingida' : `Faltam ${decimalText(waterGoal - waterTotal)} ml para a meta`}</span>
+              </div>
+            ) : <div className="ft-water-goal"><span>Sem meta configurada</span><Link href="/perfil">Definir no Perfil</Link></div>}
           </div>
-          {waterGoal !== null ? (
-            <div className="ft-water-goal">
-              <span>Meta pessoal configurada</span>
-              <strong>{decimalText(waterGoal)} ml</strong>
-              <span>{decimalText((waterTotal / waterGoal) * 100)}% da meta</span>
-              <span>
-                {waterTotal > waterGoal
-                  ? `${decimalText(waterTotal - waterGoal)} ml acima da meta`
-                  : waterTotal === waterGoal
-                    ? 'Meta atingida'
-                    : `Faltam ${decimalText(waterGoal - waterTotal)} ml para a meta`}
-              </span>
-            </div>
-          ) : (
-            <div className="ft-water-goal">
-              <span>Sem meta configurada</span>
-              <Link href="/perfil">Definir no Perfil</Link>
-            </div>
-          )}
-        </div>
-
-        <div className="ft-quick-actions" role="group" aria-label="Ações rápidas de água">
-          <Button variant="outline" onClick={() => quickWater(500)} disabled={busy}>
-            <Plus aria-hidden="true" /> Registrar 500 ml
-          </Button>
-          {cupVolume !== null ? (
-            <Button variant="outline" onClick={() => quickWater(cupVolume)} disabled={busy}>
-              <Droplets aria-hidden="true" /> Registrar um copo ({decimalText(cupVolume)} ml)
-            </Button>
-          ) : (
-            <p className="ft-cup-note">
-              O volume do seu copo não está configurado. <Link href="/perfil">Você pode informar isso no Perfil.</Link>
-            </p>
-          )}
-        </div>
+          <div className="ft-quick-actions" role="group" aria-label="Ações rápidas de água">
+            <Button variant="outline" onClick={() => quickWater(500)} disabled={busy}><Plus aria-hidden="true" /> Registrar 500 ml</Button>
+            {cupVolume !== null ? <Button variant="outline" onClick={() => quickWater(cupVolume)} disabled={busy}><Droplets aria-hidden="true" /> Registrar um copo ({decimalText(cupVolume)} ml)</Button> : <p className="ft-cup-note">O volume do seu copo não está configurado. <Link href="/perfil">Você pode informar isso no Perfil.</Link></p>}
+          </div>
+        </>}
 
         {waterEditorOpen && (
           <form className="ft-editor ft-water-editor" onSubmit={onWaterSubmit} noValidate>
@@ -770,7 +750,7 @@ export function FoodTracking() {
           </form>
         )}
 
-        {waterForDate.length ? (
+        {selectedWaterTab === 'history' && (waterForDate.length ? (
           <div className="ft-water-list">
             {waterForDate.map((entry) => (
               <div className="ft-water-row" key={entry.id}>
@@ -791,7 +771,7 @@ export function FoodTracking() {
             <p>Você pode adicionar um registro quando quiser. Não há cobrança nem recomendação de quantidade.</p>
             {!waterEditorOpen && <Button variant="outline" onClick={openNewWater}><Plus aria-hidden="true" /> Registrar água</Button>}
           </div>
-        )}
+        ))}
       </section>
 
       <p className="ft-privacy-note">

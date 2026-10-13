@@ -109,18 +109,18 @@ const PRIORITY_ORDER = [...PRIORITY];
 
 /** Itens adicionais conferidos na TBCA/USP. Nutrientes por 100 g; receitas variam conforme preparo. */
 const BRAZILIAN_ESTIMATES: FoodPer100[] = [
-  { name: 'Pão de queijo, assado (estimativa)', kcal: 330, protein: 6, carbs: 35, fat: 18, fiber: 1, origin: 'estimate', code: 'estimate-pao-de-queijo', units: [['unidade pequena', 25], ['porção (2 unidades)', 50]] },
-  { name: 'Feijoada (estimativa caseira)', kcal: 150, protein: 10, carbs: 12, fat: 7, fiber: 5, origin: 'estimate', code: 'estimate-feijoada', units: [['concha', 150], ['porção', 150]] },
-  { name: 'Brigadeiro caseiro (estimativa)', kcal: 390, protein: 5, carbs: 60, fat: 14, fiber: 1, origin: 'estimate', code: 'estimate-brigadeiro', units: [['unidade', 25], ['porção (4 unidades pequenas)', 100]] },
-  { name: 'Tapioca sem recheio (estimativa)', kcal: 230, protein: 0.2, carbs: 57, fat: 0.1, fiber: 0.2, origin: 'estimate', code: 'estimate-tapioca', units: [['unidade média', 60]] },
-  { name: 'Cuscuz de tapioca com coco (estimativa)', kcal: 240, protein: 2, carbs: 45, fat: 6, fiber: 2, origin: 'estimate', code: 'estimate-cuscuz-tapioca', units: [['pedaço médio', 70]] },
-  { name: 'Moqueca de peixe (estimativa caseira)', kcal: 140, protein: 14, carbs: 4, fat: 8, fiber: 1, origin: 'estimate', code: 'estimate-moqueca-peixe', units: [['concha cheia', 150], ['porção', 150]] },
-  { name: 'Esfiha assada (estimativa)', kcal: 270, protein: 10, carbs: 35, fat: 9, fiber: 2, origin: 'estimate', code: 'estimate-esfiha', units: [['unidade média', 70]] },
-  { name: 'Bolo de cenoura simples (estimativa caseira)', kcal: 350, protein: 5, carbs: 55, fat: 12, fiber: 1, origin: 'estimate', code: 'estimate-bolo-cenoura', units: [['fatia média', 50]] },
-  { name: 'Bolo de cenoura com cobertura de chocolate (estimativa)', kcal: 380, protein: 5, carbs: 58, fat: 14, fiber: 2, origin: 'estimate', code: 'estimate-bolo-cenoura-chocolate', units: [['fatia média', 50]] },
-  { name: 'Pamonha de milho com coco (estimativa caseira)', kcal: 220, protein: 3, carbs: 40, fat: 6, fiber: 3, origin: 'estimate', code: 'estimate-pamonha-coco', units: [['unidade média', 100]] },
-  { name: 'Coxinha de frango frita (estimativa)', kcal: 290, protein: 9, carbs: 35, fat: 12, fiber: 2, origin: 'estimate', code: 'estimate-coxinha-frango', units: [['unidade média', 50], ['porção (2 unidades)', 100]] },
-  { name: 'Pastel frito (estimativa caseira)', kcal: 380, protein: 8, carbs: 40, fat: 20, fiber: 1, origin: 'estimate', code: 'estimate-pastel-frito', units: [['unidade média', 50]] },
+  { name: 'Pão de queijo, assado (estimativa)', kcal: 330, protein: 6, carbs: 35, fat: 18, fiber: 1, origin: 'estimate', code: 'estimate-br-pao-de-queijo', units: [['unidade pequena', 25], ['porção (2 unidades)', 50]] },
+  { name: 'Feijoada (estimativa caseira)', kcal: 150, protein: 10, carbs: 12, fat: 7, fiber: 5, origin: 'estimate', code: 'estimate-br-feijoada', units: [['concha', 150], ['porção', 150]] },
+  { name: 'Brigadeiro caseiro (estimativa)', kcal: 390, protein: 5, carbs: 60, fat: 14, fiber: 1, origin: 'estimate', code: 'estimate-br-brigadeiro', units: [['unidade', 25], ['porção (4 unidades pequenas)', 100]] },
+  { name: 'Tapioca sem recheio (estimativa)', kcal: 230, protein: 0.2, carbs: 57, fat: 0.1, fiber: 0.2, origin: 'estimate', code: 'estimate-br-tapioca', units: [['unidade média', 60]] },
+  { name: 'Cuscuz de tapioca com coco (estimativa)', kcal: 240, protein: 2, carbs: 45, fat: 6, fiber: 2, origin: 'estimate', code: 'estimate-br-cuscuz-tapioca', units: [['pedaço médio', 70]] },
+  { name: 'Moqueca de peixe (estimativa caseira)', kcal: 140, protein: 14, carbs: 4, fat: 8, fiber: 1, origin: 'estimate', code: 'estimate-br-moqueca-peixe', units: [['concha cheia', 150], ['porção', 150]] },
+  { name: 'Esfiha assada (estimativa)', kcal: 270, protein: 10, carbs: 35, fat: 9, fiber: 2, origin: 'estimate', code: 'estimate-br-esfiha', units: [['unidade média', 70]] },
+  { name: 'Bolo de cenoura simples (estimativa caseira)', kcal: 350, protein: 5, carbs: 55, fat: 12, fiber: 1, origin: 'estimate', code: 'estimate-br-bolo-cenoura', units: [['fatia média', 50]] },
+  { name: 'Bolo de cenoura com cobertura de chocolate (estimativa)', kcal: 380, protein: 5, carbs: 58, fat: 14, fiber: 2, origin: 'estimate', code: 'estimate-br-bolo-cenoura-chocolate', units: [['fatia média', 50]] },
+  { name: 'Pamonha de milho com coco (estimativa caseira)', kcal: 220, protein: 3, carbs: 40, fat: 6, fiber: 3, origin: 'estimate', code: 'estimate-br-pamonha-coco', units: [['unidade média', 100]] },
+  { name: 'Coxinha de frango frita (estimativa)', kcal: 290, protein: 9, carbs: 35, fat: 12, fiber: 2, origin: 'estimate', code: 'estimate-br-coxinha-frango', units: [['unidade média', 50], ['porção (2 unidades)', 100]] },
+  { name: 'Pastel frito (estimativa caseira)', kcal: 380, protein: 8, carbs: 40, fat: 20, fiber: 1, origin: 'estimate', code: 'estimate-br-pastel-frito', units: [['unidade média', 50]] },
 ];
 
 export const FOODS_BR: FoodPer100[] = [

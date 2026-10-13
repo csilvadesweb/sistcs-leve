@@ -578,7 +578,7 @@ export function ProfileSettings() {
               {menuItems
                 .slice()
                 .sort((a, b) => menuPreferences.order.indexOf(a.href) - menuPreferences.order.indexOf(b.href))
-                .map((item, index, ordered) => (
+                .map((item, index) => (
                   <div className="menu-preference-row" key={item.href}>
                     <div className="menu-preference-order" aria-hidden="true">{index + 1}</div>
                     <Field id={`menu-label-${item.href.replace(/[^a-z]/g, '')}`} label={item.label} className="profile-field">

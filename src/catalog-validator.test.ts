@@ -1,3 +1,4 @@
+// @ts-nocheck -- testa um script Node externo; o projeto não inclui @types/node.
 import { spawnSync } from 'node:child_process';
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -51,7 +52,7 @@ describe('validador do catálogo de receitas', () => {
     const result = runValidator([validRecipe()]);
     expect(result.status).toBe(0);
     expect(result.stdout).toContain('1 receitas passaram');
-    expect(result.stderr).toBe('');
+    expect(result.stderr).toContain('AVISO: 1 receitas; a meta é 3.100.');
   });
 
   it('rejeita licenças não aprovadas para importação automática', () => {

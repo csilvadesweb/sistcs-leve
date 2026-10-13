@@ -306,6 +306,24 @@ describe('Open Food Facts — integração externa resiliente', () => {
     ]);
   });
 
+  it('normaliza espaços e hífens no código de barras antes da consulta', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => ({
+      status: 1,
+      product: { product_name: 'Produto com código', nutriments: { 'energy-kcal_100g': 100 } },
+    }) });
+    vi.stubGlobal('fetch', fetchMock);
+    await expect(lookupBarcode(' 789-123-456 ')).resolves.toMatchObject({ code: '789123456', name: 'Produto com código' });
+    expect(fetchMock.mock.calls[0]?.[0]).toContain('/product/789123456.json');
+  });
+
+  it('não consulta a API para códigos vazios ou com caracteres inválidos', async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal('fetch', fetchMock);
+    await expect(lookupBarcode('   ')).resolves.toBeNull();
+    await expect(lookupBarcode('123abc456')).resolves.toBeNull();
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
   it('retorna null quando o código de barras não existe', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ status: 404, ok: false }));
     await expect(lookupBarcode('00000000')).resolves.toBeNull();

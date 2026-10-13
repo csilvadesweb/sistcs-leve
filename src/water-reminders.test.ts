@@ -13,9 +13,14 @@ describe('preferências dos lembretes de água', () => {
 
   it('normaliza intervalos e horários inválidos sem lançar exceção', () => {
     expect(normalizeWaterReminderSettings({ enabled: true, intervalMinutes: 5, startTime: '99:99', endTime: 'x' }))
-      .toEqual({ enabled: true, intervalMinutes: 60, startTime: '09:00', endTime: '21:00' });
+      .toEqual({ enabled: true, intervalMinutes: 60, startTime: '09:00', endTime: '21:00', soundEnabled: true });
   });
 });
+
+  it('mantém compatibilidade com preferências antigas e permite desativar o som', () => {
+    expect(normalizeWaterReminderSettings({ enabled: true, intervalMinutes: 30, startTime: '08:00', endTime: '20:00' }).soundEnabled).toBe(true);
+    expect(normalizeWaterReminderSettings({ soundEnabled: false }).soundEnabled).toBe(false);
+  });
 
 describe('janela de lembretes', () => {
   it('inclui o início e exclui o fim da janela diurna', () => {

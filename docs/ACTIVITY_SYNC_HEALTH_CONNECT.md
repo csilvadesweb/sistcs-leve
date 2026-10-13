@@ -1,6 +1,6 @@
 # Sincronização automática de atividade — Health Connect
 
-**Estado:** decisão técnica e plano de implementação; ainda não é uma integração ativa.  
+**Estado:** companion Android inicial implementado para leitura local; sincronização remota automática ainda não está ativa.  
 **Data:** 2026-10-12  
 **Regra:** custo zero, regressão zero.
 
@@ -14,7 +14,7 @@ Não iniciar uma integração nova com Google Fit REST/Android APIs: o Google an
 
 ## Escopo do MVP
 
-1. App Android separado em `android-health-connect/`, sem alterar o bundle web existente.
+1. Companion Android separado em `android-health-connect/`, sem alterar o bundle web existente. A primeira etapa de leitura local foi adicionada, mas ainda precisa de build e validação em aparelho.
 2. Leitura consentida de:
    - passos agregados por dia;
    - sessões de exercício (tipo, início/fim e duração quando disponíveis);
@@ -43,7 +43,7 @@ Não iniciar uma integração nova com Google Fit REST/Android APIs: o Google an
 
 ## Bloqueios antes de produção
 
-- Criar e testar o app Android nativo; não existe módulo Android no projeto web atual.
+- Compilar e testar o companion Android; ainda não há evidência de build Android nem validação em aparelho real.
 - Definir package ID e assinatura de release para a distribuição Android.
 - Implementar e testar autenticação segura entre o companion e Supabase.
 - Criar migration aditiva e testes RLS em ambiente descartável. O histórico remoto de migrations tem scripts ausentes; não executar `db push` nem aplicar alterações em produção até reconciliar esse histórico conforme `docs/SUPABASE_MIGRATION_AUDIT_2026-10-12.md`.
@@ -53,7 +53,7 @@ Não iniciar uma integração nova com Google Fit REST/Android APIs: o Google an
 ## Critérios de aceite
 
 - `npm test`, `npm run typecheck` e `npm run build` do PWA continuam passando sem mudanças de comportamento.
-- Testes Android unitários e de integração passam; validar em dispositivo físico.
+- Testes Android unitários e de integração precisam ser executados; validar em dispositivo físico antes de sair do estado draft.
 - Reimportar o mesmo período não cria duplicatas.
 - Usuário A não lê nem altera dados de usuário B (testes RLS reais, não só mocks).
 - Revogar permissão interrompe leituras futuras; desconectar não apaga dados não relacionados.

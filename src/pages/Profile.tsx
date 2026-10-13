@@ -31,6 +31,7 @@ import {
 } from '../calc';
 import { Avatar, resizeImage } from '../photos';
 import { InstallCard } from '../pwa';
+import { HealthActivityCard } from '../components/HealthActivityCard';
 import { Button, Field, decimalInputText, decimalText, readError, todayInSaoPaulo } from '../ui';
 
 const menuItems = [
@@ -360,6 +361,8 @@ export function ProfileSettings() {
       </section>
 
       {loadError && <div className="profile-state-message profile-state-error" role="alert">{loadError}</div>}
+
+      <HealthActivityCard />
 
       <form className="profile-form" onSubmit={onSubmit} noValidate>
         <section className="profile-card" aria-labelledby="profile-details-title">

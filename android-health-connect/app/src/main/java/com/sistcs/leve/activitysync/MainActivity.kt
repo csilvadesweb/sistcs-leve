@@ -3,7 +3,9 @@ package com.sistcs.leve.activitysync
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
+import android.text.InputType
 import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
@@ -11,21 +13,25 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.PermissionController
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.format.DateTimeFormatter
-import java.time.ZoneId
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
     private lateinit var status: TextView
     private lateinit var details: TextView
+    private lateinit var emailInput: EditText
+    private lateinit var passwordInput: EditText
     private lateinit var connectButton: Button
     private var healthClient: HealthConnectClient? = null
+    private var accountSession: SupabaseActivitySync.Session? = null
+    private val syncApi = SupabaseActivitySync()
 
     private val permissionLauncher = registerForActivityResult(
         PermissionController.createRequestPermissionResultContract(),
     ) { granted ->
         if (granted.containsAll(HealthConnectReader.requiredPermissions())) {
-            readActivity()
+            readAndSyncActivity()
         } else {
             status.text = "Permissões não concedidas"
             details.text = "Nenhum dado foi enviado. Conceda as permissões e tente novamente."
@@ -47,7 +53,7 @@ class MainActivity : ComponentActivity() {
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER_HORIZONTAL
-            setPadding(40, 48, 40, 40)
+            setPadding(40, 40, 40, 40)
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -58,70 +64,99 @@ class MainActivity : ComponentActivity() {
             textSize = 28f
             gravity = Gravity.CENTER
         })
+        root.addView(TextView(this).apply {
+            text = "Entre na sua conta SISTCS para sincronizar a atividade deste aparelho."
+            textSize = 16f
+            setPadding(0, 20, 0, 12)
+        })
+        emailInput = EditText(this).apply {
+            hint = "E-mail da conta SISTCS"
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            setSingleLine(true)
+        }
+        passwordInput = EditText(this).apply {
+            hint = "Senha da conta"
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            setSingleLine(true)
+        }
         status = TextView(this).apply {
-            text = "Conecte ao Health Connect para ler seus dados de atividade."
-            textSize = 17f
-            setPadding(0, 28, 0, 16)
+            text = "A conexão solicita apenas leitura de passos e sessões de exercício."
+            textSize = 16f
+            setPadding(0, 20, 0, 12)
         }
         details = TextView(this).apply {
-            text = "A leitura acontece neste aparelho. Esta versão ainda não envia dados para sua conta SISTCS."
-            textSize = 15f
+            text = "Os dados são enviados à sua conta com a sessão autenticada. Nenhuma chave administrativa é usada."
+            textSize = 14f
         }
         connectButton = Button(this).apply {
-            text = "Conectar e ler atividade"
-            setOnClickListener { requestPermissionsAndRead() }
+            text = "Conectar e sincronizar"
+            setOnClickListener { signInAndConnect() }
         }
+        root.addView(emailInput)
+        root.addView(passwordInput)
         root.addView(status)
         root.addView(details)
         root.addView(connectButton)
         setContentView(root)
     }
 
-    private fun requestPermissionsAndRead() {
-        if (HealthConnectClient.getSdkStatus(this) != HealthConnectClient.SDK_AVAILABLE) {
-            status.text = "Health Connect não está disponível"
-            connectButton.isEnabled = false
-            return
-        }
-        val client = HealthConnectClient.getOrCreate(this)
-        healthClient = client
+    private fun signInAndConnect() {
+        connectButton.isEnabled = false
+        status.text = "Autenticando sua conta…"
         lifecycleScope.launch {
             try {
+                val session = withContext(Dispatchers.IO) {
+                    syncApi.signIn(emailInput.text.toString(), passwordInput.text.toString())
+                }
+                accountSession = session
+                passwordInput.text?.clear()
+                val client = HealthConnectClient.getOrCreate(this@MainActivity)
+                healthClient = client
                 val granted = client.permissionController.getGrantedPermissions()
                 val required = HealthConnectReader.requiredPermissions()
-                if (granted.containsAll(required)) readActivity() else permissionLauncher.launch(required)
-            } catch (_: Exception) {
-                status.text = "Não foi possível verificar as permissões"
-                details.text = "Abra o Health Connect, confira as permissões e tente novamente."
+                if (granted.containsAll(required)) {
+                    readAndSyncActivity()
+                } else {
+                    status.text = "Autorize a leitura de atividade"
+                    permissionLauncher.launch(required)
+                }
+            } catch (error: Exception) {
+                status.text = "Não foi possível conectar"
+                details.text = error.message?.take(240) ?: "Confira sua conexão e tente novamente."
                 connectButton.isEnabled = true
             }
         }
     }
 
-    private fun readActivity() {
+    private fun readAndSyncActivity() {
         val client = healthClient ?: HealthConnectClient.getOrCreate(this).also { healthClient = it }
+        val session = accountSession
+        if (session == null) {
+            status.text = "Entre na sua conta antes de sincronizar"
+            connectButton.isEnabled = true
+            return
+        }
         connectButton.isEnabled = false
-        status.text = "Lendo atividade..."
+        status.text = "Lendo e sincronizando atividade…"
         lifecycleScope.launch {
             try {
                 val summary = HealthConnectReader(client).readToday()
-                status.text = "${summary.steps} passos hoje"
+                val uploaded = withContext(Dispatchers.IO) { syncApi.upload(session, summary) }
+                status.text = "${summary.steps} passos sincronizados hoje"
                 val exercises = if (summary.exercises.isEmpty()) {
                     "Nenhuma sessão de exercício encontrada hoje."
                 } else {
                     summary.exercises.joinToString(separator = "\n") {
-                        val start = DateTimeFormatter.ofPattern("HH:mm")
-                            .withZone(ZoneId.of(summary.zoneId)).format(it.start)
-                        "• ${it.type} — $start — ${it.durationMinutes} min"
+                        "${it.type} — ${it.durationMinutes} min"
                     }
                 }
-                details.text = "Data: ${summary.date} (${summary.zoneId})\n\n$exercises\n\nLeitura local concluída. Ainda não há sincronização com a conta SISTCS."
+                details.text = "Data: ${summary.date} (${summary.zoneId})\nRegistros enviados/atualizados: $uploaded\n\n$exercises\n\nAbra Perfil no SISTCS Leve para conferir a sincronização."
             } catch (_: SecurityException) {
                 status.text = "Permissão revogada ou insuficiente"
                 details.text = "Conceda novamente acesso a passos e exercícios no Health Connect."
-            } catch (_: Exception) {
-                status.text = "Falha ao ler os dados"
-                details.text = "Confira se o Health Connect tem dados disponíveis e tente novamente."
+            } catch (error: Exception) {
+                status.text = "A sincronização não foi concluída"
+                details.text = error.message?.take(240) ?: "Confira sua conexão e tente novamente."
             } finally {
                 connectButton.isEnabled = true
             }

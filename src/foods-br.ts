@@ -12,7 +12,7 @@ export interface FoodPer100 {
   carbs: number;
   fat: number;
   fiber: number;
-  origin: 'local' | 'off' | 'estimate' | 'usda' | 'tbca';
+  origin: 'local' | 'off' | 'estimate' | 'usda';
   sourceUrl?: string;
   sourceLicense?: string;
   code?: string;
@@ -108,107 +108,23 @@ const PRIORITY = new Set([
 const PRIORITY_ORDER = [...PRIORITY];
 
 /** Itens adicionais conferidos na TBCA/USP. Nutrientes por 100 g; receitas variam conforme preparo. */
-const TBCA_FOODS: FoodPer100[] = [
-  {
-    name: 'Pão de queijo, industrializado, assado (TBCA)',
-    kcal: 381, protein: 7.18, carbs: 35.6, fat: 23.4, fiber: 0.61,
-    origin: 'tbca', code: 'tbca-BRC0123B',
-    sourceUrl: 'https://www.tbca.net.br/base-dados/composicao_alimentos.php',
-    sourceLicense: 'TBCA/USP — valores consultados na base pública',
-    units: [['unidade pequena', 25], ['porção (2 unidades)', 50]],
-  },
-  {
-    name: 'Feijoada com sal (TBCA)',
-    kcal: 131, protein: 9.55, carbs: 11.7, fat: 6.21, fiber: 5.13,
-    origin: 'tbca', code: 'tbca-BRC0198T',
-    sourceUrl: 'https://www.tbca.net.br/base-dados/composicao_alimentos.php',
-    sourceLicense: 'TBCA/USP — valores consultados na base pública',
-    units: [['concha', 150], ['porção', 150]],
-  },
-  {
-    name: 'Brigadeiro caseiro com chocolate (TBCA)',
-    kcal: 387, protein: 6.31, carbs: 57.8, fat: 14.6, fiber: 0.61,
-    origin: 'tbca', code: 'tbca-BRC0190K',
-    sourceUrl: 'https://www.tbca.net.br/base-dados/composicao_alimentos.php',
-    sourceLicense: 'TBCA/USP — valores consultados na base pública',
-    units: [['unidade', 25], ['porção (4 unidades pequenas)', 100]],
-  },
-  {
-    name: 'Tapioca sem manteiga e sem recheio (TBCA)',
-    kcal: 289, protein: 0.36, carbs: 71.9, fat: 0, fiber: 0.2,
-    origin: 'tbca', code: 'tbca-BRC0906B',
-    sourceUrl: 'https://www.tbca.net.br/base-dados/composicao_alimentos.php',
-    sourceLicense: 'TBCA/USP — valores consultados na base pública',
-    units: [['unidade média', 60]],
-  },
-  {
-    name: 'Cuscuz de tapioca com coco e leite de coco (TBCA)',
-    kcal: 166, protein: 0.83, carbs: 31.8, fat: 4.02, fiber: 0.52,
-    origin: 'tbca', code: 'tbca-BRC0997B',
-    sourceUrl: 'https://www.tbca.net.br/base-dados/composicao_alimentos.php',
-    sourceLicense: 'TBCA/USP — valores consultados na base pública',
-    units: [['pedaço médio', 70]],
-  },
-  {
-    name: 'Moqueca baiana de peixe (TBCA)',
-    kcal: 132, protein: 18.6, carbs: 2.83, fat: 4.56, fiber: 1.37,
-    origin: 'tbca', code: 'tbca-BRC0121E',
-    sourceUrl: 'https://www.tbca.net.br/base-dados/composicao_alimentos.php',
-    sourceLicense: 'TBCA/USP — valores consultados na base pública',
-    units: [['concha cheia', 60], ['concha rasa', 45]],
-  },
-  {
-    name: 'Esfiha (esfirra), caseira, assada, média de sabores (TBCA)',
-    kcal: 275, protein: 15.1, carbs: 40.4, fat: 6.17, fiber: 1.40,
-    origin: 'tbca', code: 'tbca-BRC0439A',
-    sourceUrl: 'https://www.tbca.net.br/base-dados/int_composicao_alimentos.php',
-    sourceLicense: 'TBCA/USP — valores consultados na base pública',
-    units: [['unidade média', 70]],
-  },
-  {
-    name: 'Bolo de cenoura simples, caseiro (TBCA)',
-    kcal: 369, protein: 5.73, carbs: 64.0, fat: 10.3, fiber: 1.28,
-    origin: 'tbca', code: 'tbca-BRC0461A',
-    sourceUrl: 'https://www.tbca.net.br/base-dados/int_composicao_alimentos.php',
-    sourceLicense: 'TBCA/USP — valores consultados na base pública',
-    units: [['fatia média', 50]],
-  },
-  {
-    name: 'Bolo de cenoura com cobertura de chocolate e leite de coco, caseiro (TBCA)',
-    kcal: 354, protein: 6.25, carbs: 59.9, fat: 10.8, fiber: 4.04,
-    origin: 'tbca', code: 'tbca-BRC1071A',
-    sourceUrl: 'https://www.tbca.net.br/base-dados/int_composicao_alimentos.php',
-    sourceLicense: 'TBCA/USP — valores consultados na base pública',
-    units: [['fatia média', 50]],
-  },
-  {
-    name: 'Pamonha de milho verde com coco ralado e açúcar (TBCA)',
-    kcal: 219, protein: 2.45, carbs: 35.4, fat: 8.08, fiber: 2.44,
-    origin: 'tbca', code: 'tbca-BRC1051A',
-    sourceUrl: 'https://www.tbca.net.br/base-dados/int_composicao_alimentos.php',
-    sourceLicense: 'TBCA/USP — valores consultados na base pública',
-    units: [['unidade média', 100]],
-  },
-  {
-    name: 'Coxinha de frango, industrializada, frita (TBCA)',
-    kcal: 273, protein: 9.61, carbs: 34.5, fat: 11.8, fiber: 4.97,
-    origin: 'tbca', code: 'tbca-BRC0100F',
-    sourceUrl: 'https://www.tbca.net.br/base-dados/int_composicao_alimentos.php',
-    sourceLicense: 'TBCA/USP — valores consultados na base pública',
-    units: [['unidade média', 50], ['porção (2 unidades)', 100]],
-  },
-  {
-    name: 'Pastel frito caseiro, média de diferentes recheios (TBCA)',
-    kcal: 412, protein: 9.41, carbs: 46.0, fat: 21.4, fiber: 0.97,
-    origin: 'tbca', code: 'tbca-BRC0165A',
-    sourceUrl: 'https://www.tbca.net.br/base-dados/int_composicao_alimentos.php',
-    sourceLicense: 'TBCA/USP — valores consultados na base pública',
-    units: [['unidade média', 50]],
-  },
+const BRAZILIAN_ESTIMATES: FoodPer100[] = [
+  { name: 'Pão de queijo, assado (estimativa)', kcal: 330, protein: 6, carbs: 35, fat: 18, fiber: 1, origin: 'estimate', code: 'estimate-pao-de-queijo', units: [['unidade pequena', 25], ['porção (2 unidades)', 50]] },
+  { name: 'Feijoada (estimativa caseira)', kcal: 150, protein: 10, carbs: 12, fat: 7, fiber: 5, origin: 'estimate', code: 'estimate-feijoada', units: [['concha', 150], ['porção', 150]] },
+  { name: 'Brigadeiro caseiro (estimativa)', kcal: 390, protein: 5, carbs: 60, fat: 14, fiber: 1, origin: 'estimate', code: 'estimate-brigadeiro', units: [['unidade', 25], ['porção (4 unidades pequenas)', 100]] },
+  { name: 'Tapioca sem recheio (estimativa)', kcal: 230, protein: 0.2, carbs: 57, fat: 0.1, fiber: 0.2, origin: 'estimate', code: 'estimate-tapioca', units: [['unidade média', 60]] },
+  { name: 'Cuscuz de tapioca com coco (estimativa)', kcal: 240, protein: 2, carbs: 45, fat: 6, fiber: 2, origin: 'estimate', code: 'estimate-cuscuz-tapioca', units: [['pedaço médio', 70]] },
+  { name: 'Moqueca de peixe (estimativa caseira)', kcal: 140, protein: 14, carbs: 4, fat: 8, fiber: 1, origin: 'estimate', code: 'estimate-moqueca-peixe', units: [['concha cheia', 150], ['porção', 150]] },
+  { name: 'Esfiha assada (estimativa)', kcal: 270, protein: 10, carbs: 35, fat: 9, fiber: 2, origin: 'estimate', code: 'estimate-esfiha', units: [['unidade média', 70]] },
+  { name: 'Bolo de cenoura simples (estimativa caseira)', kcal: 350, protein: 5, carbs: 55, fat: 12, fiber: 1, origin: 'estimate', code: 'estimate-bolo-cenoura', units: [['fatia média', 50]] },
+  { name: 'Bolo de cenoura com cobertura de chocolate (estimativa)', kcal: 380, protein: 5, carbs: 58, fat: 14, fiber: 2, origin: 'estimate', code: 'estimate-bolo-cenoura-chocolate', units: [['fatia média', 50]] },
+  { name: 'Pamonha de milho com coco (estimativa caseira)', kcal: 220, protein: 3, carbs: 40, fat: 6, fiber: 3, origin: 'estimate', code: 'estimate-pamonha-coco', units: [['unidade média', 100]] },
+  { name: 'Coxinha de frango frita (estimativa)', kcal: 290, protein: 9, carbs: 35, fat: 12, fiber: 2, origin: 'estimate', code: 'estimate-coxinha-frango', units: [['unidade média', 50], ['porção (2 unidades)', 100]] },
+  { name: 'Pastel frito (estimativa caseira)', kcal: 380, protein: 8, carbs: 40, fat: 20, fiber: 1, origin: 'estimate', code: 'estimate-pastel-frito', units: [['unidade média', 50]] },
 ];
 
 export const FOODS_BR: FoodPer100[] = [
-  ...TBCA_FOODS,
+  ...BRAZILIAN_ESTIMATES,
   ...[...TACO, ...EXTRA].map(([id, name, kcal, protein, carbs, fat, fiber]) => ({
   name,
   kcal,

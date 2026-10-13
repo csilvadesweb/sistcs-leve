@@ -168,6 +168,9 @@ describe('Open Food Facts — integração externa resiliente', () => {
             carbohydrates_100g: 40,
             fat_100g: 8,
             fiber_100g: 2,
+            'saturated-fat_100g': 2.5,
+            sugars_100g: 12,
+            sodium_100g: 0.42,
           },
         }],
       }),
@@ -184,6 +187,10 @@ describe('Open Food Facts — integração externa resiliente', () => {
       code: '78912345',
       sourceUrl: 'https://world.openfoodfacts.org/product/78912345',
       sourceLicense: 'ODbL-1.0; Database Contents License',
+      saturatedFat: 2.5,
+      sugars: 12,
+      sodiumMg: 420,
+      reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
     }]);
   });
 
@@ -319,6 +326,19 @@ describe('Open Food Facts — integração externa resiliente', () => {
     ]);
   });
 
+  it('preserva nutrientes adicionais e distingue valores ausentes de zero', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({
+      status: 1,
+      product: { product_name: 'Produto com tabela parcial', nutriments: {
+        'energy-kcal_100g': 210, proteins_100g: 6, carbohydrates_100g: 24, fat_100g: 9,
+        'saturated-fat_100g': 3, sugars_100g: 8, sodium_100g: 0.35,
+      } },
+    }) }));
+    await expect(lookupBarcode('7891234567890')).resolves.toMatchObject({
+      kcal: 210, protein: 6, carbs: 24, fat: 9, saturatedFat: 3, sugars: 8, sodiumMg: 350,
+      reportedNutrients: { protein: true, carbs: true, fat: true, fiber: false },
+    });
+  });
   it('normaliza espaços e hífens no código de barras antes da consulta', async () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => ({
       status: 1,

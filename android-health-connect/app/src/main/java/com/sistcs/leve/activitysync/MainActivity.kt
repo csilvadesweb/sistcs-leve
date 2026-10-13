@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
@@ -53,21 +54,33 @@ class MainActivity : ComponentActivity() {
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER_HORIZONTAL
-            setPadding(40, 40, 40, 40)
+            setPadding(40, 32, 40, 40)
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT,
             )
         }
+        root.addView(ImageView(this).apply {
+            setImageResource(R.drawable.sistcs_health_connect_illustration)
+            contentDescription = "Ilustração do SISTCS Leve conectado à atividade física"
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                (120 * resources.displayMetrics.density).toInt(),
+            ).apply {
+                bottomMargin = (16 * resources.displayMetrics.density).toInt()
+            }
+        })
         root.addView(TextView(this).apply {
             text = "SISTCS Leve"
             textSize = 28f
             gravity = Gravity.CENTER
         })
         root.addView(TextView(this).apply {
-            text = "Entre na sua conta SISTCS para sincronizar a atividade deste aparelho."
+            text = "Conecte sua atividade física ao seu perfil com segurança."
             textSize = 16f
-            setPadding(0, 20, 0, 12)
+            gravity = Gravity.CENTER
+            setPadding(0, 12, 0, 12)
         })
         emailInput = EditText(this).apply {
             hint = "E-mail da conta SISTCS"

@@ -170,7 +170,7 @@ export function calculateFoodNutrientTotals(
 
 type Row = Record<string, any>;
 const num = (v: unknown) => Number(v);
-const DEFAULT_NAVIGATION_ORDER = ['/', '/alimentacao', '/registros', '/jejum', '/medicamentos', '/relatorios', '/perfil'];
+const DEFAULT_NAVIGATION_ORDER = ['/', '/alimentacao', '/receitas', '/assistente', '/exercicios', '/registros', '/jejum', '/medicamentos', '/relatorios', '/perfil'];
 
 export function normalizeNavigationPreferences(value: unknown): NavigationPreferences {
   const input = value && typeof value === 'object' ? value as Partial<NavigationPreferences> : {};

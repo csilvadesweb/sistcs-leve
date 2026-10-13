@@ -105,7 +105,7 @@ class SupabaseActivitySync {
             connectTimeout = 15000
             readTimeout = 20000
             setRequestProperty("apikey", PUBLIC_KEY)
-            setRequestProperty("Authorization", "Bearer ${accessToken ?: PUBLIC_KEY}")
+            if (accessToken != null) setRequestProperty("Authorization", "Bearer $accessToken")
             setRequestProperty("Content-Type", "application/json")
             if (prefer != null) setRequestProperty("Prefer", prefer)
             doOutput = true

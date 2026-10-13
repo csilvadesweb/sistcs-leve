@@ -4,9 +4,8 @@ import { useAppData } from '../session';
 import { createFoodEntry, type MealType } from '../data';
 import { decimalText, todayInSaoPaulo } from '../ui';
 import { filterRecipes, RECIPES, scaleRecipeNutrients, type Recipe, type RecipeCategory } from '../recipes';
+import { buildShoppingList, resolvePlannedMeals, validatePlannedMeals, WEEK_DAYS, type PlannedMeal } from '../meal-plan';
 
-const WEEK_DAYS = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'] as const;
-type PlannedMeal = { id: string; day: string; meal: MealType; recipeId: string };
 const MEAL_LABELS: Record<MealType, string> = { breakfast: 'Café da manhã', lunch: 'Almoço', snack: 'Lanche', dinner: 'Jantar', other: 'Outros' };
 const categories: Array<RecipeCategory | 'Todas'> = ['Todas', 'Café da manhã', 'Almoço e jantar', 'Lanches', 'Vegetariana'];
 const meals: Array<{ value: MealType; label: string }> = [
@@ -32,11 +31,7 @@ export function Recipes() {
     try {
       const raw = window.localStorage.getItem(`sistcs-leve-meal-plan-v1:${user.id}`);
       const parsed: unknown = raw ? JSON.parse(raw) : [];
-      return Array.isArray(parsed) ? parsed.filter((item): item is PlannedMeal =>
-        item && typeof item.id === 'string' && WEEK_DAYS.includes(item.day) &&
-        ['breakfast', 'lunch', 'snack', 'dinner', 'other'].includes(item.meal) &&
-        typeof item.recipeId === 'string' && RECIPES.some((recipe) => recipe.id === item.recipeId)
-      ) : [];
+      return validatePlannedMeals(parsed, RECIPES);
     } catch {
       return [];
     }
@@ -57,17 +52,8 @@ export function Recipes() {
     setFeedback({ id: recipe.id, message: `Adicionada ao planejamento: ${planDay}, ${MEAL_LABELS[planMeal]}.` });
   }
 
-  const plannedWithRecipes = planItems
-    .map((item) => ({ ...item, recipe: RECIPES.find((recipe) => recipe.id === item.recipeId) }))
-    .filter((item): item is PlannedMeal & { recipe: Recipe } => Boolean(item.recipe));
-  const shoppingIngredients = plannedWithRecipes.reduce<Array<{ ingredient: string; count: number }>>((list, item) => {
-    for (const ingredient of item.recipe.ingredients) {
-      const existing = list.find((entry) => entry.ingredient.toLocaleLowerCase('pt-BR') === ingredient.toLocaleLowerCase('pt-BR'));
-      if (existing) existing.count += 1;
-      else list.push({ ingredient, count: 1 });
-    }
-    return list;
-  }, []).sort((a, b) => a.ingredient.localeCompare(b.ingredient, 'pt-BR'));
+  const plannedWithRecipes = resolvePlannedMeals(planItems, RECIPES);
+  const shoppingIngredients = buildShoppingList(plannedWithRecipes);
 
   async function addToDiary(recipe: Recipe) {
     const amount = servings[recipe.id] ?? 1;

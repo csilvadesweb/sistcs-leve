@@ -38,20 +38,30 @@ export function PrivacyPolicy() {
           Facts. Nenhum dado de identificação seu é enviado nessa busca.
         </p>
 
-        <h2>6. Seus direitos</h2>
+        <h2>6. Assistente de inteligência artificial (opcional)</h2>
+        <p>
+          Se você escolher usar o Assistente IA, o texto da pergunta e um trecho limitado da conversa são enviados ao Google
+          Gemini para gerar a resposta. Não enviamos automaticamente seu perfil, diário alimentar, peso, medicamentos, fotos
+          ou demais registros do aplicativo. Não inclua nome, contato, documentos ou detalhes de saúde que identifiquem você.
+          O serviço gratuito do Gemini pode usar o conteúdo enviado para melhorar os produtos do Google, conforme os termos
+          vigentes do Google AI Studio. Você pode simplesmente não usar esse recurso; as outras funções do aplicativo continuam
+          disponíveis. A IA fornece informação educativa, não diagnóstico nem tratamento.
+        </p>
+
+        <h2>7. Seus direitos</h2>
         <p>
           Em Perfil → “Privacidade e seus dados” você pode <strong>exportar</strong> tudo em JSON e{' '}
           <strong>apagar</strong> todos os seus registros. Em “Excluir minha conta” você apaga a conta, os registros e as fotos de forma definitiva. Para correção ou qualquer outro
           pedido previsto na LGPD, escreva para o contato abaixo.
         </p>
 
-        <h2>7. Retenção e segurança</h2>
+        <h2>8. Retenção e segurança</h2>
         <p>Mantemos os dados enquanto a conta existir. Usamos conexão criptografada (HTTPS), controle de acesso por linha no banco e armazenamento privado de fotos.</p>
 
-        <h2>8. Aviso de saúde</h2>
+        <h2>9. Aviso de saúde</h2>
         <p>O SISTCS Leve é uma ferramenta de acompanhamento e não substitui orientação de médico ou nutricionista. Estimativas de calorias são aproximadas.</p>
 
-        <h2>9. Contato</h2>
+        <h2>10. Contato</h2>
         <p>Controlador: SISTCS. Contato do titular: <a href="mailto:privacidade@sistcs.com">privacidade@sistcs.com</a>.</p>
 
         <p className="auth-switch"><a className="link-button" href="#/">Voltar ao aplicativo</a></p>

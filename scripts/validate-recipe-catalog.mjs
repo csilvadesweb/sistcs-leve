@@ -8,7 +8,6 @@ import { readFile } from 'node:fs/promises';
 const allowedLicenses = new Set([
   'CC-BY-4.0',
   'CC-BY-SA-4.0',
-  'CC-BY-SA-3.0',
   'PUBLIC-DOMAIN',
 ]);
 

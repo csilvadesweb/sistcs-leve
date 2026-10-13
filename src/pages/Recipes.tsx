@@ -3,11 +3,11 @@ import { CookingPot, Clock3, Search, Users, UtensilsCrossed, Plus, CheckCircle2 
 import { useAppData } from '../session';
 import { createFoodEntry, type MealType } from '../data';
 import { decimalText, todayInSaoPaulo } from '../ui';
-import { filterRecipes, RECIPES, scaleRecipeNutrients, type Recipe, type RecipeCategory } from '../recipes';
+import { filterRecipes, RECIPES, scaleRecipeNutrients, type Recipe, type RecipeFilter } from '../recipes';
 import { buildShoppingList, resolvePlannedMeals, validatePlannedMeals, WEEK_DAYS, type PlannedMeal } from '../meal-plan';
 
 const MEAL_LABELS: Record<MealType, string> = { breakfast: 'Café da manhã', lunch: 'Almoço', snack: 'Lanche', dinner: 'Jantar', other: 'Outros' };
-const categories: Array<RecipeCategory | 'Todas'> = ['Todas', 'Café da manhã', 'Almoço e jantar', 'Lanches', 'Vegetariana'];
+const categories: RecipeFilter[] = ['Brasileira', 'Fitness', 'Todas', 'Café da manhã', 'Almoço e jantar', 'Lanches', 'Vegetariana'];
 const meals: Array<{ value: MealType; label: string }> = [
   { value: 'breakfast', label: 'Café da manhã' },
   { value: 'lunch', label: 'Almoço' },
@@ -19,7 +19,7 @@ const meals: Array<{ value: MealType; label: string }> = [
 export function Recipes() {
   const { reload, user } = useAppData();
   const [query, setQuery] = useState('');
-  const [category, setCategory] = useState<RecipeCategory | 'Todas'>('Todas');
+  const [category, setCategory] = useState<RecipeFilter>('Todas');
   const [meal, setMeal] = useState<MealType>('lunch');
   const [servings, setServings] = useState<Record<string, number>>({});
   const [expanded, setExpanded] = useState<string | null>(null);

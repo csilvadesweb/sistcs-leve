@@ -537,7 +537,6 @@ export const RECIPES: Recipe[] = [
     nutrientsPerServing: { calories: 255, proteins: 12, carbohydrates: 26, fats: 11, fiber: 1 },
     nutritionNote: 'Estimativa editorial por porção; varia conforme o queijo e a goma utilizados.',
   },
-,
   {
     id: 'frango-arroz-brocolis', name: 'Frango grelhado com arroz integral e brócolis', category: 'Almoço e jantar', tags: ["Fitness","Brasileira"],
     description: 'Refeição equilibrada com frango grelhado e acompanhamento de preparo caseiro.',

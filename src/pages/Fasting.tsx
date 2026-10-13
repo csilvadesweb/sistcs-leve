@@ -5,13 +5,7 @@ import { deleteFast, endFast, fastHours, startFast, updateFastingStart, type Fas
 import { ageFromBirth } from '../calc';
 import { Button, Field, decimalText, todayInSaoPaulo, useRunner } from '../ui';
 
-const PROTOCOLS = [
-  { hours: 12, label: '12:12', hint: 'Iniciante' },
-  { hours: 14, label: '14:10', hint: 'Leve' },
-  { hours: 16, label: '16:8', hint: 'O mais popular' },
-  { hours: 18, label: '18:6', hint: 'Avançado' },
-  { hours: 20, label: '20:4', hint: 'Avançado' },
-];
+import { FASTING_PROTOCOLS, FASTING_METHODS } from '../fasting-protocols';
 
 /** Fases apenas informativas: o corpo de cada pessoa responde de um jeito. */
 const PHASES = [
@@ -77,7 +71,7 @@ export function Fasting() {
   async function onStart(event: FormEvent) {
     event.preventDefault();
     if (minor) return;
-    if (!targetOk) return setFeedback({ kind: 'error', message: 'Use uma duração entre 12 e 24 horas.' });
+    if (!targetOk) return setFeedback({ kind: 'error', message: 'Use uma duração entre 12 e 24 horas. Para protocolos longos, procure orientação profissional.' });
     let start = new Date();
     if (startedEarlier) {
       start = new Date(startedEarlier);
@@ -210,7 +204,7 @@ export function Fasting() {
             <fieldset className="fast-protocols">
               <legend>Escolha o protocolo (horas de jejum : horas para comer)</legend>
               <div className="fast-protocol-grid">
-                {PROTOCOLS.map((p) => (
+                {FASTING_PROTOCOLS.map((p) => (
                   <label key={p.hours} className={`fast-protocol ${!custom.trim() && protocol === p.hours ? 'is-on' : ''}`}>
                     <input type="radio" name="protocol" checked={!custom.trim() && protocol === p.hours} onChange={() => { setProtocol(p.hours); setCustom(''); }} />
                     <strong>{p.label}</strong>
@@ -232,6 +226,24 @@ export function Fasting() {
             </div>
           </form>
         )}
+      </section>
+
+      <section className="ft-card" aria-labelledby="fast-methods-title">
+        <div className="ft-section-heading">
+          <div className="ft-section-mark"><HeartPulse size={19} aria-hidden="true" /></div>
+          <div><p className="ft-kicker">GUIA DE PROTOCOLOS</p><h2 id="fast-methods-title">Encontre o método que combina com sua rotina</h2></div>
+        </div>
+        <p className="empty-description">Os protocolos abaixo são explicações gerais, não uma recomendação individual. O cronômetro registra jejuns por duração; métodos semanais exigem planejamento próprio e não são iniciados pelo botão do cronômetro.</p>
+        <div className="fast-method-grid">
+          {FASTING_METHODS.map((method) => (
+            <article className="fast-method-card" key={method.id}>
+              <div className="fast-method-top"><strong>{method.name}</strong><span className={method.level === 'Exige orientação' ? 'fast-method-caution' : 'fast-method-level'}>{method.level}</span></div>
+              <p>{method.description}</p>
+              <small>{method.schedule}</small>
+            </article>
+          ))}
+        </div>
+        <p className="fast-warning" role="note"><TriangleAlert size={16} aria-hidden="true" /><span><strong>Importante:</strong> não é necessário prolongar o jejum para obter benefícios. Evite jejuns de 20–24 horas, OMAD, 5:2 ou dias alternados sem avaliação profissional. Pare se houver tontura, tremores, fraqueza, confusão ou mal-estar.</span></p>
       </section>
 
       <section className="stat-grid" aria-label="Resumo dos jejuns">

@@ -16,10 +16,18 @@ export function Assistant() {
   const [draft, setDraft] = useState('');
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
+  const [aiAvailable, setAiAvailable] = useState<boolean | null>(null);
   const endRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [messages, busy]);
+  useEffect(() => {
+    let active = true;
+    fetch('/api/ai/status').then((response) => response.json()).then((status: { available?: boolean }) => {
+      if (active) setAiAvailable(status.available === true);
+    }).catch(() => { if (active) setAiAvailable(false); });
+    return () => { active = false; };
+  }, []);
 
   async function send(text = draft) {
     const message = text.trim();
@@ -71,8 +79,10 @@ export function Assistant() {
           <h2>Vamos cuidar da sua rotina?</h2>
           <p>Converse sobre refeições, receitas e substituições de alimentos. As sugestões são educativas e podem precisar de confirmação nutricional.</p>
         </div>
-        <span className="ai-status"><span /> Gemini</span>
+        <span className={'ai-status ' + (aiAvailable === false ? 'ai-status-pending' : '')}><span /> {aiAvailable === false ? 'Configuração pendente' : aiAvailable === true ? 'Gemini disponível' : 'Verificando IA…'}</span>
       </section>
+
+      {aiAvailable === false && <p className="ai-setup-note" role="status">A tela do assistente está pronta, mas a chave segura do Gemini ainda precisa ser configurada na Cloudflare. Nenhuma outra função do aplicativo depende dessa configuração.</p>}
 
       <section className="ai-chat-card" aria-label="Conversa com o assistente">
         <div className="ai-chat-heading">

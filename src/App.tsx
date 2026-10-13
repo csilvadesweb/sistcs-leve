@@ -87,6 +87,8 @@ function Shell({ children }: { children: ReactNode }) {
     href: string;
     startX: number;
     startY: number;
+    lastX: number;
+    scrolling: boolean;
     active: boolean;
     originalOrder: string[];
     latestOrder: string[];
@@ -113,6 +115,8 @@ function Shell({ children }: { children: ReactNode }) {
       href,
       startX: event.clientX,
       startY: event.clientY,
+      lastX: event.clientX,
+      scrolling: false,
       active: false,
       originalOrder: [...mobileOrder],
       latestOrder: [...mobileOrder],
@@ -135,10 +139,27 @@ function Shell({ children }: { children: ReactNode }) {
     const drag = dragRef.current;
     if (!drag || drag.pointerId !== event.pointerId) return;
     if (!drag.active) {
-      if (Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) > 10) {
+      if (drag.scrolling) {
+        event.preventDefault();
+        const nav = navRef.current;
+        if (nav) nav.scrollLeft -= event.clientX - drag.lastX;
+        drag.lastX = event.clientX;
+        return;
+      }
+      const deltaX = event.clientX - drag.startX;
+      const deltaY = event.clientY - drag.startY;
+      if (Math.hypot(deltaX, deltaY) > 10) {
         if (drag.holdTimer !== null) window.clearTimeout(drag.holdTimer);
         setPressingHref(null);
-        dragRef.current = null;
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+          // A horizontal swipe scrolls the strip; it never starts a reorder.
+          drag.scrolling = true;
+          drag.lastX = event.clientX;
+          navRef.current?.setPointerCapture?.(event.pointerId);
+        } else {
+          // Vertical movement belongs to the page, not to menu reordering.
+          dragRef.current = null;
+        }
       }
       return;
     }

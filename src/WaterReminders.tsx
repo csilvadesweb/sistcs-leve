@@ -41,6 +41,9 @@ async function showWaterNotification() {
     body: 'Uma pausa para beber água pode ajudar você a manter sua rotina. Registre a quantidade no SISTCS Leve.',
     icon: `${import.meta.env.BASE_URL}icon-192.png`,
     tag: 'sistcs-leve-water-reminder',
+    // Solicita alerta sonoro e permite novo alerta quando a mesma notificação é substituída.
+    silent: false,
+    renotify: true,
   };
   if ('serviceWorker' in navigator) {
     try {

@@ -37,6 +37,9 @@ import { Button, Field, decimalInputText, decimalText, readError, todayInSaoPaul
 const menuItems = [
   { href: '/', label: 'Início' },
   { href: '/alimentacao', label: 'Alimentação' },
+  { href: '/receitas', label: 'Receitas' },
+  { href: '/assistente', label: 'Assistente IA' },
+  { href: '/exercicios', label: 'Exercícios' },
   { href: '/registros', label: 'Registros' },
   { href: '/jejum', label: 'Jejum' },
   { href: '/medicamentos', label: 'Medicamentos' },
@@ -134,7 +137,7 @@ export function ProfileSettings() {
   const [busy, setBusy] = useState(false);
   const [legacy, setLegacy] = useState(() => readLegacyData());
   const [menuPreferences, setMenuPreferences] = useState<NavigationPreferences>(() => ({
-    order: ['/', '/alimentacao', '/registros', '/jejum', '/medicamentos', '/relatorios', '/perfil'],
+    order: ['/', '/alimentacao', '/receitas', '/assistente', '/exercicios', '/registros', '/jejum', '/medicamentos', '/relatorios', '/perfil'],
     labels: {},
   }));
   const [menuBusy, setMenuBusy] = useState(false);
@@ -569,7 +572,7 @@ export function ProfileSettings() {
           <div className="profile-subsection menu-customization" aria-labelledby="menu-customization-title">
             <div className="profile-subsection-heading">
               <h3 id="menu-customization-title">Personalizar menu</h3>
-              <p>Altere os nomes e a ordem das áreas. Isso muda apenas os rótulos e a navegação; os endereços e as funções originais permanecem intactos.</p>
+              <p>Personalize os nomes das áreas. Para reorganizar a barra principal no celular, pressione um ícone e arraste-o para a posição desejada. Os endereços e as funções originais permanecem intactos.</p>
             </div>
             <div className="menu-preferences-list">
               {menuItems
@@ -591,20 +594,7 @@ export function ProfileSettings() {
                         }))}
                       />
                     </Field>
-                    <div className="menu-preference-moves">
-                      <Button type="button" variant="outline" size="sm" aria-label={`Mover ${item.label} para cima`} disabled={index === 0 || menuBusy} onClick={() => setMenuPreferences((current) => {
-                        const order = [...current.order];
-                        const position = order.indexOf(item.href);
-                        if (position > 0) [order[position - 1], order[position]] = [order[position], order[position - 1]];
-                        return { ...current, order };
-                      })}>↑</Button>
-                      <Button type="button" variant="outline" size="sm" aria-label={`Mover ${item.label} para baixo`} disabled={index === ordered.length - 1 || menuBusy} onClick={() => setMenuPreferences((current) => {
-                        const order = [...current.order];
-                        const position = order.indexOf(item.href);
-                        if (position >= 0 && position < order.length - 1) [order[position], order[position + 1]] = [order[position + 1], order[position]];
-                        return { ...current, order };
-                      })}>↓</Button>
-                    </div>
+
                   </div>
                 ))}
             </div>

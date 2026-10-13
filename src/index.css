@@ -419,19 +419,26 @@ body::before, body::after { display: none; }
   right: 8px;
   left: 8px;
   display: flex;
-  gap: 2px;
+  gap: 4px;
   justify-content: flex-start;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scrollbar-width: none;
   border-color: #dbe6de;
-  border-radius: 15px;
-  padding: 5px;
-  background: rgba(255, 255, 255, .98);
-  box-shadow: 0 4px 20px rgba(26, 65, 39, .12);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  border-radius: 18px;
+  padding: 6px;
+  background: rgba(255, 255, 255, .97);
+  box-shadow: 0 8px 28px rgba(26, 65, 39, .16), 0 1px 0 rgba(255, 255, 255, .9) inset;
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  scroll-behavior: auto;
+  scroll-padding-inline: 6px;
+  touch-action: pan-x;
 }
+.mobile-nav.is-reordering { overflow-x: auto; cursor: grabbing; }
+.mobile-nav .nav-link-mobile { cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; transition: background-color .16s ease, color .16s ease, opacity .16s ease, transform .16s ease; }
+.mobile-nav .nav-link-dragging { z-index: 2; opacity: .78; transform: scale(1.06); background: #eaf5ed; box-shadow: 0 5px 16px rgba(26, 65, 39, .16); cursor: grabbing; }
+.mobile-nav .nav-link-mobile:focus-visible { outline: 2px solid #218548; outline-offset: 2px; }
 .mobile-nav::-webkit-scrollbar { display: none; }
 .nav-link-mobile {
   flex: 0 0 68px;

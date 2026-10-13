@@ -72,14 +72,6 @@ class SupabaseActivitySync {
     private fun request(
         path: String,
         method: String,
-        body: org.json.JSONStringer? = null,
-        accessToken: String? = null,
-        prefer: String? = null,
-    ): JSONObject = request(path, method, body?.let { JSONObject(it.toString()) }, accessToken, prefer)
-
-    private fun request(
-        path: String,
-        method: String,
         body: JSONObject,
         accessToken: String? = null,
         prefer: String? = null,

@@ -25,6 +25,19 @@ describe('catálogo de receitas', () => {
     }
   });
 
+  it('classifica o lote brasileiro sem sobrepor os filtros Fitness e Brasileira e usa preparo específico', () => {
+    const batch = RECIPES.filter((recipe) => recipe.id.startsWith('brl'));
+    expect(batch).toHaveLength(100);
+    expect(batch.filter((recipe) => recipe.tags?.includes('Fitness'))).toHaveLength(50);
+    expect(batch.filter((recipe) => recipe.tags?.includes('Brasileira'))).toHaveLength(50);
+    for (const recipe of batch) {
+      expect(recipe.tags?.includes('Fitness') && recipe.tags?.includes('Brasileira')).toBe(false);
+      expect(recipe.description).not.toContain('Refeição caseira com');
+      expect(recipe.steps.join(' ')).not.toContain('até atingir a textura desejada');
+      expect(recipe.steps).toHaveLength(3);
+    }
+  });
+
   it('filtra por categoria', () => {
     const results = filterRecipes(RECIPES, '', 'Vegetariana');
     expect(results.length).toBeGreaterThan(0);

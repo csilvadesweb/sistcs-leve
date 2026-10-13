@@ -18,15 +18,15 @@ describe('catálogo de receitas', () => {
     expect(results.every((recipe) => recipe.category === 'Vegetariana')).toBe(true);
   });
 
-  it('prioriza todas as receitas Fitness antes das brasileiras exclusivas e oferece filtros dedicados', () => {
+  it('prioriza receitas brasileiras, depois Fitness, e oferece filtros dedicados', () => {
     const all = filterRecipes(RECIPES, '');
-    const firstNonFitness = all.findIndex((recipe) => !recipe.tags?.includes('Fitness'));
+    const firstNonBrazilian = all.findIndex((recipe) => !recipe.tags?.includes('Brasileira'));
 
     expect(all.length).toBe(RECIPES.length);
-    expect(all[0].tags).toContain('Fitness');
-    expect(firstNonFitness).toBeGreaterThanOrEqual(0);
-    expect(all.slice(0, firstNonFitness).every((recipe) => recipe.tags?.includes('Fitness'))).toBe(true);
-    expect(all.slice(firstNonFitness).every((recipe) => !recipe.tags?.includes('Fitness'))).toBe(true);
+    expect(all[0].tags).toContain('Brasileira');
+    expect(firstNonBrazilian).toBeGreaterThanOrEqual(0);
+    expect(all.slice(0, firstNonBrazilian).every((recipe) => recipe.tags?.includes('Brasileira'))).toBe(true);
+    expect(all.slice(firstNonBrazilian).every((recipe) => !recipe.tags?.includes('Brasileira'))).toBe(true);
     expect(filterRecipes(RECIPES, '', 'Brasileira').every((recipe) => recipe.tags?.includes('Brasileira'))).toBe(true);
     expect(filterRecipes(RECIPES, '', 'Fitness').every((recipe) => recipe.tags?.includes('Fitness'))).toBe(true);
   });

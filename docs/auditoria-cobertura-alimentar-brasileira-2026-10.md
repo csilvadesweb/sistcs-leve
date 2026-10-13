@@ -29,3 +29,26 @@ Fontes:
 ## Limitação importante
 
 Esta alteração elimina a dependência dos 12 registros TBCA, mas **não libera automaticamente o catálogo TACO já existente para uso comercial**. O próximo passo seguro é obter autorização escrita da NEPA/UNICAMP ou substituir os registros em lotes por dados com licença explícita, validando cada lote antes de remover os dados atuais.
+
+
+## Nova auditoria de fontes públicas (13/10/2026)
+
+A busca encontrou uma fonte adicional muito relevante: a **POF/IBGE — Tabelas de Composição Nutricional dos Alimentos Consumidos no Brasil (2008–2009)**, que inclui preparações e alimentos relatados em domicílios e fora deles. A publicação informa que a composição foi compilada usando múltiplas fontes, incluindo TACO/UNICAMP, NDSR, publicações científicas e rótulos. Portanto, o arquivo completo **não pode ser presumido como livre para redistribuição comercial** apenas por estar disponível no site do IBGE; cada registro precisa ter sua referência de origem verificada. Fonte oficial: https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9050-pesquisa-de-orcamentos-familiares.html?edicao=9058 e descrição da publicação: https://loja.ibge.gov.br/pesquisa-de-orcamentos-familiares-2008-2009-tabelas-de-composic-o-nutricional-dos-alimentos-consumidos-no-brasil.html.
+
+A POF/IBGE continua sendo útil para orientar **prioridade e nomes** dos alimentos consumidos no Brasil e para descobrir lacunas regionais. Não se deve copiar a tabela inteira para o catálogo antes de resolver as licenças das fontes incorporadas.
+
+### Caminho de importação sem custo de licença
+
+1. Usar USDA FoodData Central para dados nutricionais cujos registros sejam de origem USDA e licença pública explícita. O USDA declara seus dados em domínio público/CC0 1.0 e permite reutilização sem pedir autorização, recomendando atribuição: https://fdc.nal.usda.gov/api-guide/ e https://fdc.nal.usda.gov/download-datasets/.
+2. Usar os conjuntos de alimentos genéricos (Foundation Foods/SR Legacy) para ingredientes básicos, mantendo ID, nome original, nutrientes por 100 g, URL, data/versão e licença. Traduzir nomes e acrescentar sinônimos em campos separados, sem alterar os valores de origem nem apresentar uma tradução como medição brasileira.
+3. Usar Open Food Facts para produtos embalados com código de barras, atribuição visível e tratamento compatível com ODbL/DCL. Não misturar sua base derivada com outra base sem avaliar a obrigação share-alike e não reutilizar imagens sem análise da licença própria.
+4. Para pratos regionais e preparações brasileiras não cobertos por fonte reutilizável, priorizar valores calculados de receitas próprias e pesadas ou obter autorização escrita do titular. Marcar estimativas com transparência; não inventar valores como se fossem oficiais.
+5. Fazer importação em lote aditivo e idempotente, deduplicar por identificador de origem, preservar os alimentos existentes e testar a busca, valores por 100 g, unidades, origem e atribuição antes de ativar os novos registros.
+
+### Cobertura não é sinônimo de catálogo completo
+
+Nenhuma das fontes encontradas é simultaneamente completa para todos os alimentos consumidos no Brasil, livre de restrições para redistribuição comercial e atualizada com todos os produtos embalados. A estratégia mais segura é combinar **USDA CC0 para ingredientes genéricos + Open Food Facts sob suas condições para embalados + receitas próprias validadas/autorizações para pratos regionais**, sem importar integralmente TACO/TBCA/POF enquanto as permissões não estiverem claras.
+
+### Melhoria de busca regional
+
+A normalização local aceita sinônimos regionais adicionais (por exemplo, *mexerica*, *batata salsa*, *mandioquinha*, *pão cacetinho* e *feijão de corda/macassa*) e os direciona a registros existentes equivalentes, sem criar novos valores nutricionais ou remover alimentos.

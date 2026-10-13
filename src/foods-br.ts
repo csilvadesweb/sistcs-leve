@@ -227,8 +227,14 @@ export function searchLocal(query: string, limit = 8): FoodPer100[] {
   const searchableQuery = normalize(query)
     .replace(/castanha[ -]+do[ -]+par[aá]/g, 'castanha do brasil')
     .replace(/\bpao de sal\b/g, 'pao frances')
+    .replace(/\bpao cacetinho\b/g, 'pao frances')
+    .replace(/\bbatata salsa\b/g, 'batata baroa')
+    .replace(/\bmandioquinha\b/g, 'batata baroa')
+    .replace(/\bfeijao de corda\b/g, 'feijao fradinho')
+    .replace(/\bfeijao macassa\b/g, 'feijao fradinho')
     .replace(/\bjerimum\b/g, 'abobora')
-    .replace(/\bbergamota\b/g, 'tangerina');
+    .replace(/\bbergamota\b/g, 'tangerina')
+    .replace(/\bmexerica\b/g, 'tangerina');
   const terms = stemAll(searchableQuery)
     .split(' ')
     .filter((t) => t && !STOPWORDS.has(t))

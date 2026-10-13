@@ -221,6 +221,7 @@ export function FoodTracking() {
     });
   }, [selectedDate]);
   const [foodEditorOpen, setFoodEditorOpen] = useState(false);
+  const [selectedMealTab, setSelectedMealTab] = useState<MealType | 'summary'>('summary');
   const [editingFood, setEditingFood] = useState<FoodEntry | null>(null);
   const [waterEditorOpen, setWaterEditorOpen] = useState(false);
   const [editingWater, setEditingWater] = useState<WaterEntry | null>(null);
@@ -616,61 +617,52 @@ export function FoodTracking() {
 
         <NutrientTotals entries={entriesForDate} goals={data.profile?.goals ?? null} />
 
-        {entriesForDate.length > 0 ? (
-          <>
-            <div className="ft-meal-groups">
-              {mealGroups.map(({ meal, entries }) => (
-                <section className="ft-meal-group" key={meal} aria-labelledby={`meal-${meal}`}>
-                  <div className="ft-meal-heading">
-                    <div>
-                      <h3 id={`meal-${meal}`}>{mealLabels[meal]}</h3>
-                      <span>{sum(entries, 'calories')} kcal</span>
+        <nav className="ft-meal-tabs" aria-label="Detalhes por refeição" role="tablist">
+          <button type="button" role="tab" aria-selected={selectedMealTab === 'summary'} className={selectedMealTab === 'summary' ? 'is-active' : ''} onClick={() => setSelectedMealTab('summary')}>Resumo</button>
+          {mealKeys.map((meal) => (
+            <button key={meal} type="button" role="tab" aria-selected={selectedMealTab === meal} className={selectedMealTab === meal ? 'is-active' : ''} onClick={() => setSelectedMealTab(meal)}>
+              {mealLabels[meal]} <span>{mealGroups.find((group) => group.meal === meal)?.entries.length ?? 0}</span>
+            </button>
+          ))}
+        </nav>
+        {selectedMealTab === 'summary' ? (
+          <div className="ft-meal-summary-grid">
+            {mealGroups.map(({ meal, entries }) => (
+              <button className="ft-meal-summary-card" type="button" key={meal} onClick={() => setSelectedMealTab(meal)}>
+                <span>{mealLabels[meal]}</span>
+                <strong>{sum(entries, 'calories')} kcal</strong>
+                <small>{entries.length} {entries.length === 1 ? 'alimento' : 'alimentos'}</small>
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="ft-meal-groups">
+            {mealGroups.filter(({ meal }) => meal === selectedMealTab).map(({ meal, entries }) => (
+              <section className="ft-meal-group" key={meal} aria-labelledby={`meal-${meal}`}>
+                <div className="ft-meal-heading">
+                  <div><h3 id={`meal-${meal}`}>{mealLabels[meal]}</h3><span>{sum(entries, 'calories')} kcal</span></div>
+                  <Button variant="outline" size="sm" onClick={() => openNewFoodForMeal(meal)} disabled={busy} aria-label={`Adicionar alimento em ${mealLabels[meal]}`}><Plus aria-hidden="true" /> Adicionar</Button>
+                </div>
+                <p className="ft-meal-subtotal">
+                  Subtotal · {sum(entries, 'calories')} kcal
+                  <span>Proteínas {sum(entries, 'proteins')} g</span><span>Carboidratos {sum(entries, 'carbohydrates')} g</span><span>Gorduras {sum(entries, 'fats')} g</span><span>Fibras {sum(entries, 'fiber')} g</span>
+                </p>
+                {entries.length ? entries.map((entry) => (
+                  <article className="ft-record" key={entry.id}>
+                    <div className="ft-record-copy"><strong>{entry.name}</strong><span>{decimalText(entry.quantity)} × {entry.portion}</span><small>{entry.nutritionSource === 'user-estimated' ? 'Valores estimados por você' : 'Valores informados por você'}</small></div>
+                    <div className="ft-record-nutrients">{decimalText(calculateFoodEntryNutrient(entry, 'calories'))} kcal<span>P {decimalText(calculateFoodEntryNutrient(entry, 'proteins'))} g · C {decimalText(calculateFoodEntryNutrient(entry, 'carbohydrates'))} g</span></div>
+                    <div className="ft-record-actions">
+                      <Button variant="ghost" size="sm" onClick={() => copyFoodEntry(entry)} disabled={busy}><Copy aria-hidden="true" /> Copiar para o dia</Button>
+                      <Button variant="ghost" size="sm" onClick={() => toggleFavorite(entry)} disabled={busy} aria-pressed={favoriteBySource.has(entry.id)}><Heart aria-hidden="true" /> {favoriteBySource.has(entry.id) ? 'Salvo' : 'Favoritar'}</Button>
+                      <Button variant="ghost" size="sm" onClick={() => openEditFood(entry)}><Pencil aria-hidden="true" /> Editar</Button>
+                      <Button variant="ghost" size="sm" onClick={() => removeFood(entry)} disabled={busy}><Trash2 aria-hidden="true" /> Excluir</Button>
                     </div>
-                    <Button variant="outline" size="sm" onClick={() => openNewFoodForMeal(meal)} disabled={busy} aria-label={`Adicionar alimento em ${mealLabels[meal]}`}>
-                      <Plus aria-hidden="true" /> Adicionar
-                    </Button>
-                  </div>
-                  <p className="ft-meal-subtotal">
-                    Subtotal · {sum(entries, 'calories')} kcal
-                    <span>Proteínas {sum(entries, 'proteins')} g</span>
-                    <span>Carboidratos {sum(entries, 'carbohydrates')} g</span>
-                    <span>Gorduras {sum(entries, 'fats')} g</span>
-                    <span>Fibras {sum(entries, 'fiber')} g</span>
-                  </p>
-                  {entries.map((entry) => (
-                    <article className="ft-record" key={entry.id}>
-                      <div className="ft-record-copy">
-                        <strong>{entry.name}</strong>
-                        <span>{decimalText(entry.quantity)} × {entry.portion}</span>
-                        <small>{entry.nutritionSource === 'user-estimated' ? 'Valores estimados por você' : 'Valores informados por você'}</small>
-                      </div>
-                      <div className="ft-record-nutrients">
-                        {decimalText(calculateFoodEntryNutrient(entry, 'calories'))} kcal
-                        <span>
-                          P {decimalText(calculateFoodEntryNutrient(entry, 'proteins'))} g · C {decimalText(calculateFoodEntryNutrient(entry, 'carbohydrates'))} g
-                        </span>
-                      </div>
-                      <div className="ft-record-actions">
-                        <Button variant="ghost" size="sm" onClick={() => copyFoodEntry(entry)} disabled={busy}>
-                          <Copy aria-hidden="true" /> Copiar para o dia
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => toggleFavorite(entry)} disabled={busy} aria-pressed={favoriteBySource.has(entry.id)}>
-                          <Heart aria-hidden="true" /> {favoriteBySource.has(entry.id) ? 'Salvo' : 'Favoritar'}
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => openEditFood(entry)}>
-                          <Pencil aria-hidden="true" /> Editar
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => removeFood(entry)} disabled={busy}>
-                          <Trash2 aria-hidden="true" /> Excluir
-                        </Button>
-                      </div>
-                    </article>
-                  ))}
-                </section>
-              ))}
-            </div>
-          </>
-        ) : null}
+                  </article>
+                )) : <p className="ft-favorites-empty">Nenhum alimento registrado nesta refeição para este dia.</p>}
+              </section>
+            ))}
+          </div>
+        )}
 
         <section className="ft-favorites" aria-labelledby="favorites-title">
           <div className="ft-favorites-heading">

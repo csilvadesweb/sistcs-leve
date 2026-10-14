@@ -545,14 +545,14 @@ export function foodSourceLabel(food: FoodPer100): string {
 }
 
 export function foodConfidence(food: FoodPer100): { level: 'alta' | 'média' | 'baixa'; explanation: string } {
-  if (food.origin === 'local') return { level: 'alta', explanation: 'Referência publicada identificada; o preparo real pode diferir.' };
+  if (food.origin === 'local') return { level: 'média', explanation: 'Fonte publicada identificada; a cópia do catálogo ainda deve ser conferida com a tabela original, e o preparo real pode diferir.' };
   if (food.origin === 'usda') return { level: 'média', explanation: 'Referência internacional genérica; confira se o alimento e o preparo correspondem.' };
   if (food.origin === 'off') return { level: 'média', explanation: 'Registro colaborativo; confira marca, variante e tabela do rótulo.' };
   return { level: 'baixa', explanation: 'Valor aproximado; receita, porção e ingredientes podem alterar os nutrientes.' };
 }
 
 function canonicalBarcode(value: string): string {
-  return value.replace(/\\D/g, '').replace(/^0+(?=\\d)/, '');
+  return value.replace(/\D/g, '').replace(/^0+(?=\d)/, '');
 }
 function barcodeMatches(expected: string, returned: string): boolean {
   const a = canonicalBarcode(expected);

@@ -27,6 +27,9 @@ class MainActivity : ComponentActivity() {
     private lateinit var emailInput: EditText
     private lateinit var passwordInput: EditText
     private lateinit var connectButton: Button
+    private lateinit var logoutButton: Button
+    private lateinit var sessionStore: SecureSessionStore
+    private var savedAccount: SecureSessionStore.Saved? = null
     private var healthClient: HealthConnectClient? = null
     private var accountSession: SupabaseActivitySync.Session? = null
     private val syncApi = SupabaseActivitySync()
@@ -45,7 +48,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sessionStore = SecureSessionStore(this)
+        savedAccount = sessionStore.load()
         render()
+        applyAccountMode()
         if (HealthConnectClient.getSdkStatus(this) != HealthConnectClient.SDK_AVAILABLE) {
             status.text = "Health Connect não está disponível"
             details.text = "Instale ou atualize o Health Connect no Android e abra este app novamente."
@@ -96,7 +102,7 @@ class MainActivity : ComponentActivity() {
         passwordInput = EditText(this).apply {
             hint = "Senha da conta"
             contentDescription = "Senha da conta SISTCS"
-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
             imeOptions = EditorInfo.IME_ACTION_DONE
             setAutofillHints(View.AUTOFILL_HINT_PASSWORD)
             setSingleLine(true)
@@ -114,11 +120,16 @@ class MainActivity : ComponentActivity() {
             text = "Conectar e sincronizar"
             setOnClickListener { signInAndConnect() }
         }
+        logoutButton = Button(this).apply {
+            text = "Sair desta conta"
+            setOnClickListener { signOut() }
+        }
         root.addView(emailInput)
         root.addView(passwordInput)
         root.addView(status)
         root.addView(details)
         root.addView(connectButton)
+        root.addView(logoutButton)
         passwordInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 signInAndConnect()
@@ -137,6 +148,34 @@ class MainActivity : ComponentActivity() {
         })
     }
 
+    /** Com conta salva, esconde e-mail/senha: o app entra direto e só precisa sincronizar. */
+    private fun applyAccountMode() {
+        val saved = savedAccount
+        if (saved != null) {
+            emailInput.visibility = View.GONE
+            passwordInput.visibility = View.GONE
+            logoutButton.visibility = View.VISIBLE
+            status.text = "Conectado como ${saved.email}"
+            details.text = "Toque em Sincronizar agora para enviar seus passos e exercícios de hoje."
+            connectButton.text = "Sincronizar agora"
+        } else {
+            emailInput.visibility = View.VISIBLE
+            passwordInput.visibility = View.VISIBLE
+            logoutButton.visibility = View.GONE
+            connectButton.text = "Conectar e sincronizar"
+        }
+    }
+
+    private fun signOut() {
+        sessionStore.clear()
+        savedAccount = null
+        accountSession = null
+        passwordInput.text?.clear()
+        applyAccountMode()
+        status.text = "Você saiu da conta"
+        details.text = "Seus dados já enviados continuam na sua conta SISTCS."
+    }
+
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
     private fun signInAndConnect() {
@@ -145,11 +184,21 @@ class MainActivity : ComponentActivity() {
         status.text = "Autenticando sua conta…"
         lifecycleScope.launch {
             try {
+                val saved = savedAccount
                 val session = withContext(Dispatchers.IO) {
-                    syncApi.signIn(emailInput.text.toString(), passwordInput.text.toString())
+                    if (saved != null) {
+                        syncApi.refresh(saved.refreshToken, saved.email)
+                    } else {
+                        syncApi.signIn(emailInput.text.toString(), passwordInput.text.toString())
+                    }
                 }
                 accountSession = session
                 passwordInput.text?.clear()
+                if (session.refreshToken.isNotBlank()) {
+                    sessionStore.save(session.email, session.refreshToken)
+                    savedAccount = SecureSessionStore.Saved(session.email, session.refreshToken)
+                    applyAccountMode()
+                }
                 val client = HealthConnectClient.getOrCreate(this@MainActivity)
                 healthClient = client
                 val granted = client.permissionController.getGrantedPermissions()
@@ -161,8 +210,18 @@ class MainActivity : ComponentActivity() {
                     permissionLauncher.launch(required)
                 }
             } catch (error: Exception) {
-                status.text = "Não foi possível conectar"
-                details.text = error.message?.take(240) ?: "Confira sua conexão e tente novamente."
+                val rejected = error is SupabaseActivitySync.HttpFailure && error.code in 400..499 && error.code != 429
+                if (savedAccount != null && rejected) {
+                    // Sessão salva expirou ou foi revogada: pede o login de novo.
+                    sessionStore.clear()
+                    savedAccount = null
+                    applyAccountMode()
+                    status.text = "Sua sessão expirou"
+                    details.text = "Entre novamente com seu e-mail e senha."
+                } else {
+                    status.text = "Não foi possível conectar"
+                    details.text = error.message?.take(240) ?: "Confira sua conexão e tente novamente."
+                }
                 connectButton.isEnabled = true
             }
         }

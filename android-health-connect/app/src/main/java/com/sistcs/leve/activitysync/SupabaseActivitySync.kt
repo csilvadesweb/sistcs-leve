@@ -15,7 +15,15 @@ class SupabaseActivitySync {
         private const val PUBLIC_KEY = "sb_publishable_8NA8UB_55isWrQJawod7OQ_tvNKEJNz"
     }
 
-    data class Session(val userId: String, val accessToken: String)
+    data class Session(
+        val userId: String,
+        val accessToken: String,
+        val refreshToken: String = "",
+        val email: String = "",
+    )
+
+    /** Erro HTTP do serviço de conta; [code] permite distinguir sessão recusada (4xx) de instabilidade (5xx). */
+    class HttpFailure(val code: Int, message: String) : IllegalStateException(message)
 
     fun signIn(email: String, password: String): Session {
         require(email.isNotBlank() && password.isNotEmpty()) { "Informe e-mail e senha da sua conta SISTCS." }
@@ -24,11 +32,31 @@ class SupabaseActivitySync {
             method = "POST",
             body = JSONObject().put("email", email.trim()).put("password", password),
         )
+        return parseSession(response, email.trim())
+    }
+
+    /** Renova a sessão com o refresh token guardado (o Supabase devolve um novo refresh token a cada uso). */
+    fun refresh(refreshToken: String, email: String): Session {
+        require(refreshToken.isNotBlank()) { "Sessão salva inválida." }
+        val response = request(
+            path = "/auth/v1/token?grant_type=refresh_token",
+            method = "POST",
+            body = JSONObject().put("refresh_token", refreshToken),
+        )
+        return parseSession(response, email)
+    }
+
+    private fun parseSession(response: JSONObject, fallbackEmail: String): Session {
         val user = response.optJSONObject("user") ?: error("A autenticação não retornou um usuário válido.")
         val userId = user.optString("id")
         val token = response.optString("access_token")
         check(userId.isNotBlank() && token.isNotBlank()) { "Não foi possível iniciar uma sessão válida." }
-        return Session(userId, token)
+        return Session(
+            userId = userId,
+            accessToken = token,
+            refreshToken = response.optString("refresh_token"),
+            email = user.optString("email").ifBlank { fallbackEmail },
+        )
     }
 
     fun upload(session: Session, summary: DailyActivitySummary): Int {
@@ -127,7 +155,7 @@ class SupabaseActivitySync {
             val stream = if (code in 200..299) connection.inputStream else connection.errorStream
             val text = stream?.bufferedReader(Charsets.UTF_8)?.use { it.readText() }.orEmpty()
             if (code !in 200..299) {
-                throw IllegalStateException(friendlyError(code, text))
+                throw HttpFailure(code, friendlyError(code, text))
             }
             return if (text.isBlank()) JSONObject() else JSONObject(text)
         } finally {

@@ -96,4 +96,21 @@ describe('idade e estimativa de metas', () => {
     expect(ageFromBirth('1990-13-01', '2026-10-12')).toBeNaN();
     expect(ageFromBirth('1990-01-01', '2026-02-30')).toBeNaN();
   });
+  it.each([
+    ['ritmo semanal NaN', { weeklyRateKg: Number.NaN }],
+    ['ritmo semanal infinito', { weeklyRateKg: Number.POSITIVE_INFINITY }],
+    ['sexo inválido', { sex: 'unknown' as EstimateInput['sex'] }],
+    ['objetivo inválido', { goalType: 'unknown' as EstimateInput['goalType'] }],
+    ['preset inválido', { macroPreset: 'unknown' as EstimateInput['macroPreset'] }],
+    ['atividade inválida', { activity: 'unknown' as EstimateInput['activity'] }],
+  ])('recusa %s sem produzir metas NaN', (_label, overrides) => {
+    const result = estimate({ ...complete, ...overrides }, '2026-10-12');
+    expect(result.ok).toBe(false);
+  });
+
+  it('não produz metas não finitas mesmo com dados numéricos extremos', () => {
+    const result = estimate({ ...complete, weightKg: Number.MAX_VALUE }, '2026-10-12');
+    expect(result.ok).toBe(false);
+  });
+
 });

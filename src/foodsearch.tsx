@@ -6,6 +6,7 @@ import { gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBar
 export interface PickedFood {
   name: string;
   portion: string;
+  nutritionSource?: "user-reported" | "user-estimated";
   nutrients: { calories: number; proteins: number; carbohydrates: number; fats: number; fiber: number };
 }
 

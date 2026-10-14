@@ -30,6 +30,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var logoutButton: Button
     private lateinit var sessionStore: SecureSessionStore
     private var savedAccount: SecureSessionStore.Saved? = null
+    private var lastAutoSync = 0L
     private var healthClient: HealthConnectClient? = null
     private var accountSession: SupabaseActivitySync.Session? = null
     private val syncApi = SupabaseActivitySync()
@@ -43,6 +44,25 @@ class MainActivity : ComponentActivity() {
             status.text = "Permissões não concedidas"
             details.text = "Nenhum dado foi enviado. Conceda as permissões e tente novamente."
             connectButton.isEnabled = true
+        }
+    }
+
+    private val backgroundLauncher = registerForActivityResult(
+        PermissionController.createRequestPermissionResultContract(),
+    ) { granted ->
+        getSharedPreferences("config", MODE_PRIVATE).edit().putBoolean("bg_asked", true).apply()
+        if (BACKGROUND_PERMISSION in granted) {
+            details.text = details.text.toString() + "\n\nSincronização automática em segundo plano ativada."
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // Com conta salva, sincroniza sozinho ao abrir (no máximo a cada minuto).
+        val now = System.currentTimeMillis()
+        if (savedAccount != null && connectButton.isEnabled && now - lastAutoSync > 60_000) {
+            lastAutoSync = now
+            signInAndConnect()
         }
     }
 
@@ -171,6 +191,7 @@ class MainActivity : ComponentActivity() {
         savedAccount = null
         accountSession = null
         passwordInput.text?.clear()
+        SyncWorker.cancel(this)
         applyAccountMode()
         status.text = "Você saiu da conta"
         details.text = "Seus dados já enviados continuam na sua conta SISTCS."
@@ -227,6 +248,20 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /** Pede uma vez a leitura em segundo plano; sem ela a sincronização automática só acontece ao abrir o app. */
+    private fun maybeRequestBackgroundPermission(client: HealthConnectClient) {
+        val prefs = getSharedPreferences("config", MODE_PRIVATE)
+        if (prefs.getBoolean("bg_asked", false)) return
+        lifecycleScope.launch {
+            try {
+                if (BACKGROUND_PERMISSION in client.permissionController.getGrantedPermissions()) return@launch
+                backgroundLauncher.launch(setOf(BACKGROUND_PERMISSION))
+            } catch (_: Exception) {
+                // Aparelho sem suporte à leitura em segundo plano: continua sincronizando ao abrir o app.
+            }
+        }
+    }
+
     private fun readAndSyncActivity() {
         val client = healthClient ?: HealthConnectClient.getOrCreate(this).also { healthClient = it }
         val session = accountSession
@@ -249,7 +284,9 @@ class MainActivity : ComponentActivity() {
                         "${it.type} — ${it.durationMinutes} min"
                     }
                 }
-                details.text = "Data: ${summary.date} (${summary.zoneId})\nRegistros enviados/atualizados: $uploaded\n\n$exercises\n\nAbra Perfil no SISTCS Leve para conferir a sincronização."
+                SyncWorker.schedule(this@MainActivity)
+                details.text = "Data: ${summary.date} (${summary.zoneId})\nRegistros enviados/atualizados: $uploaded\n\n$exercises\n\nSincronização automática ativada (a cada cerca de 15 minutos, quando o Android permitir). Abra Perfil no SISTCS Leve para conferir."
+                maybeRequestBackgroundPermission(client)
             } catch (_: SecurityException) {
                 status.text = "Permissão revogada ou insuficiente"
                 details.text = "Conceda novamente acesso a passos e exercícios no Health Connect."
@@ -260,5 +297,9 @@ class MainActivity : ComponentActivity() {
                 connectButton.isEnabled = true
             }
         }
+    }
+
+    private companion object {
+        const val BACKGROUND_PERMISSION = "android.permission.health.READ_HEALTH_DATA_IN_BACKGROUND"
     }
 }

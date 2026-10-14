@@ -87,3 +87,59 @@ describe('endpoint do assistente Gemini', () => {
     expect(response.status).toBe(503);
   });
 });
+
+
+describe('endpoint de leitura de rótulo nutricional', () => {
+  const envWithKey = { ...env, GEMINI_API_KEY: 'gemini-test-key' } as unknown as Parameters<typeof worker.fetch>[1];
+  const labelRequest = (body: unknown, authorization = 'Bearer test-token') => new Request('https://leve.sistcs.com/api/ai/label', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', authorization },
+    body: JSON.stringify(body),
+  });
+
+  it('recusa leitura sem sessão válida', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => new Response('{}', { status: 401 })));
+    const response = await worker.fetch(labelRequest({ mimeType: 'image/jpeg', imageBase64: 'YWJj' }), envWithKey);
+    expect(response.status).toBe(401);
+  });
+
+  it('recusa tipo de imagem não permitido antes de consumir quota', async () => {
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ id: 'user-1' }), { status: 200 }));
+    vi.stubGlobal('fetch', fetchMock);
+    const response = await worker.fetch(labelRequest({ mimeType: 'image/svg+xml', imageBase64: 'YWJj' }), envWithKey);
+    expect(response.status).toBe(400);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('respeita a quota diária existente de IA', async () => {
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify({ id: 'user-1' }), { status: 200 }))
+      .mockResolvedValueOnce(new Response('false', { status: 200 }));
+    vi.stubGlobal('fetch', fetchMock);
+    const response = await worker.fetch(labelRequest({ mimeType: 'image/jpeg', imageBase64: 'YWJj' }), envWithKey);
+    expect(response.status).toBe(429);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it('devolve os valores reconhecidos após autenticação e quota, sem guardar a imagem', async () => {
+    const extracted = {
+      name: 'Iogurte de teste', brand: 'Marca teste', basis: '100g', servingSize: '160 g',
+      calories: 76, proteins: 10, carbohydrates: 5.7, fats: 1.2, fiber: 0,
+      saturatedFat: 0.8, sugars: 4, sodiumMg: 42, confidence: 'high', notes: '',
+    };
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify({ id: 'user-1' }), { status: 200 }))
+      .mockResolvedValueOnce(new Response('true', { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({
+        candidates: [{ content: { parts: [{ text: JSON.stringify(extracted) }] } }],
+      }), { status: 200, headers: { 'content-type': 'application/json' } }));
+    vi.stubGlobal('fetch', fetchMock);
+    const response = await worker.fetch(labelRequest({ mimeType: 'image/jpeg', imageBase64: 'YWJj' }), envWithKey);
+    const body = await response.json() as { food?: { name?: string; calories?: number; proteins?: number } };
+    expect(response.status).toBe(200);
+    expect(body.food?.name).toBe('Iogurte de teste');
+    expect(body.food?.calories).toBe(76);
+    expect(body.food?.proteins).toBe(10);
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+  });
+});

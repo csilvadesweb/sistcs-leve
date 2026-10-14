@@ -48,3 +48,41 @@ A migration `navigation_preferences` permanece versionada como `20261012163900_n
 4. Rever no painel a recomendação de segurança sobre proteção contra senhas comprometidas desativada. A configuração não foi alterada.
 
 A divergência de versão de `exercise_entries` está corrigida no versionamento proposto, mas **a reconciliação geral das sete migrations históricas ausentes continua bloqueando qualquer `db push`**.
+
+
+---
+
+## Atualização somente de leitura — 2026-10-14
+
+A consulta mais recente ao projeto remoto confirmou **11 migrations registradas**, não nove. As duas versões adicionais são:
+
+| Versão | Nome remoto | Arquivo versionado em `main` |
+| --- | --- | --- |
+| `20261013020313` | `health_activity_records` | Ausente |
+| `20261014003810` | `ai_usage_daily_quota` | Ausente |
+
+O inventário completo atual é:
+
+| Versão | Nome remoto | Arquivo versionado |
+| --- | --- | --- |
+| `20261011021110` | `meu_progresso_total_schema_inicial` | Ausente |
+| `20261011030655` | `meu_progresso_total_peso_medicamentos_perfil` | Ausente |
+| `20261011143427` | `personalizacao_metas` | Ausente |
+| `20261011150916` | `foto_antes_depois_jejum` | Ausente |
+| `20261012015340` | `fase_1_integridade_dados_usuario` | Ausente |
+| `20261012113725` | `menu_personalizado` | Ausente |
+| `20261012162317` | `fix_favorite_foods_source_delete` | Ausente |
+| `20261012163900` | `navigation_preferences` | Presente |
+| `20261012195153` | `exercise_entries` | Presente |
+| `20261013020313` | `health_activity_records` | Ausente |
+| `20261014003810` | `ai_usage_daily_quota` | Ausente |
+
+O banco remoto contém 12 tabelas públicas, todas com RLS habilitado. `exercise_entries` existe e contém registros; `health_activity_records` e `ai_usage` também existem e estão vazias na consulta. Isso confirma que a frase anterior do README dizendo que a migration de exercícios não havia sido aplicada ficou desatualizada.
+
+### Decisão de segurança
+
+- **Nenhuma migration foi aplicada e nenhum dado foi alterado nesta atualização.**
+- Não recriar os nove arquivos históricos ausentes a partir de suposições sobre o estado final do schema.
+- Não executar `supabase db push`, `db reset` nem reparar o histórico remoto até obter os scripts originais ou uma baseline oficial reproduzível.
+- A proteção contra senhas comprometidas permanece desativada; a tabela `ai_usage` tem RLS sem políticas próprias e a função `consume_ai_quota()` está disponível para `authenticated`. Esses avisos exigem revisão explícita de permissões antes de alterações.
+- A próxima mudança que exigir tabelas novas (por exemplo, notificações, eventos GLP-1 ou compartilhamento com nutricionistas) fica bloqueada até a reconciliação do histórico e testes RLS em ambiente descartável.

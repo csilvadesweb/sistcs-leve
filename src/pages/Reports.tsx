@@ -40,8 +40,10 @@ export function Reports() {
   const exerciseCalories = perDay.reduce((sum, d) => sum + d.exerciseCalories, 0);
   const kcalGoal = goals?.calories ?? null;
   const waterGoal = goals?.waterMl ?? null;
+  const proteinGoal = goals?.proteins ?? null;
   const withinGoal = kcalGoal === null ? null : loggedDays.filter((d) => d.totals.calories <= kcalGoal).length;
   const waterGoalDays = waterGoal === null ? null : waterDays.filter((d) => d.water >= waterGoal).length;
+  const proteinGoalDays = proteinGoal === null ? null : loggedDays.filter((d) => d.totals.proteins >= proteinGoal).length;
 
   const weightInRange = data.weightEntries.filter((w) => w.date >= days[0] && w.date <= days[days.length - 1]);
   const { first: wFirst, latest: wLatest } = weightSummary(weightInRange);
@@ -64,6 +66,11 @@ export function Reports() {
       label: 'Média de proteínas',
       value: loggedDays.length ? `${decimalText(Math.round(average(loggedDays.map((d) => d.totals.proteins))))} g` : '—',
       note: goals?.proteins ? `meta ${decimalText(goals.proteins)} g` : 'sem meta definida',
+    },
+    {
+      label: 'Dias que atingiram a meta de proteína',
+      value: proteinGoalDays === null ? '—' : `${proteinGoalDays} de ${loggedDays.length}`,
+      note: proteinGoal !== null ? `meta ${decimalText(proteinGoal)} g · entre dias registrados` : 'defina uma meta de proteína no Perfil',
     },
     {
       label: 'Média de água',

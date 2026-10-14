@@ -97,6 +97,22 @@ export function estimate(input: EstimateInput, today: string): Estimate {
   if (!input.goalType) missing.push('objetivo');
   if (missing.length) return { ok: false, reason: `Para calcular, preencha: ${missing.join(', ')}.` };
 
+  if (input.sex !== 'female' && input.sex !== 'male') {
+    return { ok: false, reason: 'Confira o sexo informado para estimar as metas.' };
+  }
+  if (!input.activity || !Object.hasOwn(ACTIVITY, input.activity)) {
+    return { ok: false, reason: 'Confira o nível de atividade informado.' };
+  }
+  if (!input.goalType || !['lose', 'maintain', 'gain'].includes(input.goalType)) {
+    return { ok: false, reason: 'Confira o objetivo informado.' };
+  }
+  if (!input.macroPreset || !Object.hasOwn(PRESETS, input.macroPreset)) {
+    return { ok: false, reason: 'Confira a distribuição de macronutrientes.' };
+  }
+  if (input.weeklyRateKg !== null && input.weeklyRateKg !== undefined && !Number.isFinite(input.weeklyRateKg)) {
+    return { ok: false, reason: 'Confira o ritmo semanal escolhido.' };
+  }
+
   const sex = input.sex as Sex;
   const age = ageFromBirth(input.birthDate as string, today);
   if (!Number.isFinite(age) || age < 0 || age > 120) return { ok: false, reason: 'Confira a data de nascimento.' };
@@ -115,11 +131,11 @@ export function estimate(input: EstimateInput, today: string): Estimate {
   if (!Number.isFinite(height) || height < 50 || height > 260) {
     return { ok: false, reason: 'Confira a altura (entre 50 e 260 cm).' };
   }
-  if (!ACTIVITY[input.activity as Activity] || !PRESETS[input.macroPreset]) {
-    return { ok: false, reason: 'Confira o nível de atividade e a distribuição de macronutrientes.' };
-  }
   const bmr = 10 * weight + 6.25 * height - 5 * age + (sex === 'male' ? 5 : -161);
   const tdee = bmr * ACTIVITY[input.activity as Activity].factor;
+  if (!Number.isFinite(bmr) || !Number.isFinite(tdee) || bmr <= 0 || tdee <= 0) {
+    return { ok: false, reason: 'Não foi possível calcular metas confiáveis com esses dados. Confira o perfil.' };
+  }
 
   const goal = input.goalType as GoalType;
   const rate = Math.min(1, Math.max(0.1, input.weeklyRateKg ?? (goal === 'gain' ? 0.25 : 0.5)));

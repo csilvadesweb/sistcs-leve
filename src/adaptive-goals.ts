@@ -10,6 +10,12 @@ export interface AdaptiveProgressInsight {
   message: string;
 }
 
+function isValidDate(value: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const parsed = new Date(`${value}T00:00:00.000Z`);
+  return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+}
+
 function shiftDate(date: string, days: number): string {
   const value = new Date(`${date}T12:00:00Z`);
   value.setUTCDate(value.getUTCDate() + days);
@@ -27,20 +33,39 @@ export function analyzeAdaptiveProgress(
   calorieGoal: number | null,
   today: string,
 ): AdaptiveProgressInsight | null {
-  if (!goalType || !/^\d{4}-\d{2}-\d{2}$/.test(today)) return null;
+  if (!goalType || !['lose', 'maintain', 'gain'].includes(goalType) || !isValidDate(today)) return null;
   const start = shiftDate(today, -27);
   const split = shiftDate(today, -13);
-  const recentWeights = weights.filter((entry) => entry.date >= split && entry.date <= today);
-  const priorWeights = weights.filter((entry) => entry.date >= start && entry.date < split);
+  const validWeights = weights.filter((entry) =>
+    isValidDate(entry.date) && Number.isFinite(entry.weightKg) && entry.weightKg >= 20 && entry.weightKg <= 400
+  );
+  // Aggregate multiple weigh-ins per day so one busy day cannot dominate the trend.
+  const dailyWeights = new Map<string, number[]>();
+  for (const entry of validWeights) {
+    const day = dailyWeights.get(entry.date) ?? [];
+    day.push(entry.weightKg);
+    dailyWeights.set(entry.date, day);
+  }
+  const byDay = [...dailyWeights.entries()].map(([date, values]) => ({
+    date,
+    weightKg: values.reduce((sum, value) => sum + value, 0) / values.length,
+  }));
+  const recentWeights = byDay.filter((entry) => entry.date >= split && entry.date <= today);
+  const priorWeights = byDay.filter((entry) => entry.date >= start && entry.date < split);
   if (recentWeights.length < 3 || priorWeights.length < 3) return null;
 
-  const entriesInRange = foodEntries.filter((entry) => entry.date >= start && entry.date <= today);
+  const entriesInRange = foodEntries.filter((entry) =>
+    isValidDate(entry.date) &&
+    entry.date >= start && entry.date <= today &&
+    Number.isFinite(entry.quantity) && entry.quantity > 0 &&
+    Number.isFinite(entry.nutrientsPerPortion?.calories) && entry.nutrientsPerPortion.calories >= 0
+  );
   const priorEntries = entriesInRange.filter((entry) => entry.date < split);
   const recentEntries = entriesInRange.filter((entry) => entry.date >= split);
   const uniqueDays = (entries: FoodEntry[]) => new Set(entries.map((entry) => entry.date)).size;
   if (uniqueDays(priorEntries) < 5 || uniqueDays(recentEntries) < 5) return null;
 
-  const averageWeight = (entries: WeightEntry[]) => entries.reduce((sum, entry) => sum + entry.weightKg, 0) / entries.length;
+  const averageWeight = (entries: { weightKg: number }[]) => entries.reduce((sum, entry) => sum + entry.weightKg, 0) / entries.length;
   const weightChangeKg = averageWeight(recentWeights) - averageWeight(priorWeights);
   const dailyCalories = (entries: FoodEntry[]) => {
     const totals = new Map<string, number>();

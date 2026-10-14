@@ -544,6 +544,14 @@ export function foodSourceLabel(food: FoodPer100): string {
   return food.sourceUrl ? 'Estimativa com referência externa a conferir' : 'Estimativa nutricional caseira';
 }
 
+export function foodSourceUrl(food: FoodPer100): string | undefined {
+  if (food.sourceUrl) return food.sourceUrl;
+  if (food.origin === 'local') return 'https://www.nepa.unicamp.br/taco/';
+  if (food.origin === 'usda') return 'https://fdc.nal.usda.gov/';
+  if (food.origin === 'off') return 'https://world.openfoodfacts.org/';
+  return undefined;
+}
+
 export function foodConfidence(food: FoodPer100): { level: 'alta' | 'média' | 'baixa'; explanation: string } {
   if (food.origin === 'local') return { level: 'média', explanation: 'Fonte publicada identificada; a cópia do catálogo ainda deve ser conferida com a tabela original, e o preparo real pode diferir.' };
   if (food.origin === 'usda') return { level: 'média', explanation: 'Referência internacional genérica; confira se o alimento e o preparo correspondem.' };

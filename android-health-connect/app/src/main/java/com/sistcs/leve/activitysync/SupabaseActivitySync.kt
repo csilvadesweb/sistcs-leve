@@ -69,6 +69,25 @@ class SupabaseActivitySync {
         return rows.length()
     }
 
+    /** O GoTrue responde com `msg`/`error_code`; a API REST usa `message`. Traduz os casos comuns de login. */
+    private fun friendlyError(code: Int, text: String): String {
+        val json = runCatching { JSONObject(text) }.getOrNull()
+        val errorCode = json?.optString("error_code").orEmpty()
+        val raw = listOf("msg", "message", "error_description", "error")
+            .map { json?.optString(it).orEmpty() }
+            .firstOrNull { it.isNotBlank() }
+            .orEmpty()
+        return when {
+            errorCode == "invalid_credentials" || raw.contains("Invalid login credentials", ignoreCase = true) ->
+                "E-mail ou senha incorretos. Use o mesmo e-mail e senha com que você entra no app."
+            errorCode == "email_not_confirmed" -> "Confirme seu e-mail antes de entrar."
+            code == 429 || errorCode.contains("rate_limit") -> "Muitas tentativas. Aguarde alguns minutos e tente de novo."
+            code in 500..599 -> "Serviço de conta indisponível no momento (HTTP $code). Tente de novo em instantes."
+            raw.isNotBlank() -> "$raw (HTTP $code)"
+            else -> "Falha no serviço de conta (HTTP $code)."
+        }
+    }
+
     private fun request(
         path: String,
         method: String,
@@ -108,8 +127,7 @@ class SupabaseActivitySync {
             val stream = if (code in 200..299) connection.inputStream else connection.errorStream
             val text = stream?.bufferedReader(Charsets.UTF_8)?.use { it.readText() }.orEmpty()
             if (code !in 200..299) {
-                val message = runCatching { JSONObject(text).optString("message") }.getOrNull().orEmpty()
-                throw IllegalStateException(message.ifBlank { "Falha no serviço de conta (HTTP $code)." })
+                throw IllegalStateException(friendlyError(code, text))
             }
             return if (text.isBlank()) JSONObject() else JSONObject(text)
         } finally {

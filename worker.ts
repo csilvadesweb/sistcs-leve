@@ -215,7 +215,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
       fiber: safeNumber(goals.fiber),
     };
     const loggedMeals = safeNumber(context.loggedMeals);
-    if (typeof context.date === "string" && /^\\d{4}-\\d{2}-\\d{2}$/.test(context.date)) {
+    if (typeof context.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(context.date)) {
       diaryContextText = "Resumo diário agregado autorizado (não contém nomes de alimentos): " + JSON.stringify({
         date: context.date, loggedMeals, totals: safeTotals, goals: safeGoals,
       });

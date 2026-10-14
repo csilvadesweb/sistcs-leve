@@ -31,7 +31,13 @@ jobs:
           gradle-version: '8.11.1'
       - name: Compilar APK assinado
         working-directory: android-twa
-        run: gradle --no-daemon assembleRelease
+        run: |
+          if ! gradle --no-daemon assembleRelease > build.log 2>&1; then
+            MSG=$(grep -E -A6 "What went wrong|error:|Error:|FAILED" build.log | head -20 | tr '\n' ' ' | cut -c1-900)
+            echo "::error title=Gradle falhou::$MSG"
+            tail -30 build.log
+            exit 1
+          fi
       - name: Mostrar fingerprint da assinatura
         run: |
           APK=$(ls android-twa/app/build/outputs/apk/release/*.apk | head -1)

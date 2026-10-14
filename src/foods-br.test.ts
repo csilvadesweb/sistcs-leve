@@ -132,7 +132,7 @@ describe('Cobertura de preparações brasileiras estimadas', () => {
 
   it('mantém valores numéricos válidos e medidas caseiras nas preparações estimadas', () => {
     const additions = FOODS_BR.filter((food) => food.code?.startsWith('estimate-br-'));
-    expect(additions).toHaveLength(12);
+    expect(additions).toHaveLength(28);
     for (const food of additions) {
       expect([food.kcal, food.protein, food.carbs, food.fat, food.fiber].every((n) => Number.isFinite(n) && n >= 0)).toBe(true);
       expect(food.units?.length).toBeGreaterThan(0);
@@ -161,7 +161,7 @@ describe('catálogo prioritário brasileiro e transparência', () => {
     const taco = FOODS_BR.find((food) => food.code === 'taco-3')!;
     const estimate = FOODS_BR.find((food) => food.code === 'estimate-br-marmita-caseira')!;
     expect(foodSourceLabel(taco)).toContain('TACO');
-    expect(foodConfidence(taco).level).toBe('alta');
+    expect(foodConfidence(taco).level).toBe('média');
     expect(foodSourceLabel(estimate)).toContain('Estimativa');
     expect(foodConfidence(estimate).level).toBe('baixa');
     expect(foodConfidence(estimate).explanation).toMatch(/receita/i);

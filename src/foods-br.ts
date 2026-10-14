@@ -130,8 +130,34 @@ const BRAZILIAN_ESTIMATES: FoodPer100[] = [
   { name: 'Pastel frito (estimativa caseira)', kcal: 380, protein: 8, carbs: 40, fat: 20, fiber: 1, origin: 'estimate', code: 'estimate-br-pastel-frito', units: [['unidade média', 50]] },
 ];
 
+/**
+ * Preparações brasileiras frequentes ausentes da referência genérica.
+ * Valores são estimativas por 100 g, não rótulos nem análises laboratoriais.
+ * Receitas, óleo, açúcar e acompanhamentos mudam bastante os nutrientes.
+ */
+const BRAZILIAN_ESTIMATES_MORE: FoodPer100[] = [
+  { name: 'Açaí puro, polpa sem açúcar (estimativa)', kcal: 70, protein: 1.5, carbs: 4, fat: 5, fiber: 2, origin: 'estimate', code: 'estimate-br-acai-puro', units: [['tigela pequena', 200], ['porção', 100]] },
+  { name: 'Açaí na tigela com banana e granola (estimativa)', kcal: 160, protein: 3, carbs: 29, fat: 4, fiber: 4, origin: 'estimate', code: 'estimate-br-acai-banana-granola', units: [['tigela média', 300], ['tigela pequena', 200]] },
+  { name: 'Marmita caseira de arroz, feijão, frango e salada (estimativa)', kcal: 145, protein: 10, carbs: 18, fat: 3, fiber: 2, origin: 'estimate', code: 'estimate-br-marmita-caseira', units: [['marmita média', 450], ['marmita pequena', 350]] },
+  { name: 'Marmita fitness de frango, batata-doce e legumes (estimativa)', kcal: 120, protein: 12, carbs: 12, fat: 2, fiber: 2.5, origin: 'estimate', code: 'estimate-br-marmita-fitness', units: [['marmita média', 350], ['marmita grande', 450]] },
+  { name: 'Cuscuz nordestino de milho cozido (estimativa)', kcal: 112, protein: 2.5, carbs: 25, fat: 0.5, fiber: 2, origin: 'estimate', code: 'estimate-br-cuscuz-nordestino', units: [['fatia média', 100], ['xícara', 160]] },
+  { name: 'Baião de dois (estimativa caseira)', kcal: 150, protein: 6, carbs: 23, fat: 4, fiber: 3, origin: 'estimate', code: 'estimate-br-baiao-dois', units: [['concha média', 160], ['porção', 200]] },
+  { name: 'Acarajé sem recheio (estimativa)', kcal: 300, protein: 7, carbs: 30, fat: 17, fiber: 5, origin: 'estimate', code: 'estimate-br-acaraje', units: [['unidade média', 100]] },
+  { name: 'Vatapá (estimativa caseira)', kcal: 220, protein: 8, carbs: 18, fat: 13, fiber: 2, origin: 'estimate', code: 'estimate-br-vatapa', units: [['concha média', 150], ['porção', 100]] },
+  { name: 'Tacacá (estimativa caseira)', kcal: 55, protein: 3, carbs: 8, fat: 1, fiber: 1, origin: 'estimate', code: 'estimate-br-tacaca', units: [['cuia média', 400]] },
+  { name: 'Galinhada (estimativa caseira)', kcal: 155, protein: 11, carbs: 19, fat: 4, fiber: 1, origin: 'estimate', code: 'estimate-br-galinhada', units: [['concha grande', 180], ['porção', 250]] },
+  { name: 'Arroz carreteiro (estimativa caseira)', kcal: 175, protein: 8, carbs: 23, fat: 6, fiber: 1, origin: 'estimate', code: 'estimate-br-arroz-carreteiro', units: [['concha grande', 180], ['porção', 250]] },
+  { name: 'Barreado (estimativa caseira)', kcal: 160, protein: 17, carbs: 5, fat: 8, fiber: 0.5, origin: 'estimate', code: 'estimate-br-barreado', units: [['concha média', 150], ['porção', 200]] },
+  { name: 'Mandioca cozida (estimativa de referência)', kcal: 125, protein: 1, carbs: 30, fat: 0.3, fiber: 1.5, origin: 'estimate', code: 'estimate-br-mandioca-cozida', units: [['pedaço médio', 80], ['porção', 100]] },
+  { name: 'Tapioca com queijo coalho (estimativa)', kcal: 285, protein: 7, carbs: 45, fat: 8, fiber: 0.5, origin: 'estimate', code: 'estimate-br-tapioca-queijo-coalho', units: [['unidade média', 120]] },
+  { name: 'Omelete com queijo (estimativa caseira)', kcal: 190, protein: 13, carbs: 2, fat: 14, fiber: 0, origin: 'estimate', code: 'estimate-br-omelete-queijo', units: [['omelete de 2 ovos', 130]] },
+  { name: 'Iogurte proteico genérico (estimativa; conferir rótulo)', kcal: 70, protein: 10, carbs: 5, fat: 1, fiber: 0, origin: 'estimate', code: 'estimate-br-iogurte-proteico', units: [['pote', 160]] },
+];
+
+
 export const FOODS_BR: FoodPer100[] = [
   ...BRAZILIAN_ESTIMATES,
+  ...BRAZILIAN_ESTIMATES_MORE,
   ...[...TACO, ...EXTRA].map(([id, name, kcal, protein, carbs, fat, fiber]) => ({
   name,
   kcal,

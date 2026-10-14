@@ -165,7 +165,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (url.pathname !== "/api/ai/chat") return withCors(json({ error: "Rota não encontrada." }, 404));
   if (request.method !== "POST") return withCors(json({ error: "Método não permitido." }, 405));
   if (!(await authenticatedUser(request, env))) return withCors(json({ error: "Entre na sua conta para usar o assistente." }, 401));
-  let payload: { message?: unknown; history?: unknown };
+  let payload: { message?: unknown; history?: unknown; diaryContext?: unknown };
   try {
     payload = await request.json() as typeof payload;
   } catch {
@@ -191,12 +191,44 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
     })
     : [];
 
+  let diaryContextText = "";
+  if (payload.diaryContext && typeof payload.diaryContext === "object") {
+    const context = payload.diaryContext as {
+      date?: unknown; loggedMeals?: unknown;
+      totals?: Record<string, unknown>; goals?: Record<string, unknown> | null;
+    };
+    const safeNumber = (value: unknown) => typeof value === "number" && Number.isFinite(value) && value >= 0 && value <= 100000 ? value : null;
+    const totals = context.totals && typeof context.totals === "object" ? context.totals : {};
+    const goals = context.goals && typeof context.goals === "object" ? context.goals : {};
+    const safeTotals = {
+      calories: safeNumber(totals.calories),
+      proteins: safeNumber(totals.proteins),
+      carbohydrates: safeNumber(totals.carbohydrates),
+      fats: safeNumber(totals.fats),
+      fiber: safeNumber(totals.fiber),
+    };
+    const safeGoals = {
+      calories: safeNumber(goals.calories),
+      proteins: safeNumber(goals.proteins),
+      carbohydrates: safeNumber(goals.carbohydrates),
+      fats: safeNumber(goals.fats),
+      fiber: safeNumber(goals.fiber),
+    };
+    const loggedMeals = safeNumber(context.loggedMeals);
+    if (typeof context.date === "string" && /^\\d{4}-\\d{2}-\\d{2}$/.test(context.date)) {
+      diaryContextText = "Resumo diário agregado autorizado (não contém nomes de alimentos): " + JSON.stringify({
+        date: context.date, loggedMeals, totals: safeTotals, goals: safeGoals,
+      });
+    }
+  }
+
   const prompt = [
     "Você é o Assistente de Alimentação do SISTCS Leve. Responda em português brasileiro, com empatia, clareza e concisão.",
     "Ajude com ideias de refeições, receitas, substituições e educação alimentar geral. Não diagnostique, não prescreva tratamentos, medicamentos, dietas clínicas ou metas calóricas individuais.",
     "Não afirme que valores nutricionais estimados são exatos. Para calorias e nutrientes, oriente a pessoa a confirmar os alimentos e porções na base nutricional do aplicativo.",
     "Em gravidez, transtornos alimentares, doenças, alergias graves ou sintomas preocupantes, recomende orientação de profissional de saúde. Não solicite nome completo, documentos, endereço ou outros dados pessoais.",
     "A resposta é educativa e não substitui nutricionista ou médico.",
+    "Se houver um resumo diário agregado autorizado, use-o apenas para contextualizar sugestões. Não deduza diagnósticos, não trate metas como prescrição clínica e deixe claro quando faltarem dados.",
   ].join("\n");
 
   try {
@@ -206,7 +238,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
       headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: prompt }] },
-        contents: [...history, { role: "user", parts: [{ text: payload.message.trim() }] }],
+        contents: [...history, { role: "user", parts: [{ text: payload.message.trim() }, ...(diaryContextText ? [{ text: diaryContextText }] : [])] }],
         generationConfig: { temperature: 0.6, maxOutputTokens: 700 },
       }),
     });

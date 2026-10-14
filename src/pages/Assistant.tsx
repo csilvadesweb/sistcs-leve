@@ -71,7 +71,7 @@ export function Assistant() {
       if (!response.ok || !result.answer) throw new Error(result.error || 'Não foi possível obter uma resposta.');
       setMessages([...next, { role: 'model', text: result.answer }]);
     } catch (error) {
-      setNotice(error instanceof Error ? error.message : 'Não foi possível conectar ao assistente.');
+      setNotice(error instanceof Error ? error.message : 'Não foi possível conectar ao Coach de IA.');
     } finally {
       setBusy(false);
       inputRef.current?.focus();
@@ -88,12 +88,12 @@ export function Assistant() {
       <div className="page-heading">
         <div>
           <p className="eyebrow">SEU APOIO DIÁRIO</p>
-          <h1>Assistente inteligente</h1>
+          <h1>Coach de IA</h1>
           <p className="page-description">Ideias práticas para sua alimentação, receitas e escolhas do dia a dia.</p>
         </div>
       </div>
 
-      <section className="ai-hero" aria-label="Assistente do SISTCS Leve">
+      <section className="ai-hero" aria-label="Coach de IA do SISTCS Leve">
         <div className="ai-hero-icon"><Sparkles size={25} aria-hidden="true" /></div>
         <div className="ai-hero-copy">
           <span className="ai-kicker">SISTCS LEVE · IA</span>
@@ -105,10 +105,10 @@ export function Assistant() {
 
       {aiAvailable === false && <p className="ai-setup-note" role="status">A tela do assistente está pronta, mas a chave segura do Gemini ainda precisa ser configurada na Cloudflare. Nenhuma outra função do aplicativo depende dessa configuração.</p>}
 
-      <section className="ai-chat-card" aria-label="Conversa com o assistente">
+      <section className="ai-chat-card" aria-label="Conversa com o Coach de IA">
         <div className="ai-chat-heading">
           <span className="ai-avatar"><Bot size={21} aria-hidden="true" /></span>
-          <div><strong>Assistente de alimentação</strong><p>Português brasileiro · respostas objetivas</p></div>
+          <div><strong>Coach de IA</strong><p>Português brasileiro · respostas objetivas</p></div>
           <button className="ai-reset" type="button" onClick={() => { setMessages([]); setNotice(''); }} disabled={busy} aria-label="Limpar conversa" title="Limpar conversa"><RotateCcw size={17} /></button>
         </div>
         <div className="ai-messages" aria-live="polite" aria-busy={busy}>

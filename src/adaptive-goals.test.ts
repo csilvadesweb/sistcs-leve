@@ -28,7 +28,7 @@ describe('analyzeAdaptiveProgress', () => {
       weight('2026-10-02', 80), weight('2026-10-05', 80.1), weight('2026-10-09', 79.9),
       weight('2026-10-17', 80), weight('2026-10-21', 80.1), weight('2026-10-26', 80),
     ];
-    const foods = Array.from({ length: 14 }, (_, index) => food(`2026-10-${String(index + 1).padStart(2, '0')}`));
+    const foods = Array.from({ length: 28 }, (_, index) => food(`2026-10-${String(index + 1).padStart(2, '0')}`));
     const result = analyzeAdaptiveProgress(weights, foods, 'lose', 1800, '2026-10-28');
     expect(result?.kind).toBe('review');
     expect(result?.calorieGoal).toBe(1800);

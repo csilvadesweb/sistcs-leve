@@ -164,7 +164,13 @@ export function InstallCard() {
             <button
               type="button"
               className="btn btn-default btn-md"
-              onClick={async () => setMsg((await install()) ? 'App instalado.' : 'Instalação cancelada.')}
+              onClick={async () => {
+                try {
+                  setMsg((await install()) ? 'App instalado.' : 'Instalação não concluída. Use o menu do navegador para tentar novamente.');
+                } catch {
+                  setMsg('O navegador não conseguiu iniciar a instalação. Use o menu do navegador e escolha “Instalar app” ou “Adicionar à tela inicial”.');
+                }
+              }}
             >
               Instalar app
             </button>

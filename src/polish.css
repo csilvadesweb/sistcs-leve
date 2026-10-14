@@ -60,3 +60,18 @@
 .recipe-card .recipe-add-button:disabled { opacity: .6; box-shadow: none; cursor: progress; }
 .recipe-nutrients div { align-content: start; }
 .recipe-favorite-button { background: transparent; }
+
+/* --- Constância e resumo semanal --- */
+.insight-card { display: grid; gap: 16px; padding: 20px; border: 1px solid var(--line-soft); border-radius: 22px; background: var(--surface); box-shadow: var(--shadow); }
+.insight-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.insight-head h2 { margin: 0; font-size: 20px; }
+.insight-streak { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; background: var(--surface-2); color: var(--text-3); font-size: 14px; font-weight: 700; }
+.insight-streak.is-on { background: rgba(214, 120, 20, .12); color: #a35a0a; }
+.insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+.insight-grid div { display: grid; gap: 3px; padding: 12px 14px; border: 1px solid var(--line-soft); border-radius: 14px; background: var(--surface-2); }
+.insight-grid strong { font-size: 22px; font-variant-numeric: tabular-nums; }
+.insight-grid small { font-size: 13px; font-weight: 600; color: var(--text-3); }
+.insight-grid span { color: var(--text-3); font-size: 13px; }
+.insight-badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.insight-badges li { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border: 1px dashed var(--line); border-radius: 999px; color: var(--text-3); font-size: 13px; font-weight: 650; }
+.insight-badges li.is-earned { border-style: solid; border-color: rgba(31, 154, 82, .4); background: rgba(31, 154, 82, .08); color: var(--leaf-2, #17803f); }

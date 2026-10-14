@@ -38,14 +38,18 @@ export function PrivacyPolicy() {
           Facts. Nenhum dado de identificação seu é enviado nessa busca.
         </p>
 
-        <h2>6. Assistente de inteligência artificial (opcional)</h2>
+        <h2>6. Recursos de inteligência artificial (opcionais)</h2>
         <p>
-          Se você escolher usar o Assistente IA, o texto da pergunta e um trecho limitado da conversa são enviados ao Google
-          Gemini para gerar a resposta. Não enviamos automaticamente seu perfil, diário alimentar, peso, medicamentos, fotos
-          ou demais registros do aplicativo. Não inclua nome, contato, documentos ou detalhes de saúde que identifiquem você.
-          O serviço gratuito do Gemini pode usar o conteúdo enviado para melhorar os produtos do Google, conforme os termos
-          vigentes do Google AI Studio. Você pode simplesmente não usar esse recurso; as outras funções do aplicativo continuam
-          disponíveis. A IA fornece informação educativa, não diagnóstico nem tratamento.
+          Se você usar o Coach de IA, o texto da pergunta e um trecho limitado da conversa são enviados ao Google Gemini para
+          gerar a resposta. Se você usar a leitura de rótulo ou a estimativa por foto do prato, a imagem escolhida por você é
+          enviada ao Gemini para análise; nós não guardamos a imagem, e os valores sugeridos só entram no diário depois que
+          você confere e confirma. Somente se você ativar “Usar meu resumo alimentar de hoje”, enviamos também números
+          agregados do dia (calorias, macronutrientes, metas e quantidade de lançamentos), sem nomes de alimentos. Não enviamos
+          automaticamente seu perfil, peso, medicamentos, fotos de progresso ou demais registros. Não inclua nome, contato,
+          documentos, rostos ou detalhes de saúde que identifiquem você nas perguntas e nas fotos. O serviço gratuito do Gemini
+          pode usar o conteúdo enviado para melhorar os produtos do Google, conforme os termos vigentes do Google AI Studio.
+          Há um limite diário de usos por conta. Você pode simplesmente não usar esses recursos; as outras funções do
+          aplicativo continuam disponíveis. A IA fornece informação educativa, não diagnóstico nem tratamento.
         </p>
 
         <h2>7. Seus direitos</h2>

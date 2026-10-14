@@ -1,9 +1,10 @@
 import { Link } from 'wouter';
-import { Apple, ChevronRight, Droplets, Pill, Scale, Sprout } from 'lucide-react';
+import { Apple, ChevronRight, Droplets, Flame, Pill, Scale, Sprout, Trophy } from 'lucide-react';
 import { useAppData } from '../session';
 import { calculateFoodNutrientTotals, weightSummary } from '../data';
 import { decimalText, todayInSaoPaulo } from '../ui';
 import { WaterReminders } from '../WaterReminders';
+import { achievements, loggingStreak, weeklySummary } from '../insights';
 
 function leftText(goal: number, total: number, unit: string) {
   const diff = goal - total;
@@ -50,6 +51,9 @@ export function Home() {
   const takenToday = new Set(data.medicationLogs.filter((l) => l.date === today).map((l) => `${l.medicationId}|${l.time}`));
   const dosesDone = doses.filter((d) => takenToday.has(d)).length;
 
+  const streak = loggingStreak(data.foodEntries, today);
+  const week = weeklySummary(data.foodEntries, goals, today);
+  const badges = achievements(data.foodEntries, today);
   const configured = Boolean(profile?.sex && profile.birthDate && profile.heightCm && profile.activity && profile.goalType);
   const hasGoals = goals && Object.values(goals).some((v) => v !== null);
   const name = profile?.displayName?.trim();
@@ -139,6 +143,26 @@ export function Home() {
         </div>
         {!hasGoals && <p className="ft-cup-note">Você ainda não definiu metas. <Link href="/perfil">Defina no Perfil</Link> para ver quanto falta em cada dia.</p>}
       </section>
+
+      {data.foodEntries.length > 0 && (
+        <section className="insight-card" aria-labelledby="insight-title">
+          <div className="insight-head">
+            <div><p className="ft-kicker">SUA SEMANA</p><h2 id="insight-title">Constância e resumo</h2></div>
+            <span className={`insight-streak${streak > 0 ? ' is-on' : ''}`}><Flame size={16} aria-hidden="true" /> {streak} {streak === 1 ? 'dia seguido' : 'dias seguidos'}</span>
+          </div>
+          <div className="insight-grid">
+            <div><strong>{week.daysLogged}<small> / 7</small></strong><span>dias com registro</span></div>
+            <div><strong>{week.avgCalories !== null ? decimalText(week.avgCalories) : '—'}<small> kcal</small></strong><span>média por dia registrado</span></div>
+            <div><strong>{week.avgProteins !== null ? decimalText(week.avgProteins) : '—'}<small> g</small></strong><span>proteína média</span></div>
+            {week.proteinDaysHit !== null && <div><strong>{week.proteinDaysHit}<small> dias</small></strong><span>com a meta de proteína</span></div>}
+          </div>
+          <ul className="insight-badges" aria-label="Conquistas">
+            {badges.map((b) => (
+              <li key={b.id} className={b.earned ? 'is-earned' : ''} title={b.hint}><Trophy size={14} aria-hidden="true" /> {b.label}</li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section className="mini-grid" aria-label="Água, peso e medicamentos">
         <Link href="/alimentacao" className="mini-card">

@@ -536,6 +536,30 @@ export async function searchOpenFoodFactsPage(query: string, page = 1, signal?: 
 export async function searchOpenFoodFacts(query: string, signal?: AbortSignal): Promise<FoodPer100[]> {
   return (await searchOpenFoodFactsPage(query, 1, signal)).foods;
 }
+/** Origem exibível e grau de confiança para transparência nutricional. */
+export function foodSourceLabel(food: FoodPer100): string {
+  if (food.origin === 'local') return 'TACO · NEPA/UNICAMP';
+  if (food.origin === 'usda') return 'USDA FoodData Central / SR Legacy via TempoLife';
+  if (food.origin === 'off') return 'Open Food Facts · base colaborativa';
+  return food.sourceUrl ? 'Estimativa com referência externa a conferir' : 'Estimativa nutricional caseira';
+}
+
+export function foodConfidence(food: FoodPer100): { level: 'alta' | 'média' | 'baixa'; explanation: string } {
+  if (food.origin === 'local') return { level: 'alta', explanation: 'Referência publicada identificada; o preparo real pode diferir.' };
+  if (food.origin === 'usda') return { level: 'média', explanation: 'Referência internacional genérica; confira se o alimento e o preparo correspondem.' };
+  if (food.origin === 'off') return { level: 'média', explanation: 'Registro colaborativo; confira marca, variante e tabela do rótulo.' };
+  return { level: 'baixa', explanation: 'Valor aproximado; receita, porção e ingredientes podem alterar os nutrientes.' };
+}
+
+function canonicalBarcode(value: string): string {
+  return value.replace(/\\D/g, '').replace(/^0+(?=\\d)/, '');
+}
+function barcodeMatches(expected: string, returned: string): boolean {
+  const a = canonicalBarcode(expected);
+  const b = canonicalBarcode(returned);
+  return Boolean(a && b && a === b);
+}
+
 /** Normaliza entrada de leitores/cópia antes de limitar o campo visual a 14 dígitos. */
 export function normalizeBarcodeInput(raw: string): string {
   return raw.replace(/\D/g, '').slice(0, 14);
@@ -552,7 +576,11 @@ export async function lookupBarcode(code: string, signal?: AbortSignal): Promise
   if (res.status === 404) return null;
   if (!res.ok) throw new Error('A consulta de código de barras está indisponível agora.');
   const json = await res.json();
-  return json.status === 1 ? fromOff({ ...json.product, code: normalizedCode }) : null;
+  if (json.status !== 1 || !json.product) return null;
+  const returnedCode = String(json.product.code ?? '');
+  // Nunca associar os nutrientes de um produto a outro código por resposta inesperada da API.
+  if (!barcodeMatches(normalizedCode, returnedCode)) return null;
+  return fromOff(json.product);
 }
 
 export function scale(f: FoodPer100, grams: number) {

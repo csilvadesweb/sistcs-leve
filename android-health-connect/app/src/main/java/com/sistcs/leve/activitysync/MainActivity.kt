@@ -140,6 +140,7 @@ class MainActivity : ComponentActivity() {
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
     private fun signInAndConnect() {
+        if (!connectButton.isEnabled) return
         connectButton.isEnabled = false
         status.text = "Autenticando sua conta…"
         lifecycleScope.launch {

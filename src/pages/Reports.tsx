@@ -44,6 +44,12 @@ export function Reports() {
   const withinGoal = kcalGoal === null ? null : loggedDays.filter((d) => d.totals.calories <= kcalGoal).length;
   const waterGoalDays = waterGoal === null ? null : waterDays.filter((d) => d.water >= waterGoal).length;
   const proteinGoalDays = proteinGoal === null ? null : loggedDays.filter((d) => d.totals.proteins >= proteinGoal).length;
+  let currentRun = 0;
+  let longestRun = 0;
+  for (const day of perDay) {
+    currentRun = day.logged ? currentRun + 1 : 0;
+    longestRun = Math.max(longestRun, currentRun);
+  }
 
   const weightInRange = data.weightEntries.filter((w) => w.date >= days[0] && w.date <= days[days.length - 1]);
   const { first: wFirst, latest: wLatest } = weightSummary(weightInRange);
@@ -51,6 +57,7 @@ export function Reports() {
 
   const stats = [
     { label: 'Dias com alimentos', value: `${loggedDays.length} de ${range}`, note: 'dias com ao menos um registro' },
+    { label: 'Maior sequência de registros', value: `${longestRun} dia${longestRun === 1 ? '' : 's'}`, note: `maior sequência nos últimos ${range} dias` },
     { label: 'Calorias de exercício', value: data.exerciseTrackingAvailable ? `${decimalText(exerciseCalories)} kcal` : '—', note: data.exerciseTrackingAvailable ? `${exerciseMinutes} min ativos · estimativa` : 'ative o diário de exercícios' },
     {
       label: 'Média de calorias',

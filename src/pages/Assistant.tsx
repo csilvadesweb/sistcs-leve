@@ -1,6 +1,9 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { Bot, Send, Sparkles, UserRound, RotateCcw, ShieldCheck } from 'lucide-react';
 import { supabase } from '../supabase';
+import { useAppData } from '../session';
+import { calculateFoodNutrientTotals } from '../data';
+import { todayInSaoPaulo } from '../ui';
 import './assistant.css';
 
 type Message = { role: 'user' | 'model'; text: string };
@@ -17,6 +20,8 @@ export function Assistant() {
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
   const [aiAvailable, setAiAvailable] = useState<boolean | null>(null);
+  const [includeDiaryContext, setIncludeDiaryContext] = useState(false);
+  const { data: appData } = useAppData();
   const endRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -44,7 +49,23 @@ export function Assistant() {
       const response = await fetch('/api/ai/chat', {
         method: 'POST',
         headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
-        body: JSON.stringify({ message, history: messages.slice(-8) }),
+        body: JSON.stringify({
+          message,
+          history: messages.slice(-8),
+          ...(includeDiaryContext ? {
+            diaryContext: (() => {
+              const today = todayInSaoPaulo();
+              const entries = appData.foodEntries.filter((entry) => entry.date === today);
+              const totals = calculateFoodNutrientTotals(entries);
+              return {
+                date: today,
+                totals,
+                goals: appData.profile?.goals ?? null,
+                loggedMeals: entries.length,
+              };
+            })(),
+          } : {}),
+        }),
       });
       const result = await response.json() as { answer?: string; error?: string };
       if (!response.ok || !result.answer) throw new Error(result.error || 'Não foi possível obter uma resposta.');
@@ -116,6 +137,10 @@ export function Assistant() {
           <textarea id="ai-message" ref={inputRef} value={draft} onChange={(event) => setDraft(event.target.value)} maxLength={4000} rows={2} placeholder="Ex.: me ajude a montar um jantar simples…" disabled={busy} />
           <button type="submit" disabled={busy || !draft.trim()} aria-label="Enviar pergunta"><Send size={18} aria-hidden="true" /><span>Enviar</span></button>
         </form>
+        <label style={{ display: 'flex', alignItems: 'flex-start', gap: 9, padding: '12px 14px', fontSize: 13, lineHeight: 1.45 }}>
+          <input type="checkbox" checked={includeDiaryContext} onChange={(event) => setIncludeDiaryContext(event.target.checked)} />
+          <span><strong>Usar meu resumo alimentar de hoje</strong><br />Se ativado, envia apenas totais agregados de calorias, nutrientes, metas e quantidade de lançamentos — não nomes de alimentos nem histórico completo. Desativado por padrão.</span>
+        </label>
         <p className="ai-privacy"><ShieldCheck size={15} aria-hidden="true" /> Não envie dados pessoais. Evite compartilhar informações de saúde identificáveis.</p>
       </section>
       <p className="ai-disclaimer">Informação educativa, não é diagnóstico nem substitui orientação de nutricionista ou médico. Valores nutricionais devem ser confirmados na base do aplicativo.</p>

@@ -296,6 +296,9 @@ const ALIASES: Record<string, string> = {
   mucarela: 'mussarela', mozarela: 'mussarela', muzzarela: 'mussarela', mingnon: 'mignon',
   coca: 'refrigerante cola', pepsi: 'refrigerante cola', guarana: 'refrigerante guarana',
   frango: 'frango', bolacha: 'biscoito', macaxeira: 'mandioca', aipim: 'mandioca', pao: 'pao',
+  // Grafias correntes no Brasil para a mesma preparação; normalização já remove acentos.
+  strogonofe: 'strogonoff', estrogonofe: 'strogonoff', estrogonoff: 'strogonoff',
+  bovino: 'carne', bovina: 'carne',
 };
 
 export function searchLocal(query: string, limit = 8): FoodPer100[] {

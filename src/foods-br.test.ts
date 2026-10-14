@@ -96,6 +96,10 @@ describe('searchLocal — catálogo TACO', () => {
     expect(searchLocal('strogonofe de carne')).toContainEqual(expect.objectContaining({ code: 'recipe-strogonoff-carne' }));
     expect(searchLocal('estrogonoff bovino')).toContainEqual(expect.objectContaining({ code: 'recipe-strogonoff-carne' }));
     expect(searchLocal('estrogonoff carne bovina')).toContainEqual(expect.objectContaining({ code: 'recipe-strogonoff-carne' }));
+    expect(searchLocal('strogonoff de carne', 20).filter((food) => /strogonoff|estrogonof/i.test(food.name))).toEqual([
+      expect.objectContaining({ code: 'recipe-strogonoff-carne', name: 'Strogonoff de carne bovina (estimativa caseira)' }),
+    ]);
+    expect(searchLocal('strogonoff de frango', 20)).not.toContainEqual(expect.objectContaining({ code: 'recipe-strogonoff-carne' }));
   });
 
   it('fornece medidas caseiras úteis para alimentos de referência sem porções cadastradas', async () => {

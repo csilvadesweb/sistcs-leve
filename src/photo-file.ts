@@ -5,5 +5,5 @@ const SUPPORTED_IMAGE_EXTENSIONS = /\.(?:jpe?g|png|webp)$/i;
 export function isSupportedPhotoFile(file: { type?: string | null; name?: string | null }): boolean {
   const type = (file.type ?? '').toLowerCase();
   if (SUPPORTED_IMAGE_MIMES.has(type)) return true;
-  return type === '' && SUPPORTED_IMAGE_EXTENSIONS.test(file.name ?? '');
+  return (type === '' || type === 'application/octet-stream') && SUPPORTED_IMAGE_EXTENSIONS.test(file.name ?? '');
 }

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
-import { gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { foodConfidence, foodSourceLabel, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 export interface PickedFood {
   name: string;
@@ -289,9 +289,10 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
     <li key={key} className="fs-row">
       <div>
         <strong>{f.name}</strong>
-        <span>{f.brand ? `${f.brand} · ` : ''}{decimalText(f.kcal)} kcal por {f.basis === '100ml' ? '100 ml' : '100 g'}{f.origin === 'usda' ? ' · USDA (referência)' : ''}</span>
-        {f.origin === 'usda' && <a href={f.sourceUrl ?? 'https://tempolife.app/'} target="_blank" rel="noreferrer">Fonte: USDA via TempoLife</a>}
-        {f.origin === 'off' && <a href={f.sourceUrl ?? 'https://world.openfoodfacts.org/'} target="_blank" rel="noreferrer">Fonte: Open Food Facts · licença ODbL / DCL</a>}
+        <span>{f.brand ? `${f.brand} · ` : ''}{decimalText(f.kcal)} kcal por {f.basis === '100ml' ? '100 ml' : '100 g'}</span>
+        <span>Fonte: {foodSourceLabel(f)} · Confiança {foodConfidence(f).level}</span>
+        <small>{foodConfidence(f).explanation}</small>
+        {(f.origin === 'usda' || f.origin === 'off') && <a href={f.sourceUrl ?? (f.origin === 'usda' ? 'https://fdc.nal.usda.gov/' : 'https://world.openfoodfacts.org/')} target="_blank" rel="noreferrer">Consultar registro de origem</a>}
       </div>
       <Button variant="outline" size="sm" onClick={() => choose(f)}>Usar</Button>
     </li>
@@ -334,9 +335,10 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           <div className="fs-selected-top">
             <div>
               <strong>{food.name}</strong>
-              <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por 100 g{food.origin === 'local' ? ' · fonte: TACO (Unicamp)' : food.origin === 'estimate' ? ' · estimativa nutricional (valor aproximado)' : food.origin === 'usda' ? ' · USDA SR Legacy via TempoLife (referência internacional)' : ''}</span>
-              {food.origin === 'usda' && <a href={food.sourceUrl ?? 'https://tempolife.app/'} target="_blank" rel="noreferrer">Fonte dos nutrientes: USDA SR Legacy via TempoLife</a>}
-              {food.origin === 'off' && <a href={food.sourceUrl ?? 'https://world.openfoodfacts.org/'} target="_blank" rel="noreferrer">Fonte do produto: Open Food Facts · licença ODbL / DCL</a>}
+              <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por {food.basis === '100ml' ? '100 ml' : '100 g'}</span>
+              <span>Fonte: {foodSourceLabel(food)} · Confiança {foodConfidence(food).level}</span>
+              <small>{foodConfidence(food).explanation}</small>
+              {(food.origin === 'usda' || food.origin === 'off') && <a href={food.sourceUrl ?? (food.origin === 'usda' ? 'https://fdc.nal.usda.gov/' : 'https://world.openfoodfacts.org/')} target="_blank" rel="noreferrer">Consultar registro de origem</a>}
             </div>
           </div>
           {food.origin === 'off' && <section className="fs-nutrition-details" aria-label="Tabela nutricional por 100 gramas">

@@ -1,0 +1,10 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.sistcs.leve",
+      "sha256_cert_fingerprints": ["44:EC:F0:A5:43:E8:54:AC:83:1D:A3:19:F1:CE:56:E1:AF:EA:41:A9:B9:E8:E6:92:F3:87:34:02:8E:0D:E2:E1"]
+    }
+  }
+]

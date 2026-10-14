@@ -54,4 +54,12 @@ test.describe('telas públicas', () => {
     expect((await manifest.json()).name).toBeTruthy();
     expect((await request.get('/sw.js')).ok()).toBe(true);
   });
+
+  test('assetlinks.json do app Android é servido', async ({ request }) => {
+    const res = await request.get('/.well-known/assetlinks.json');
+    expect(res.ok()).toBe(true);
+    const links = await res.json();
+    expect(links[0].target.package_name).toBe('com.sistcs.leve');
+    expect(links[0].target.sha256_cert_fingerprints[0]).toMatch(/^([0-9A-F]{2}:){31}[0-9A-F]{2}$/);
+  });
 });

@@ -19,6 +19,8 @@ describe('parseQuery — linguagem natural de porções', () => {
     ['2 ovos', { name: 'ovos', amount: 2, unit: null }],
     ['150 g de arroz', { name: 'arroz', amount: 150, unit: 'g' }],
     ['1 colher de sopa de azeite', { name: 'azeite', amount: 1, unit: 'colher de sopa' }],
+    ['1 colher de sobremesa de azeite', { name: 'azeite', amount: 1, unit: 'colher de sobremesa' }],
+    ['2 colheres de sobremesa de pasta de amendoim', { name: 'pasta de amendoim', amount: 2, unit: 'colher de sobremesa' }],
     ['1,5 kg de batata', { name: 'batata', amount: 1.5, unit: 'kg' }],
   ])('interpreta %s sem perder quantidade ou alimento', (input, expected) => {
     expect(parseQuery(input)).toEqual(expected);
@@ -36,6 +38,10 @@ describe('gramsFor — conversão de porções', () => {
 
   it('converte medida caseira usando a medida específica do alimento', () => {
     expect(gramsFor(sample, parseQuery('2 colheres de sopa de alimento')).grams).toBe(40);
+  });
+
+  it('converte colher de sobremesa sem transformar a palavra em parte do alimento', () => {
+    expect(gramsFor(sample, parseQuery('2 colheres de sobremesa de alimento')).grams).toBe(20);
   });
 
   it('usa a primeira medida cadastrada quando só há quantidade e nome', () => {
@@ -165,6 +171,9 @@ describe('catálogo prioritário brasileiro e transparência', () => {
     expect(foodSourceLabel(estimate)).toContain('Estimativa');
     expect(foodConfidence(estimate).level).toBe('baixa');
     expect(foodConfidence(estimate).explanation).toMatch(/receita/i);
+    const collaborative: FoodPer100 = { ...taco, origin: 'off', code: '7890000000000' };
+    expect(foodConfidence(collaborative).level).toBe('baixa');
+    expect(foodConfidence(collaborative).explanation).toMatch(/colaborativo/i);
   });
 
   it('mantém dados de marmitas e preparações novas como estimativas com porção', () => {

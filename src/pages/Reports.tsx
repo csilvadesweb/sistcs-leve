@@ -3,6 +3,7 @@ import { ChartNoAxesCombined } from 'lucide-react';
 import { Link } from 'wouter';
 import { useAppData } from '../session';
 import { calculateFoodNutrientTotals, lastDays, weightSummary } from '../data';
+import { analyzeAdaptiveProgress } from '../adaptive-goals';
 import { BarChart, WeightChart } from '../charts';
 import { decimalText, formatDate, todayInSaoPaulo } from '../ui';
 
@@ -53,6 +54,16 @@ export function Reports() {
 
   const weightInRange = data.weightEntries.filter((w) => w.date >= days[0] && w.date <= days[days.length - 1]);
   const { first: wFirst, latest: wLatest } = weightSummary(weightInRange);
+  const adaptiveInsight = useMemo(
+    () => analyzeAdaptiveProgress(
+      data.weightEntries,
+      data.foodEntries,
+      data.profile?.goalType,
+      goals?.calories ?? null,
+      today,
+    ),
+    [data.weightEntries, data.foodEntries, data.profile?.goalType, goals?.calories, today],
+  );
   const weightChange = wFirst && wLatest && wFirst.id !== wLatest.id ? wLatest.weightKg - wFirst.weightKg : null;
 
   const stats = [
@@ -130,6 +141,20 @@ export function Reports() {
           </div>
         ))}
       </section>
+      {adaptiveInsight && (
+        <section className="ft-card" aria-labelledby="adaptive-progress-title" style={{ marginTop: 16 }}>
+          <p className="ft-kicker">ACOMPANHAMENTO ADAPTATIVO</p>
+          <h2 className="rep-title" id="adaptive-progress-title">
+            {adaptiveInsight.kind === 'review' ? 'Vale revisar seus registros' : adaptiveInsight.kind === 'stable' ? 'Tendência de peso estável' : 'Tendência acompanhando o objetivo'}
+          </h2>
+          <p>{adaptiveInsight.message}</p>
+          <p className="ft-explainer" style={{ marginLeft: 0 }}>
+            Variação entre médias de peso: {adaptiveInsight.weightChangeKg > 0 ? '+' : ''}{decimalText(adaptiveInsight.weightChangeKg)} kg · média registrada: {decimalText(adaptiveInsight.averageCalories)} kcal/dia · {adaptiveInsight.loggedDays} dias com alimentação registrada.
+            {adaptiveInsight.calorieGoal !== null ? ` Meta atual: ${decimalText(adaptiveInsight.calorieGoal)} kcal/dia.` : ''}
+          </p>
+          <p className="ft-explainer" style={{ marginLeft: 0 }}>Insight estimado com base nos registros disponíveis. Nenhuma meta é alterada automaticamente; procure um profissional para orientação individual.</p>
+        </section>
+      )}
 
       </div>}
       {activeReportTab === 'food' && <div id="report-panel-food" role="tabpanel">

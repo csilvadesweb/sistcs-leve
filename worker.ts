@@ -155,6 +155,89 @@ async function handleLabelScan(request: Request, env: Env): Promise<Response> {
   }
 }
 
+
+/** Sugere alimentos visíveis em uma foto de prato; toda a saída é estimativa e exige confirmação. */
+async function handleMealPhoto(request: Request, env: Env): Promise<Response> {
+  if (request.method !== "POST") return withCors(json({ error: "Método não permitido." }, 405));
+  if (!(await authenticatedUser(request, env))) return withCors(json({ error: "Entre na sua conta para analisar a foto do prato." }, 401));
+  if (!env.GEMINI_API_KEY) return withCors(json({ error: "A análise de foto ainda não está configurada." }, 503));
+
+  let payload: { mimeType?: unknown; imageBase64?: unknown };
+  try {
+    payload = await request.json() as typeof payload;
+  } catch {
+    return withCors(json({ error: "Envie uma imagem válida." }, 400));
+  }
+  const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
+  if (typeof payload.mimeType !== "string" || !allowedTypes.has(payload.mimeType)) {
+    return withCors(json({ error: "Use uma imagem JPG, PNG ou WebP." }, 400));
+  }
+  if (typeof payload.imageBase64 !== "string" || !/^[A-Za-z0-9+/]+={0,2}$/.test(payload.imageBase64)) {
+    return withCors(json({ error: "A imagem enviada não é válida." }, 400));
+  }
+  if (payload.imageBase64.length > 5_600_000) return withCors(json({ error: "A imagem deve ter no máximo 4 MB." }, 413));
+
+  const quota = await consumeQuota(request, env);
+  if (quota === "limit") return withCors(json({ error: "Você atingiu o limite diário de 30 usos de IA. Volte amanhã." }, 429));
+  if (quota === "error") return withCors(json({ error: "Não foi possível verificar seu limite de IA. Tente novamente." }, 503));
+
+  const prompt = [
+    "Você ajuda a estimar os alimentos visíveis em uma foto de prato para um diário alimentar brasileiro.",
+    "Identifique somente alimentos que pareçam visíveis. Não afirme certeza se a imagem estiver ambígua. Não estime marcas nem nutrientes exatos.",
+    "Retorne somente um objeto JSON com a propriedade items. Cada item deve ter name, grams, calories, proteins, carbohydrates, fats, fiber e confidence.",
+    "Inclua de 1 a 6 itens. grams é a porção estimada em gramas; calorias e nutrientes são estimativas para essa porção, não por 100 g. Se não conseguir identificar nada, retorne uma lista items vazia.",
+    "Use confidence high, medium ou low. Nunca ofereça orientação médica, não deduza doenças e não sugira que a estimativa seja exata.",
+  ].join(" ");
+
+  try {
+    const model = (env.GEMINI_MODEL || "gemini-3.5-flash-lite").trim();
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+      body: JSON.stringify({
+        contents: [{ role: "user", parts: [
+          { text: prompt },
+          { inlineData: { mimeType: payload.mimeType, data: payload.imageBase64 } },
+        ] }],
+        generationConfig: { temperature: 0.2, maxOutputTokens: 700, responseMimeType: "application/json" },
+      }),
+    });
+    if (!response.ok) {
+      if (response.status === 429) return withCors(json({ error: "O limite gratuito da IA foi atingido por enquanto. Tente mais tarde." }, 429));
+      console.warn("SISTCS Leve meal photo provider status", { httpStatus: response.status });
+      return withCors(json({ error: "Não foi possível analisar a foto agora. Tente uma imagem mais nítida." }, 502));
+    }
+    const result = await response.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> };
+    const raw = result.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("").trim() || "";
+    let parsed: { items?: unknown };
+    try {
+      parsed = JSON.parse(raw) as { items?: unknown };
+    } catch {
+      return withCors(json({ error: "A foto não gerou uma estimativa legível. Tente novamente." }, 422));
+    }
+    const sourceItems = Array.isArray(parsed.items) ? parsed.items.slice(0, 6) : [];
+    const numeric = (value: unknown, max: number) =>
+      typeof value === "number" && Number.isFinite(value) && value >= 0 && value <= max ? value : null;
+    const items = sourceItems.flatMap((value) => {
+      if (!value || typeof value !== "object") return [];
+      const item = value as Record<string, unknown>;
+      const name = typeof item.name === "string" ? item.name.trim().slice(0, 120) : "";
+      const grams = numeric(item.grams, 2000);
+      const calories = numeric(item.calories, 10000);
+      const proteins = numeric(item.proteins, 1000);
+      const carbohydrates = numeric(item.carbohydrates, 1000);
+      const fats = numeric(item.fats, 1000);
+      const fiber = numeric(item.fiber, 1000);
+      if (!name || grams === null || grams <= 0 || calories === null || proteins === null || carbohydrates === null || fats === null || fiber === null) return [];
+      const confidence = item.confidence === "high" || item.confidence === "medium" ? item.confidence : "low";
+      return [{ name, grams, calories, proteins, carbohydrates, fats, fiber, confidence }];
+    });
+    return withCors(json({ items }));
+  } catch {
+    return withCors(json({ error: "Não foi possível conectar à análise de foto. Verifique a conexão e tente novamente." }, 502));
+  }
+}
+
 async function handleApi(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
   if (request.method === "OPTIONS") return withCors(new Response(null, { status: 204 }));
@@ -162,6 +245,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
     return withCors(json({ available: Boolean(env.GEMINI_API_KEY), model: env.GEMINI_MODEL || "gemini-3.5-flash-lite" }));
   }
   if (url.pathname === "/api/ai/label") return handleLabelScan(request, env);
+  if (url.pathname === "/api/ai/meal-photo") return handleMealPhoto(request, env);
   if (url.pathname !== "/api/ai/chat") return withCors(json({ error: "Rota não encontrada." }, 404));
   if (request.method !== "POST") return withCors(json({ error: "Método não permitido." }, 405));
   if (!(await authenticatedUser(request, env))) return withCors(json({ error: "Entre na sua conta para usar o assistente." }, 401));

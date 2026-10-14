@@ -74,7 +74,8 @@ export function NutritionLabelScanner({ onPick }: { onPick: (food: PickedFood) =
     if (!preview) return;
     const values = [preview.calories, preview.proteins, preview.carbohydrates, preview.fats, preview.fiber];
     if (values.some((value) => value === null)) {
-      setNotice('Há valores ilegíveis. Preencha ou corrija os campos no formulário manual antes de salvar.');
+      setNotice('Preencha todos os valores nutricionais que faltam ou descarte a leitura. Não vou transformar um valor ilegível em zero.');
+      return;
     }
     onPick({
       name: preview.brand && !preview.name.toLocaleLowerCase('pt-BR').includes(preview.brand.toLocaleLowerCase('pt-BR'))

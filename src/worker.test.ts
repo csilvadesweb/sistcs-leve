@@ -143,3 +143,41 @@ describe('endpoint de leitura de rótulo nutricional', () => {
     expect(fetchMock).toHaveBeenCalledTimes(3);
   });
 });
+
+
+describe('endpoint de estimativa por foto do prato', () => {
+  const envWithKey = { ...env, GEMINI_API_KEY: 'gemini-test-key' } as unknown as Parameters<typeof worker.fetch>[1];
+  const mealRequest = (body: unknown) => new Request('https://leve.sistcs.com/api/ai/meal-photo', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', authorization: 'Bearer test-token' },
+    body: JSON.stringify(body),
+  });
+
+  it('recusa tipos de imagem não permitidos', async () => {
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ id: 'user-1' }), { status: 200 }));
+    vi.stubGlobal('fetch', fetchMock);
+    const response = await worker.fetch(mealRequest({ mimeType: 'image/svg+xml', imageBase64: 'YWJj' }), envWithKey);
+    expect(response.status).toBe(400);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('retorna estimativas validadas para revisão, após autenticação e quota', async () => {
+    const estimates = { items: [{
+      name: 'Arroz branco cozido', grams: 120, calories: 156, proteins: 3.2,
+      carbohydrates: 34, fats: 0.4, fiber: 1.8, confidence: 'medium',
+    }] };
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify({ id: 'user-1' }), { status: 200 }))
+      .mockResolvedValueOnce(new Response('true', { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({
+        candidates: [{ content: { parts: [{ text: JSON.stringify(estimates) }] } }],
+      }), { status: 200, headers: { 'content-type': 'application/json' } }));
+    vi.stubGlobal('fetch', fetchMock);
+    const response = await worker.fetch(mealRequest({ mimeType: 'image/jpeg', imageBase64: 'YWJj' }), envWithKey);
+    const body = await response.json() as { items?: Array<{ name: string; grams: number; calories: number }> };
+    expect(response.status).toBe(200);
+    expect(body.items).toHaveLength(1);
+    expect(body.items?.[0]).toMatchObject({ name: 'Arroz branco cozido', grams: 120, calories: 156 });
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+  });
+});

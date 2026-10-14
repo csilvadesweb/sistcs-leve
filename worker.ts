@@ -184,10 +184,10 @@ async function handleMealPhoto(request: Request, env: Env): Promise<Response> {
   const prompt = [
     "Você ajuda a estimar os alimentos visíveis em uma foto de prato para um diário alimentar brasileiro.",
     "Identifique somente alimentos que pareçam visíveis. Não afirme certeza se a imagem estiver ambígua. Não estime marcas nem nutrientes exatos.",
-    "Retorne somente JSON válido no formato {\\"items\\":[{\\"name\\":\\"nome\\" ,\\"grams\\":150,\\"calories\\":220,\\"proteins\\":12,\\"carbohydrates\\":30,\\"fats\\":6,\\"fiber\\":4,\\"confidence\\":\\"medium\\"}]}",
-    "Inclua de 1 a 6 itens. grams é a porção estimada em gramas; calorias e nutrientes são estimativas para essa porção, não por 100 g. Se não conseguir identificar nada, retorne {\\"items\\":[]}.",
+    "Retorne somente um objeto JSON com a propriedade items. Cada item deve ter name, grams, calories, proteins, carbohydrates, fats, fiber e confidence.",
+    "Inclua de 1 a 6 itens. grams é a porção estimada em gramas; calorias e nutrientes são estimativas para essa porção, não por 100 g. Se não conseguir identificar nada, retorne uma lista items vazia.",
     "Use confidence high, medium ou low. Nunca ofereça orientação médica, não deduza doenças e não sugira que a estimativa seja exata.",
-  ].join("\\n");
+  ].join(" ");
 
   try {
     const model = (env.GEMINI_MODEL || "gemini-3.5-flash-lite").trim();

@@ -609,8 +609,8 @@ export async function createMedicationEffect(input: MedicationEffectInput): Prom
     event_date: input.date,
     symptom,
     severity: input.severity,
-    started_at: input.startedAt || null,
-    resolved_at: input.resolvedAt || null,
+    started_at: input.startedAt ? new Date(input.startedAt).toISOString() : null,
+    resolved_at: input.resolvedAt ? new Date(input.resolvedAt).toISOString() : null,
     notes,
   }).select().single();
   fail(error, 'Não foi possível registrar o efeito. Confirme se a migration de histórico de efeitos foi aplicada.');

@@ -1,5 +1,6 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import { FoodSearch, type PickedFood } from '../foodsearch';
+import { NutritionLabelScanner } from '../label-scanner';
 import { Link } from 'wouter';
 import { Apple, Check, Copy, Droplets, Heart, Pencil, Plus, Save, Trash2, X } from 'lucide-react';
 import { useAppData } from '../session';
@@ -278,7 +279,7 @@ export function FoodTracking() {
       carbohydrates: decimalInputText(food.nutrients.carbohydrates),
       fats: decimalInputText(food.nutrients.fats),
       fiber: decimalInputText(food.nutrients.fiber),
-      nutritionSource: 'user-estimated',
+      nutritionSource: food.nutritionSource ?? 'user-estimated',
     }));
     setFoodErrors({});
   }
@@ -550,7 +551,7 @@ export function FoodTracking() {
                 <X aria-hidden="true" /> Fechar
               </Button>
             </div>
-            {!editingFood && <FoodSearch onPick={applyPicked} />}
+            {!editingFood && <><NutritionLabelScanner onPick={applyPicked} /><FoodSearch onPick={applyPicked} /></>}
             <div className="ft-form-grid">
               <Field id="food-date" label="Data" className="ft-field" error={foodErrors.date}>
                 <input id="food-date" className="input" type="date" value={foodForm.date} onChange={setFood('date')} />

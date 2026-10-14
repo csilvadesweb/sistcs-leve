@@ -1,7 +1,7 @@
 /* Service worker do SISTCS Leve.
  * Só guarda arquivos do próprio app (tela inicial, scripts, estilos, imagens) para abrir rápido e sem internet.
  * Nada de dados de saúde é guardado aqui: Supabase, Open Food Facts e fontes passam direto pela rede. */
-const VERSION = 'v4';
+const VERSION = 'v5';
 const SHELL = `sistcs-shell-${VERSION}`;
 const RUNTIME = `sistcs-runtime-${VERSION}`;
 const MAX_RUNTIME_ENTRIES = 80;
@@ -31,6 +31,67 @@ async function trim(cacheName, max) {
   const keys = await cache.keys();
   for (let i = 0; i < keys.length - max; i++) await cache.delete(keys[i]);
 }
+
+
+/* Push receiver: works while the installed PWA is closed once a valid server-side
+ * subscription and VAPID sender are configured. Never put health details in push text. */
+self.addEventListener('push', (event) => {
+  event.waitUntil((async () => {
+    let payload = {};
+    try {
+      if (event.data) payload = event.data.json();
+    } catch {
+      payload = { body: event.data ? event.data.text() : '' };
+    }
+    const title = typeof payload.title === 'string' && payload.title.trim()
+      ? payload.title.trim().slice(0, 80)
+      : 'SISTCS Leve';
+    const body = typeof payload.body === 'string'
+      ? payload.body.trim().slice(0, 180)
+      : 'Você tem uma notificação.';
+    const rawUrl = typeof payload.url === 'string' ? payload.url : './';
+    let url = new URL('./', self.registration.scope);
+    try {
+      const candidate = new URL(rawUrl, self.registration.scope);
+      if (candidate.origin === self.location.origin) url = candidate;
+    } catch {
+      // Invalid destinations fall back to the app home.
+    }
+    await self.registration.showNotification(title, {
+      body,
+      icon: new URL('icon-192.png', self.registration.scope).href,
+      badge: new URL('icon-192.png', self.registration.scope).href,
+      tag: typeof payload.tag === 'string' ? payload.tag.slice(0, 80) : 'sistcs-leve',
+      data: { url: url.href },
+      renotify: false,
+    });
+  })());
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  event.waitUntil((async () => {
+    const rawUrl = event.notification.data && typeof event.notification.data.url === 'string'
+      ? event.notification.data.url
+      : './';
+    let target = new URL('./', self.registration.scope);
+    try {
+      const candidate = new URL(rawUrl, self.registration.scope);
+      if (candidate.origin === self.location.origin) target = candidate;
+    } catch {
+      // Invalid destinations fall back to the app home.
+    }
+    const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    for (const client of windows) {
+      if (new URL(client.url).origin === self.location.origin) {
+        await client.navigate(target.href);
+        return client.focus();
+      }
+    }
+    if (self.clients.openWindow) return self.clients.openWindow(target.href);
+    return undefined;
+  })());
+});
 
 self.addEventListener('fetch', (event) => {
   const req = event.request;

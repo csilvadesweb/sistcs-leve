@@ -2,13 +2,16 @@ package com.sistcs.leve.activitysync
 
 import android.os.Bundle
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.ScrollView
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.health.connect.client.HealthConnectClient
@@ -54,10 +57,10 @@ class MainActivity : ComponentActivity() {
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER_HORIZONTAL
-            setPadding(40, 32, 40, 40)
+            setPadding(dp(24), dp(24), dp(24), dp(32))
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
             )
         }
         root.addView(ImageView(this).apply {
@@ -66,9 +69,9 @@ class MainActivity : ComponentActivity() {
             scaleType = ImageView.ScaleType.FIT_CENTER
             layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                (120 * resources.displayMetrics.density).toInt(),
+                dp(120),
             ).apply {
-                bottomMargin = (16 * resources.displayMetrics.density).toInt()
+                bottomMargin = dp(16)
             }
         })
         root.addView(TextView(this).apply {
@@ -80,22 +83,28 @@ class MainActivity : ComponentActivity() {
             text = "Conecte sua atividade física ao seu perfil com segurança."
             textSize = 16f
             gravity = Gravity.CENTER
-            setPadding(0, 12, 0, 12)
+            setPadding(0, dp(12), 0, dp(12))
         })
         emailInput = EditText(this).apply {
             hint = "E-mail da conta SISTCS"
+            contentDescription = "E-mail da conta SISTCS"
             inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            imeOptions = EditorInfo.IME_ACTION_NEXT
+            setAutofillHints(View.AUTOFILL_HINT_EMAIL_ADDRESS)
             setSingleLine(true)
         }
         passwordInput = EditText(this).apply {
             hint = "Senha da conta"
+            contentDescription = "Senha da conta SISTCS"
             inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            imeOptions = EditorInfo.IME_ACTION_DONE
+            setAutofillHints(View.AUTOFILL_HINT_PASSWORD)
             setSingleLine(true)
         }
         status = TextView(this).apply {
             text = "A conexão solicita apenas leitura de passos e sessões de exercício."
             textSize = 16f
-            setPadding(0, 20, 0, 12)
+            setPadding(0, dp(20), 0, dp(12))
         }
         details = TextView(this).apply {
             text = "Os dados são enviados à sua conta com a sessão autenticada. Nenhuma chave administrativa é usada."
@@ -110,8 +119,25 @@ class MainActivity : ComponentActivity() {
         root.addView(status)
         root.addView(details)
         root.addView(connectButton)
-        setContentView(root)
+        passwordInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                signInAndConnect()
+                true
+            } else {
+                false
+            }
+        }
+        // Scrollable content keeps the connect action reachable on compact screens and with the keyboard open.
+        setContentView(ScrollView(this).apply {
+            isFillViewport = true
+            addView(root, ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+            ))
+        })
     }
+
+    private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
     private fun signInAndConnect() {
         connectButton.isEnabled = false

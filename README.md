@@ -11,12 +11,12 @@ Consulte `docs/FOOD_DATA_SOURCES_AND_LICENSES.md` antes de importar, redistribui
 
 - **Início:** resumo de hoje (calorias com anel de progresso, nutrientes, água, peso, doses) e atalho para configurar.
 - **Exercícios:** diário de atividades, duração e estimativa aproximada de calorias gastas por MET e peso corporal. Requer a migration aditiva `supabase/migrations/20261012195153_exercise_entries.sql`. A migration ainda não foi aplicada em produção; não execute `db push` até reconciliar o histórico de migrations documentado em `docs/SUPABASE_MIGRATION_AUDIT_2026-10-12.md`.
-- **Alimentação:** busca local de alimentos e preparações brasileiras, produtos embalados do Open Food Facts e referências USDA SR Legacy via TempoLife (priorizar registros com licença pública explícita e atribuição; nomes podem aparecer em inglês), leitura de código de barras pela câmera (Chrome/Android; nos outros navegadores, digite o número), lançamentos por refeição, favoritos, total do dia e **quanto falta (ou passou) para cada meta**; água com meta e copo. Os valores aproximados são identificados como estimativas.
+- **Alimentação:** busca local de alimentos e preparações brasileiras, produtos embalados do Open Food Facts e referências USDA SR Legacy via TempoLife (priorizar registros com licença pública explícita e atribuição; nomes podem aparecer em inglês), leitura de código de barras pela câmera (Chrome/Android; nos outros navegadores, digite o número), lançamentos por refeição, favoritos, total do dia e **quanto falta (ou passou) para cada meta**; água com meta e copo. Os valores aproximados são identificados como estimativas. A foto do prato pode sugerir alimentos e porções estimadas; cada item precisa ser selecionado e revisado antes de salvar. A foto da tabela nutricional tenta transcrever valores do rótulo para revisão manual.
 - **Registros:** peso com gráfico, variação e progresso até o peso desejado.
 - **Registros também tem Antes e depois:** envio de fotos (antes, durante, depois), comparação lado a lado com dias e variação de peso, e galeria.
 - **Jejum:** protocolos 12:12 a 20:4 (ou 12 a 24 h), cronômetro com início e término, horas jejuadas, fase estimada, histórico, estatísticas e benefícios com avisos de saúde. Não é indicado para menores de 18 anos.
 - **Medicamentos:** cadastro com horários e marcação das doses de cada dia.
-- **Relatórios:** últimos 7, 14 ou 30 dias (calorias, água, peso, médias e dias dentro da meta).
+- **Relatórios:** últimos 7, 14 ou 30 dias (calorias, água, peso, médias e dias dentro da meta). Inclui a maior sequência de dias com registro e a comparação dos dias que atingiram a meta de proteína. Um insight de tendência do peso só aparece com dados suficientes; ele não altera metas automaticamente.
 - **Perfil:** foto de perfil (recortada em quadrado), dados pessoais, objetivo, estimativa de metas, metas manuais, exportar JSON, importar dados antigos, sair e apagar tudo.
 
 ## Configuração personalizada

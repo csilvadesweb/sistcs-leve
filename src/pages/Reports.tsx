@@ -116,6 +116,43 @@ export function Reports() {
       {loadError && <p className="ft-feedback ft-feedback-error" role="alert">{loadError}</p>}
       {loading && <p className="ft-feedback" role="status">Carregando seus registros…</p>}
 
+      <section className="ft-card nutritionist-print-report" aria-labelledby="nutritionist-report-title">
+        <div className="ft-row-between">
+          <div>
+            <p className="ft-kicker">RESUMO PARA ACOMPANHAMENTO</p>
+            <h2 className="rep-title" id="nutritionist-report-title">Resumo para compartilhar com seu nutricionista</h2>
+          </div>
+          <button type="button" className="btn btn-primary" onClick={() => window.print()} aria-label="Imprimir ou salvar resumo em PDF">
+            Imprimir / salvar PDF
+          </button>
+        </div>
+        <p className="ft-explainer" style={{ marginLeft: 0 }}>
+          {data.profile?.displayName ? `Pessoa: ${data.profile.displayName} · ` : ''}Período: {formatDate(days[0])} a {formatDate(days[days.length - 1])}. Este resumo contém apenas registros do aplicativo e pode ser salvo localmente como PDF pelo navegador.
+        </p>
+        <div className="nutritionist-report-metrics">
+          <div><span>Dias com alimentação</span><strong>{loggedDays.length} de {range}</strong></div>
+          <div><span>Média de calorias nos dias registrados</span><strong>{loggedDays.length ? `${decimalText(Math.round(average(loggedDays.map((d) => d.totals.calories))))} kcal/dia` : 'Sem dados'}</strong></div>
+          <div><span>Média de proteínas nos dias registrados</span><strong>{loggedDays.length ? `${decimalText(Math.round(average(loggedDays.map((d) => d.totals.proteins))))} g/dia` : 'Sem dados'}</strong></div>
+          <div><span>Dias que atingiram a meta de proteína</span><strong>{proteinGoalDays === null ? 'Meta não definida' : `${proteinGoalDays} de ${loggedDays.length} dias registrados`}</strong></div>
+          <div><span>Média de água nos dias com registro</span><strong>{waterDays.length ? `${decimalText(Math.round(average(waterDays.map((d) => d.water))))} ml/dia` : 'Sem dados'}</strong></div>
+          <div><span>Variação do peso no período</span><strong>{weightChange === null ? 'Sem dados suficientes' : `${weightChange > 0 ? '+' : ''}${decimalText(weightChange)} kg`}</strong></div>
+        </div>
+        <h3 className="rep-title">Resumo diário</h3>
+        <div className="nutritionist-report-table-wrap">
+          <table className="nutritionist-report-table">
+            <thead><tr><th>Data</th><th>Calorias</th><th>Proteína</th><th>Água</th><th>Exercício</th></tr></thead>
+            <tbody>{perDay.map((day) => <tr key={day.date}>
+              <td>{formatDate(day.date)}</td>
+              <td>{day.logged ? `${Math.round(day.totals.calories)} kcal` : '—'}</td>
+              <td>{day.logged ? `${decimalText(day.totals.proteins)} g` : '—'}</td>
+              <td>{day.water > 0 ? `${Math.round(day.water)} ml` : '—'}</td>
+              <td>{day.exerciseCount > 0 ? `${day.exerciseMinutes} min` : '—'}</td>
+            </tr>)}</tbody>
+          </table>
+        </div>
+        <p className="ft-privacy-note">Relatório gerado no dispositivo a pedido do usuário. Não é enviado automaticamente a ninguém e não substitui avaliação clínica.</p>
+      </section>
+
       <div className="seg" role="group" aria-label="Período">
         {RANGES.map((r) => (
           <button key={r} type="button" className={r === range ? 'is-on' : ''} aria-pressed={r === range} onClick={() => setRange(r)}>

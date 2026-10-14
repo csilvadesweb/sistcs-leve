@@ -1,5 +1,5 @@
 # Backup semanal do banco (o Supabase Free não faz backup restaurável).
-# Requer o secret SUPABASE_DB_URL (Settings > Database > Connection string, modo Session pooler).
+# Requer o secret SUPABASE_DB_URL: a connection string do Session pooler (IPv4) do Supabase, com a senha do banco.
 # O arquivo fica como artefato privado do GitHub por 30 dias. Sem o secret, o job só avisa e termina.
 name: backup
 on:
@@ -18,7 +18,13 @@ jobs:
       - name: Dump
         if: env.DB_URL != ''
         run: |
-          sudo apt-get install -y -qq postgresql-client >/dev/null
+          # O banco é Postgres 17: o pg_dump precisa ser da mesma versão (ou maior).
+          sudo install -d /usr/share/postgresql-common/pgdg
+          sudo curl -fsSL -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc https://www.postgresql.org/media/keys/ACCC4CF8.asc
+          echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list >/dev/null
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client-17 >/dev/null
+          pg_dump --version
           pg_dump "$DB_URL" --no-owner --no-privileges --schema=public -Fc -f backup.dump
       - uses: actions/upload-artifact@v4
         if: env.DB_URL != ''

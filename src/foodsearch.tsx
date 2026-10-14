@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
-import { foodConfidence, foodSourceLabel, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { foodConfidence, foodSourceLabel, foodSourceUrl, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 export interface PickedFood {
   name: string;
@@ -292,7 +292,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
         <span>{f.brand ? `${f.brand} · ` : ''}{decimalText(f.kcal)} kcal por {f.basis === '100ml' ? '100 ml' : '100 g'}</span>
         <span>Fonte: {foodSourceLabel(f)} · Confiança {foodConfidence(f).level}</span>
         <small>{foodConfidence(f).explanation}</small>
-        {(f.origin === 'usda' || f.origin === 'off') && <a href={f.sourceUrl ?? (f.origin === 'usda' ? 'https://fdc.nal.usda.gov/' : 'https://world.openfoodfacts.org/')} target="_blank" rel="noreferrer">Consultar registro de origem</a>}
+        {foodSourceUrl(f) && <a href={foodSourceUrl(f)} target="_blank" rel="noreferrer">Consultar fonte</a>}
       </div>
       <Button variant="outline" size="sm" onClick={() => choose(f)}>Usar</Button>
     </li>
@@ -338,7 +338,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
               <span>{food.brand ? `${food.brand} · ` : ''}{decimalText(food.kcal)} kcal por {food.basis === '100ml' ? '100 ml' : '100 g'}</span>
               <span>Fonte: {foodSourceLabel(food)} · Confiança {foodConfidence(food).level}</span>
               <small>{foodConfidence(food).explanation}</small>
-              {(food.origin === 'usda' || food.origin === 'off') && <a href={food.sourceUrl ?? (food.origin === 'usda' ? 'https://fdc.nal.usda.gov/' : 'https://world.openfoodfacts.org/')} target="_blank" rel="noreferrer">Consultar registro de origem</a>}
+              {foodSourceUrl(food) && <a href={foodSourceUrl(food)} target="_blank" rel="noreferrer">Consultar fonte</a>}
             </div>
           </div>
           {food.origin === 'off' && <section className="fs-nutrition-details" aria-label="Tabela nutricional por 100 gramas">

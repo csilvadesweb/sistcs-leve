@@ -37,7 +37,7 @@ describe('analyzeAdaptiveProgress', () => {
   it('ignora pesos e registros alimentares incompletos ou não finitos', () => {
     const weights = [
       weight('2026-10-02', 80), weight('2026-10-05', 80.1), weight('2026-10-09', 79.9),
-      weight('2026-10-17', 80), weight('2026-10-21', Number.NaN), weight('2026-10-26', 80),
+      weight('2026-10-17', 80), weight('2026-10-21', Number.NaN), weight('2026-10-24', 80), weight('2026-10-26', 80),
       weight('2026-10-27', 999), weight('2026-99-99', 70),
     ];
     const foods = Array.from({ length: 28 }, (_, index) => food(`2026-10-${String(index + 1).padStart(2, '0')}`));

@@ -2,6 +2,7 @@ import { useRef, useState, type ChangeEvent } from 'react';
 import { Camera, LoaderCircle, ScanText } from 'lucide-react';
 import { supabase } from './supabase';
 import type { PickedFood } from './foodsearch';
+import { hasCompleteNonNegativeNutrition } from './photo-nutrition';
 
 type LabelResult = {
   name: string;
@@ -73,8 +74,16 @@ export function NutritionLabelScanner({ onPick }: { onPick: (food: PickedFood) =
   function useResult() {
     if (!preview) return;
     const values = [preview.calories, preview.proteins, preview.carbohydrates, preview.fats, preview.fiber];
-    if (values.some((value) => value === null)) {
-      setNotice('Preencha todos os valores nutricionais que faltam ou descarte a leitura. Não vou transformar um valor ilegível em zero.');
+    if (!hasCompleteNonNegativeNutrition(values)) {
+      setNotice('Preencha todos os valores com números válidos e não negativos, ou descarte a leitura. Não vou transformar um valor ilegível em zero.');
+      return;
+    }
+    if (typeof preview.name !== 'string' || !preview.name.trim()) {
+      setNotice('Informe o nome do alimento reconhecido antes de transferir os valores.');
+      return;
+    }
+    if (preview.basis !== '100g' && preview.basis !== '100ml') {
+      setNotice('A base nutricional não foi reconhecida. Confira o rótulo antes de continuar.');
       return;
     }
     onPick({

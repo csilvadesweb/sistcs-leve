@@ -2,22 +2,14 @@ import { useState, type ChangeEvent } from 'react';
 import { Camera, ScanLine } from 'lucide-react';
 import { supabase } from './supabase';
 import type { PickedFood } from './foodsearch';
+import { normalizeMealPhotoEstimates, type MealPhotoEstimate } from './photo-nutrition';
 
-type MealEstimate = {
-  name: string;
-  grams: number;
-  calories: number;
-  proteins: number;
-  carbohydrates: number;
-  fats: number;
-  fiber: number;
-  confidence: 'high' | 'medium' | 'low';
-};
+
 
 export function MealPhotoScanner({ onPick }: { onPick: (food: PickedFood) => void }) {
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
-  const [items, setItems] = useState<MealEstimate[]>([]);
+  const [items, setItems] = useState<MealPhotoEstimate[]>([]);
 
   async function analyze(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -54,12 +46,9 @@ export function MealPhotoScanner({ onPick }: { onPick: (food: PickedFood) => voi
         headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
         body: JSON.stringify({ mimeType: file.type, imageBase64 }),
       });
-      const body = await response.json() as { items?: MealEstimate[]; error?: string };
+      const body = await response.json() as { items?: unknown; error?: string };
       if (!response.ok) throw new Error(body.error || 'Não foi possível analisar a foto.');
-      const valid = Array.isArray(body.items) ? body.items.filter((item) =>
-        item && typeof item.name === 'string' && Number.isFinite(item.grams) && item.grams > 0 &&
-        ['calories', 'proteins', 'carbohydrates', 'fats', 'fiber'].every((key) => Number.isFinite(item[key as keyof MealEstimate])),
-      ) : [];
+      const valid = normalizeMealPhotoEstimates(body.items);
       setItems(valid);
       setNotice(valid.length ? 'Estimativas geradas. Escolha um item e revise os valores antes de salvar.' : 'Não consegui identificar itens com confiança suficiente. Tente outra foto ou use a busca.');
     } catch (error) {

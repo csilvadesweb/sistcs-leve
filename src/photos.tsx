@@ -1,32 +1,80 @@
 import { useEffect, useRef, useState } from 'react';
 import { UserRound } from 'lucide-react';
 import { signedPhotoUrl } from './data';
+import { isSupportedPhotoFile } from './photo-file';
+
+type DecodedPhoto = {
+  source: CanvasImageSource;
+  width: number;
+  height: number;
+  close: () => void;
+};
+
+async function decodePhoto(file: File): Promise<DecodedPhoto> {
+  if (typeof createImageBitmap === 'function') {
+    try {
+      const bitmap = await createImageBitmap(file);
+      return { source: bitmap, width: bitmap.width, height: bitmap.height, close: () => bitmap.close() };
+    } catch {
+      // Older mobile browsers and some gallery providers need the HTMLImageElement fallback below.
+    }
+  }
+
+  const url = URL.createObjectURL(file);
+  try {
+    const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const element = new Image();
+      element.onload = () => resolve(element);
+      element.onerror = () => reject(new Error('O navegador não conseguiu abrir esta foto. Tente uma imagem JPG, PNG ou WebP.'));
+      element.src = url;
+    });
+    if (!image.naturalWidth || !image.naturalHeight) {
+      throw new Error('A foto não contém uma imagem que o navegador consiga ler.');
+    }
+    return {
+      source: image,
+      width: image.naturalWidth,
+      height: image.naturalHeight,
+      close: () => URL.revokeObjectURL(url),
+    };
+  } catch (error) {
+    URL.revokeObjectURL(url);
+    throw error;
+  }
+}
 
 /** Reduz e converte a imagem para JPEG no navegador (economiza espaço e remove metadados como o GPS). */
 export async function resizeImage(file: File, maxSide: number, square = false): Promise<Blob> {
-  if (!/^image\/(jpeg|png|webp)$/.test(file.type)) throw new Error('Use uma imagem JPG, PNG ou WebP.');
-  if (file.size > 15 * 1024 * 1024) throw new Error('A imagem é grande demais. Escolha uma de até 15 MB.');
-  const bitmap = await createImageBitmap(file);
-  let sx = 0, sy = 0, sw = bitmap.width, sh = bitmap.height;
-  if (square) {
-    const side = Math.min(bitmap.width, bitmap.height);
-    sx = (bitmap.width - side) / 2;
-    sy = (bitmap.height - side) / 2;
-    sw = sh = side;
+  if (!isSupportedPhotoFile(file)) throw new Error('Use uma imagem JPG, PNG ou WebP.');
+  if (!Number.isFinite(file.size) || file.size <= 0 || file.size > 15 * 1024 * 1024) {
+    throw new Error('A imagem deve ter até 15 MB e não pode estar vazia.');
   }
-  const scale = Math.min(1, maxSide / Math.max(sw, sh));
-  const w = Math.max(1, Math.round(sw * scale));
-  const h = Math.max(1, Math.round(sh * scale));
-  const canvas = document.createElement('canvas');
-  canvas.width = w;
-  canvas.height = h;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('Seu navegador não conseguiu processar a imagem.');
-  ctx.drawImage(bitmap, sx, sy, sw, sh, 0, 0, w, h);
-  bitmap.close?.();
-  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.85));
-  if (!blob) throw new Error('Não foi possível preparar a imagem.');
-  return blob;
+  if (!Number.isFinite(maxSide) || maxSide < 1) throw new Error('O tamanho da imagem não é válido.');
+
+  const decoded = await decodePhoto(file);
+  try {
+    let sx = 0, sy = 0, sw = decoded.width, sh = decoded.height;
+    if (square) {
+      const side = Math.min(decoded.width, decoded.height);
+      sx = (decoded.width - side) / 2;
+      sy = (decoded.height - side) / 2;
+      sw = sh = side;
+    }
+    const scale = Math.min(1, maxSide / Math.max(sw, sh));
+    const w = Math.max(1, Math.round(sw * scale));
+    const h = Math.max(1, Math.round(sh * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('Seu navegador não conseguiu processar a imagem.');
+    ctx.drawImage(decoded.source, sx, sy, sw, sh, 0, 0, w, h);
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.85));
+    if (!blob) throw new Error('Não foi possível preparar a imagem.');
+    return blob;
+  } finally {
+    decoded.close();
+  }
 }
 
 /** Link temporário (1 hora) para uma imagem do Storage privado. */

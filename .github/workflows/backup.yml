@@ -25,7 +25,14 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq postgresql-client-17 >/dev/null
           pg_dump --version
-          pg_dump "$DB_URL" --no-owner --no-privileges --schema=public -Fc -f backup.dump
+          HOSTPORT=$(echo "$DB_URL" | sed -E 's#^[a-z]+://[^@]*@([^/?]*).*#\1#')
+          USERPART=$(echo "$DB_URL" | sed -E 's#^[a-z]+://([^:@]*).*#\1#')
+          echo "host:porta=$HOSTPORT usuario=$USERPART"
+          if ! pg_dump "$DB_URL" --no-owner --no-privileges --schema=public -Fc -f backup.dump 2> dump.err; then
+            MSG=$(tr '\n' ' ' < dump.err | cut -c1-400)
+            echo "::error title=pg_dump falhou::$MSG | $HOSTPORT | usuario=$USERPART"
+            exit 1
+          fi
       - uses: actions/upload-artifact@v4
         if: env.DB_URL != ''
         with:

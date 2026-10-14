@@ -697,3 +697,48 @@ body::before, body::after { display: none; }
   .progressive-tabs { gap: 5px; padding: 5px; }
   .progressive-tab { min-height: 46px; padding: 0 12px; font-size: 14px; }
 }
+
+
+/* Resumo para profissional: impressão local, sem envio automático de dados de saúde. */
+.nutritionist-report-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+.nutritionist-report-metrics > div {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid var(--border, #d9dfd3);
+  border-radius: 12px;
+}
+.nutritionist-report-metrics span { font-size: 0.84rem; color: var(--muted, #647067); }
+.nutritionist-report-metrics strong { font-size: 1rem; overflow-wrap: anywhere; }
+.nutritionist-report-table-wrap { overflow-x: auto; }
+.nutritionist-report-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.nutritionist-report-table th, .nutritionist-report-table td { padding: 8px; border-bottom: 1px solid var(--border, #d9dfd3); text-align: left; }
+.nutritionist-report-table th { font-weight: 700; }
+@media print {
+  body * { visibility: hidden !important; }
+  .nutritionist-print-report, .nutritionist-print-report * { visibility: visible !important; }
+  .nutritionist-print-report {
+    position: absolute !important;
+    inset: 0 auto auto 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: white !important;
+    color: black !important;
+  }
+  .nutritionist-print-report button { display: none !important; }
+  .nutritionist-print-report .ft-privacy-note,
+  .nutritionist-print-report .ft-explainer,
+  .nutritionist-print-report span { color: #333 !important; }
+  .nutritionist-report-table-wrap { overflow: visible !important; }
+  .nutritionist-report-table { font-size: 9pt !important; }
+  .nutritionist-report-table tr { break-inside: avoid; }
+  @page { size: A4 portrait; margin: 14mm; }
+}

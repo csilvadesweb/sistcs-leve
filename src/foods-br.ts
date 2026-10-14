@@ -130,8 +130,34 @@ const BRAZILIAN_ESTIMATES: FoodPer100[] = [
   { name: 'Pastel frito (estimativa caseira)', kcal: 380, protein: 8, carbs: 40, fat: 20, fiber: 1, origin: 'estimate', code: 'estimate-br-pastel-frito', units: [['unidade média', 50]] },
 ];
 
+/**
+ * Preparações brasileiras frequentes ausentes da referência genérica.
+ * Valores são estimativas por 100 g, não rótulos nem análises laboratoriais.
+ * Receitas, óleo, açúcar e acompanhamentos mudam bastante os nutrientes.
+ */
+const BRAZILIAN_ESTIMATES_MORE: FoodPer100[] = [
+  { name: 'Açaí puro, polpa sem açúcar (estimativa)', kcal: 70, protein: 1.5, carbs: 4, fat: 5, fiber: 2, origin: 'estimate', code: 'estimate-br-acai-puro', units: [['tigela pequena', 200], ['porção', 100]] },
+  { name: 'Açaí na tigela com banana e granola (estimativa)', kcal: 160, protein: 3, carbs: 29, fat: 4, fiber: 4, origin: 'estimate', code: 'estimate-br-acai-banana-granola', units: [['tigela média', 300], ['tigela pequena', 200]] },
+  { name: 'Marmita caseira de arroz, feijão, frango e salada (estimativa)', kcal: 145, protein: 10, carbs: 18, fat: 3, fiber: 2, origin: 'estimate', code: 'estimate-br-marmita-caseira', units: [['marmita média', 450], ['marmita pequena', 350]] },
+  { name: 'Marmita fitness de frango, batata-doce e legumes (estimativa)', kcal: 120, protein: 12, carbs: 12, fat: 2, fiber: 2.5, origin: 'estimate', code: 'estimate-br-marmita-fitness', units: [['marmita média', 350], ['marmita grande', 450]] },
+  { name: 'Cuscuz nordestino de milho cozido (estimativa)', kcal: 112, protein: 2.5, carbs: 25, fat: 0.5, fiber: 2, origin: 'estimate', code: 'estimate-br-cuscuz-nordestino', units: [['fatia média', 100], ['xícara', 160]] },
+  { name: 'Baião de dois (estimativa caseira)', kcal: 150, protein: 6, carbs: 23, fat: 4, fiber: 3, origin: 'estimate', code: 'estimate-br-baiao-dois', units: [['concha média', 160], ['porção', 200]] },
+  { name: 'Acarajé sem recheio (estimativa)', kcal: 300, protein: 7, carbs: 30, fat: 17, fiber: 5, origin: 'estimate', code: 'estimate-br-acaraje', units: [['unidade média', 100]] },
+  { name: 'Vatapá (estimativa caseira)', kcal: 220, protein: 8, carbs: 18, fat: 13, fiber: 2, origin: 'estimate', code: 'estimate-br-vatapa', units: [['concha média', 150], ['porção', 100]] },
+  { name: 'Tacacá (estimativa caseira)', kcal: 55, protein: 3, carbs: 8, fat: 1, fiber: 1, origin: 'estimate', code: 'estimate-br-tacaca', units: [['cuia média', 400]] },
+  { name: 'Galinhada (estimativa caseira)', kcal: 155, protein: 11, carbs: 19, fat: 4, fiber: 1, origin: 'estimate', code: 'estimate-br-galinhada', units: [['concha grande', 180], ['porção', 250]] },
+  { name: 'Arroz carreteiro (estimativa caseira)', kcal: 175, protein: 8, carbs: 23, fat: 6, fiber: 1, origin: 'estimate', code: 'estimate-br-arroz-carreteiro', units: [['concha grande', 180], ['porção', 250]] },
+  { name: 'Barreado (estimativa caseira)', kcal: 160, protein: 17, carbs: 5, fat: 8, fiber: 0.5, origin: 'estimate', code: 'estimate-br-barreado', units: [['concha média', 150], ['porção', 200]] },
+  { name: 'Mandioca cozida (estimativa de referência)', kcal: 125, protein: 1, carbs: 30, fat: 0.3, fiber: 1.5, origin: 'estimate', code: 'estimate-br-mandioca-cozida', units: [['pedaço médio', 80], ['porção', 100]] },
+  { name: 'Tapioca com queijo coalho (estimativa)', kcal: 285, protein: 7, carbs: 45, fat: 8, fiber: 0.5, origin: 'estimate', code: 'estimate-br-tapioca-queijo-coalho', units: [['unidade média', 120]] },
+  { name: 'Omelete com queijo (estimativa caseira)', kcal: 190, protein: 13, carbs: 2, fat: 14, fiber: 0, origin: 'estimate', code: 'estimate-br-omelete-queijo', units: [['omelete de 2 ovos', 130]] },
+  { name: 'Iogurte proteico genérico (estimativa; conferir rótulo)', kcal: 70, protein: 10, carbs: 5, fat: 1, fiber: 0, origin: 'estimate', code: 'estimate-br-iogurte-proteico', units: [['pote', 160]] },
+];
+
+
 export const FOODS_BR: FoodPer100[] = [
   ...BRAZILIAN_ESTIMATES,
+  ...BRAZILIAN_ESTIMATES_MORE,
   ...[...TACO, ...EXTRA].map(([id, name, kcal, protein, carbs, fat, fiber]) => ({
   name,
   kcal,
@@ -510,6 +536,38 @@ export async function searchOpenFoodFactsPage(query: string, page = 1, signal?: 
 export async function searchOpenFoodFacts(query: string, signal?: AbortSignal): Promise<FoodPer100[]> {
   return (await searchOpenFoodFactsPage(query, 1, signal)).foods;
 }
+/** Origem exibível e grau de confiança para transparência nutricional. */
+export function foodSourceLabel(food: FoodPer100): string {
+  if (food.origin === 'local') return 'TACO · NEPA/UNICAMP';
+  if (food.origin === 'usda') return 'USDA FoodData Central / SR Legacy via TempoLife';
+  if (food.origin === 'off') return 'Open Food Facts · base colaborativa';
+  return food.sourceUrl ? 'Estimativa com referência externa a conferir' : 'Estimativa nutricional caseira';
+}
+
+export function foodSourceUrl(food: FoodPer100): string | undefined {
+  if (food.sourceUrl) return food.sourceUrl;
+  if (food.origin === 'local') return 'https://www.nepa.unicamp.br/taco/';
+  if (food.origin === 'usda') return 'https://fdc.nal.usda.gov/';
+  if (food.origin === 'off') return 'https://world.openfoodfacts.org/';
+  return undefined;
+}
+
+export function foodConfidence(food: FoodPer100): { level: 'alta' | 'média' | 'baixa'; explanation: string } {
+  if (food.origin === 'local') return { level: 'média', explanation: 'Fonte publicada identificada; a cópia do catálogo ainda deve ser conferida com a tabela original, e o preparo real pode diferir.' };
+  if (food.origin === 'usda') return { level: 'média', explanation: 'Referência internacional genérica; confira se o alimento e o preparo correspondem.' };
+  if (food.origin === 'off') return { level: 'média', explanation: 'Registro colaborativo; confira marca, variante e tabela do rótulo.' };
+  return { level: 'baixa', explanation: 'Valor aproximado; receita, porção e ingredientes podem alterar os nutrientes.' };
+}
+
+function canonicalBarcode(value: string): string {
+  return value.replace(/\D/g, '').replace(/^0+(?=\d)/, '');
+}
+function barcodeMatches(expected: string, returned: string): boolean {
+  const a = canonicalBarcode(expected);
+  const b = canonicalBarcode(returned);
+  return Boolean(a && b && a === b);
+}
+
 /** Normaliza entrada de leitores/cópia antes de limitar o campo visual a 14 dígitos. */
 export function normalizeBarcodeInput(raw: string): string {
   return raw.replace(/\D/g, '').slice(0, 14);
@@ -526,7 +584,11 @@ export async function lookupBarcode(code: string, signal?: AbortSignal): Promise
   if (res.status === 404) return null;
   if (!res.ok) throw new Error('A consulta de código de barras está indisponível agora.');
   const json = await res.json();
-  return json.status === 1 ? fromOff({ ...json.product, code: normalizedCode }) : null;
+  if (json.status !== 1 || !json.product) return null;
+  const returnedCode = String(json.product.code ?? '');
+  // Nunca associar os nutrientes de um produto a outro código por resposta inesperada da API.
+  if (!barcodeMatches(normalizedCode, returnedCode)) return null;
+  return fromOff(json.product);
 }
 
 export function scale(f: FoodPer100, grams: number) {

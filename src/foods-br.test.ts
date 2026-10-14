@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { FOODS_BR, gramsFor, lookupBarcode, normalizeBarcodeInput, parseQuery, scale, searchLocal, searchOpenFoodFacts, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { FOODS_BR, foodConfidence, foodSourceLabel, gramsFor, lookupBarcode, normalizeBarcodeInput, parseQuery, scale, searchLocal, searchOpenFoodFacts, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 afterEach(() => vi.unstubAllGlobals());
 
@@ -132,7 +132,7 @@ describe('Cobertura de preparações brasileiras estimadas', () => {
 
   it('mantém valores numéricos válidos e medidas caseiras nas preparações estimadas', () => {
     const additions = FOODS_BR.filter((food) => food.code?.startsWith('estimate-br-'));
-    expect(additions).toHaveLength(12);
+    expect(additions).toHaveLength(28);
     for (const food of additions) {
       expect([food.kcal, food.protein, food.carbs, food.fat, food.fiber].every((n) => Number.isFinite(n) && n >= 0)).toBe(true);
       expect(food.units?.length).toBeGreaterThan(0);
@@ -140,6 +140,42 @@ describe('Cobertura de preparações brasileiras estimadas', () => {
   });
 });
 
+
+describe('catálogo prioritário brasileiro e transparência', () => {
+  it.each([
+    ['arroz', 'taco-3'],
+    ['feijão', 'taco-561'],
+    ['pão francês', 'taco-53'],
+    ['tapioca', 'estimate-br-tapioca'],
+    ['açaí', 'estimate-br-acai-puro'],
+    ['marmita', 'estimate-br-marmita-caseira'],
+    ['cuscuz nordestino', 'estimate-br-cuscuz-nordestino'],
+    ['baião de dois', 'estimate-br-baiao-dois'],
+    ['tacacá', 'estimate-br-tacaca'],
+    ['iogurte proteico', 'estimate-br-iogurte-proteico'],
+  ])('encontra o termo prioritário %s com origem identificável', (query, code) => {
+    expect(searchLocal(query, 50)).toContainEqual(expect.objectContaining({ code }));
+  });
+
+  it('explica origem e confiança sem rotular estimativa como dado verificado', () => {
+    const taco = FOODS_BR.find((food) => food.code === 'taco-3')!;
+    const estimate = FOODS_BR.find((food) => food.code === 'estimate-br-marmita-caseira')!;
+    expect(foodSourceLabel(taco)).toContain('TACO');
+    expect(foodConfidence(taco).level).toBe('média');
+    expect(foodSourceLabel(estimate)).toContain('Estimativa');
+    expect(foodConfidence(estimate).level).toBe('baixa');
+    expect(foodConfidence(estimate).explanation).toMatch(/receita/i);
+  });
+
+  it('mantém dados de marmitas e preparações novas como estimativas com porção', () => {
+    const additions = FOODS_BR.filter((food) => food.code?.startsWith('estimate-br-'));
+    for (const food of additions) {
+      expect(food.origin).toBe('estimate');
+      expect(food.code).toBeTruthy();
+      expect(food.units?.length).toBeGreaterThan(0);
+    }
+  });
+});
 
 describe('origem dos valores aproximados', () => {
   it.each([
@@ -382,7 +418,7 @@ describe('Open Food Facts — integração externa resiliente', () => {
   it('preserva nutrientes adicionais e distingue valores ausentes de zero', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({
       status: 1,
-      product: { product_name: 'Produto com tabela parcial', nutriments: {
+      product: { code: '7891234567890', product_name: 'Produto com tabela parcial', nutriments: {
         'energy-kcal_100g': 210, proteins_100g: 6, carbohydrates_100g: 24, fat_100g: 9,
         'saturated-fat_100g': 3, sugars_100g: 8, sodium_100g: 0.35,
       } },
@@ -395,7 +431,7 @@ describe('Open Food Facts — integração externa resiliente', () => {
   it('normaliza espaços e hífens no código de barras antes da consulta', async () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => ({
       status: 1,
-      product: { product_name: 'Produto com código', nutriments: { 'energy-kcal_100g': 100 } },
+      product: { code: '789123456', product_name: 'Produto com código', nutriments: { 'energy-kcal_100g': 100 } },
     }) });
     vi.stubGlobal('fetch', fetchMock);
     await expect(lookupBarcode(' 789-123-456 ')).resolves.toMatchObject({ code: '789123456', name: 'Produto com código' });
@@ -408,6 +444,14 @@ describe('Open Food Facts — integração externa resiliente', () => {
     await expect(lookupBarcode('   ')).resolves.toBeNull();
     await expect(lookupBarcode('123abc456')).resolves.toBeNull();
     expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it('recusa produto retornado com código diferente do consultado', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({
+      status: 1,
+      product: { code: '7899999999999', product_name: 'Produto diferente', nutriments: { 'energy-kcal_100g': 100 } },
+    }) }));
+    await expect(lookupBarcode('7891234567890')).resolves.toBeNull();
   });
 
   it('retorna null quando o código de barras não existe', async () => {

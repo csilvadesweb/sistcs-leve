@@ -11,6 +11,7 @@ describe('compatibilidade de arquivos de foto', () => {
   it('aceita extensão conhecida quando o seletor Android não informa MIME', () => {
     expect(isSupportedPhotoFile({ type: '', name: 'IMG_1234.JPG' })).toBe(true);
     expect(isSupportedPhotoFile({ type: null, name: 'progresso.jpeg' })).toBe(true);
+    expect(isSupportedPhotoFile({ type: 'application/octet-stream', name: 'galeria.jpg' })).toBe(true);
     expect(isSupportedPhotoFile({ type: '', name: 'imagem.webp' })).toBe(true);
   });
 

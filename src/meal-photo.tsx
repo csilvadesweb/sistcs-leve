@@ -46,7 +46,7 @@ export function MealPhotoScanner({ onPick }: { onPick: (food: PickedFood) => voi
         headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
         body: JSON.stringify({ mimeType: file.type, imageBase64 }),
       });
-      const body = await response.json() as { items?: MealPhotoEstimate[]; error?: string };
+      const body = await response.json() as { items?: unknown; error?: string };
       if (!response.ok) throw new Error(body.error || 'Não foi possível analisar a foto.');
       const valid = normalizeMealPhotoEstimates(body.items);
       setItems(valid);

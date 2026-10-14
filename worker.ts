@@ -266,14 +266,22 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (quota === "limit") return withCors(json({ error: "Você atingiu o limite diário de 30 mensagens do assistente. Volte amanhã." }, 429));
   if (quota === "error") return withCors(json({ error: "Não foi possível verificar seu limite agora. Tente novamente em instantes." }, 503));
 
-  const history = Array.isArray(payload.history)
-    ? payload.history.slice(-8).flatMap((item) => {
+  // Keep recent conversational context useful while bounding prompt size and provider cost.
+  const historyCandidates = Array.isArray(payload.history)
+    ? payload.history.slice(-6).flatMap((item) => {
       if (!item || typeof item !== "object") return [];
       const row = item as { role?: unknown; text?: unknown };
       if ((row.role !== "user" && row.role !== "model") || typeof row.text !== "string") return [];
-      return [{ role: row.role, parts: [{ text: row.text.slice(0, 1500) }] }];
+      return [{ role: row.role, text: row.text }];
     })
     : [];
+  let historyBudget = 2400;
+  const history = historyCandidates.reverse().flatMap((item) => {
+    if (historyBudget <= 0) return [];
+    const text = item.text.slice(-Math.min(700, historyBudget));
+    historyBudget -= text.length;
+    return [{ role: item.role, parts: [{ text }] }];
+  }).reverse();
 
   let diaryContextText = "";
   if (payload.diaryContext && typeof payload.diaryContext === "object") {
@@ -307,12 +315,13 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   }
 
   const prompt = [
-    "Você é o Assistente de Alimentação do SISTCS Leve. Responda em português brasileiro, com empatia, clareza e concisão.",
-    "Ajude com ideias de refeições, receitas, substituições e educação alimentar geral. Não diagnostique, não prescreva tratamentos, medicamentos, dietas clínicas ou metas calóricas individuais.",
-    "Não afirme que valores nutricionais estimados são exatos. Para calorias e nutrientes, oriente a pessoa a confirmar os alimentos e porções na base nutricional do aplicativo.",
-    "Em gravidez, transtornos alimentares, doenças, alergias graves ou sintomas preocupantes, recomende orientação de profissional de saúde. Não solicite nome completo, documentos, endereço ou outros dados pessoais.",
-    "A resposta é educativa e não substitui nutricionista ou médico.",
-    "Se houver um resumo diário agregado autorizado, use-o apenas para contextualizar sugestões. Não deduza diagnósticos, não trate metas como prescrição clínica e deixe claro quando faltarem dados.",
+    "Você é o Coach de Alimentação do SISTCS Leve. Responda em português brasileiro, com empatia, clareza, concisão e foco em ações práticas.",
+    "Priorize alimentos comuns no Brasil, opções acessíveis e preparações simples. Ao sugerir uma refeição, dê de 1 a 3 opções, ingredientes e porções aproximadas; ofereça substituições simples quando útil.",
+    "Personalize somente com dados que a pessoa forneceu explicitamente nesta conversa ou no resumo diário agregado autorizado. Não invente alimentos registrados, preferências, metas, progresso, fontes consultadas ou dados que não recebeu.",
+    "Precisão nutricional: não invente calorias, proteínas ou outros números exatos. Sem valores fornecidos ou calculados de uma fonte confiável, explique que os números são estimativas e peça que a pessoa confira alimento e porção na base do aplicativo ou no rótulo.",
+    "Se usar o resumo diário, calcule diferenças apenas entre totais e metas válidos presentes nele; se faltarem dados ou a unidade não estiver clara, diga que não é possível concluir. Nunca trate meta do aplicativo como prescrição clínica.",
+    "Não diagnostique nem prescreva tratamentos, medicamentos, dietas clínicas ou metas calóricas individuais. Para gravidez, transtornos alimentares, doenças, alergias graves, uso de medicamentos para emagrecer ou sintomas preocupantes, recomende orientação de profissional de saúde.",
+    "Não solicite nome completo, documentos, endereço ou outros dados pessoais. A resposta é educativa e não substitui nutricionista ou médico.",
   ].join("\n");
 
   try {
@@ -323,7 +332,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: prompt }] },
         contents: [...history, { role: "user", parts: [{ text: payload.message.trim() }, ...(diaryContextText ? [{ text: diaryContextText }] : [])] }],
-        generationConfig: { temperature: 0.6, maxOutputTokens: 700 },
+        generationConfig: { temperature: 0.3, maxOutputTokens: 550 },
       }),
     });
     if (response.status === 429) return withCors(json({ error: "O limite gratuito da IA foi atingido por enquanto. Tente novamente mais tarde." }, 429));

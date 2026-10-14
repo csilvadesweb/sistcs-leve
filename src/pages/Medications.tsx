@@ -122,11 +122,15 @@ export function Medications() {
       <header className="ft-heading">
         <div>
           <p className="eyebrow"><span className="eyebrow-dot" />INFORMAÇÕES DE CUIDADO</p>
-          <h1 className="serif-display">Medicamentos</h1>
-          <p>Anote o que você toma e marque cada dose. Os horários e as doses são os que você informar.</p>
+          <h1 className="serif-display">Medicamentos e canetas emagrecedoras</h1>
+          <p>Anote seus medicamentos e marque cada dose conforme a orientação recebida. Os horários e as doses são os que você informar.</p>
         </div>
         <div className="ft-heading-icon" aria-hidden="true"><Pill size={29} strokeWidth={1.6} /></div>
       </header>
+
+      <aside className="ft-feedback" role="note">
+        <strong>Usa uma caneta emagrecedora prescrita?</strong> Você pode cadastrá-la aqui pelo nome e pela dose exatamente como constam na receita. Não inicie, suspenda nem altere dose ou intervalo sem falar com o profissional que acompanha você. O histórico estruturado de efeitos adversos ainda não está disponível; por enquanto, use o campo Anotação para registrar observações e converse com seu médico sobre elas.
+      </aside>
 
       {loadError && <p className="ft-feedback ft-feedback-error" role="alert">{loadError}</p>}
       {loading && <p className="ft-feedback" role="status">Carregando seus medicamentos…</p>}

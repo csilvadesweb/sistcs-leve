@@ -1,6 +1,7 @@
 # Backup semanal do banco (o Supabase Free não faz backup restaurável).
 # Requer o secret SUPABASE_DB_URL: a connection string do Session pooler (IPv4) do Supabase, com a senha do banco.
-# O arquivo fica como artefato privado do GitHub por 30 dias. Sem o secret, o job só avisa e termina.
+# O repositório é PÚBLICO: o dump é criptografado (AES-256) com o secret BACKUP_PASSPHRASE antes de virar artefato.
+# Sem SUPABASE_DB_URL ou sem BACKUP_PASSPHRASE o job só avisa e termina (nunca sobe dump sem criptografia).
 name: backup
 on:
   schedule:
@@ -11,12 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
     steps:
       - name: Verificar secret
         run: |
-          if [ -z "$DB_URL" ]; then echo "SUPABASE_DB_URL não configurado; backup ignorado."; exit 0; fi
+          if [ -z "$DB_URL" ] || [ -z "$BACKUP_PASSPHRASE" ]; then echo "::warning::SUPABASE_DB_URL ou BACKUP_PASSPHRASE não configurado; backup ignorado."; exit 0; fi
       - name: Dump
-        if: env.DB_URL != ''
+        if: env.DB_URL != '' && env.BACKUP_PASSPHRASE != ''
         run: |
           # O banco é Postgres 17: o pg_dump precisa ser da mesma versão (ou maior).
           sudo install -d /usr/share/postgresql-common/pgdg
@@ -33,9 +35,11 @@ jobs:
             echo "::error title=pg_dump falhou::$MSG | $HOSTPORT | usuario=$USERPART"
             exit 1
           fi
+          gpg --batch --yes --pinentry-mode loopback --passphrase "$BACKUP_PASSPHRASE" --symmetric --cipher-algo AES256 -o backup.dump.gpg backup.dump
+          rm -f backup.dump dump.err
       - uses: actions/upload-artifact@v7
-        if: env.DB_URL != ''
+        if: env.DB_URL != '' && env.BACKUP_PASSPHRASE != ''
         with:
           name: backup-${{ github.run_id }}
-          path: backup.dump
+          path: backup.dump.gpg
           retention-days: 30

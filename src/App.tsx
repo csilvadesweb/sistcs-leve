@@ -35,7 +35,7 @@ const destinations = [
   { href: '/', label: 'Início', short: 'Início', icon: House },
   { href: '/alimentacao', label: 'Alimentação', short: 'Comida', icon: Apple },
   { href: '/receitas', label: 'Receitas', short: 'Receitas', icon: CookingPot },
-  { href: '/assistente', label: 'Assistente IA', short: 'IA', icon: Sparkles },
+  { href: '/assistente', label: 'Coach de IA', short: 'Coach IA', icon: Sparkles },
   { href: '/exercicios', label: 'Exercícios', short: 'Exercícios', icon: Dumbbell },
   { href: '/registros', label: 'Registros', short: 'Evolução', icon: ClipboardList },
   { href: '/jejum', label: 'Jejum', short: 'Jejum', icon: Timer },

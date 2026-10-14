@@ -75,3 +75,14 @@
 .insight-badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .insight-badges li { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border: 1px dashed var(--line); border-radius: 999px; color: var(--text-3); font-size: 13px; font-weight: 650; }
 .insight-badges li.is-earned { border-style: solid; border-color: rgba(31, 154, 82, .4); background: rgba(31, 154, 82, .08); color: var(--leaf-2, #17803f); }
+
+
+/* Mobile accessibility: avoid iOS zoom-on-focus in form controls without changing desktop sizing. */
+html { -webkit-text-size-adjust: 100%; }
+@media (max-width: 480px) {
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    font-size: max(16px, 1rem);
+  }
+}

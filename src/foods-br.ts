@@ -555,7 +555,7 @@ export function foodSourceUrl(food: FoodPer100): string | undefined {
 export function foodConfidence(food: FoodPer100): { level: 'alta' | 'média' | 'baixa'; explanation: string } {
   if (food.origin === 'local') return { level: 'média', explanation: 'Fonte publicada identificada; a cópia do catálogo ainda deve ser conferida com a tabela original, e o preparo real pode diferir.' };
   if (food.origin === 'usda') return { level: 'média', explanation: 'Referência internacional genérica; confira se o alimento e o preparo correspondem.' };
-  if (food.origin === 'off') return { level: 'média', explanation: 'Registro colaborativo; confira marca, variante e tabela do rótulo.' };
+  if (food.origin === 'off') return { level: 'baixa', explanation: 'Registro colaborativo que pode estar incompleto ou desatualizado; confirme marca, variante e nutrientes no rótulo antes de confiar nos valores.' };
   return { level: 'baixa', explanation: 'Valor aproximado; receita, porção e ingredientes podem alterar os nutrientes.' };
 }
 
@@ -606,7 +606,7 @@ export function scale(f: FoodPer100, grams: number) {
 /* ---------- Texto livre: "2 ovos", "150 g de arroz", "1 colher de sopa de azeite" ---------- */
 
 const WEIGHT_UNITS: Record<string, number> = { g: 1, gr: 1, grama: 1, kg: 1000, quilo: 1000, ml: 1, l: 1000, litro: 1000 };
-const HOME_UNITS: Record<string, number> = { 'colher de sopa': 15, 'colher de cha': 5, xicara: 240, copo: 200, concha: 100, fatia: 30, pote: 170, lata: 350, unidade: 0, un: 0 };
+const HOME_UNITS: Record<string, number> = { 'colher de sopa': 15, 'colher de sobremesa': 10, 'colher de cha': 5, xicara: 240, copo: 200, concha: 100, fatia: 30, pote: 170, lata: 350, unidade: 0, un: 0 };
 
 export interface ParsedQuery {
   name: string;
@@ -624,7 +624,7 @@ export function parseQuery(raw: string): ParsedQuery {
     if (!rest.length) return [null, 0];
     if (stem(rest[0]!) === 'colher') {
       const kind = rest[1] === 'de' && rest[2] ? stem(rest[2]) : '';
-      if (kind === 'sopa' || kind === 'cha') return [`colher de ${kind}`, 3];
+      if (kind === 'sopa' || kind === 'sobremesa' || kind === 'cha') return [`colher de ${kind}`, 3];
       return ['colher de sopa', 1];
     }
     if (isUnit(rest[0]!)) return [stem(rest[0]!), 1];
@@ -660,7 +660,7 @@ export function parseQuery(raw: string): ParsedQuery {
   return { name: tokens.join(' '), amount: null, unit: null };
 }
 
-const SHOW: Record<string, string> = { porcao: 'porção', pao: 'pão', maca: 'maçã', file: 'filé', xicara: 'xícara', 'colher de cha': 'colher de chá' };
+const SHOW: Record<string, string> = { porcao: 'porção', pao: 'pão', maca: 'maçã', file: 'filé', xicara: 'xícara', 'colher de cha': 'colher de chá', 'colher de sobremesa': 'colher de sobremesa' };
 const show = (u: string) => SHOW[u] ?? u;
 
 /** Converte o que a pessoa digitou em gramas para o alimento escolhido. */

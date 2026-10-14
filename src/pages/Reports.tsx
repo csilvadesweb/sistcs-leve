@@ -122,7 +122,7 @@ export function Reports() {
             <p className="ft-kicker">RESUMO PARA ACOMPANHAMENTO</p>
             <h2 className="rep-title" id="nutritionist-report-title">Resumo para compartilhar com seu nutricionista</h2>
           </div>
-          <button type="button" className="ft-button" onClick={() => window.print()} aria-label="Imprimir ou salvar resumo em PDF">
+          <button type="button" className="btn btn-primary" onClick={() => window.print()} aria-label="Imprimir ou salvar resumo em PDF">
             Imprimir / salvar PDF
           </button>
         </div>

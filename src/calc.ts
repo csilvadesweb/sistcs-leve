@@ -100,13 +100,13 @@ export function estimate(input: EstimateInput, today: string): Estimate {
   if (input.sex !== 'female' && input.sex !== 'male') {
     return { ok: false, reason: 'Confira o sexo informado para estimar as metas.' };
   }
-  if (!input.activity || !(input.activity in ACTIVITY)) {
+  if (!input.activity || !Object.hasOwn(ACTIVITY, input.activity)) {
     return { ok: false, reason: 'Confira o nível de atividade informado.' };
   }
   if (!input.goalType || !['lose', 'maintain', 'gain'].includes(input.goalType)) {
     return { ok: false, reason: 'Confira o objetivo informado.' };
   }
-  if (!input.macroPreset || !(input.macroPreset in PRESETS)) {
+  if (!input.macroPreset || !Object.hasOwn(PRESETS, input.macroPreset)) {
     return { ok: false, reason: 'Confira a distribuição de macronutrientes.' };
   }
   if (input.weeklyRateKg !== null && input.weeklyRateKg !== undefined && !Number.isFinite(input.weeklyRateKg)) {

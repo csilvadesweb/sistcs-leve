@@ -143,7 +143,10 @@ export function Medications() {
   async function removeEffect(id: string) {
     if (!window.confirm('Excluir este relato de efeito adverso?')) return;
     await run(
-      async () => setFeedback({ kind: 'success', message: 'Relato excluído.' }).valueOf() && deleteMedicationEffect(id),
+      async () => {
+        await deleteMedicationEffect(id);
+        setFeedback({ kind: 'success', message: 'Relato excluído.' });
+      },
       (message) => setFeedback({ kind: 'error', message }),
       'Não foi possível excluir o relato.',
     );

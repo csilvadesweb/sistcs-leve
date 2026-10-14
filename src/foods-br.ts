@@ -298,6 +298,7 @@ const ALIASES: Record<string, string> = {
   frango: 'frango', bolacha: 'biscoito', macaxeira: 'mandioca', aipim: 'mandioca', pao: 'pao',
   // Grafias correntes no Brasil para a mesma preparação; normalização já remove acentos.
   strogonofe: 'strogonoff', estrogonofe: 'strogonoff', estrogonoff: 'strogonoff',
+  bovino: 'carne', bovina: 'carne',
 };
 
 export function searchLocal(query: string, limit = 8): FoodPer100[] {

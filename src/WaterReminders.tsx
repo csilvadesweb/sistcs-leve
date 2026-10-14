@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ChangeEvent } from 'react';
 import { BellRing, BellOff, Droplets } from 'lucide-react';
 import {
   DEFAULT_WATER_REMINDER_SETTINGS,
@@ -6,7 +6,14 @@ import {
   shouldSendWaterReminder,
   type WaterReminderSettings,
 } from './water-reminders';
-import { playWaterReminderSound, prepareWaterReminderAudio } from './water-reminder-sound';
+import {
+  clearCustomWaterSound,
+  getCustomWaterSoundName,
+  playWaterReminderSound,
+  prepareWaterReminderAudio,
+  saveCustomWaterSound,
+} from './water-reminder-sound';
+import { validateCustomSound } from './water-reminder-custom-sound';
 
 const SETTINGS_KEY = 'sistcs-leve-water-reminders-v1';
 const LAST_SENT_KEY = 'sistcs-leve-water-reminders-last-sent-v1';
@@ -64,6 +71,11 @@ export function WaterReminders() {
     'Notification' in window ? Notification.permission : 'unsupported',
   );
   const [message, setMessage] = useState('');
+  const [customSoundName, setCustomSoundName] = useState<string | null>(null);
+
+  useEffect(() => {
+    void getCustomWaterSoundName().then(setCustomSoundName);
+  }, []);
 
   useEffect(() => {
     saveSettings(settings);
@@ -131,6 +143,33 @@ export function WaterReminders() {
       : 'Não foi possível tocar o som. Confira o volume, o modo silencioso e as permissões do navegador.');
   }
 
+  async function chooseCustomSound(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+    const problem = validateCustomSound(file);
+    if (problem) {
+      setMessage(problem);
+      return;
+    }
+    try {
+      await saveCustomWaterSound(file);
+      setCustomSoundName(file.name);
+      const played = await playWaterReminderSound();
+      setMessage(played
+        ? 'Som escolhido e guardado neste aparelho. Ele toca nos próximos lembretes.'
+        : 'Som guardado, mas não foi possível tocá-lo agora. Confira o volume e o modo silencioso.');
+    } catch {
+      setMessage('Não foi possível guardar o som neste aparelho.');
+    }
+  }
+
+  async function removeCustomSound() {
+    await clearCustomWaterSound();
+    setCustomSoundName(null);
+    setMessage('Som personalizado removido. Voltou o som padrão.');
+  }
+
   function disableReminders() {
     setSettings((current) => ({ ...current, enabled: false }));
     setMessage('Lembretes desativados.');
@@ -182,7 +221,17 @@ export function WaterReminders() {
         </label>
         <button className="btn btn-outline btn-sm" type="button" onClick={() => void testReminderSound()}>Testar som</button>
       </div>
-      <p className="water-reminder-note">Importante: o som é reproduzido enquanto a página está ativa e o navegador permite áudio. O som da notificação do sistema depende do volume, modo silencioso e configurações de notificação do Android. Os lembretes não são garantidos com o app fechado; isso exige Web Push e configuração adicional.</p>
+      <div className="water-reminder-actions">
+        <label className="btn btn-outline btn-sm" htmlFor="water-reminder-custom-sound">Escolher som do celular</label>
+        <input id="water-reminder-custom-sound" type="file" accept="audio/*" hidden onChange={(event) => void chooseCustomSound(event)} />
+        {customSoundName && (
+          <>
+            <span className="water-reminder-status">Som: {customSoundName}</span>
+            <button className="btn btn-outline btn-sm" type="button" onClick={() => void removeCustomSound()}>Remover</button>
+          </>
+        )}
+      </div>
+      <p className="water-reminder-note">Importante: o som é reproduzido enquanto a página está ativa e o navegador permite áudio. O som da notificação do sistema depende do volume, modo silencioso e configurações de notificação do Android. O som escolhido do seu celular fica guardado só neste aparelho, toca com o app aberto (até 10 segundos, arquivos de até 2 MB). Os lembretes não são garantidos com o app fechado; isso exige Web Push e configuração adicional.</p>
       {message && <p className="water-reminder-feedback" role="status">{message}</p>}
     </section>
   );

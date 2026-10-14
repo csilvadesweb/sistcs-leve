@@ -44,6 +44,25 @@ async function authenticatedUser(request: Request, env: Env): Promise<boolean> {
   }
 }
 
+/** Limite diário por conta (30 mensagens), aplicado no banco via RPC com o token do próprio usuário. */
+async function consumeQuota(request: Request, env: Env): Promise<"ok" | "limit" | "error"> {
+  try {
+    const response = await fetch(`${env.SUPABASE_URL}/rest/v1/rpc/consume_ai_quota`, {
+      method: "POST",
+      headers: {
+        authorization: request.headers.get("authorization") ?? "",
+        apikey: env.SUPABASE_ANON_KEY,
+        "content-type": "application/json",
+      },
+      body: "{}",
+    });
+    if (!response.ok) return "error";
+    return (await response.json()) === true ? "ok" : "limit";
+  } catch {
+    return "error";
+  }
+}
+
 async function handleApi(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
   if (request.method === "OPTIONS") return withCors(new Response(null, { status: 204 }));
@@ -65,6 +84,10 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (payload.message.length > 4000) return withCors(json({ error: "A mensagem deve ter no máximo 4.000 caracteres." }, 413));
 
   if (!env.GEMINI_API_KEY) return withCors(json({ error: "O assistente ainda precisa ser configurado pelo administrador. As demais funções continuam disponíveis." }, 503));
+
+  const quota = await consumeQuota(request, env);
+  if (quota === "limit") return withCors(json({ error: "Você atingiu o limite diário de 30 mensagens do assistente. Volte amanhã." }, 429));
+  if (quota === "error") return withCors(json({ error: "Não foi possível verificar seu limite agora. Tente novamente em instantes." }, 503));
 
   const history = Array.isArray(payload.history)
     ? payload.history.slice(-8).flatMap((item) => {

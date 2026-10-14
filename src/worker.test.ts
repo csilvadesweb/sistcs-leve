@@ -52,4 +52,38 @@ describe('endpoint do assistente Gemini', () => {
     }), env);
     expect(response.status).toBe(413);
   });
+
+  it('bloqueia com 429 quando o limite diário acabou, sem chamar o Google', async () => {
+    const envComChave = { ...env, GEMINI_API_KEY: 'segredo-de-teste' } as unknown as Parameters<typeof worker.fetch>[1];
+    const calls: string[] = [];
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      calls.push(url);
+      if (url.includes('/auth/v1/user')) return new Response(JSON.stringify({ id: 'user-1' }), { status: 200 });
+      if (url.includes('consume_ai_quota')) return new Response('false', { status: 200 });
+      return new Response('{}', { status: 200 });
+    }));
+    const response = await worker.fetch(new Request('https://leve.sistcs.com/api/ai/chat', {
+      method: 'POST',
+      headers: { authorization: 'Bearer test-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ message: 'Sugira um jantar' }),
+    }), envComChave);
+    expect(response.status).toBe(429);
+    expect(calls.some((url) => url.includes('generativelanguage.googleapis.com'))).toBe(false);
+  });
+
+  it('falha de forma segura (503) se não conseguir verificar o limite', async () => {
+    const envComChave = { ...env, GEMINI_API_KEY: 'segredo-de-teste' } as unknown as Parameters<typeof worker.fetch>[1];
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url.includes('/auth/v1/user')) return new Response(JSON.stringify({ id: 'user-1' }), { status: 200 });
+      return new Response('erro', { status: 500 });
+    }));
+    const response = await worker.fetch(new Request('https://leve.sistcs.com/api/ai/chat', {
+      method: 'POST',
+      headers: { authorization: 'Bearer test-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ message: 'Sugira um jantar' }),
+    }), envComChave);
+    expect(response.status).toBe(503);
+  });
 });

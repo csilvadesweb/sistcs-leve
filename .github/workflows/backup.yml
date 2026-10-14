@@ -24,11 +24,11 @@ jobs:
           echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list >/dev/null
           sudo apt-get update -qq
           sudo apt-get install -y -qq postgresql-client-17 >/dev/null
-          pg_dump --version
+          /usr/lib/postgresql/17/bin/pg_dump --version
           HOSTPORT=$(echo "$DB_URL" | sed -E 's#^[a-z]+://[^@]*@([^/?]*).*#\1#')
           USERPART=$(echo "$DB_URL" | sed -E 's#^[a-z]+://([^:@]*).*#\1#')
           echo "host:porta=$HOSTPORT usuario=$USERPART"
-          if ! pg_dump "$DB_URL" --no-owner --no-privileges --schema=public -Fc -f backup.dump 2> dump.err; then
+          if ! /usr/lib/postgresql/17/bin/pg_dump "$DB_URL" --no-owner --no-privileges --schema=public -Fc -f backup.dump 2> dump.err; then
             MSG=$(tr '\n' ' ' < dump.err | cut -c1-400)
             echo "::error title=pg_dump falhou::$MSG | $HOSTPORT | usuario=$USERPART"
             exit 1

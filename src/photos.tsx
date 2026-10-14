@@ -3,7 +3,6 @@ import { UserRound } from 'lucide-react';
 import { signedPhotoUrl } from './data';
 import { isSupportedPhotoFile } from './photo-file';
 
-/** Reduz e converte a imagem para JPEG no navegador (economiza espaço e remove metadados como o GPS). */
 type DecodedPhoto = {
   source: CanvasImageSource;
   width: number;

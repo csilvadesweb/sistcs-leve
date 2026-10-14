@@ -35,19 +35,30 @@ class HealthConnectReader(private val client: HealthConnectClient) {
                 timeRangeFilter = TimeRangeFilter.between(start, end),
             ),
         )
-        val exerciseResult = client.readRecords(
-            ReadRecordsRequest(
-                recordType = ExerciseSessionRecord::class,
-                timeRangeFilter = TimeRangeFilter.between(start, end),
-                ascendingOrder = false,
-                pageSize = 500,
-            ),
-        )
+
+        // Health Connect caps each page. Follow every continuation token so busy users
+        // don't silently lose exercise sessions after the first 500 records.
+        val exerciseRecords = mutableListOf<ExerciseSessionRecord>()
+        var pageToken: String? = null
+        do {
+            val response = client.readRecords(
+                ReadRecordsRequest(
+                    recordType = ExerciseSessionRecord::class,
+                    timeRangeFilter = TimeRangeFilter.between(start, end),
+                    ascendingOrder = false,
+                    pageSize = 500,
+                    pageToken = pageToken,
+                ),
+            )
+            exerciseRecords.addAll(response.records)
+            pageToken = response.pageToken
+        } while (pageToken != null)
+
         return DailyActivitySummary(
             date = now.toLocalDate().toString(),
             zoneId = zone.id,
             steps = stepResult[StepsRecord.COUNT_TOTAL] ?: 0L,
-            exercises = exerciseResult.records.map {
+            exercises = exerciseRecords.map {
                 ExerciseSummary(it.exerciseType.toString(), it.startTime, it.endTime)
             },
         )

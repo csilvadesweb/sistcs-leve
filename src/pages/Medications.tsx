@@ -3,10 +3,13 @@ import { Check, Clock, Pencil, Pill, Plus, Save, Trash2, X } from 'lucide-react'
 import { useAppData } from '../session';
 import {
   createMedication,
+  createMedicationEffect,
   deleteMedication,
+  deleteMedicationEffect,
   setMedicationTaken,
   updateMedication,
   type Medication,
+  type MedicationEffectInput,
   type MedicationInput,
 } from '../data';
 import { Button, Field, formatDate, todayInSaoPaulo, useRunner } from '../ui';
@@ -33,6 +36,10 @@ export function Medications() {
   const [errors, setErrors] = useState<{ name?: string; dose?: string; times?: string; notes?: string }>({});
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [activeMedicationTab, setActiveMedicationTab] = useState<'today' | 'manage'>('today');
+  const [effectForm, setEffectForm] = useState<MedicationEffectInput>({
+    medicationName: '', date: todayInSaoPaulo(), symptom: '', severity: 2, startedAt: '', resolvedAt: '', notes: '',
+  });
+  const [effectOpen, setEffectOpen] = useState(false);
 
   const taken = useMemo(() => {
     const set = new Set<string>();
@@ -107,6 +114,41 @@ export function Medications() {
     );
   }
 
+  async function onEffectSubmit(event: FormEvent) {
+    event.preventDefault();
+    if (!data.medicationEffectTrackingAvailable) {
+      setFeedback({ kind: 'error', message: 'O histórico estruturado ainda depende da migration do banco; nenhum dado foi salvo.' });
+      return;
+    }
+    if (!effectForm.medicationName.trim() || !effectForm.symptom.trim()) {
+      setFeedback({ kind: 'error', message: 'Informe o medicamento e o sintoma observado.' });
+      return;
+    }
+    if (effectForm.startedAt && effectForm.resolvedAt && new Date(effectForm.resolvedAt) < new Date(effectForm.startedAt)) {
+      setFeedback({ kind: 'error', message: 'A resolução não pode ser anterior ao início do sintoma.' });
+      return;
+    }
+    await run(
+      async () => {
+        await createMedicationEffect(effectForm);
+        setEffectForm({ medicationName: '', date: todayInSaoPaulo(), symptom: '', severity: 2, startedAt: '', resolvedAt: '', notes: '' });
+        setEffectOpen(false);
+        setFeedback({ kind: 'success', message: 'Relato de efeito salvo no seu histórico privado.' });
+      },
+      (message) => setFeedback({ kind: 'error', message }),
+      'Não foi possível registrar o efeito.',
+    );
+  }
+
+  async function removeEffect(id: string) {
+    if (!window.confirm('Excluir este relato de efeito adverso?')) return;
+    await run(
+      async () => setFeedback({ kind: 'success', message: 'Relato excluído.' }).valueOf() && deleteMedicationEffect(id),
+      (message) => setFeedback({ kind: 'error', message }),
+      'Não foi possível excluir o relato.',
+    );
+  }
+
   async function toggle(med: Medication, time: string, value: boolean) {
     await run(
       async () => {
@@ -134,6 +176,61 @@ export function Medications() {
 
       {loadError && <p className="ft-feedback ft-feedback-error" role="alert">{loadError}</p>}
       {loading && <p className="ft-feedback" role="status">Carregando seus medicamentos…</p>}
+
+      <section className="ft-card" aria-labelledby="effects-title">
+        <div className="ft-section-heading">
+          <div className="ft-section-mark"><Pill size={19} aria-hidden="true" /></div>
+          <div><p className="ft-kicker">ACOMPANHAMENTO DE SEGURANÇA</p><h2 id="effects-title">Histórico de efeitos e sintomas</h2></div>
+          <Button variant="outline" onClick={() => setEffectOpen((v) => !v)}>{effectOpen ? 'Fechar' : 'Registrar relato'}</Button>
+        </div>
+        <p>Registre o que você percebeu durante o tratamento para conversar com o profissional de saúde. Este diário não determina a causa do sintoma nem substitui orientação médica.</p>
+        {!data.medicationEffectTrackingAvailable && <p className="ft-feedback" role="status">A estrutura do banco está preparada no código, mas ainda não foi ativada. Seus registros não serão enviados até a migration ser aplicada e validada.</p>}
+        {effectOpen && <form className="ft-editor" onSubmit={onEffectSubmit} noValidate>
+          <div className="ft-form-grid">
+            <Field id="effect-medication" label="Medicamento / caneta" className="ft-field">
+              <input id="effect-medication" className="input" maxLength={120} list="known-medications" value={effectForm.medicationName} onChange={(e) => setEffectForm((v) => ({ ...v, medicationName: e.target.value }))} required />
+              <datalist id="known-medications">{data.medications.map((m) => <option key={m.id} value={m.name} />)}</datalist>
+            </Field>
+            <Field id="effect-date" label="Data do relato" className="ft-field">
+              <input id="effect-date" className="input" type="date" value={effectForm.date} onChange={(e) => setEffectForm((v) => ({ ...v, date: e.target.value }))} required />
+            </Field>
+          </div>
+          <div className="ft-form-grid">
+            <Field id="effect-symptom" label="Sintoma observado" className="ft-field">
+              <input id="effect-symptom" className="input" maxLength={120} placeholder="Ex.: náusea, dor de cabeça" value={effectForm.symptom} onChange={(e) => setEffectForm((v) => ({ ...v, symptom: e.target.value }))} required />
+            </Field>
+            <Field id="effect-severity" label="Intensidade (1 leve – 5 muito forte)" className="ft-field">
+              <select id="effect-severity" className="input" value={effectForm.severity} onChange={(e) => setEffectForm((v) => ({ ...v, severity: Number(e.target.value) }))}>
+                <option value={1}>1 — Leve</option><option value={2}>2 — Moderada</option><option value={3}>3 — Forte</option><option value={4}>4 — Muito forte</option><option value={5}>5 — Extremamente forte</option>
+              </select>
+            </Field>
+          </div>
+          <div className="ft-form-grid">
+            <Field id="effect-start" label="Quando começou" optional className="ft-field">
+              <input id="effect-start" className="input" type="datetime-local" value={effectForm.startedAt} onChange={(e) => setEffectForm((v) => ({ ...v, startedAt: e.target.value }))} />
+            </Field>
+            <Field id="effect-resolved" label="Quando passou (se passou)" optional className="ft-field">
+              <input id="effect-resolved" className="input" type="datetime-local" value={effectForm.resolvedAt} onChange={(e) => setEffectForm((v) => ({ ...v, resolvedAt: e.target.value }))} />
+            </Field>
+          </div>
+          <Field id="effect-notes" label="Observações" optional className="ft-field">
+            <textarea id="effect-notes" className="input" maxLength={1000} rows={3} value={effectForm.notes} onChange={(e) => setEffectForm((v) => ({ ...v, notes: e.target.value }))} />
+          </Field>
+          <div className="ft-form-actions"><Button type="submit" disabled={busy || !data.medicationEffectTrackingAvailable}>Salvar relato</Button></div>
+        </form>}
+        {data.medicationEffectTrackingAvailable && data.medicationEffectLogs.length === 0 && <p className="ft-empty">Nenhum relato registrado até agora.</p>}
+        {data.medicationEffectTrackingAvailable && data.medicationEffectLogs.map((effect) => (
+          <div className="ft-favorite-row" key={effect.id}>
+            <div>
+              <strong>{effect.symptom} · intensidade {effect.severity}/5</strong>
+              <span>{effect.date} · {effect.medicationName}{effect.resolvedAt ? ' · resolução registrada' : ' · sem resolução registrada'}</span>
+              {effect.notes && <p>{effect.notes}</p>}
+            </div>
+            <Button variant="ghost" size="sm" disabled={busy} onClick={() => void removeEffect(effect.id)}><Trash2 aria-hidden="true" /> Excluir</Button>
+          </div>
+        ))}
+        <p className="ft-privacy-note">Procure atendimento urgente se houver sintomas graves ou piora rápida. O app não classifica emergências nem recomenda alterar ou suspender doses.</p>
+      </section>
 
       <div className="progressive-tabs" role="tablist" aria-label="Seções de medicamentos">
         <button type="button" role="tab" aria-selected={activeMedicationTab === 'today'} aria-controls="med-panel-today" className={activeMedicationTab === 'today' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveMedicationTab('today')}><Check size={17} aria-hidden="true" /> Doses do dia</button>

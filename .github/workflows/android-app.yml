@@ -38,12 +38,16 @@ jobs:
             tail -30 build.log
             exit 1
           fi
-      - name: Mostrar fingerprint da assinatura
+      - name: Conferir fingerprint da assinatura
         run: |
           APK=$(ls android-twa/app/build/outputs/apk/release/*.apk | head -1)
+          APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
+          SIG=$("$APKSIGNER" verify --print-certs "$APK" | grep "SHA-256 digest" | head -1 | sed 's/.*: //' | tr 'a-f' 'A-F')
+          EXPECTED=$(grep -o '[0-9A-F:]\{95\}' public/.well-known/assetlinks.json | head -1 | tr -d ':')
           echo "APK: $APK"
-          keytool -printcert -jarfile "$APK" | grep "SHA256:"
-          grep -o '"[0-9A-F:]\{95\}"' public/.well-known/assetlinks.json
+          echo "Assinatura do APK: $SIG"
+          echo "assetlinks.json:   $EXPECTED"
+          if [ "$SIG" != "$EXPECTED" ]; then echo "::error::Fingerprint do APK diferente do assetlinks.json"; exit 1; fi
       - uses: actions/upload-artifact@v7
         with:
           name: sistcs-leve-app

@@ -73,6 +73,20 @@ export interface MedicationLog {
   time: string;
 }
 
+export interface MedicationEffectInput {
+  medicationName: string;
+  date: string;
+  symptom: string;
+  severity: number;
+  startedAt: string;
+  resolvedAt: string;
+  notes: string;
+}
+export interface MedicationEffectLog extends MedicationEffectInput {
+  id: string;
+  createdAt: string;
+}
+
 export type MealType = 'breakfast' | 'lunch' | 'snack' | 'dinner' | 'other';
 export type NutritionSource = 'user-reported' | 'user-estimated';
 
@@ -123,6 +137,8 @@ export interface AppData {
   weightEntries: WeightEntry[];
   medications: Medication[];
   medicationLogs: MedicationLog[];
+  medicationEffectLogs: MedicationEffectLog[];
+  medicationEffectTrackingAvailable: boolean;
   progressPhotos: ProgressPhoto[];
   fastingEntries: FastingEntry[];
   exerciseEntries: ExerciseEntry[];
@@ -137,6 +153,8 @@ export const EMPTY_DATA: AppData = {
   weightEntries: [],
   medications: [],
   medicationLogs: [],
+  medicationEffectLogs: [],
+  medicationEffectTrackingAvailable: false,
   progressPhotos: [],
   fastingEntries: [],
   exerciseEntries: [],
@@ -319,6 +337,20 @@ function medicationLogFromRow(r: Row): MedicationLog {
   return { id: r.id, medicationId: r.medication_id, date: r.log_date, time: r.scheduled_time ?? '' };
 }
 
+function medicationEffectFromRow(r: Row): MedicationEffectLog {
+  return {
+    id: r.id,
+    medicationName: r.medication_name,
+    date: r.event_date,
+    symptom: r.symptom,
+    severity: num(r.severity),
+    startedAt: r.started_at ?? '',
+    resolvedAt: r.resolved_at ?? '',
+    notes: r.notes ?? '',
+    createdAt: r.created_at,
+  };
+}
+
 function fail(error: { message: string } | null, fallback: string): asserts error is null {
   if (error) {
     console.error(error);
@@ -336,7 +368,7 @@ function isMissingRelation(error:{code?:string;message?:string}|null|undefined,t
 /* ---------- leitura ---------- */
 
 export async function loadAll(userId: string): Promise<AppData> {
-  const [profile, foods, favorites, water, weights, meds, medLogs, photos, fasts, exercises] = await Promise.all([
+  const [profile, foods, favorites, water, weights, meds, medLogs, photos, fasts, exercises, effects] = await Promise.all([
     supabase.from('profiles').select('*').eq('user_id', userId).maybeSingle(),
     supabase.from('food_entries').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
     supabase.from('favorite_foods').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
@@ -347,6 +379,7 @@ export async function loadAll(userId: string): Promise<AppData> {
     supabase.from('progress_photos').select('*').eq('user_id', userId).order('taken_on', { ascending: false }).order('created_at', { ascending: false }),
     supabase.from('fasting_entries').select('*').eq('user_id', userId).order('started_at', { ascending: false }).limit(200),
     supabase.from('exercise_entries').select('*').eq('user_id', userId).order('entry_date', { ascending: false }).order('created_at', { ascending: false }).limit(500),
+    supabase.from('medication_effect_logs').select('*').eq('user_id', userId).order('event_date', { ascending: false }).order('created_at', { ascending: false }).limit(500),
   ]);
   fail(profile.error, 'Não foi possível carregar o perfil.');
   fail(foods.error, 'Não foi possível carregar os alimentos.');
@@ -359,6 +392,8 @@ export async function loadAll(userId: string): Promise<AppData> {
   fail(fasts.error, 'Não foi possível carregar os jejuns.');
   const exerciseTableMissing = isMissingRelation(exercises.error, 'exercise_entries');
   if (exercises.error && !exerciseTableMissing) fail(exercises.error, 'Não foi possível carregar os exercícios.');
+  const effectsTableMissing = isMissingRelation(effects.error, 'medication_effect_logs');
+  if (effects.error && !effectsTableMissing) fail(effects.error, 'Não foi possível carregar o histórico de efeitos.');
   return {
     profile: profile.data ? profileFromRow(profile.data) : null,
     foodEntries: (foods.data ?? []).map(foodFromRow),
@@ -367,6 +402,8 @@ export async function loadAll(userId: string): Promise<AppData> {
     weightEntries: (weights.data ?? []).map(weightFromRow),
     medications: (meds.data ?? []).map(medicationFromRow),
     medicationLogs: (medLogs.data ?? []).map(medicationLogFromRow),
+    medicationEffectLogs: effectsTableMissing ? [] : (effects.data ?? []).map(medicationEffectFromRow),
+    medicationEffectTrackingAvailable: !effectsTableMissing,
     progressPhotos: (photos.data ?? []).map(photoFromRow),
     fastingEntries: (fasts.data ?? []).map(fastingFromRow),
     exerciseEntries: exerciseTableMissing ? [] : (exercises.data ?? []).map(exerciseFromRow),
@@ -558,6 +595,33 @@ export async function deleteMedication(id: string) {
   fail(error, 'Não foi possível excluir o medicamento.');
 }
 
+export async function createMedicationEffect(input: MedicationEffectInput): Promise<MedicationEffectLog> {
+  const medicationName = input.medicationName.trim();
+  const symptom = input.symptom.trim();
+  const notes = input.notes.trim();
+  if (!medicationName || medicationName.length > 120) throw new Error('Informe o medicamento (até 120 caracteres).');
+  if (!symptom || symptom.length > 120) throw new Error('Informe o sintoma (até 120 caracteres).');
+  if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(input.date)) throw new Error('Informe uma data válida.');
+  if (!Number.isInteger(input.severity) || input.severity < 1 || input.severity > 5) throw new Error('A intensidade deve ficar entre 1 e 5.');
+  if (notes.length > 1000) throw new Error('Use até 1000 caracteres nas observações.');
+  const { data, error } = await supabase.from('medication_effect_logs').insert({
+    medication_name: medicationName,
+    event_date: input.date,
+    symptom,
+    severity: input.severity,
+    started_at: input.startedAt ? new Date(input.startedAt).toISOString() : null,
+    resolved_at: input.resolvedAt ? new Date(input.resolvedAt).toISOString() : null,
+    notes,
+  }).select().single();
+  fail(error, 'Não foi possível registrar o efeito. Confirme se a migration de histórico de efeitos foi aplicada.');
+  return medicationEffectFromRow(data);
+}
+
+export async function deleteMedicationEffect(id: string) {
+  const { error } = await supabase.from('medication_effect_logs').delete().eq('id', id);
+  fail(error, 'Não foi possível excluir o registro de efeito.');
+}
+
 /** Marca ou desmarca uma dose (medicamento + data + horário). */
 export async function setMedicationTaken(medicationId: string, date: string, time: string, taken: boolean) {
   if (taken) {
@@ -686,6 +750,7 @@ export async function clearAllUserData(userId: string) {
   }
   const tables = [
     'health_activity_records',
+    'medication_effect_logs',
     'exercise_entries',
     'fasting_entries',
     'progress_photos',
@@ -699,7 +764,7 @@ export async function clearAllUserData(userId: string) {
   ];
   for (const table of tables) {
     const { error } = await supabase.from(table).delete().eq('user_id', userId);
-    if ((table === 'exercise_entries' || table === 'health_activity_records') && isMissingRelation(error, table)) continue;
+    if ((table === 'exercise_entries' || table === 'health_activity_records' || table === 'medication_effect_logs') && isMissingRelation(error, table)) continue;
     fail(error, 'Não foi possível apagar os dados.');
   }
 }

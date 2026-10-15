@@ -103,7 +103,7 @@ const blankFood = (date: string): FoodForm => ({
 function foodToForm(entry: FoodEntry): FoodForm {
   // Older or partially populated records must remain editable instead of
   // throwing before the editor's open state can render.
-  const n = entry.nutrientsPerPortion ?? {};
+  const n = (entry.nutrientsPerPortion ?? {}) as Partial<NonNullable<FoodEntry['nutrientsPerPortion']>>;
   const safeNumber = (value: unknown, fallback: number) =>
     typeof value === 'number' && Number.isFinite(value) ? value : fallback;
   const validMeals: MealType[] = ['breakfast', 'lunch', 'snack', 'dinner', 'other'];

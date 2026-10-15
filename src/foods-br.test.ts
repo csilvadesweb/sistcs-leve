@@ -502,3 +502,36 @@ describe('estimativas brasileiras comuns (estimate-br2-*)', () => {
     expect(searchLocal('refrigerante de cola').some((food) => food.basis === '100ml')).toBe(true);
   });
 });
+
+describe('estimativas brasileiras (lote 3) e internacionais', () => {
+  const brazilian = FOODS_BR.filter((food) => food.code?.startsWith('estimate-br3-'));
+  const international = FOODS_BR.filter((food) => food.code?.startsWith('estimate-intl-'));
+  it('têm volume mínimo, códigos únicos e rótulo de estimativa', () => {
+    expect(brazilian.length).toBeGreaterThanOrEqual(60);
+    expect(international.length).toBeGreaterThanOrEqual(60);
+    const all = [...brazilian, ...international];
+    expect(new Set(all.map((food) => food.code)).size).toBe(all.length);
+    for (const food of all) {
+      expect(food.origin).toBe('estimate');
+      expect(food.name).toMatch(/\(estimativa\)$/);
+      expect(food.units?.length ?? 0).toBeGreaterThan(0);
+    }
+  });
+  it('têm calorias coerentes com os macronutrientes (±12%)', () => {
+    for (const food of [...brazilian, ...international]) {
+      const atwater = 4 * food.protein + 4 * food.carbs + 9 * food.fat;
+      expect(Math.abs(atwater - food.kcal) / food.kcal, food.name).toBeLessThanOrEqual(0.12);
+    }
+  });
+  it('não repetem nomes do catálogo (ignorando "(estimativa)")', () => {
+    const names = FOODS_BR.map((food) => food.name.replace(/\s*\(estimativa[^)]*\)\s*$/i, '').trim().toLowerCase());
+    for (const food of [...brazilian, ...international]) {
+      const base = food.name.replace(/\s*\(estimativa\)\s*$/, '').trim().toLowerCase();
+      expect(names.filter((name) => name === base).length, food.name).toBe(1);
+    }
+  });
+  it('são encontradas pela busca local', () => {
+    expect(searchLocal('sushi nigiri').some((food) => food.code === 'estimate-intl-sushi-nigiri-de-salmao')).toBe(true);
+    expect(searchLocal('espetinho de carne').some((food) => food.code === 'estimate-br3-espetinho-de-carne')).toBe(true);
+  });
+});

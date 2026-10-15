@@ -10,7 +10,7 @@ import type { FoodPer100 } from './foods-br';
  */
 export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
   {
-    name: "Manteiga batida, com sal",
+    name: "Manteiga batida com sal",
     aliases: ["BUTTER, WHIPPED, WITH SALT"],
     kcal: 718, protein: 0.49, carbs: 2.87, fat: 78.3, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -55,7 +55,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Queijo processado, american, fortificado with vitamina d",
+    name: "Queijo, processado, american, fort com vitamina D",
     aliases: ["CHEESE, PAST PROCESS, AMERICAN, FORT WITH VITAMIN D"],
     kcal: 366, protein: 18.13, carbs: 4.78, fat: 30.71, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -64,7 +64,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Creme líquido, leve whipping",
+    name: "Creme líquido leve para bater",
     aliases: ["CREAM, FLUID, LT WHIPPING"],
     kcal: 292, protein: 2.17, carbs: 2.96, fat: 30.91, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -73,7 +73,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Leite com gordura vegetal e óleo de ácido láurico",
+    name: "Leite, filled, líquido, com lauric acid óleo",
     aliases: ["MILK, FILLED, FLUID, WITH LAURIC ACID OIL"],
     kcal: 63, protein: 3.33, carbs: 4.74, fat: 3.4, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -82,7 +82,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cobertura para sobremesa, semissólido, frz",
+    name: "Cobertura para sobremesa, semissólido, congelado",
     aliases: ["DESSERT TOPPING, SEMI SOLID, FRZ"],
     kcal: 318, protein: 1.25, carbs: 23.05, fat: 25.31, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -91,7 +91,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Leite com pouca gordura, fluid, 1% gordura do leite, com adição de vitamina A and vitamina d",
+    name: "Leite com pouca gordura, líquido, 1% gordura do leite, com adição de vitamina A e vitamina D",
     aliases: ["MILK, LOWFAT, FLUID, 1% MILKFAT, WITH ADDED VIT A AND VITAMIN D"],
     kcal: 42, protein: 3.37, carbs: 4.99, fat: 0.97, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -100,7 +100,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Leite em pó, integral, com adição de vitamina d",
+    name: "Leite, seco, integral, com adição de vitamina D",
     aliases: ["MILK, DRY, WHL, WITH ADDED VITAMIN D"],
     kcal: 496, protein: 26.32, carbs: 38.42, fat: 26.71, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -109,7 +109,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Leite com chocolate, fluid, comm, gordura reduzida",
+    name: "Leite com chocolate, líquido, comercial, gordura reduzida",
     aliases: ["MILK, CHOC, FLUID, COMM, RED FAT"],
     kcal: 76, protein: 2.99, carbs: 12.13, fat: 1.9, fiber: 0.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -118,7 +118,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Leite-shake espesso baunilha",
+    name: "Leite-shake, espesso baunilha",
     aliases: ["MILK SHAKES, THICK VANILLA"],
     kcal: 112, protein: 3.86, carbs: 17.75, fat: 3.03, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -127,7 +127,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Iogurte de baunilha, com pouca gordura, 11 gramas proteísódio por 8 oz",
+    name: "Iogurte de baunilha, com pouca gordura, 11 gramas proteína por 8 oz",
     aliases: ["YOGURT, VANILLA, LOFAT, 11 GRAMS PROT PER 8 OZ"],
     kcal: 85, protein: 4.93, carbs: 13.8, fat: 1.25, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -136,7 +136,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gema de ovo, cru, frz, adoçado, past",
+    name: "Gema de ovo, cru, congelado, sugared, pasteurizado",
     aliases: ["EGG, YOLK, RAW, FRZ, SUGARED, PAST"],
     kcal: 307, protein: 13.87, carbs: 10.95, fat: 22.82, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -145,7 +145,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Clara de ovo, desidratado, flakes, stabilized, glucose reduzido",
+    name: "Clara de ovo, desidratado, flocos, estabilizado, glicose reduzido",
     aliases: ["EGG, WHITE, DRIED, FLAKES, STABILIZED, GLUCOSE RED"],
     kcal: 351, protein: 76.92, carbs: 4.17, fat: 0.04, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -154,7 +154,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Leite desnatado, fluid, sem adição de vitamina A and vitamina D (sem gordura or desnatado)",
+    name: "Leite desnatado, líquido, sem adição de vitamina A e vitamina D (sem gordura ou desnatado)",
     aliases: ["MILK, NONFAT, FLUID, WITHOUT ADDED VIT A AND VIT D (FAT FREE OR SKIM)"],
     kcal: 34, protein: 3.37, carbs: 4.96, fat: 0.08, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -163,7 +163,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gema de ovo, cru, frz, salted, past",
+    name: "Gema de ovo, cru, congelado, salgado, pasteurizado",
     aliases: ["EGG, YOLK, RAW, FRZ, SALTED, PAST"],
     kcal: 275, protein: 14.07, carbs: 1.77, fat: 22.93, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -172,7 +172,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Ovo inteiro, cru, frz, past",
+    name: "Ovo, integral, cru, congelado, pasteurizado",
     aliases: ["EGG, WHL, RAW, FRZ, PAST"],
     kcal: 147, protein: 12.33, carbs: 1.01, fat: 9.95, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -190,7 +190,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Kraft velveeta processado chs creme para barrar",
+    name: "Kraft velveeta processado chs sprd",
     aliases: ["KRAFT VELVEETA PAST PROCESS CHS SPRD"],
     kcal: 303, protein: 16.3, carbs: 9.8, fat: 22, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -199,7 +199,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Queijo, parmesan, dry grated, gordura reduzida",
+    name: "Queijo, parmesan, seco ralado, gordura reduzida",
     aliases: ["CHEESE, PARMESAN, DRY GRATED, RED FAT"],
     kcal: 265, protein: 20, carbs: 1.37, fat: 20, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -208,7 +208,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Iogurte com frutas, com pouca gordura, 9 gramas proteísódio por 8 oz, fortificado with vitamina d",
+    name: "Iogurte, fruta, com pouca gordura, 9 gramas proteína por 8 oz, fort com vitamina D",
     aliases: ["YOGURT, FRUIT, LOFAT, 9 GRAMS PROT PER 8 OZ, FORT WITH VITAMIN D"],
     kcal: 99, protein: 3.98, carbs: 18.64, fat: 1.15, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -226,7 +226,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Ice creme, bar or stk, choc covered",
+    name: "Ice crm, bar ou stk, chocolate covered",
     aliases: ["ICE CRM, BAR OR STK, CHOC COVERED"],
     kcal: 331, protein: 4.1, carbs: 24.5, fat: 24.1, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -235,7 +235,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Nutritional supp for people with diabetes, liq",
+    name: "Nutritional supp for people com diabetes, liq",
     aliases: ["NUTRITIONAL SUPP FOR PEOPLE WITH DIABETES, LIQ"],
     kcal: 88, protein: 4.4, carbs: 11.88, fat: 3.08, fiber: 2.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -244,7 +244,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Queijo creme para barrar, american or cheddar chs base, gordura reduzida",
+    name: "Queijo sprd, american ou cheddar chs base, gordura reduzida",
     aliases: ["CHEESE SPRD, AMERICAN OR CHEDDAR CHS BASE, RED FAT"],
     kcal: 176, protein: 13.41, carbs: 10.71, fat: 8.88, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -262,7 +262,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Iogurte, greek, natural, lowfat",
+    name: "Iogurte, greek, natural, com pouca gordura",
     aliases: ["YOGURT, GREEK, PLN, LOWFAT"],
     kcal: 73, protein: 9.95, carbs: 3.94, fat: 1.92, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -271,7 +271,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Iogurte, greek, baunilha, lowfat",
+    name: "Iogurte, greek, baunilha, com pouca gordura",
     aliases: ["YOGURT, GREEK, VANILLA, LOWFAT"],
     kcal: 95, protein: 8.64, carbs: 9.54, fat: 2.5, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -334,7 +334,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Baunilha extrato, imitação, alcohol",
+    name: "Baunilha extract, imitn, alcohol",
     aliases: ["VANILLA EXTRACT, IMITN, ALCOHOL"],
     kcal: 237, protein: 0.05, carbs: 2.41, fat: 0, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -370,7 +370,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, finger snacks, gerber, graduates, puffs, appl and cinn",
+    name: "Babyfood, finger snacks, gerber, graduates, puffs, appl e cinn",
     aliases: ["BABYFOOD, FINGER SNACKS, GERBER, GRADUATES, PUFFS, APPL AND CINN"],
     kcal: 389, protein: 6.19, carbs: 85.79, fat: 2.3, fiber: 3.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -379,7 +379,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, macaroni and chs, todd",
+    name: "Babyfood, macaroni e chs, todd",
     aliases: ["BABYFOOD, MACARONI AND CHS, TODD"],
     kcal: 82, protein: 3.5, carbs: 11.2, fat: 2.6, fiber: 0.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -388,7 +388,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, dinner, veg and ham, jr",
+    name: "Babyfood, dinner, veg e ham, jr",
     aliases: ["BABYFOOD, DINNER, VEG AND HAM, JR"],
     kcal: 60, protein: 2.02, carbs: 8.64, fat: 1.89, fiber: 1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -397,7 +397,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, dinner, veg, macarrão and chick, jr",
+    name: "Babyfood, dinner, veg, noodles e chick, jr",
     aliases: ["BABYFOOD, DINNER, VEG, NOODLES AND CHICK, JR"],
     kcal: 64, protein: 1.7, carbs: 9.1, fat: 2.2, fiber: 1.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -406,7 +406,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, dinner, macaroni and chs, str",
+    name: "Babyfood, dinner, macaroni e chs, str",
     aliases: ["BABYFOOD, DINNER, MACARONI AND CHS, STR"],
     kcal: 67, protein: 3.14, carbs: 8.95, fat: 2.11, fiber: 0.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -433,7 +433,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, fruta, apricot with tapioca, jr",
+    name: "Babyfood, fruta, apricot com tapioca, jr",
     aliases: ["BABYFOOD, FRUIT, APRICOT WITH TAPIOCA, JR"],
     kcal: 63, protein: 0.3, carbs: 17.3, fat: 0, fiber: 1.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -442,7 +442,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, fruta, prunes with tapioca, without vit c, jr",
+    name: "Babyfood, fruta, prunes com tapioca, sem vit c, jr",
     aliases: ["BABYFOOD, FRUIT, PRUNES WITH TAPIOCA, WITHOUT VIT C, JR"],
     kcal: 70, protein: 0.6, carbs: 18.7, fat: 0.1, fiber: 2.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -451,7 +451,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, fruta, applsauc with banana, jr",
+    name: "Babyfood, fruta, applsauc com banana, jr",
     aliases: ["BABYFOOD, FRUIT, APPLSAUC WITH BANANA, JR"],
     kcal: 66, protein: 0.37, carbs: 16.16, fat: 0.1, fiber: 1.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -460,7 +460,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, fruta, pears and pnappl, str",
+    name: "Babyfood, fruta, pears e pnappl, str",
     aliases: ["BABYFOOD, FRUIT, PEARS AND PNAPPL, STR"],
     kcal: 41, protein: 0.3, carbs: 10.9, fat: 0.1, fiber: 2.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -478,7 +478,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, juc, laranja and pnappl",
+    name: "Babyfood, juc, laranja e pnappl",
     aliases: ["BABYFOOD, JUC, ORANGE AND PNAPPL"],
     kcal: 48, protein: 0.5, carbs: 11.7, fat: 0.1, fiber: 0.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -487,7 +487,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, crl, oatmeal, dry fortificado",
+    name: "Babyfood, crl, oatmeal, seco fort",
     aliases: ["BABYFOOD, CRL, OATMEAL, DRY FORT"],
     kcal: 394, protein: 10.99, carbs: 73.48, fat: 6.36, fiber: 7.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -496,7 +496,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, oatmeal crl with fruta, dry, instantâneo, todd fortificado",
+    name: "Babyfood, oatmeal crl com fruta, seco, inst, todd fort",
     aliases: ["BABYFOOD, OATMEAL CRL WITH FRUIT, DRY, INST, TODD FORT"],
     kcal: 402, protein: 10.5, carbs: 74.1, fat: 7.05, fiber: 7.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -523,7 +523,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, juc, fruta punch, with ca",
+    name: "Babyfood, juc, fruta punch, com ca",
     aliases: ["BABYFOOD, JUC, FRUIT PUNCH, WITH CA"],
     kcal: 52, protein: 0.2, carbs: 12.7, fat: 0.1, fiber: 0.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -532,7 +532,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, veg, mistura veg str",
+    name: "Babyfood, veg, mix veg str",
     aliases: ["BABYFOOD, VEG, MIX VEG STR"],
     kcal: 36, protein: 1, carbs: 8.25, fat: 0.5, fiber: 1.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -550,7 +550,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, crl, arroz, prep with integral leite",
+    name: "Babyfood, crl, arroz, prep com integral leite",
     aliases: ["BABYFOOD, CRL, RICE, PREP WITH WHL MILK"],
     kcal: 85, protein: 3.45, carbs: 10.31, fat: 3.38, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -559,7 +559,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Inf formula, mead johnson, enfamillipil, with irn, pdr, with ara and dha",
+    name: "Inf formula, mead johnson, enfamillipil, com irn, pdr, com ara e dha",
     aliases: ["INF FORMULA, MEAD JOHNSON, ENFAMILLIPIL, WITH IRN, PDR, WITH ARA AND DHA"],
     kcal: 511, protein: 10.8, carbs: 56.2, fat: 27, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -568,7 +568,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Child formula, mead johnson, portagen, with iron, pdr, not recon",
+    name: "Child formula, mead johnson, portagen, com iron, pdr, not recon",
     aliases: ["CHILD FORMULA, MEAD JOHNSON, PORTAGEN, WITH IRON, PDR, NOT RECON"],
     kcal: 483, protein: 16.5, carbs: 54.8, fat: 22, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -577,7 +577,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Inf formula, me john, enfa, lacf lip, with iro, pow, with ar an dh",
+    name: "Inf formula, me john, enfa, lacf lip, com iro, pow, com ar an dh",
     aliases: ["INF FORMULA, ME JOHN, ENFA, LACF LIP, WITH IRO, POW, WITH AR AN DH"],
     kcal: 521, protein: 10.9, carbs: 56.3, fat: 28, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -586,7 +586,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Inf formula, abbo nutr, simila, isomi, with iron, pdr, not recon",
+    name: "Inf formula, abbo nutr, simila, isomi, com iron, pdr, not recon",
     aliases: ["INF FORMULA, ABBO NUTR, SIMILA, ISOMI, WITH IRON, PDR, NOT RECON"],
     kcal: 517, protein: 12.6, carbs: 53.57, fat: 28.09, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -595,7 +595,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Inf formula, abbott nutr, similac, with iron, pdr, not recon",
+    name: "Inf formula, abbott nutr, similac, com iron, pdr, not recon",
     aliases: ["INF FORMULA, ABBOTT NUTR, SIMILAC, WITH IRON, PDR, NOT RECON"],
     kcal: 522, protein: 10.89, carbs: 54.73, fat: 28.87, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -604,7 +604,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Inf form, mead john, next step, pros lipil, pdr, with ara and dha",
+    name: "Inf form, mead john, next step, pros lipil, pdr, com ara e dha",
     aliases: ["INF FORM, MEAD JOHN, NEXT STEP, PROS LIPIL, PDR, WITH ARA AND DHA"],
     kcal: 480, protein: 15.6, carbs: 57.1, fat: 21, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -613,7 +613,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Inf formula, nestle, good start 2 essentials, with iron, pdr",
+    name: "Inf formula, nestle, good start 2 essentials, com iron, pdr",
     aliases: ["INF FORMULA, NESTLE, GOOD START 2 ESSENTIALS, WITH IRON, PDR"],
     kcal: 471, protein: 12.2, carbs: 62.23, fat: 19.3, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -631,7 +631,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Inf form, abbot nut, simil neosu, rtf, with ara and dha",
+    name: "Inf form, abbot nut, simil neosu, rtf, com ara e dha",
     aliases: ["INF FORM, ABBOT NUT, SIMIL NEOSU, RTF, WITH ARA AND DHA"],
     kcal: 69, protein: 1.92, carbs: 6.94, fat: 3.77, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -640,7 +640,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Inf formula, abbo nutr, simil, isomil, advance with iron, rtf",
+    name: "Inf formula, abbo nutr, simil, isomil, advance com iron, rtf",
     aliases: ["INF FORMULA, ABBO NUTR, SIMIL, ISOMIL, ADVANCE WITH IRON, RTF"],
     kcal: 66, protein: 1.61, carbs: 6.7, fat: 3.59, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -649,7 +649,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Infform, meadjohnson, enfamil gentlease lipil, with iron, prepfrpdr",
+    name: "Infform, meadjohnson, enfamil gentlease lipil, com iron, prepfrpdr",
     aliases: ["INFFORM, MEADJOHNSON, ENFAMIL GENTLEASE LIPIL, WITH IRON, PREPFRPDR"],
     kcal: 63, protein: 1.52, carbs: 6.39, fat: 3.5, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -685,7 +685,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Salada drsng, 1000 island, comm, tradicional",
+    name: "Salad drsng, 1000 island, comercial, reg",
     aliases: ["SALAD DRSNG, 1000 ISLAND, COMM, REG"],
     kcal: 379, protein: 1.09, carbs: 14.64, fat: 35.06, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -694,7 +694,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Salada drsng, mayo, imitação, soybn",
+    name: "Salad drsng, mayo, imitn, soybn",
     aliases: ["SALAD DRSNG, MAYO, IMITN, SOYBN"],
     kcal: 232, protein: 0.3, carbs: 16, fat: 19.2, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -703,7 +703,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Óleo, pnut, salada or cooking",
+    name: "Óleo, pnut, salad ou cooking",
     aliases: ["OIL, PNUT, SALAD OR COOKING"],
     kcal: 884, protein: 0, carbs: 0, fat: 100, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -712,7 +712,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Salada drsng, italian drsng, comm, tradicional",
+    name: "Salad drsng, italian drsng, comercial, reg",
     aliases: ["SALAD DRSNG, ITALIAN DRSNG, COMM, REG"],
     kcal: 240, protein: 0.41, carbs: 12.12, fat: 21.12, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -721,7 +721,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Salada drsng, italian drsng, gordura reduzida, sem sal",
+    name: "Salad drsng, italian drsng, gordura reduzida, sem sal",
     aliases: ["SALAD DRSNG, ITALIAN DRSNG, RED FAT, WITHOUT SALT"],
     kcal: 76, protein: 0.47, carbs: 4.57, fat: 6.38, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -748,7 +748,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gordura, frango",
+    name: "Fat, frango",
     aliases: ["FAT, CHICKEN"],
     kcal: 900, protein: 0, carbs: 0, fat: 99.8, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -757,7 +757,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gordura vegetal confectionery, cocnt (hydr) and or palm kernel (hydr)",
+    name: "Shortening confectionery, cocnt (hydr) e ou palm kernel (hydr)",
     aliases: ["SHORTENING CONFECTIONERY, COCNT (HYDR) AND OR PALM KERNEL (HYDR)"],
     kcal: 884, protein: 0, carbs: 0, fat: 100, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -766,7 +766,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gordura, duck",
+    name: "Fat, duck",
     aliases: ["FAT, DUCK"],
     kcal: 882, protein: 0, carbs: 0, fat: 99.8, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -775,7 +775,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gordura vegetal, spl purpose for cakes and frostings, soybn (hydr)",
+    name: "Shortening, spl purpose for cakes e frostings, soybn (hydr)",
     aliases: ["SHORTENING, SPL PURPOSE FOR CAKES AND FROSTINGS, SOYBN (HYDR)"],
     kcal: 884, protein: 0, carbs: 0, fat: 100, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -784,7 +784,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gordura vegetal, multipurpose, soybn (hydr) and palm (hydr)",
+    name: "Shortening, multipurpose, soybn (hydr) e palm (hydr)",
     aliases: ["SHORTENING, MULTIPURPOSE, SOYBN (HYDR) AND PALM (HYDR)"],
     kcal: 884, protein: 0, carbs: 0, fat: 100, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -793,7 +793,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Margarina-like, veg óleo creme para barrar, 60% gordura, stk, com sal",
+    name: "Margarine-like, veg óleo sprd, 60% fat, stk, com sal",
     aliases: ["MARGARINE-LIKE, VEG OIL SPRD, 60% FAT, STK, WITH SALT"],
     kcal: 537, protein: 0.12, carbs: 0.69, fat: 60.39, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -802,7 +802,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Margarina-like creme para barrar with iogurte, 70% gordura, stk, com sal",
+    name: "Margarine-like sprd com iogurte, 70% fat, stk, com sal",
     aliases: ["MARGARINE-LIKE SPRD WITH YOGURT, 70% FAT, STK, WITH SALT"],
     kcal: 630, protein: 0.3, carbs: 0.5, fat: 70, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -811,7 +811,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Salada drsng, italian drsng, sem gordura",
+    name: "Salad drsng, italian drsng, sem gordura",
     aliases: ["SALAD DRSNG, ITALIAN DRSNG, FAT-FREE"],
     kcal: 47, protein: 0.97, carbs: 8.75, fat: 0.87, fiber: 0.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -820,7 +820,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Óleo, indus, canola (part hydrog) óleo for deep gordura frying",
+    name: "Óleo, indus, canola (part hydrog) óleo for deep fat frying",
     aliases: ["OIL, INDUS, CANOLA (PART HYDROG) OIL FOR DEEP FAT FRYING"],
     kcal: 884, protein: 0, carbs: 0, fat: 100, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -829,7 +829,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Margarina-like gordura vegetal, indus, soja(part hydr), cttnsd, and soja",
+    name: "Margarine-like shortening, indus, soja(part hydr), cttnsd, e soja",
     aliases: ["MARGARINE-LIKE SHORTENING, INDUS, SOY(PART  HYDR), CTTNSD, AND SOY"],
     kcal: 628, protein: 0, carbs: 0, fat: 71, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -838,7 +838,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Óleo, industrial, soja (parthydr ), palm, icings and fillings",
+    name: "Óleo, industrial, soja (parthydr ), palm, icings e fillings",
     aliases: ["OIL, INDUSTRIAL, SOY (PARTHYDR ), PALM, ICINGS AND FILLINGS"],
     kcal: 884, protein: 0, carbs: 0, fat: 100, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -847,7 +847,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Margarina-like creme para barrar, smart beat super leve without saturated gordura",
+    name: "Margarine-like sprd, smart beat super leve sem saturated fat",
     aliases: ["MARGARINE-LIKE SPRD, SMART BEAT SUPER LT WITHOUT SATURATED FAT"],
     kcal: 158, protein: 0, carbs: 0, fat: 17.1, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -856,7 +856,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Veg óleo creme para barrar, 37% gordura, unspec oils, com sal, com adição de vitamina d",
+    name: "Veg óleo sprd, 37% fat, unspec oils, com sal, com adição de vitamina D",
     aliases: ["VEG OIL SPRD, 37% FAT, UNSPEC OILS, WITH SALT, WITH ADDED VITAMIN D"],
     kcal: 339, protein: 0.51, carbs: 0.66, fat: 37.77, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -874,7 +874,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Maionese, gordura reduzida, with olive óleo",
+    name: "Mayonnaise, gordura reduzida, com olive óleo",
     aliases: ["MAYONNAISE, RED FAT, WITH OLIVE OIL"],
     kcal: 361, protein: 0.37, carbs: 0, fat: 40, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -883,7 +883,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango de corte or fryers, meat and skn, ckd, frito, flr",
+    name: "Frango, broilers ou fryers, meat e skn, cozido, fried, flr",
     aliases: ["CHICKEN, BROILERS OR FRYERS, MEAT AND SKN, CKD, FRIED, FLR"],
     kcal: 269, protein: 28.56, carbs: 3.15, fat: 14.92, fiber: 0.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -892,7 +892,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango de corte or fryers, skn only, ckd, rstd",
+    name: "Frango, broilers ou fryers, skn only, cozido, rstd",
     aliases: ["CHICKEN, BROILERS OR FRYERS, SKN ONLY, CKD, RSTD"],
     kcal: 454, protein: 20.36, carbs: 0, fat: 40.68, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -901,7 +901,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango, heart, all classes, ckd, simmrd",
+    name: "Frango, heart, all classes, cozido, simmrd",
     aliases: ["CHICKEN, HEART, ALL CLASSES, CKD, SIMMRD"],
     kcal: 185, protein: 26.41, carbs: 0.1, fat: 7.92, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -910,7 +910,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango de corte or fryers, dk meat, meat and skn, ckd, frito, flr",
+    name: "Frango, broilers ou fryers, dk meat, meat e skn, cozido, fried, flr",
     aliases: ["CHICKEN, BROILERS OR FRYERS, DK MEAT, MEAT AND SKN, CKD, FRIED, FLR"],
     kcal: 285, protein: 27.22, carbs: 4.08, fat: 16.91, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -919,7 +919,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango de corte or fryers, dk meat, meat only, ckd, frito",
+    name: "Frango, broilers ou fryers, dk meat, meat only, cozido, fried",
     aliases: ["CHICKEN, BROILERS OR FRYERS, DK MEAT, MEAT ONLY, CKD, FRIED"],
     kcal: 239, protein: 28.99, carbs: 2.59, fat: 11.62, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -928,7 +928,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango de corte or fryers, back, meat only, ckd, rstd",
+    name: "Frango, broilers ou fryers, back, meat only, cozido, rstd",
     aliases: ["CHICKEN, BROILERS OR FRYERS, BACK, MEAT ONLY, CKD, RSTD"],
     kcal: 239, protein: 28.19, carbs: 0, fat: 13.16, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -937,7 +937,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango de corte or fryers, breast, meat only, ckd, frito",
+    name: "Frango, broilers ou fryers, breast, meat only, cozido, fried",
     aliases: ["CHICKEN, BROILERS OR FRYERS, BREAST, MEAT ONLY, CKD, FRIED"],
     kcal: 187, protein: 33.44, carbs: 0.51, fat: 4.71, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -946,7 +946,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango de corte or fryers, dk meat, drumstk, meat only, cru",
+    name: "Frango, broilers ou fryers, dk meat, drumstk, meat only, cru",
     aliases: ["CHICKEN, BROILERS OR FRYERS, DK MEAT, DRUMSTK, MEAT ONLY, RAW"],
     kcal: 116, protein: 19.41, carbs: 0, fat: 3.71, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -955,7 +955,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango de corte or fryers, leg, meat and skn, ckd, stwd",
+    name: "Frango, broilers ou fryers, leg, meat e skn, cozido, stwd",
     aliases: ["CHICKEN, BROILERS OR FRYERS, LEG, MEAT AND SKN, CKD, STWD"],
     kcal: 220, protein: 24.17, carbs: 0, fat: 12.92, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -964,7 +964,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango de corte or fryers, neck, meat only, ckd, frito",
+    name: "Frango, broilers ou fryers, neck, meat only, cozido, fried",
     aliases: ["CHICKEN, BROILERS OR FRYERS, NECK, MEAT ONLY, CKD, FRIED"],
     kcal: 229, protein: 26.87, carbs: 1.77, fat: 11.88, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -973,7 +973,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango de corte or fryers, thigh, meat only, ckd, rstd",
+    name: "Frango, broilers ou fryers, thigh, meat only, cozido, rstd",
     aliases: ["CHICKEN, BROILERS OR FRYERS, THIGH, MEAT ONLY, CKD, RSTD"],
     kcal: 179, protein: 24.76, carbs: 0, fat: 8.15, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -982,7 +982,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango de corte or fryers, wing, meat only, ckd, frito",
+    name: "Frango, broilers ou fryers, wing, meat only, cozido, fried",
     aliases: ["CHICKEN, BROILERS OR FRYERS, WING, MEAT ONLY, CKD, FRIED"],
     kcal: 211, protein: 30.15, carbs: 0, fat: 9.15, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -991,7 +991,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango, roasting, meat only, ckd, rstd",
+    name: "Frango, roasting, meat only, cozido, rstd",
     aliases: ["CHICKEN, ROASTING, MEAT ONLY, CKD, RSTD"],
     kcal: 167, protein: 25.01, carbs: 0, fat: 6.63, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1000,7 +1000,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango, stewing, meat and skn, and giblets and neck, ckd, stwd",
+    name: "Frango, stewing, meat e skn, e giblets e neck, cozido, stwd",
     aliases: ["CHICKEN, STEWING, MEAT AND SKN, AND GIBLETS AND NECK, CKD, STWD"],
     kcal: 214, protein: 24.88, carbs: 0, fat: 11.91, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1009,7 +1009,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango, stewing, leve meat, meat only, ckd, stwd",
+    name: "Frango, stewing, leve meat, meat only, cozido, stwd",
     aliases: ["CHICKEN, STEWING, LT MEAT, MEAT ONLY, CKD, STWD"],
     kcal: 213, protein: 33.04, carbs: 0, fat: 7.98, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1018,7 +1018,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Duck, domesticated, meat and skn, cru",
+    name: "Duck, domesticated, meat e skn, cru",
     aliases: ["DUCK, DOMESTICATED, MEAT AND SKN, RAW"],
     kcal: 404, protein: 11.49, carbs: 0, fat: 39.34, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1027,7 +1027,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Goose, domesticated, meat and skn, ckd, rstd",
+    name: "Goose, domesticated, meat e skn, cozido, rstd",
     aliases: ["GOOSE, DOMESTICATED, MEAT AND SKN, CKD, RSTD"],
     kcal: 305, protein: 25.16, carbs: 0, fat: 21.92, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1045,7 +1045,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peru, integral, meat and skn, cru",
+    name: "Peru, integral, meat e skn, cru",
     aliases: ["TURKEY, WHL, MEAT AND SKN, RAW"],
     kcal: 143, protein: 21.64, carbs: 0.13, fat: 5.64, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1063,7 +1063,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peru from integral, leve meat, meat and skn, cru",
+    name: "Peru from integral, leve meat, meat e skn, cru",
     aliases: ["TURKEY FROM WHL, LT MEAT, MEAT AND SKN, RAW"],
     kcal: 161, protein: 21.96, carbs: 0.15, fat: 7.43, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1072,7 +1072,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peru, all classes, breast, meat and skn, cru",
+    name: "Peru, all classes, breast, meat e skn, cru",
     aliases: ["TURKEY, ALL CLASSES, BREAST, MEAT AND SKN, RAW"],
     kcal: 157, protein: 21.89, carbs: 0, fat: 7.02, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1090,7 +1090,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peru, cnd, meat only, with broth",
+    name: "Peru, enlatado, meat only, com broth",
     aliases: ["TURKEY, CND, MEAT ONLY, WITH BROTH"],
     kcal: 169, protein: 23.68, carbs: 1.47, fat: 6.86, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1108,7 +1108,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango, enlatado, no broth",
+    name: "Frango, canned, no broth",
     aliases: ["CHICKEN, CANNED, NO BROTH"],
     kcal: 185, protein: 25.3, carbs: 0.9, fat: 8.1, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1135,7 +1135,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango de corte or fryers, breast, meat and skn, ckd, rotisserie,",
+    name: "Frango, broilers ou fryers, breast, meat e skn, cozido, rotisserie,",
     aliases: ["CHICKEN, BROILERS OR FRYERS, BREAST, MEAT AND SKN, CKD, ROTISSERIE,"],
     kcal: 184, protein: 27.48, carbs: 0.02, fat: 8.18, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1144,7 +1144,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango, broiler, rotisserie, bbq, breast meat and skn",
+    name: "Frango, broiler, rotisserie, bbq, breast meat e skn",
     aliases: ["CHICKEN, BROILER, ROTISSERIE, BBQ, BREAST MEAT AND SKN"],
     kcal: 175, protein: 26.37, carbs: 0.09, fat: 7.67, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1162,7 +1162,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Emu, top loin, ckd, brld",
+    name: "Emu, top loin, cozido, brld",
     aliases: ["EMU, TOP LOIN, CKD, BRLD"],
     kcal: 152, protein: 29.07, carbs: 0, fat: 3.13, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1180,7 +1180,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Ostrich, tip ckd",
+    name: "Ostrich, tip cozido",
     aliases: ["OSTRICH, TIP CKD"],
     kcal: 145, protein: 28.49, carbs: 0, fat: 2.57, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1189,7 +1189,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Ground peru, 93% ln, 7% gordura, pan-broiled crumbles",
+    name: "Ground peru, 93% ln, 7% fat, pan-broiled crumbles",
     aliases: ["GROUND TURKEY, 93% LN, 7% FAT, PAN-BROILED CRUMBLES"],
     kcal: 213, protein: 27.1, carbs: 0, fat: 11.6, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1198,7 +1198,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango, skn (drumsticks and thighs), cru",
+    name: "Frango, skn (drumsticks e thighs), cru",
     aliases: ["CHICKEN, SKN (DRUMSTICKS AND THIGHS), RAW"],
     kcal: 440, protein: 9.58, carbs: 0.79, fat: 44.23, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1207,7 +1207,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango, dk meat, thigh, meat only, com adição de soln, ckd, rstd",
+    name: "Frango, dk meat, thigh, meat only, com adição de soln, cozido, rstd",
     aliases: ["CHICKEN, DK MEAT, THIGH, MEAT ONLY, WITH ADDED SOLN, CKD, RSTD"],
     kcal: 164, protein: 24.23, carbs: 0, fat: 7.73, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1216,7 +1216,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango, dk meat, thigh, meat and skn, com adição de soln, cru",
+    name: "Frango, dk meat, thigh, meat e skn, com adição de soln, cru",
     aliases: ["CHICKEN, DK MEAT, THIGH, MEAT AND SKN, WITH ADDED SOLN, RAW"],
     kcal: 197, protein: 16.56, carbs: 0, fat: 14.58, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1225,7 +1225,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peru, skn from integral, (light and dark), com adição de soln, rstd",
+    name: "Peru, skn from integral, (light e dark), com adição de soln, rstd",
     aliases: ["TURKEY, SKN FROM WHL, (LIGHT AND DARK), WITH ADDED SOLN, RSTD"],
     kcal: 451, protein: 22.15, carbs: 0, fat: 40.31, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1234,7 +1234,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peru, integral, meat and skn, com adição de soln, rstd",
+    name: "Peru, integral, meat e skn, com adição de soln, rstd",
     aliases: ["TURKEY, WHL, MEAT AND SKN, WITH ADDED SOLN, RSTD"],
     kcal: 176, protein: 26.09, carbs: 0, fat: 8.01, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1243,7 +1243,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peru, skn, from rtl parts, from dk meat, ckd, rstd",
+    name: "Peru, skn, from rtl parts, from dk meat, cozido, rstd",
     aliases: ["TURKEY, SKN, FROM RTL PARTS, FROM DK MEAT, CKD, RSTD"],
     kcal: 414, protein: 24.58, carbs: 0, fat: 35.03, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1252,7 +1252,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peru, rtl parts, drumstk, meat only, ckd, rstd",
+    name: "Peru, rtl parts, drumstk, meat only, cozido, rstd",
     aliases: ["TURKEY, RTL PARTS, DRUMSTK, MEAT ONLY, CKD, RSTD"],
     kcal: 173, protein: 28.61, carbs: 0, fat: 6.52, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1261,7 +1261,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peru, rtl parts, breast, meat and skn, ckd, rstd",
+    name: "Peru, rtl parts, breast, meat e skn, cozido, rstd",
     aliases: ["TURKEY, RTL PARTS, BREAST, MEAT AND SKN, CKD, RSTD"],
     kcal: 164, protein: 29.01, carbs: 0.05, fat: 5.33, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1279,7 +1279,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Ckn, brler/fryers, brst, sknls, bnls, mt only, w added sln, grelhado",
+    name: "Ckn, brler/fryers, brst, sknls, bnls, mt only, w added sln, grilled",
     aliases: ["CKN, BRLER/FRYERS, BRST, SKNLS, BNLS, MT ONLY, W ADDED SLN, GRILLED"],
     kcal: 148, protein: 29.5, carbs: 0, fat: 3.39, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1288,7 +1288,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, bf noodle, cnd, condensado",
+    name: "Soup, bf noodle, enlatado, condensado",
     aliases: ["SOUP, BF NOODLE, CND, COND"],
     kcal: 67, protein: 3.85, carbs: 7.16, fat: 2.46, fiber: 0.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1297,7 +1297,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, chunky chick noodle, cnd, rts",
+    name: "Soup, chunky chick noodle, enlatado, rts",
     aliases: ["SOUP, CHUNKY CHICK NOODLE, CND, RTS"],
     kcal: 41, protein: 3.09, carbs: 4.46, fat: 1.16, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1306,7 +1306,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's, healthy request, chick with arroz, condensado",
+    name: "Campbell's, healthy request, chick com arroz, condensado",
     aliases: ["CAMPBELL'S, HEALTHY REQUEST, CHICK WITH RICE, COND"],
     kcal: 46, protein: 1.59, carbs: 7.19, fat: 1.19, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1315,7 +1315,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, cogumelo with bf stock, cnd, condensado",
+    name: "Soup, cogumelo com bf stock, enlatado, condensado",
     aliases: ["SOUP, MUSHROOM WITH BF STOCK, CND, COND"],
     kcal: 68, protein: 2.51, carbs: 7.41, fat: 3.21, fiber: 0.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1324,7 +1324,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, creme of batata, cnd, condensado",
+    name: "Soup, crm of batata, enlatado, condensado",
     aliases: ["SOUP, CRM OF POTATO, CND, COND"],
     kcal: 74, protein: 1.51, carbs: 12.79, fat: 1.88, fiber: 1.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1333,7 +1333,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, vegetarian veg, cnd, condensado",
+    name: "Soup, vegetarian veg, enlatado, condensado",
     aliases: ["SOUP, VEGETARIAN VEG, CND, COND"],
     kcal: 59, protein: 1.72, carbs: 9.78, fat: 1.58, fiber: 0.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1342,7 +1342,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's reduzido and clara, chick noodleo's sopa, condensado",
+    name: "Campbell's reduzido e white, chick noodleo's soup, condensado",
     aliases: ["CAMPBELL'S RED AND WHITE, CHICK NOODLEO'S SOUP, COND"],
     kcal: 71, protein: 2.38, carbs: 11.9, fat: 1.98, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1351,7 +1351,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's reduzido and clara, feijão with bacon sopa, condensado",
+    name: "Campbell's reduzido e white, feijão com bacon soup, condensado",
     aliases: ["CAMPBELL'S RED AND WHITE, BEAN WITH BACON SOUP, COND"],
     kcal: 125, protein: 6.25, carbs: 19.53, fat: 2.34, fiber: 6.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1360,7 +1360,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, chick noodle, dry, mistura",
+    name: "Soup, chick noodle, seco, mix",
     aliases: ["SOUP, CHICK NOODLE, DRY, MIX"],
     kcal: 377, protein: 15.42, carbs: 62.32, fat: 6.51, fiber: 3.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1369,7 +1369,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Molho, pizza, cnd, rts",
+    name: "Sauce, pizza, enlatado, rts",
     aliases: ["SAUCE, PIZZA, CND, RTS"],
     kcal: 54, protein: 2.18, carbs: 8.66, fat: 1.15, fiber: 2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1378,7 +1378,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Molho, rts, pimenta, tabasco",
+    name: "Sauce, rts, pepper, tabasco",
     aliases: ["SAUCE, RTS, PEPPER, TABASCO"],
     kcal: 12, protein: 1.29, carbs: 0.8, fat: 0.76, fiber: 0.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1387,7 +1387,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Molho, peixe, ready-to-serve",
+    name: "Sauce, peixe, ready-to-serve",
     aliases: ["SAUCE, FISH, READY-TO-SERVE"],
     kcal: 35, protein: 5.06, carbs: 3.64, fat: 0.01, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1396,7 +1396,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Split pea with ham sopa, cnd, reduzido sódio, prep with h2o or rts",
+    name: "Split pea com ham soup, enlatado, reduzido na, prep com h2o ou rts",
     aliases: ["SPLIT PEA WITH HAM SOUP, CND, RED NA, PREP WITH H2O OR RTS"],
     kcal: 68, protein: 4, carbs: 11.4, fat: 0.7, fiber: 1.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1405,7 +1405,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's reduzido and clara, 25% less sódio tomate sopa, condensado",
+    name: "Campbell's reduzido e white, 25% less na tomate soup, condensado",
     aliases: ["CAMPBELL'S RED AND WHITE, 25% LESS NA TOMATO SOUP, COND"],
     kcal: 73, protein: 1.61, carbs: 16.13, fat: 0, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1414,7 +1414,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Prego massa, chunky garden cogumelo italian sau, rts",
+    name: "Prego pasta, chunky garden cogumelo italian sau, rts",
     aliases: ["PREGO PASTA, CHUNKY GARDEN MUSHROOM ITALIAN SAU, RTS"],
     kcal: 69, protein: 1.54, carbs: 10, fat: 2.31, fiber: 2.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1423,7 +1423,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, clam chowder, new eng, cnd, prep with eq vlm com pouca gordura (2%) leite",
+    name: "Soup, clam chowder, new eng, enlatado, prep com eq vlm com pouca gordura (2%) leite",
     aliases: ["SOUP, CLAM CHOWDER, NEW ENG, CND, PREP WITH EQ VLM LOFAT (2%) MILK"],
     kcal: 61, protein: 3.24, carbs: 7.46, fat: 2.02, fiber: 0.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1432,7 +1432,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Prego massa, tomate, basil and alho ital sau, rts",
+    name: "Prego pasta, tomate, basil e alho ital sau, rts",
     aliases: ["PREGO PASTA, TOMATO, BASIL AND GARLIC ITAL SAU, RTS"],
     kcal: 64, protein: 1.6, carbs: 9.6, fat: 2, fiber: 2.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1441,7 +1441,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, oyster stew, cnd, prep with eq volume leite",
+    name: "Soup, oyster stew, enlatado, prep com eq volume leite",
     aliases: ["SOUP, OYSTER STEW, CND, PREP WITH EQ VOLUME MILK"],
     kcal: 55, protein: 2.51, carbs: 3.99, fat: 3.24, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1450,7 +1450,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Molho, barbecue, kraft, original",
+    name: "Sauce, barbecue, kraft, original",
     aliases: ["SAUCE, BARBECUE, KRAFT, ORIGINAL"],
     kcal: 172, protein: 0.74, carbs: 40.77, fat: 0.62, fiber: 0.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1459,7 +1459,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gravy, campbell's, country estilo creme",
+    name: "Gravy, campbell's, country style crm",
     aliases: ["GRAVY, CAMPBELL'S, COUNTRY STYLE CRM"],
     kcal: 76, protein: 1.69, carbs: 5.08, fat: 5.08, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1468,7 +1468,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's reduzido and clara, creme of brócolis sopa, condensado",
+    name: "Campbell's reduzido e white, crm of broccoli soup, condensado",
     aliases: ["CAMPBELL'S RED AND WHITE, CRM OF BROCCOLI SOUP, COND"],
     kcal: 73, protein: 1.61, carbs: 9.68, fat: 4.03, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1477,7 +1477,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's reduzido and clara, creme of camarão sopa, condensado",
+    name: "Campbell's reduzido e white, crm of shrimp soup, condensado",
     aliases: ["CAMPBELL'S RED AND WHITE, CRM OF SHRIMP SOUP, COND"],
     kcal: 81, protein: 2.42, carbs: 6.45, fat: 4.84, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1486,7 +1486,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's reduzido and clara, goldfish massa with chick",
+    name: "Campbell's reduzido e white, goldfish pasta com chick",
     aliases: ["CAMPBELL'S RED AND WHITE, GOLDFISH PASTA WITH CHICK"],
     kcal: 63, protein: 2.38, carbs: 9.52, fat: 1.59, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1495,7 +1495,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's reduzido and clara, vegetarian veg sopa, condensado",
+    name: "Campbell's reduzido e white, vegetarian veg soup, condensado",
     aliases: ["CAMPBELL'S RED AND WHITE, VEGETARIAN VEG SOUP, COND"],
     kcal: 71, protein: 2.38, carbs: 14.29, fat: 0.4, fiber: 1.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1504,7 +1504,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's chunky soups, bf rib rst potatoes herbs sopa",
+    name: "Campbell's chunky soups, bf rib rst potatoes herbs soup",
     aliases: ["CAMPBELL'S CHUNKY SOUPS, BF RIB RST POTATOES HERBS SOUP"],
     kcal: 44, protein: 2.86, carbs: 6.94, fat: 0.41, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1522,7 +1522,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's chunky soups, healthy request veg sopa",
+    name: "Campbell's chunky soups, healthy request veg soup",
     aliases: ["CAMPBELL'S CHUNKY SOUPS, HEALTHY REQUEST VEG SOUP"],
     kcal: 49, protein: 1.63, carbs: 9.8, fat: 0.41, fiber: 1.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1531,7 +1531,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, chick gumbo, cnd, prep with eq volume h2o",
+    name: "Soup, chick gumbo, enlatado, prep com eq volume h2o",
     aliases: ["SOUP, CHICK GUMBO, CND, PREP WITH EQ VOLUME H2O"],
     kcal: 23, protein: 1.08, carbs: 3.43, fat: 0.59, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1549,7 +1549,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, cogumelo cevada, cnd, prep with eq volume h2o",
+    name: "Soup, cogumelo barley, enlatado, prep com eq volume h2o",
     aliases: ["SOUP, MUSHROOM BARLEY, CND, PREP WITH EQ VOLUME H2O"],
     kcal: 30, protein: 0.77, carbs: 4.8, fat: 0.93, fiber: 0.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1558,7 +1558,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's chunky soups, grelhado steak- steak chili with bns",
+    name: "Campbell's chunky soups, grilled steak- steak chili com bns",
     aliases: ["CAMPBELL'S CHUNKY SOUPS, GRILLED STEAK- STEAK CHILI WITH BNS"],
     kcal: 81, protein: 6.53, carbs: 11.02, fat: 1.22, fiber: 2.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1567,7 +1567,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, peru veg, cnd, prep with eq volume h2o",
+    name: "Soup, peru veg, enlatado, prep com eq volume h2o",
     aliases: ["SOUP, TURKEY VEG, CND, PREP WITH EQ VOLUME H2O"],
     kcal: 30, protein: 1.28, carbs: 3.58, fat: 1.26, fiber: 0.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1576,7 +1576,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's baixo sódio soups, chick with macarrão sopa",
+    name: "Campbell's lo na soups, chick com noodles soup",
     aliases: ["CAMPBELL'S LO NA SOUPS, CHICK WITH NOODLES SOUP"],
     kcal: 52, protein: 3.93, carbs: 5.57, fat: 1.48, fiber: 0.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1585,7 +1585,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's reduzido and clara - microwaveable bowls, tomate sopa",
+    name: "Campbell's reduzido e white - microwaveable bowls, tomate soup",
     aliases: ["CAMPBELL'S RED AND WHITE - MICROWAVEABLE BOWLS, TOMATO SOUP"],
     kcal: 44, protein: 1.22, carbs: 9.8, fat: 0, fiber: 1.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1603,7 +1603,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, ramen noodle, any sabor, dry",
+    name: "Soup, ramen noodle, any flavor, seco",
     aliases: ["SOUP, RAMEN NOODLE, ANY FLAVOR, DRY"],
     kcal: 440, protein: 10.17, carbs: 60.26, fat: 17.59, fiber: 2.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1612,7 +1612,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's sopa on the go, creamy tomate sopa",
+    name: "Campbell's soup on the go, creamy tomate soup",
     aliases: ["CAMPBELL'S SOUP ON THE GO, CREAMY TOMATO SOUP"],
     kcal: 59, protein: 0.98, carbs: 9.84, fat: 1.64, fiber: 0.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1630,7 +1630,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Smart sopa, santa fe milho chowder",
+    name: "Smart soup, santa fe milho chowder",
     aliases: ["SMART SOUP, SANTA FE CORN CHOWDER"],
     kcal: 55, protein: 2, carbs: 11.2, fat: 0.71, fiber: 2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1639,7 +1639,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Molho, pesto, buitoni, pesto with basil, rts, refr",
+    name: "Sauce, pesto, buitoni, pesto com basil, rts, refr",
     aliases: ["SAUCE, PESTO, BUITONI, PESTO WITH BASIL, RTS, REFR"],
     kcal: 418, protein: 9.83, carbs: 10.09, fat: 37.6, fiber: 1.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1648,7 +1648,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, chick milho chowder, chunky, rts, single brand",
+    name: "Soup, chick milho chowder, chunky, rts, single brand",
     aliases: ["SOUP, CHICK CORN CHOWDER, CHUNKY, RTS, SINGLE BRAND"],
     kcal: 99, protein: 3.1, carbs: 7.5, fat: 6.3, fiber: 0.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1657,7 +1657,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, bf and veg, cnd, rts",
+    name: "Soup, bf e veg, enlatado, rts",
     aliases: ["SOUP, BF AND VEG, CND, RTS"],
     kcal: 48, protein: 3.18, carbs: 6.16, fat: 1.16, fiber: 1.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1666,7 +1666,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gravy, instantâneo peru, dry",
+    name: "Gravy, inst peru, seco",
     aliases: ["GRAVY, INST TURKEY, DRY"],
     kcal: 409, protein: 11.72, carbs: 57.56, fat: 14.66, fiber: 3.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1675,7 +1675,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, veg sopa, condensado, baixo sódio, prep with eq volume h2o",
+    name: "Soup, veg soup, condensado, lo na, prep com eq volume h2o",
     aliases: ["SOUP, VEG SOUP, COND, LO NA, PREP WITH EQ VOLUME H2O"],
     kcal: 33, protein: 1.1, carbs: 6.06, fat: 0.45, fiber: 1.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1684,7 +1684,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gravy, meat or poultry, baixo sódio, prep",
+    name: "Gravy, meat ou poultry, lo na, prep",
     aliases: ["GRAVY, MEAT OR POULTRY, LO NA, PREP"],
     kcal: 53, protein: 3.8, carbs: 6.16, fat: 2.4, fiber: 0.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1693,7 +1693,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Healthy request, creme of celery, condensado",
+    name: "Healthy request, crm of celery, condensado",
     aliases: ["HEALTHY REQUEST, CRM OF CELERY, COND"],
     kcal: 56, protein: 0.81, carbs: 9.68, fat: 1.61, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1720,7 +1720,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frango creme para barrar",
+    name: "Frango sprd",
     aliases: ["CHICKEN SPRD"],
     kcal: 158, protein: 18.01, carbs: 4.05, fat: 17.56, fiber: 0.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1729,7 +1729,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Ham, chopped, not enlatado",
+    name: "Ham, chopped, not canned",
     aliases: ["HAM, CHOPPED, NOT CANNED"],
     kcal: 180, protein: 16.5, carbs: 4.2, fat: 10.3, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1738,7 +1738,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Knackwurst knockwurst carne suísódio bf",
+    name: "Knackwurst knockwurst carne suína bf",
     aliases: ["KNACKWURST  KNOCKWURST  PORK  BF"],
     kcal: 307, protein: 11.1, carbs: 3.2, fat: 27.7, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1747,7 +1747,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mortadella, carne bovina, carne suísódio",
+    name: "Mortadella, carne bovina, carne suína",
     aliases: ["MORTADELLA, BEEF, PORK"],
     kcal: 311, protein: 16.37, carbs: 3.05, fat: 25.39, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1756,7 +1756,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pickle and pimiento loaf, carne suísódio",
+    name: "Pickle e pimiento loaf, carne suína",
     aliases: ["PICKLE AND PIMIENTO LOAF, PORK"],
     kcal: 225, protein: 11.23, carbs: 8.46, fat: 15.95, fiber: 1.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1765,7 +1765,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peru sausage, gordura reduzida, brown and serve, ckd",
+    name: "Peru sausage, gordura reduzida, brown e serve, cozido",
     aliases: ["TURKEY SAUSAGE, RED FAT, BROWN AND SERVE, CKD"],
     kcal: 204, protein: 17, carbs: 10.92, fat: 10.3, fiber: 0.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1774,7 +1774,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Defumado link sausage, carne suísódio",
+    name: "Smoked link sausage, carne suína",
     aliases: ["SMOKED LINK SAUSAGE, PORK"],
     kcal: 309, protein: 11.98, carbs: 0.94, fat: 28.23, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1783,7 +1783,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "New england brand sausage, carne suísódio, bf",
+    name: "New england brand sausage, carne suína, bf",
     aliases: ["NEW ENGLAND BRAND SAUSAGE, PORK, BF"],
     kcal: 161, protein: 17.27, carbs: 4.83, fat: 7.58, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1792,7 +1792,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Hormel pillow pak sliced peru pepperoni",
+    name: "Hormel pillow pak fatiado peru pepperoni",
     aliases: ["HORMEL PILLOW PAK SLICED TURKEY PEPPERONI"],
     kcal: 243, protein: 30.99, carbs: 3.78, fat: 11.52, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1801,7 +1801,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Bratwurst veal ckd",
+    name: "Bratwurst veal cozido",
     aliases: ["BRATWURST  VEAL  CKD"],
     kcal: 341, protein: 13.99, carbs: 0, fat: 31.7, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1810,7 +1810,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sausage smmr carne suísódio and bf stks with cheddar chs",
+    name: "Sausage smmr carne suína e bf stks com cheddar chs",
     aliases: ["SAUSAGE  SMMR  PORK AND BF  STKS  WITH CHEDDAR CHS"],
     kcal: 426, protein: 19.43, carbs: 1.82, fat: 37.91, fiber: 0.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1819,7 +1819,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Salami italian carne suísódio",
+    name: "Salami italian carne suína",
     aliases: ["SALAMI  ITALIAN  PORK"],
     kcal: 425, protein: 21.7, carbs: 1.2, fat: 37, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1828,7 +1828,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Kielbasa, polish, peru and bf, defumado",
+    name: "Kielbasa, polish, peru e bf, smoked",
     aliases: ["KIELBASA, POLISH, TURKEY AND BF, SMOKED"],
     kcal: 226, protein: 13.1, carbs: 3.9, fat: 17.6, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1837,7 +1837,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peru clara rotisserie deli cut",
+    name: "Peru white rotisserie deli cut",
     aliases: ["TURKEY  WHITE  ROTISSERIE  DELI CUT"],
     kcal: 112, protein: 13.5, carbs: 7.7, fat: 3, fiber: 0.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1846,7 +1846,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peru sausage, fresco, cru",
+    name: "Peru sausage, frsh, cru",
     aliases: ["TURKEY SAUSAGE, FRSH, RAW"],
     kcal: 155, protein: 18.79, carbs: 0.47, fat: 8.08, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1855,7 +1855,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frankfurter, meat and poultry, cozido, cozido",
+    name: "Frankfurter, meat e poultry, cooked, boiled",
     aliases: ["Frankfurter, meat and poultry, cooked, boiled"],
     kcal: 298, protein: 10.31, carbs: 4.96, fat: 26.28, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1864,7 +1864,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Bologna, meat and poultry",
+    name: "Bologna, meat e poultry",
     aliases: ["BOLOGNA, MEAT AND POULTRY"],
     kcal: 281, protein: 10.34, carbs: 6.31, fat: 23.77, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1882,7 +1882,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, post, cacau pebbles",
+    name: "Cereals rte, post, cocoa pebbles",
     aliases: ["CEREALS RTE, POST, COCOA PEBBLES"],
     kcal: 397, protein: 4.8, carbs: 85.7, fat: 4.1, fiber: 1.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1891,7 +1891,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, post bran flakes",
+    name: "Cereals rte, post bran flocos",
     aliases: ["CEREALS RTE, POST BRAN FLAKES"],
     kcal: 328, protein: 9.9, carbs: 80.5, fat: 2.1, fiber: 18.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1900,7 +1900,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, post, uva-nuts flakes",
+    name: "Cereals rte, post, uva-nuts flocos",
     aliases: ["CEREALS RTE, POST, GRAPE-NUTS FLAKES"],
     kcal: 376, protein: 9.4, carbs: 82, fat: 3.7, fiber: 10.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1909,7 +1909,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, general mills, mel nut chex",
+    name: "Cereals rte, general mills, honey nut chex",
     aliases: ["CEREALS RTE, GENERAL MILLS, HONEY NUT CHEX"],
     kcal: 375, protein: 6.3, carbs: 86.67, fat: 2, fiber: 3.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1936,7 +1936,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals, quaker, milho grits, instantâneo, natural, dry",
+    name: "Cereals, quaker, milho grits, inst, natural, seco",
     aliases: ["CEREALS, QUAKER, CORN GRITS, INST, PLN, DRY"],
     kcal: 343, protein: 7.31, carbs: 78.42, fat: 2.14, fiber: 4.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1945,7 +1945,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals, farina, enriquecido, assorted brands, dry",
+    name: "Cereals, farina, enr, assorted brands, seco",
     aliases: ["CEREALS, FARINA, ENR, ASSORTED BRANDS, DRY"],
     kcal: 360, protein: 11.6, carbs: 73.19, fat: 1.41, fiber: 4.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1954,7 +1954,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals, oats, instantâneo, fortificado, natural, dry",
+    name: "Cereals, oats, inst, fort, natural, seco",
     aliases: ["CEREALS, OATS, INST, FORT, PLN, DRY"],
     kcal: 362, protein: 11.92, carbs: 69.52, fat: 6.9, fiber: 10,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1972,7 +1972,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, arroz, puffed, fortificado",
+    name: "Cereals rte, arroz, puffed, fort",
     aliases: ["CEREALS RTE, RICE, PUFFED, FORT"],
     kcal: 402, protein: 6.3, carbs: 89.8, fat: 0.5, fiber: 1.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1981,7 +1981,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals, farina, unenr, dry",
+    name: "Cereals, farina, unenr, seco",
     aliases: ["CEREALS, FARINA, UNENR, DRY"],
     kcal: 369, protein: 10.6, carbs: 78, fat: 0.5, fiber: 1.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -1990,7 +1990,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, post selects mirtilo morning",
+    name: "Cereals rte, post selects blueberry morning",
     aliases: ["CEREALS RTE, POST SELECTS BLUEBERRY MORNING"],
     kcal: 395, protein: 6.5, carbs: 81.6, fat: 5.3, fiber: 4.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2008,7 +2008,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals, quaker, aveia bran, quaker/mother's aveia bran, dry",
+    name: "Cereals, quaker, aveia bran, quaker/mother's aveia bran, seco",
     aliases: ["CEREALS, QUAKER, OAT BRAN, QUAKER/MOTHER'S OAT BRAN, DRY"],
     kcal: 364, protein: 17.03, carbs: 62.94, fat: 7.97, fiber: 14.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2017,7 +2017,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals, quaker, quaker multigrain oatmeal, prep with h2o, sem sal",
+    name: "Cereals, quaker, quaker multigrain oatmeal, prep com h2o, sem sal",
     aliases: ["CEREALS, QUAKER, QUAKER MULTIGRAIN OATMEAL, PREP WITH H2O, NO SALT"],
     kcal: 61, protein: 2.08, carbs: 13.49, fat: 0.47, fiber: 2.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2026,7 +2026,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, general mills, cacau puffs",
+    name: "Cereals rte, general mills, cocoa puffs",
     aliases: ["CEREALS RTE, GENERAL MILLS, COCOA PUFFS"],
     kcal: 383, protein: 5.6, carbs: 83.7, fat: 5.2, fiber: 5.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2035,7 +2035,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, health valley, fiber 7 flakes",
+    name: "Cereals rte, health valley, fiber 7 flocos",
     aliases: ["CEREALS RTE, HEALTH VALLEY, FIBER 7 FLAKES"],
     kcal: 353, protein: 14.44, carbs: 78.15, fat: 1.41, fiber: 14.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2071,7 +2071,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals, quaker, instantâneo oatmeal, dinosaur eggs, brown açúcar, dry",
+    name: "Cereals, quaker, inst oatmeal, dinosaur eggs, brown açúcar, seco",
     aliases: ["CEREALS, QUAKER, INST OATMEAL, DINOSAUR EGGS, BROWN SUGAR, DRY"],
     kcal: 384, protein: 8.69, carbs: 73.68, fat: 7.59, fiber: 6.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2080,7 +2080,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals, quaker, integral trigo nat crl, dry",
+    name: "Cereals, quaker, integral trigo nat crl, seco",
     aliases: ["CEREALS, QUAKER, WHL WHEAT NAT CRL, DRY"],
     kcal: 333, protein: 11.8, carbs: 74.8, fat: 2, fiber: 9.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2107,7 +2107,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, usda cmdty milho and arroz (includes all brands)",
+    name: "Cereals rte, usda cmdty milho e arroz (includes all brands)",
     aliases: ["CEREALS RTE, USDA CMDTY CORN AND RICE (INCLUDES ALL  BRANDS)"],
     kcal: 378, protein: 6.06, carbs: 86.85, fat: 1.08, fiber: 1.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2116,7 +2116,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, kashi, heart to heart, aveia flakes and bluebry clstrs",
+    name: "Cereals rte, kashi, heart to heart, aveia flocos e bluebry clstrs",
     aliases: ["CEREALS RTE, KASHI, HEART TO HEART, OAT FLAKES AND BLUEBRY CLSTRS"],
     kcal: 376, protein: 10.39, carbs: 80.3, fat: 3.79, fiber: 7.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2125,7 +2125,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, post selects maple noz-pecã crunch",
+    name: "Cereals rte, post selects maple pecan crunch",
     aliases: ["CEREALS RTE, POST SELECTS MAPLE PECAN CRUNCH"],
     kcal: 413, protein: 8.5, carbs: 77.4, fat: 8.7, fiber: 7.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2134,7 +2134,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals, creme of trigo, 2 1/2 minute cook time, dry",
+    name: "Cereals, crm of trigo, 2 1/2 minute cook time, seco",
     aliases: ["CEREALS, CRM OF WHEAT, 2 1/2 MINUTE COOK TIME, DRY"],
     kcal: 355, protein: 11.61, carbs: 71.79, fat: 1.41, fiber: 4.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2161,7 +2161,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, kellogg, kellogg's spl k, cinn noz-pecã",
+    name: "Cereals rte, kellogg, kellogg's spl k, cinn pecan",
     aliases: ["CEREALS RTE, KELLOGG, KELLOGG'S SPL K, CINN PECAN"],
     kcal: 375, protein: 7.5, carbs: 81.2, fat: 6, fiber: 10.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2179,7 +2179,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals, quaker, instantâneo oatmeal, cinn spice, reduzido açúcar",
+    name: "Cereals, quaker, inst oatmeal, cinn spice, reduzido açúcar",
     aliases: ["CEREALS, QUAKER, INST OATMEAL, CINN SPICE, RED SUGAR"],
     kcal: 358, protein: 11.26, carbs: 69.45, fat: 6.11, fiber: 8.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2188,7 +2188,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, general mills, fiber one 80 cal, mel squares",
+    name: "Cereals rte, general mills, fiber one 80 cal, honey squares",
     aliases: ["CEREALS RTE, GENERAL MILLS, FIBER ONE 80 CAL, HONEY SQUARES"],
     kcal: 248, protein: 4.8, carbs: 85.19, fat: 2.59, fiber: 38.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2197,7 +2197,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, kellogg's appl jacks with marshmallows",
+    name: "Cereals rte, kellogg's appl jacks com marshmallows",
     aliases: ["CEREALS RTE, KELLOGG'S APPL JACKS WITH MARSHMALLOWS"],
     kcal: 378, protein: 4.3, carbs: 89.6, fat: 2.8, fiber: 7.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2206,7 +2206,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, general mills, mel nut cheerios, medley crunch",
+    name: "Cereals rte, general mills, honey nut cheerios, medley crunch",
     aliases: ["CEREALS RTE, GENERAL MILLS, HONEY NUT CHEERIOS, MEDLEY CRUNCH"],
     kcal: 387, protein: 9.1, carbs: 79.5, fat: 5.4, fiber: 7.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2224,7 +2224,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals, quaker, weight control instantâneo oatmeal, banana pão",
+    name: "Cereals, quaker, weight control inst oatmeal, banana pão",
     aliases: ["CEREALS, QUAKER, WEIGHT CONTROL INST OATMEAL, BANANA BREAD"],
     kcal: 361, protein: 16.5, carbs: 64.42, fat: 6.16, fiber: 12.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2242,7 +2242,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals, kellogg's spl k nourish, maple brown açúcar crunch, dry",
+    name: "Cereals, kellogg's spl k nourish, maple brown açúcar crunch, seco",
     aliases: ["CEREALS, KELLOGG'S SPL K NOURISH, MAPLE BROWN SUGAR CRUNCH, DRY"],
     kcal: 371, protein: 15.39, carbs: 62.09, fat: 9.89, fiber: 9.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2251,7 +2251,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, kellogg, kellogg's raisin bran with cranberries",
+    name: "Cereals rte, kellogg, kellogg's raisin bran com cranberries",
     aliases: ["CEREALS RTE, KELLOGG, KELLOGG'S RAISIN BRAN WITH CRANBERRIES"],
     kcal: 344, protein: 6.9, carbs: 84.19, fat: 1.5, fiber: 9.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2260,7 +2260,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Apples, dehyd (baixo moist), sulfured, unckd",
+    name: "Apples, dehyd (lo moist), sulfured, unckd",
     aliases: ["APPLES, DEHYD (LO MOIST), SULFURED, UNCKD"],
     kcal: 346, protein: 1.32, carbs: 93.53, fat: 0.58, fiber: 12.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2269,7 +2269,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Maçã juc, frz conc, sem açúcar, undil, without vit c",
+    name: "Maçã juc, congelado conc, sem açúcar, undil, sem vit c",
     aliases: ["APPLE JUC, FRZ CONC, UNSWTND, UNDIL, WITHOUT VIT C"],
     kcal: 166, protein: 0.51, carbs: 41, fat: 0.37, fiber: 0.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2278,7 +2278,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Apricots, cnd, ex leve xarope pk, with skn, sol and liquids",
+    name: "Apricots, enlatado, ex leve syrup pk, com skn, sol e liquids",
     aliases: ["APRICOTS, CND, EX LT SYRUP PK, WITH SKN, SOL AND LIQUIDS"],
     kcal: 49, protein: 0.6, carbs: 12.5, fat: 0.1, fiber: 1.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2287,7 +2287,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Apricots, congelado, adoçado",
+    name: "Apricots, frozen, adoçado",
     aliases: ["APRICOTS, FROZEN, SWEETENED"],
     kcal: 98, protein: 0.7, carbs: 25.1, fat: 0.1, fiber: 2.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2296,7 +2296,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Blackberry juc, cnd",
+    name: "Blackberry juc, enlatado",
     aliases: ["BLACKBERRY JUC, CND"],
     kcal: 38, protein: 0.3, carbs: 7.8, fat: 0.6, fiber: 0.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2305,7 +2305,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Blueberries, frz, adoçado",
+    name: "Blueberries, congelado, adoçado",
     aliases: ["BLUEBERRIES, FRZ, SWTND"],
     kcal: 85, protein: 0.4, carbs: 21.95, fat: 0.13, fiber: 2.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2314,7 +2314,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cherries, azedo, reduzido, cnd, alto teor xarope pk, sol and liquids",
+    name: "Cherries, azedo, reduzido, enlatado, alto teor syrup pk, sol e liquids",
     aliases: ["CHERRIES, SOUR, RED, CND, HVY SYRUP PK, SOL AND LIQUIDS"],
     kcal: 91, protein: 0.73, carbs: 23.27, fat: 0.1, fiber: 1.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2323,7 +2323,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cherries, swt, cnd, ex alto teor xarope pk, sol and liquids",
+    name: "Cherries, swt, enlatado, ex alto teor syrup pk, sol e liquids",
     aliases: ["CHERRIES, SWT, CND, EX HVY SYRUP PK, SOL AND LIQUIDS"],
     kcal: 102, protein: 0.59, carbs: 26.23, fat: 0.15, fiber: 1.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2341,7 +2341,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Figs, desidratado, ensopado",
+    name: "Figs, desidratado, stewed",
     aliases: ["FIGS, DRIED, STEWED"],
     kcal: 107, protein: 1.42, carbs: 27.57, fat: 0.4, fiber: 4.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2350,7 +2350,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fruta salada, cnd, juc pk, sol and liquids",
+    name: "Fruta salad, enlatado, juc pk, sol e liquids",
     aliases: ["FRUIT SALAD, CND, JUC PK, SOL AND LIQUIDS"],
     kcal: 50, protein: 0.51, carbs: 13.05, fat: 0.03, fiber: 1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2359,7 +2359,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Toranja, cru, pink and reduzido, florida",
+    name: "Grapefruit, cru, pink e reduzido, florida",
     aliases: ["GRAPEFRUIT, RAW, PINK AND RED, FLORIDA"],
     kcal: 30, protein: 0.55, carbs: 7.5, fat: 0.1, fiber: 1.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2368,7 +2368,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Toranja juc, clara, frz conc, sem açúcar, dil with 3 volume h2o",
+    name: "Grapefruit juc, white, congelado conc, sem açúcar, dil com 3 volume h2o",
     aliases: ["GRAPEFRUIT JUC, WHITE, FRZ CONC, UNSWTND, DIL WITH 3 VOLUME H2O"],
     kcal: 41, protein: 0.55, carbs: 9.73, fat: 0.13, fiber: 0.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2377,7 +2377,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Grapes, cnd, thompson seedless, alto teor xarope pk, sol and liquids",
+    name: "Grapes, enlatado, thompson seedless, alto teor syrup pk, sol e liquids",
     aliases: ["GRAPES, CND, THOMPSON SEEDLESS, HVY SYRUP PK, SOL AND LIQUIDS"],
     kcal: 76, protein: 0.48, carbs: 19.65, fat: 0.1, fiber: 0.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2395,7 +2395,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lima juc, cnd or btld, sem açúcar",
+    name: "Lime juc, enlatado ou btld, sem açúcar",
     aliases: ["LIME JUC, CND OR BTLD, UNSWTND"],
     kcal: 21, protein: 0.25, carbs: 6.69, fat: 0.23, fiber: 0.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2404,7 +2404,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mangosteen, cnd, xarope pk",
+    name: "Mangosteen, enlatado, syrup pk",
     aliases: ["MANGOSTEEN, CND, SYRUP PK"],
     kcal: 73, protein: 0.41, carbs: 17.91, fat: 0.58, fiber: 1.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2413,7 +2413,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Olives, ripe, cnd (small-extra lrg)",
+    name: "Olives, ripe, enlatado (small-extra lrg)",
     aliases: ["OLIVES, RIPE, CND (SMALL-EXTRA LRG)"],
     kcal: 115, protein: 0.84, carbs: 6.26, fat: 10.68, fiber: 3.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2422,7 +2422,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Laranja suco, cru",
+    name: "Laranja juice, cru",
     aliases: ["ORANGE JUICE, RAW"],
     kcal: 45, protein: 0.7, carbs: 10.4, fat: 0.2, fiber: 0.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2431,7 +2431,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Laranja juc, frz conc, sem açúcar, dil with 3 volume h2o",
+    name: "Laranja juc, congelado conc, sem açúcar, dil com 3 volume h2o",
     aliases: ["ORANGE JUC, FRZ CONC, UNSWTND, DIL WITH 3 VOLUME H2O"],
     kcal: 37, protein: 0.6, carbs: 8.8, fat: 0.06, fiber: 0.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2449,7 +2449,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peaches, cnd, juc pk, sol and liquids",
+    name: "Peaches, enlatado, juc pk, sol e liquids",
     aliases: ["PEACHES, CND, JUC PK, SOL AND LIQUIDS"],
     kcal: 44, protein: 0.63, carbs: 11.57, fat: 0.03, fiber: 1.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2458,7 +2458,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peaches, frz, sliced, adoçado",
+    name: "Peaches, congelado, fatiado, adoçado",
     aliases: ["PEACHES, FRZ, SLICED, SWTND"],
     kcal: 94, protein: 0.63, carbs: 23.98, fat: 0.13, fiber: 1.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2467,7 +2467,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pears, cnd, ex alto teor xarope pk, sol and liquids",
+    name: "Pears, enlatado, ex alto teor syrup pk, sol e liquids",
     aliases: ["PEARS, CND, EX HVY SYRUP PK, SOL AND LIQUIDS"],
     kcal: 97, protein: 0.19, carbs: 25.25, fat: 0.13, fiber: 1.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2476,7 +2476,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Abacaxi, cnd, h2o pk, sol and liquids",
+    name: "Abacaxi, enlatado, h2o pk, sol e liquids",
     aliases: ["PINEAPPLE, CND, H2O PK, SOL AND LIQUIDS"],
     kcal: 32, protein: 0.43, carbs: 8.3, fat: 0.09, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2485,7 +2485,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Abacaxi juc, frz conc, sem açúcar, dil with 3 volume h2o",
+    name: "Abacaxi juc, congelado conc, sem açúcar, dil com 3 volume h2o",
     aliases: ["PINEAPPLE JUC, FRZ CONC, UNSWTND, DIL WITH 3 VOLUME H2O"],
     kcal: 51, protein: 0.4, carbs: 12.67, fat: 0.03, fiber: 0.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2494,7 +2494,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Plums, cnd, purple, ex alto teor xarope pk, sol and liquids",
+    name: "Plums, enlatado, purple, ex alto teor syrup pk, sol e liquids",
     aliases: ["PLUMS, CND, PURPLE, EX HVY SYRUP PK, SOL AND LIQUIDS"],
     kcal: 101, protein: 0.36, carbs: 26.31, fat: 0.1, fiber: 1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2521,7 +2521,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Strawberries, frz, sem açúcar",
+    name: "Strawberries, congelado, sem açúcar",
     aliases: ["STRAWBERRIES, FRZ, UNSWTND"],
     kcal: 35, protein: 0.43, carbs: 9.13, fat: 0.11, fiber: 2.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2539,7 +2539,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cherries, swt, cnd, pitted, alto teor xarope, drnd",
+    name: "Cherries, swt, enlatado, pitted, alto teor syrup, drnd",
     aliases: ["CHERRIES, SWT, CND, PITTED, HVY SYRUP, DRND"],
     kcal: 83, protein: 0.73, carbs: 21.07, fat: 0.21, fiber: 2.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2548,7 +2548,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pêssego nectar, cnd, with vit c",
+    name: "Pêssego nectar, enlatado, com vit c",
     aliases: ["PEACH NECTAR, CND, WITH VIT C"],
     kcal: 54, protein: 0.27, carbs: 13.92, fat: 0.02, fiber: 0.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2557,7 +2557,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Toranja juc, clara, btld, sem açúcar, ocean spray",
+    name: "Grapefruit juc, white, btld, sem açúcar, ocean spray",
     aliases: ["GRAPEFRUIT JUC, WHITE, BTLD, UNSWTND, OCEAN SPRAY"],
     kcal: 34, protein: 0.58, carbs: 7.93, fat: 0.1, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2575,7 +2575,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Usda cmdty peaches, cnd, leve xarope, drnd",
+    name: "Usda cmdty peaches, enlatado, leve syrup, drnd",
     aliases: ["USDA CMDTY PEACHES, CND, LT SYRUP, DRND"],
     kcal: 61, protein: 0.56, carbs: 15.65, fat: 0.15, fiber: 0.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2584,7 +2584,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Nance, cnd, xarope, drnd",
+    name: "Nance, enlatado, syrup, drnd",
     aliases: ["NANCE, CND, SYRUP, DRND"],
     kcal: 95, protein: 0.56, carbs: 22.79, fat: 1.28, fiber: 7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2593,7 +2593,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Apples, cru, fuji, with skn",
+    name: "Apples, cru, fuji, com skn",
     aliases: ["APPLES, RAW, FUJI, WITH SKN"],
     kcal: 63, protein: 0.2, carbs: 15.22, fat: 0.18, fiber: 2.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2611,7 +2611,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cranberry sau, integral, cnd, ocean spray",
+    name: "Cranberry sau, integral, enlatado, ocean spray",
     aliases: ["CRANBERRY SAU, WHL, CND, OCEAN SPRAY"],
     kcal: 158, protein: 0.75, carbs: 40.4, fat: 0.05, fiber: 1.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2620,7 +2620,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, comp of leg, loin, shldr, and spareribs, ln and gordura, cru",
+    name: "Carne suína, frsh, comp of leg, loin, shldr, e spareribs, ln e fat, cru",
     aliases: ["PORK, FRSH, COMP OF LEG, LOIN, SHLDR, AND SPARERIBS, LN AND FAT, RAW"],
     kcal: 211, protein: 18.22, carbs: 0, fat: 14.79, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2629,7 +2629,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, leg (ham), integral, ln, ckd, rstd",
+    name: "Carne suína, frsh, leg (ham), integral, ln, cozido, rstd",
     aliases: ["PORK, FRSH, LEG (HAM), WHL, LN, CKD, RSTD"],
     kcal: 211, protein: 29.41, carbs: 0, fat: 9.44, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2638,7 +2638,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, leg (ham), shank half, ln, ckd, rstd",
+    name: "Carne suína, frsh, leg (ham), shank half, ln, cozido, rstd",
     aliases: ["PORK, FRSH, LEG (HAM), SHANK HALF, LN, CKD, RSTD"],
     kcal: 175, protein: 28.69, carbs: 0, fat: 5.83, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2647,7 +2647,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, loin, blade (chops or roasts), bone-in, ln and gordura, cru",
+    name: "Carne suína, frsh, loin, blade (chops ou roasts), bone-in, ln e fat, cru",
     aliases: ["PORK, FRSH, LOIN, BLADE (CHOPS OR ROASTS), BONE-IN, LN AND FAT, RAW"],
     kcal: 194, protein: 19.56, carbs: 0, fat: 12.27, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2656,7 +2656,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, loin, cntr loin (chops), bone-in, ln and gordura, cru",
+    name: "Carne suína, frsh, loin, cntr loin (chops), bone-in, ln e fat, cru",
     aliases: ["PORK, FRSH, LOIN, CNTR LOIN (CHOPS), BONE-IN, LN AND FAT, RAW"],
     kcal: 170, protein: 20.71, carbs: 0, fat: 9.03, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2665,7 +2665,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, loin, cntr rib (chops or roasts), bone-in, ln and gordura, cru",
+    name: "Carne suína, frsh, loin, cntr rib (chops ou roasts), bone-in, ln e fat, cru",
     aliases: ["PORK, FRSH, LOIN, CNTR RIB (CHOPS OR ROASTS), BONE-IN, LN AND FAT, RAW"],
     kcal: 186, protein: 20.28, carbs: 0, fat: 11.04, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2674,7 +2674,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, loin, sirloin (chops or roasts), bone-in, ln and gordura, cru",
+    name: "Carne suína, frsh, loin, sirloin (chops ou roasts), bone-in, ln e fat, cru",
     aliases: ["PORK, FRSH, LOIN, SIRLOIN (CHOPS OR ROASTS), BONE-IN, LN AND FAT, RAW"],
     kcal: 168, protein: 20.48, carbs: 0, fat: 8.96, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2683,7 +2683,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio fresco loin tenderloin ln only cru",
+    name: "Carne suína frsh loin tenderloin ln only cru",
     aliases: ["PORK  FRSH  LOIN  TENDERLOIN   LN ONLY  RAW"],
     kcal: 109, protein: 20.95, carbs: 0, fat: 2.17, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2692,7 +2692,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, loin, top loin (roasts), bnless, ln, ckd, rstd",
+    name: "Carne suína, frsh, loin, top loin (roasts), bnless, ln, cozido, rstd",
     aliases: ["PORK, FRSH, LOIN, TOP LOIN (ROASTS), BNLESS, LN, CKD, RSTD"],
     kcal: 173, protein: 27.23, carbs: 0, fat: 6.28, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2701,7 +2701,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, shldr, arm picnic, ln, cru",
+    name: "Carne suína, frsh, shldr, arm picnic, ln, cru",
     aliases: ["PORK, FRSH, SHLDR, ARM PICNIC, LN, RAW"],
     kcal: 120, protein: 20.26, carbs: 0, fat: 3.77, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2710,7 +2710,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, shldr, (boston butt), blade (steaks), ln, ckd, brsd",
+    name: "Carne suína, frsh, shldr, (boston butt), blade (steaks), ln, cozido, brsd",
     aliases: ["PORK, FRSH, SHLDR, (BOSTON BUTT), BLADE (STEAKS), LN, CKD, BRSD"],
     kcal: 233, protein: 26.57, carbs: 0, fat: 13.2, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2719,7 +2719,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, var meats and by-products, brain, ckd, brsd",
+    name: "Carne suína, frsh, var meats e by-products, brain, cozido, brsd",
     aliases: ["PORK, FRSH, VAR MEATS AND BY-PRODUCTS, BRAIN, CKD, BRSD"],
     kcal: 138, protein: 12.14, carbs: 0, fat: 9.51, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2728,7 +2728,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, var meats and by-products, jowl, cru",
+    name: "Carne suína, frsh, var meats e by-products, jowl, cru",
     aliases: ["PORK, FRSH, VAR MEATS AND BY-PRODUCTS, JOWL, RAW"],
     kcal: 655, protein: 6.38, carbs: 0, fat: 69.61, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2737,7 +2737,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, var meats and by-products, mechanically separated, cru",
+    name: "Carne suína, frsh, var meats e by-products, mechanically separated, cru",
     aliases: ["PORK, FRSH, VAR MEATS AND BY-PRODUCTS, MECHANICALLY SEPARATED, RAW"],
     kcal: 304, protein: 15.03, carbs: 0, fat: 26.54, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2746,7 +2746,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, cured, bacon, unprep",
+    name: "Carne suína, cured, bacon, unprep",
     aliases: ["PORK, CURED, BACON, UNPREP"],
     kcal: 417, protein: 12.62, carbs: 1.28, fat: 39.69, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2755,7 +2755,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, cured, ham, tradicional (approx 13% gordura), cnd, rstd",
+    name: "Carne suína, cured, ham, reg (approx 13% fat), enlatado, rstd",
     aliases: ["PORK, CURED, HAM, REG (APPROX 13% FAT), CND, RSTD"],
     kcal: 226, protein: 20.53, carbs: 0.42, fat: 15.2, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2764,7 +2764,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Usda cmdty, carne suísódio, cnd",
+    name: "Usda cmdty, carne suína, enlatado",
     aliases: ["USDA CMDTY, PORK, CND"],
     kcal: 196, protein: 19.4, carbs: 0.59, fat: 12.95, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2773,7 +2773,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, cured, shldr, blade roll, ln and gordura, unhtd",
+    name: "Carne suína, cured, shldr, blade roll, ln e fat, unhtd",
     aliases: ["PORK, CURED, SHLDR, BLADE ROLL, LN AND FAT, UNHTD"],
     kcal: 269, protein: 16.47, carbs: 0, fat: 21.98, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2782,7 +2782,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, loin, cntr loin chops, bone-in, ln and gordura, ckd, pan-frito",
+    name: "Carne suína, frsh, loin, cntr loin chops, bone-in, ln e fat, cozido, pan-fried",
     aliases: ["PORK, FRSH, LOIN, CNTR LOIN CHOPS, BONE-IN, LN AND FAT, CKD, PAN-FRIED"],
     kcal: 238, protein: 27.63, carbs: 0, fat: 13.32, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2791,7 +2791,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, comp (leg, loin, shldr, and spareribs), ln and gordura, ckd",
+    name: "Carne suína, frsh, comp (leg, loin, shldr, e spareribs), ln e fat, cozido",
     aliases: ["PORK, FRSH, COMP (LEG, LOIN, SHLDR,  AND SPARERIBS), LN AND FAT, CKD"],
     kcal: 238, protein: 26.36, carbs: 0, fat: 13.89, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2800,7 +2800,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, loin, cntr rib (roasts), bnless, ln and gordura, ckd, rstd",
+    name: "Carne suína, frsh, loin, cntr rib (roasts), bnless, ln e fat, cozido, rstd",
     aliases: ["PORK, FRSH, LOIN, CNTR RIB (ROASTS), BNLESS, LN AND FAT, CKD, RSTD"],
     kcal: 252, protein: 26.99, carbs: 0, fat: 15.15, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2809,7 +2809,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, loin, country-estilo ribs, ln and gordura, bone-in, ckd, rstd",
+    name: "Carne suína, frsh, loin, country-style ribs, ln e fat, bone-in, cozido, rstd",
     aliases: ["PORK, FRSH, LOIN, COUNTRY-STYLE RIBS, LN AND FAT, BONE-IN, CKD, RSTD"],
     kcal: 359, protein: 21.75, carbs: 0, fat: 29.46, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2818,7 +2818,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, loin, sirloin (chops or roasts), bnless, ln, cru",
+    name: "Carne suína, frsh, loin, sirloin (chops ou roasts), bnless, ln, cru",
     aliases: ["PORK, FRSH, LOIN, SIRLOIN (CHOPS OR ROASTS), BNLESS, LN, RAW"],
     kcal: 121, protein: 22.81, carbs: 0, fat: 2.59, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2827,7 +2827,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, loin, tenderloin, ln and gordura, ckd, rstd",
+    name: "Carne suína, frsh, loin, tenderloin, ln e fat, cozido, rstd",
     aliases: ["PORK, FRSH, LOIN, TENDERLOIN, LN AND FAT, CKD, RSTD"],
     kcal: 147, protein: 26.04, carbs: 0, fat: 3.96, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2836,7 +2836,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Usda commodity, carne suísódio, ground, fine/coarse, frz, ckd",
+    name: "Usda commodity, carne suína, ground, fine/coarse, congelado, cozido",
     aliases: ["USDA COMMODITY, PORK, GROUND, FINE/COARSE, FRZ, CKD"],
     kcal: 265, protein: 23.55, carbs: 0, fat: 18.19, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2845,7 +2845,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, var meats and by-products, stomach, ckd, simmrd",
+    name: "Carne suína, frsh, var meats e by-products, stomach, cozido, simmrd",
     aliases: ["PORK, FRSH, VAR MEATS AND BY-PRODUCTS, STOMACH, CKD, SIMMRD"],
     kcal: 157, protein: 21.4, carbs: 0.09, fat: 7.26, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2854,7 +2854,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, cured, ham and h2o product, integral, bnless, ln, htd, rstd",
+    name: "Carne suína, cured, ham e h2o product, integral, bnless, ln, htd, rstd",
     aliases: ["PORK, CURED, HAM AND H2O PRODUCT, WHL, BNLESS, LN, HTD, RSTD"],
     kcal: 123, protein: 13.88, carbs: 4.61, fat: 5.46, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2863,7 +2863,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, cured, ham -- h2o added, integral, bnless, ln, htd, rstd",
+    name: "Carne suína, cured, ham -- h2o added, integral, bnless, ln, htd, rstd",
     aliases: ["PORK, CURED, HAM -- H2O ADDED, WHL, BNLESS, LN, HTD, RSTD"],
     kcal: 117, protein: 17.99, carbs: 1.57, fat: 4.39, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2872,7 +2872,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, cured, ham and h2o product, rump, bone-in, ln, unhtd",
+    name: "Carne suína, cured, ham e h2o product, rump, bone-in, ln, unhtd",
     aliases: ["PORK, CURED, HAM AND H2O PRODUCT, RUMP, BONE-IN, LN, UNHTD"],
     kcal: 107, protein: 17.93, carbs: 1.24, fat: 3.38, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2881,7 +2881,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, cured, ham, gordura, bnless, unhtd",
+    name: "Carne suína, cured, ham, fat, bnless, unhtd",
     aliases: ["PORK, CURED, HAM, FAT, BNLESS, UNHTD"],
     kcal: 515, protein: 7.5, carbs: 1.87, fat: 53, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2890,7 +2890,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, cured, ham and h2o product, slice, bone-in, ln and gordura, unhtd",
+    name: "Carne suína, cured, ham e h2o product, slice, bone-in, ln e fat, unhtd",
     aliases: ["PORK, CURED, HAM AND H2O PRODUCT, SLICE, BONE-IN, LN AND FAT, UNHTD"],
     kcal: 149, protein: 13.69, carbs: 2.72, fat: 9.29, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2899,7 +2899,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, cured, ham -- h2o added, shank, bone-in, ln and gordura, htd, rstd",
+    name: "Carne suína, cured, ham -- h2o added, shank, bone-in, ln e fat, htd, rstd",
     aliases: ["PORK, CURED, HAM -- H2O ADDED, SHANK, BONE-IN, LN AND FAT, HTD, RSTD"],
     kcal: 200, protein: 18.62, carbs: 1.35, fat: 13.37, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2908,7 +2908,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, cured, ham and h2o product, integral, bnless, ln and gordura, htd, rstd",
+    name: "Carne suína, cured, ham e h2o product, integral, bnless, ln e fat, htd, rstd",
     aliases: ["PORK, CURED, HAM AND H2O PRODUCT, WHL, BNLESS, LN AND FAT, HTD, RSTD"],
     kcal: 123, protein: 13.88, carbs: 4.61, fat: 5.46, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2917,7 +2917,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, cured, ham, rump, bone-in, ln, htd, rstd",
+    name: "Carne suína, cured, ham, rump, bone-in, ln, htd, rstd",
     aliases: ["PORK, CURED, HAM, RUMP, BONE-IN, LN, HTD, RSTD"],
     kcal: 132, protein: 26.02, carbs: 0.68, fat: 3.07, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2926,7 +2926,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, cured, ham, slice, bone-in, ln and gordura, unhtd",
+    name: "Carne suína, cured, ham, slice, bone-in, ln e fat, unhtd",
     aliases: ["PORK, CURED, HAM, SLICE, BONE-IN, LN AND FAT, UNHTD"],
     kcal: 173, protein: 22.45, carbs: 0.21, fat: 9.17, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2935,7 +2935,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, loin, tp ln (chps), bnlss, ln and ft, com adição de sln, cru",
+    name: "Carne suína, frsh, loin, tp ln (chps), bnlss, ln e ft, com adição de sln, cru",
     aliases: ["PORK, FRSH, LOIN, TP LN (CHPS), BNLSS, LN AND FT, WITH ADDED SLN, RAW"],
     kcal: 171, protein: 19.45, carbs: 0, fat: 10.26, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2944,7 +2944,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, leg cap steak, bnless, ln and gordura, cru",
+    name: "Carne suína, leg cap steak, bnless, ln e fat, cru",
     aliases: ["PORK, LEG CAP STEAK, BNLESS, LN AND FAT, RAW"],
     kcal: 123, protein: 21.64, carbs: 0, fat: 3.39, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2953,7 +2953,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, ground, 96% ln / 4% gordura, cru",
+    name: "Carne suína, ground, 96% ln / 4% fat, cru",
     aliases: ["PORK, GROUND, 96% LN / 4% FAT, RAW"],
     kcal: 121, protein: 21.1, carbs: 0.21, fat: 4, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2962,7 +2962,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio loin, fresco, backribs, bone-in, cozido-assado, ln",
+    name: "Carne suína loin, frsh, backribs, bone-in, cooked-roasted, ln",
     aliases: ["PORK LOIN, FRSH, BACKRIBS, BONE-IN, COOKED-ROASTED, LN"],
     kcal: 255, protein: 24.15, carbs: 0, fat: 17.65, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2971,7 +2971,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, fresco, loin, blde (chops or roast), bnless, ln and gordura oly, cru",
+    name: "Carne suína, frsh, loin, blde (chops ou roast), bnless, ln e fat oly, cru",
     aliases: ["PORK, FRSH, LOIN, BLDE (CHOPS OR ROAST), BNLESS, LN AND FAT OLY, RAW"],
     kcal: 157, protein: 20.54, carbs: 0.76, fat: 7.94, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2980,7 +2980,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Artichokes, (globe or french), ckd, bld, drnd, sem sal",
+    name: "Artichokes, (globe ou french), cozido, bld, drnd, sem sal",
     aliases: ["ARTICHOKES, (GLOBE OR FRENCH), CKD, BLD, DRND, WITHOUT SALT"],
     kcal: 53, protein: 2.89, carbs: 11.95, fat: 0.34, fiber: 5.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2989,7 +2989,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Asparagus, frz, ckd, bld, drnd, sem sal",
+    name: "Asparagus, congelado, cozido, bld, drnd, sem sal",
     aliases: ["ASPARAGUS, FRZ, CKD, BLD, DRND, WITHOUT SALT"],
     kcal: 18, protein: 2.95, carbs: 1.92, fat: 0.42, fiber: 1.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -2998,7 +2998,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lima bns, immat seeds, ckd, bld, drnd, sem sal",
+    name: "Lima bns, immat seeds, cozido, bld, drnd, sem sal",
     aliases: ["LIMA BNS, IMMAT SEEDS, CKD, BLD, DRND, WITHOUT SALT"],
     kcal: 123, protein: 6.81, carbs: 23.64, fat: 0.32, fiber: 5.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3007,7 +3007,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mung bns, mature seeds, sprouted, ckd, stir-frito",
+    name: "Mung bns, mature seeds, sprouted, cozido, stir-fried",
     aliases: ["MUNG BNS, MATURE SEEDS, SPROUTED, CKD, STIR-FRIED"],
     kcal: 50, protein: 4.3, carbs: 10.59, fat: 0.21, fiber: 1.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3016,7 +3016,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beans, snap, cnd, all styles, seasoned, sol and liquids",
+    name: "Beans, snap, enlatado, all styles, seasoned, sol e liquids",
     aliases: ["BEANS, SNAP, CND, ALL STYLES, SEASONED, SOL AND LIQUIDS"],
     kcal: 16, protein: 0.83, carbs: 3.49, fat: 0.2, fiber: 1.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3025,7 +3025,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beets, cnd, drnd sol",
+    name: "Beets, enlatado, drnd sol",
     aliases: ["BEETS, CND, DRND SOL"],
     kcal: 31, protein: 0.91, carbs: 7.21, fat: 0.14, fiber: 1.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3034,7 +3034,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Brócolis, frz, spears, ckd, bld, drnd, sem sal",
+    name: "Broccoli, congelado, spears, cozido, bld, drnd, sem sal",
     aliases: ["BROCCOLI, FRZ, SPEARS, CKD, BLD, DRND, WITHOUT SALT"],
     kcal: 28, protein: 3.1, carbs: 5.36, fat: 0.11, fiber: 3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3043,7 +3043,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Burdock root, ckd, bld, drnd, sem sal",
+    name: "Burdock root, cozido, bld, drnd, sem sal",
     aliases: ["BURDOCK ROOT, CKD, BLD, DRND, WITHOUT SALT"],
     kcal: 88, protein: 2.09, carbs: 21.15, fat: 0.14, fiber: 1.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3052,7 +3052,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Repolho, chinese (pak-choi), ckd, bld, drnd, sem sal",
+    name: "Cabbage, chinese (pak-choi), cozido, bld, drnd, sem sal",
     aliases: ["CABBAGE, CHINESE (PAK-CHOI), CKD, BLD, DRND, WITHOUT SALT"],
     kcal: 12, protein: 1.56, carbs: 1.78, fat: 0.16, fiber: 1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3061,7 +3061,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carrots, cnd, tradicional pk, sol and liquids",
+    name: "Carrots, enlatado, reg pk, sol e liquids",
     aliases: ["CARROTS, CND, REG PK, SOL AND LIQUIDS"],
     kcal: 23, protein: 0.58, carbs: 5.37, fat: 0.14, fiber: 1.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3070,7 +3070,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cauliflower, frz, ckd, bld, drnd, sem sal",
+    name: "Cauliflower, congelado, cozido, bld, drnd, sem sal",
     aliases: ["CAULIFLOWER, FRZ, CKD, BLD, DRND, WITHOUT SALT"],
     kcal: 19, protein: 1.61, carbs: 3.75, fat: 0.22, fiber: 2.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3088,7 +3088,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Couve, frz, chopd, unprep",
+    name: "Collards, congelado, chopd, unprep",
     aliases: ["COLLARDS, FRZ, CHOPD, UNPREP"],
     kcal: 33, protein: 2.69, carbs: 6.46, fat: 0.37, fiber: 3.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3097,7 +3097,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Milho, swt, yel, cnd, vacuum pk, tradicional pk",
+    name: "Milho, swt, yel, enlatado, vacuum pk, reg pk",
     aliases: ["CORN, SWT, YEL, CND, VACUUM PK, REG PK"],
     kcal: 79, protein: 2.41, carbs: 19.44, fat: 0.5, fiber: 2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3106,7 +3106,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cowpeas (blackeyes), immat seeds, ckd, bld, drnd, sem sal",
+    name: "Cowpeas (blackeyes), immat seeds, cozido, bld, drnd, sem sal",
     aliases: ["COWPEAS (BLACKEYES), IMMAT SEEDS, CKD, BLD, DRND, WITHOUT SALT"],
     kcal: 97, protein: 3.17, carbs: 20.32, fat: 0.38, fiber: 5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3124,7 +3124,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gourd, clara-flowered (calabash), cru",
+    name: "Gourd, white-flowered (calabash), cru",
     aliases: ["GOURD, WHITE-FLOWERED (CALABASH), RAW"],
     kcal: 14, protein: 0.62, carbs: 3.39, fat: 0.02, fiber: 0.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3133,7 +3133,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Jute, potherb, ckd, bld, drnd, sem sal",
+    name: "Jute, potherb, cozido, bld, drnd, sem sal",
     aliases: ["JUTE, POTHERB, CKD, BLD, DRND, WITHOUT SALT"],
     kcal: 37, protein: 3.68, carbs: 7.29, fat: 0.2, fiber: 2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3151,7 +3151,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Alface, butterhead (incl boston and bibb types), cru",
+    name: "Lettuce, butterhead (incl boston e bibb types), cru",
     aliases: ["LETTUCE, BUTTERHEAD (INCL BOSTON AND BIBB TYPES), RAW"],
     kcal: 13, protein: 1.35, carbs: 2.23, fat: 0.22, fiber: 1.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3160,7 +3160,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mushrooms, clara, cru",
+    name: "Mushrooms, white, cru",
     aliases: ["MUSHROOMS, WHITE, RAW"],
     kcal: 22, protein: 3.09, carbs: 3.26, fat: 0.34, fiber: 1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3169,7 +3169,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mushrooms, shiitake, ckd, sem sal",
+    name: "Mushrooms, shiitake, cozido, sem sal",
     aliases: ["MUSHROOMS, SHIITAKE, CKD, WITHOUT SALT"],
     kcal: 56, protein: 1.56, carbs: 14.39, fat: 0.22, fiber: 2.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3205,7 +3205,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Ervilhas, edible-podded, frz, unprep",
+    name: "Ervilhas, edible-podded, congelado, unprep",
     aliases: ["PEAS, EDIBLE-PODDED, FRZ, UNPREP"],
     kcal: 42, protein: 2.8, carbs: 7.2, fat: 0.3, fiber: 3.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3214,7 +3214,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Ervilhas, grn, frz, ckd, bld, drnd, sem sal",
+    name: "Ervilhas, grn, congelado, cozido, bld, drnd, sem sal",
     aliases: ["PEAS, GRN, FRZ, CKD, BLD, DRND, WITHOUT SALT"],
     kcal: 78, protein: 5.15, carbs: 14.26, fat: 0.27, fiber: 4.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3223,7 +3223,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peppers, swt, grn, ckd, bld, drnd, sem sal",
+    name: "Peppers, swt, grn, cozido, bld, drnd, sem sal",
     aliases: ["PEPPERS, SWT, GRN, CKD, BLD, DRND, WITHOUT SALT"],
     kcal: 28, protein: 0.92, carbs: 6.7, fat: 0.2, fiber: 1.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3241,7 +3241,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Potatoes, reduzido, flesh and skn, bkd",
+    name: "Potatoes, reduzido, flesh e skn, bkd",
     aliases: ["POTATOES, RED, FLESH AND SKN, BKD"],
     kcal: 89, protein: 2.3, carbs: 19.59, fat: 0.15, fiber: 1.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3250,7 +3250,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Potatoes, bld, ckd in skn, skn, sem sal",
+    name: "Potatoes, bld, cozido in skn, skn, sem sal",
     aliases: ["POTATOES, BLD, CKD IN SKN, SKN, WITHOUT SALT"],
     kcal: 78, protein: 2.86, carbs: 17.21, fat: 0.1, fiber: 3.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3259,7 +3259,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Potatoes, cnd, sol and liquids",
+    name: "Potatoes, enlatado, sol e liquids",
     aliases: ["POTATOES, CND, SOL AND LIQUIDS"],
     kcal: 44, protein: 1.2, carbs: 9.89, fat: 0.11, fiber: 1.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3268,7 +3268,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Potatoes, au gratin, dry mistura, prep with h2o, integral leite and manteiga",
+    name: "Potatoes, au gratin, seco mix, prep com h2o, integral leite e manteiga",
     aliases: ["POTATOES, AU GRATIN, DRY MIX, PREP WITH H2O, WHL MILK AND BUTTER"],
     kcal: 93, protein: 2.3, carbs: 12.84, fat: 4.12, fiber: 0.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3277,7 +3277,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Potatoes, french fr, shoestrng, sal added in proc, frz, oven-htd",
+    name: "Potatoes, french fr, shoestrng, sal added in proc, congelado, oven-htd",
     aliases: ["POTATOES, FRENCH FR, SHOESTRNG, SALT ADDED IN PROC, FRZ, OVEN-HTD"],
     kcal: 199, protein: 2.9, carbs: 31.66, fat: 6.76, fiber: 2.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3286,7 +3286,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Potatoes, french fr, all types, sal added in proc, frz, oven htd",
+    name: "Potatoes, french fr, all types, sal added in proc, congelado, oven htd",
     aliases: ["POTATOES, FRENCH FR, ALL TYPES, SALT ADDED IN PROC, FRZ, OVEN HTD"],
     kcal: 158, protein: 2.75, carbs: 25.55, fat: 5.48, fiber: 2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3313,7 +3313,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sauerkraut, cnd, sol and liquids",
+    name: "Sauerkraut, enlatado, sol e liquids",
     aliases: ["SAUERKRAUT, CND, SOL AND LIQUIDS"],
     kcal: 19, protein: 0.91, carbs: 4.28, fat: 0.14, fiber: 2.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3322,7 +3322,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Soybeans, mature seeds, sprouted, ckd, stir-frito",
+    name: "Soybeans, mature seeds, sprouted, cozido, stir-fried",
     aliases: ["SOYBEANS, MATURE SEEDS, SPROUTED, CKD, STIR-FRIED"],
     kcal: 125, protein: 13.1, carbs: 9.4, fat: 7.1, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3331,7 +3331,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Squash, smmr, crookneck and straightneck, ckd, bld, drnd, sem sal",
+    name: "Squash, smmr, crookneck e straightneck, cozido, bld, drnd, sem sal",
     aliases: ["SQUASH, SMMR, CROOKNECK AND STRAIGHTNECK, CKD, BLD, DRND, WITHOUT SALT"],
     kcal: 23, protein: 1.04, carbs: 3.79, fat: 0.39, fiber: 1.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3340,7 +3340,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Squash, smmr, zucchini, incl skn, frz, unprep",
+    name: "Squash, smmr, zucchini, incl skn, congelado, unprep",
     aliases: ["SQUASH, SMMR, ZUCCHINI, INCL SKN, FRZ, UNPREP"],
     kcal: 17, protein: 1.16, carbs: 3.58, fat: 0.13, fiber: 1.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3358,7 +3358,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Succotash, (milho and limas), cnd, with integral kernel milho, sol and liquids",
+    name: "Succotash, (milho e limas), enlatado, com integral kernel milho, sol e liquids",
     aliases: ["SUCCOTASH, (CORN AND LIMAS), CND, WITH WHL KERNEL CORN, SOL AND LIQUIDS"],
     kcal: 63, protein: 2.6, carbs: 13.98, fat: 0.49, fiber: 2.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3367,7 +3367,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Doce batata, ckd, bld, without skn",
+    name: "Sweet batata, cozido, bld, sem skn",
     aliases: ["SWEET POTATO, CKD, BLD, WITHOUT SKN"],
     kcal: 76, protein: 1.37, carbs: 17.72, fat: 0.14, fiber: 2.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3376,7 +3376,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Taro leaves, ckd, cozido no vapor, sem sal",
+    name: "Taro leaves, cozido, stmd, sem sal",
     aliases: ["TARO LEAVES, CKD, STMD, WITHOUT SALT"],
     kcal: 24, protein: 2.72, carbs: 4.02, fat: 0.41, fiber: 2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3385,7 +3385,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Tomate products, cnd, puree, sem sal",
+    name: "Tomate products, enlatado, puree, sem sal",
     aliases: ["TOMATO PRODUCTS, CND, PUREE, WITHOUT SALT"],
     kcal: 38, protein: 1.65, carbs: 8.98, fat: 0.21, fiber: 1.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3394,7 +3394,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Tree fern, ckd, sem sal",
+    name: "Tree fern, cozido, sem sal",
     aliases: ["TREE FERN, CKD, WITHOUT SALT"],
     kcal: 40, protein: 0.29, carbs: 10.98, fat: 0.07, fiber: 3.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3403,7 +3403,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Nabo grns, frz, unprep",
+    name: "Turnip grns, congelado, unprep",
     aliases: ["TURNIP GRNS, FRZ, UNPREP"],
     kcal: 22, protein: 2.47, carbs: 3.67, fat: 0.31, fiber: 2.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3412,7 +3412,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Legume juc cocktail, baixo sódio, cnd",
+    name: "Legume juc cocktail, lo na, enlatado",
     aliases: ["VEGETABLE JUC COCKTAIL, LO NA, CND"],
     kcal: 19, protein: 0.91, carbs: 3.83, fat: 0.32, fiber: 0.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3430,7 +3430,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Couve, scotch, cru",
+    name: "Kale, scotch, cru",
     aliases: ["KALE, SCOTCH, RAW"],
     kcal: 42, protein: 2.8, carbs: 8.32, fat: 0.6, fiber: 1.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3448,7 +3448,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cenoura suco, enlatado",
+    name: "Cenoura juice, canned",
     aliases: ["CARROT JUICE, CANNED"],
     kcal: 40, protein: 0.95, carbs: 9.28, fat: 0.15, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3466,7 +3466,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Tomatoes, laranja crua",
+    name: "Tomatoes, laranja, cru",
     aliases: ["TOMATOES, ORANGE, RAW"],
     kcal: 16, protein: 1.16, carbs: 3.18, fat: 0.19, fiber: 0.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3475,7 +3475,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Asparagus, frz, ckd, bld, drnd, com sal",
+    name: "Asparagus, congelado, cozido, bld, drnd, com sal",
     aliases: ["ASPARAGUS, FRZ, CKD, BLD, DRND, WITH SALT"],
     kcal: 18, protein: 2.95, carbs: 1.92, fat: 0.42, fiber: 1.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3484,7 +3484,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mung bns, mature seeds, sprouted, ckd, bld, drnd, com sal",
+    name: "Mung bns, mature seeds, sprouted, cozido, bld, drnd, com sal",
     aliases: ["MUNG BNS, MATURE SEEDS, SPROUTED, CKD, BLD, DRND, WITH SALT"],
     kcal: 19, protein: 2.03, carbs: 3.6, fat: 0.09, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3493,7 +3493,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beans, snap, yel, cnd, sem sal, sol and liquids",
+    name: "Beans, snap, yel, enlatado, sem sal, sol e liquids",
     aliases: ["BEANS, SNAP, YEL, CND, NO SALT, SOL AND LIQUIDS"],
     kcal: 15, protein: 0.8, carbs: 3.5, fat: 0.1, fiber: 1.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3502,7 +3502,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beet grns, ckd, bld, drnd, com sal",
+    name: "Beet grns, cozido, bld, drnd, com sal",
     aliases: ["BEET GRNS, CKD, BLD, DRND, WITH SALT"],
     kcal: 27, protein: 2.57, carbs: 5.46, fat: 0.2, fiber: 2.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3511,7 +3511,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Repolho, common, freshly harvest, cru",
+    name: "Cabbage, common, freshly harvest, cru",
     aliases: ["CABBAGE, COMMON, FRESHLY HARVEST, RAW"],
     kcal: 24, protein: 1.21, carbs: 5.37, fat: 0.18, fiber: 2.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3520,7 +3520,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carrots, ckd, bld, drnd, com sal",
+    name: "Carrots, cozido, bld, drnd, com sal",
     aliases: ["CARROTS, CKD, BLD, DRND, WITH SALT"],
     kcal: 35, protein: 0.76, carbs: 8.22, fat: 0.18, fiber: 3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3529,7 +3529,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Chayote, fruta, ckd, bld, drnd, com sal",
+    name: "Chayote, fruta, cozido, bld, drnd, com sal",
     aliases: ["CHAYOTE, FRUIT, CKD, BLD, DRND, WITH SALT"],
     kcal: 22, protein: 0.62, carbs: 4.5, fat: 0.48, fiber: 2.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3538,7 +3538,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Milho, swt, yel, frz, krnls, cut off cob, bld, drnd, com sal",
+    name: "Milho, swt, yel, congelado, krnls, cut off cob, bld, drnd, com sal",
     aliases: ["CORN, SWT, YEL, FRZ, KRNLS, CUT OFF COB, BLD, DRND, WITH SALT"],
     kcal: 79, protein: 2.55, carbs: 18.71, fat: 0.67, fiber: 2.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3547,7 +3547,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gourd, dishcloth (towelgourd), ckd, bld, drnd, com sal",
+    name: "Gourd, dishcloth (towelgourd), cozido, bld, drnd, com sal",
     aliases: ["GOURD, DISHCLOTH (TOWELGOURD), CKD, BLD, DRND, WITH SALT"],
     kcal: 54, protein: 0.66, carbs: 13.75, fat: 0.34, fiber: 2.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3556,7 +3556,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lotus root, ckd, bld, drnd, com sal",
+    name: "Lotus root, cozido, bld, drnd, com sal",
     aliases: ["LOTUS ROOT, CKD, BLD, DRND, WITH SALT"],
     kcal: 66, protein: 1.58, carbs: 16.02, fat: 0.07, fiber: 3.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3565,7 +3565,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Okra, frz, ckd, bld, drnd, com sal",
+    name: "Okra, congelado, cozido, bld, drnd, com sal",
     aliases: ["OKRA, FRZ, CKD, BLD, DRND, WITH SALT"],
     kcal: 34, protein: 1.63, carbs: 6.41, fat: 0.24, fiber: 2.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3574,7 +3574,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Ervilhas, grn, cnd, sem sal, sol and liquids",
+    name: "Ervilhas, grn, enlatado, sem sal, sol e liquids",
     aliases: ["PEAS, GRN, CND, NO SALT, SOL AND LIQUIDS"],
     kcal: 53, protein: 3.19, carbs: 9.75, fat: 0.3, fiber: 3.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3601,7 +3601,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Potatoes, frz, frch fr, par fr, cttge-cut, prep, htd oven, com sal",
+    name: "Potatoes, congelado, frch fr, par fr, cttge-cut, prep, htd oven, com sal",
     aliases: ["POTATOES, FRZ, FRCH FR, PAR FR, CTTGE-CUT, PREP, HTD OVEN, WITH SALT"],
     kcal: 218, protein: 3.44, carbs: 34.03, fat: 8.2, fiber: 3.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3610,7 +3610,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pumpkin leaves, ckd, bld, drnd, com sal",
+    name: "Pumpkin leaves, cozido, bld, drnd, com sal",
     aliases: ["PUMPKIN LEAVES, CKD, BLD, DRND, WITH SALT"],
     kcal: 21, protein: 2.72, carbs: 3.39, fat: 0.22, fiber: 2.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3619,7 +3619,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Squash, smmr, all var, ckd, bld, drnd, com sal",
+    name: "Squash, smmr, all var, cozido, bld, drnd, com sal",
     aliases: ["SQUASH, SMMR, ALL VAR, CKD, BLD, DRND, WITH SALT"],
     kcal: 20, protein: 0.91, carbs: 4.31, fat: 0.31, fiber: 1.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3628,7 +3628,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Squash, wntr, acorn, ckd, bld, mshd, com sal",
+    name: "Squash, wntr, acorn, cozido, bld, mshd, com sal",
     aliases: ["SQUASH, WNTR, ACORN, CKD, BLD, MSHD, WITH SALT"],
     kcal: 34, protein: 0.67, carbs: 8.79, fat: 0.08, fiber: 2.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3637,7 +3637,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Doce batata, ckd, bkd in skn, flesh, com sal",
+    name: "Sweet batata, cozido, bkd in skn, flesh, com sal",
     aliases: ["SWEET POTATO, CKD, BKD IN SKN, FLESH, WITH SALT"],
     kcal: 92, protein: 2.01, carbs: 20.71, fat: 0.15, fiber: 3.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3646,7 +3646,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Tomate products, cnd, puree, com sal",
+    name: "Tomate products, enlatado, puree, com sal",
     aliases: ["TOMATO PRODUCTS, CND, PUREE, WITH SALT"],
     kcal: 38, protein: 1.65, carbs: 8.98, fat: 0.21, fiber: 1.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3655,7 +3655,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Milho, doce, clara, cru",
+    name: "Milho, sweet, white, cru",
     aliases: ["CORN, SWEET, WHITE, RAW"],
     kcal: 86, protein: 3.22, carbs: 19.02, fat: 1.18, fiber: 2.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3664,7 +3664,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Milho, swt, clara, cnd, vacuum pk, tradicional pk",
+    name: "Milho, swt, white, enlatado, vacuum pk, reg pk",
     aliases: ["CORN, SWT, WHITE, CND, VACUUM PK, REG PK"],
     kcal: 79, protein: 2.41, carbs: 19.44, fat: 0.5, fiber: 2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3673,7 +3673,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peppers, swt, reduzido, cnd, sol and liquids",
+    name: "Peppers, swt, reduzido, enlatado, sol e liquids",
     aliases: ["PEPPERS, SWT, RED, CND, SOL AND LIQUIDS"],
     kcal: 18, protein: 0.8, carbs: 3.9, fat: 0.3, fiber: 1.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3682,7 +3682,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Potatoes, mshd, prep from granules, without leite, integral leite and margarina",
+    name: "Potatoes, mshd, prep from granules, sem leite, integral leite e margarine",
     aliases: ["POTATOES, MSHD, PREP FROM GRANULES, WITHOUT MILK, WHL MILK AND MARGARINE"],
     kcal: 108, protein: 2.05, carbs: 14.4, fat: 4.93, fiber: 2.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3691,7 +3691,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pickles, cucumber, dill or kosher dill",
+    name: "Pickles, cucumber, dill ou kosher dill",
     aliases: ["PICKLES, CUCUMBER, DILL OR KOSHER DILL"],
     kcal: 12, protein: 0.5, carbs: 2.41, fat: 0.3, fiber: 1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3700,7 +3700,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pickles, cucumber, dill, reduzido sódio",
+    name: "Pickles, cucumber, dill, reduzido na",
     aliases: ["PICKLES, CUCUMBER, DILL, RED NA"],
     kcal: 12, protein: 0.5, carbs: 2.41, fat: 0.3, fiber: 1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3727,7 +3727,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Uva leaves, cnd",
+    name: "Uva leaves, enlatado",
     aliases: ["GRAPE LEAVES, CND"],
     kcal: 69, protein: 4.27, carbs: 11.71, fat: 1.97, fiber: 9.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3736,7 +3736,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pickles, chowchow, with cauliflower cebola mostarda, swt",
+    name: "Pickles, chowchow, com cauliflower cebola mustard, swt",
     aliases: ["PICKLES, CHOWCHOW, WITH CAULIFLOWER ONION MUSTARD, SWT"],
     kcal: 121, protein: 1.5, carbs: 26.64, fat: 0.9, fiber: 1.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3745,7 +3745,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mushrooms, clara, microwaved",
+    name: "Mushrooms, white, microwaved",
     aliases: ["MUSHROOMS, WHITE, MICROWAVED"],
     kcal: 35, protein: 3.91, carbs: 6.04, fat: 0.46, fiber: 2.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3763,7 +3763,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Girassol sd krnls, dry rstd, sem sal",
+    name: "Sunflower sd krnls, seco rstd, sem sal",
     aliases: ["SUNFLOWER SD KRNLS, DRY RSTD, WITHOUT SALT"],
     kcal: 582, protein: 19.33, carbs: 24.07, fat: 49.8, fiber: 11.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3790,7 +3790,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Coco leite, cru (liq expressed from grated meat and h2o)",
+    name: "Coco leite, cru (liq expressed from ralado meat e h2o)",
     aliases: ["COCONUT MILK, RAW (LIQ EXPRESSED FROM GRATED MEAT AND H2O)"],
     kcal: 230, protein: 2.29, carbs: 5.54, fat: 23.84, fiber: 2.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3799,7 +3799,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mixed nuts, dry rstd, with pnuts, sem sal",
+    name: "Mixed nuts, seco rstd, com pnuts, sem sal",
     aliases: ["MIXED NUTS, DRY RSTD, WITH PNUTS, WITHOUT SALT"],
     kcal: 607, protein: 19.5, carbs: 22.42, fat: 53.5, fiber: 6.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3817,7 +3817,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Nuts, walnuts, dry rstd, com sal added",
+    name: "Nuts, walnuts, seco rstd, com sal added",
     aliases: ["NUTS, WALNUTS, DRY RSTD, WITH SALT ADDED"],
     kcal: 643, protein: 14.29, carbs: 17.86, fat: 60.71, fiber: 7.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3826,7 +3826,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Coco meat, desidratado (desiccated), adoçado, shredded",
+    name: "Coco meat, desidratado (desiccated), adoçado, desfiado",
     aliases: ["COCONUT MEAT, DRIED (DESICCATED), SWTND, SHREDDED"],
     kcal: 501, protein: 2.88, carbs: 47.67, fat: 35.49, fiber: 4.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3835,7 +3835,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gergelim sd krnls, tstd, com sal (decort)",
+    name: "Sesame sd krnls, tstd, com sal (decort)",
     aliases: ["SESAME SD KRNLS, TSTD, WITH SALT (DECORT)"],
     kcal: 567, protein: 16.96, carbs: 26.04, fat: 48, fiber: 16.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3844,7 +3844,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Castanha-de-caju nuts, dry rstd, com sal",
+    name: "Cashew nuts, seco rstd, com sal",
     aliases: ["CASHEW NUTS, DRY RSTD, WITH SALT"],
     kcal: 574, protein: 15.31, carbs: 32.69, fat: 46.35, fiber: 3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3871,7 +3871,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, flank, steak, ln and gordura, 0\" gordura, choic, cru",
+    name: "Carne bovina, flank, steak, ln e fat, 0\" fat, choic, cru",
     aliases: ["BEEF, FLANK, STEAK, LN AND FAT, 0\" FAT, CHOIC, RAW"],
     kcal: 165, protein: 21.22, carbs: 0, fat: 8.29, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3880,7 +3880,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rib, eye, sml end (ribs 10-12), ln, 0\"gordura, choic, cru",
+    name: "Carne bovina, rib, eye, sml end (ribs 10-12), ln, 0\"fat, choic, cru",
     aliases: ["BEEF, RIB, EYE, SML END (RIBS 10-12), LN, 0\"FAT, CHOIC, RAW"],
     kcal: 161, protein: 20.13, carbs: 0, fat: 8.3, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3889,7 +3889,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Usda cmdty, bf, cnd",
+    name: "Usda cmdty, bf, enlatado",
     aliases: ["USDA CMDTY, BF, CND"],
     kcal: 246, protein: 20.52, carbs: 0, fat: 17.57, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3898,7 +3898,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck, und bl pot rst, bnless, ln, 0\" gordura, all grds, ckd",
+    name: "Carne bovina, chuck, und bl pot rst, bnless, ln, 0\" fat, all grds, cozido",
     aliases: ["BEEF, CHUCK, UND BL POT RST, BNLESS, LN, 0\" FAT, ALL GRDS, CKD"],
     kcal: 216, protein: 30.54, carbs: 0, fat: 10.46, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3907,7 +3907,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, var meats and by-products, heart, ckd, simmrd",
+    name: "Carne bovina, var meats e by-products, heart, cozido, simmrd",
     aliases: ["BEEF, VAR MEATS AND BY-PRODUCTS, HEART, CKD, SIMMRD"],
     kcal: 165, protein: 28.48, carbs: 0.15, fat: 4.73, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3916,7 +3916,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, var meats and by-products, mechanically separated bf, cru",
+    name: "Carne bovina, var meats e by-products, mechanically separated bf, cru",
     aliases: ["BEEF, VAR MEATS AND BY-PRODUCTS, MECHANICALLY SEPARATED BF, RAW"],
     kcal: 276, protein: 14.97, carbs: 0, fat: 23.52, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3925,7 +3925,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, var meats and by-products, tongue, cru",
+    name: "Carne bovina, var meats e by-products, tongue, cru",
     aliases: ["BEEF, VAR MEATS AND BY-PRODUCTS, TONGUE, RAW"],
     kcal: 224, protein: 14.9, carbs: 3.68, fat: 16.09, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3934,7 +3934,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, cured, corned bf, brisket, ckd",
+    name: "Carne bovina, cured, corned bf, brisket, cozido",
     aliases: ["BEEF, CURED, CORNED BF, BRISKET, CKD"],
     kcal: 251, protein: 18.17, carbs: 0.47, fat: 18.98, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3943,7 +3943,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, cured, sausage, ckd, defumado",
+    name: "Carne bovina, cured, sausage, cozido, smoked",
     aliases: ["BEEF, CURED, SAUSAGE, CKD, SMOKED"],
     kcal: 312, protein: 14.11, carbs: 2.42, fat: 26.91, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3952,7 +3952,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, comp of rtl cuts, ln, 0\"gordura, sel, ckd",
+    name: "Carne bovina, comp of rtl cuts, ln, 0\"fat, sel, cozido",
     aliases: ["BEEF, COMP OF RTL CUTS, LN, 0\"FAT, SEL, CKD"],
     kcal: 188, protein: 29.88, carbs: 0, fat: 7.12, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3961,7 +3961,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck, arm pot rst, ln and gordura, 0\" gordura, sel, ckd, brsd",
+    name: "Carne bovina, chuck, arm pot rst, ln e fat, 0\" fat, sel, cozido, brsd",
     aliases: ["BEEF, CHUCK, ARM POT RST, LN AND FAT, 0\" FAT, SEL, CKD, BRSD"],
     kcal: 283, protein: 29.23, carbs: 0, fat: 17.56, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3970,7 +3970,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck, under blade pot rst, bnless, ln, 0\" gordura, sel, ckd, brsd",
+    name: "Carne bovina, chuck, under blade pot rst, bnless, ln, 0\" fat, sel, cozido, brsd",
     aliases: ["BEEF, CHUCK, UNDER BLADE POT RST, BNLESS, LN, 0\" FAT, SEL, CKD, BRSD"],
     kcal: 216, protein: 30.68, carbs: 0, fat: 9.44, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3979,7 +3979,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rib, sml end (ribs 10-12), ln and gordura, 0\"gordura, sel, ckd, brld",
+    name: "Carne bovina, rib, sml end (ribs 10-12), ln e fat, 0\"fat, sel, cozido, brld",
     aliases: ["BEEF, RIB, SML END (RIBS 10-12), LN AND FAT, 0\"FAT, SEL, CKD, BRLD"],
     kcal: 285, protein: 24.91, carbs: 0, fat: 19.79, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3988,7 +3988,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, bttm rnd, rst, ln and gordura, 0\" gordura, sel, ckd, rstd",
+    name: "Carne bovina, rnd, bttm rnd, rst, ln e fat, 0\" fat, sel, cozido, rstd",
     aliases: ["BEEF, RND, BTTM RND, RST, LN AND FAT, 0\" FAT, SEL, CKD, RSTD"],
     kcal: 175, protein: 28.08, carbs: 0, fat: 6.06, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -3997,7 +3997,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, eye of rnd rst, bnless, ln and ft, 0\" gordura, choic, ckd, rstd",
+    name: "Carne bovina, rnd, eye of rnd rst, bnless, ln e ft, 0\" fat, choic, cozido, rstd",
     aliases: ["BEEF, RND, EYE OF RND RST, BNLESS, LN AND FT, 0\" FAT, CHOIC, CKD, RSTD"],
     kcal: 171, protein: 29.79, carbs: 0, fat: 4.83, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4006,7 +4006,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, tip rnd, rst, ln, 0\" gordura, all grds, ckd, rstd",
+    name: "Carne bovina, rnd, tip rnd, rst, ln, 0\" fat, all grds, cozido, rstd",
     aliases: ["BEEF, RND, TIP RND, RST, LN, 0\" FAT, ALL GRDS, CKD, RSTD"],
     kcal: 174, protein: 27.53, carbs: 0, fat: 6.2, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4015,7 +4015,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, loin, tndrln steak, bnless, l and f, 0\" f, a grds, ckd, grelhado",
+    name: "Carne bovina, loin, tndrln steak, bnless, l e f, 0\" f, a grds, cozido, grilled",
     aliases: ["BEEF, LOIN, TNDRLN STEAK, BNLESS, L AND F, 0\" F, A GRDS, CKD, GRILLED"],
     kcal: 211, protein: 30.5, carbs: 0, fat: 8.91, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4024,7 +4024,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, loin, toploinstk, bnls, lip off, ln gordura, 0\" ft, sel, ckd, grld",
+    name: "Carne bovina, loin, toploinstk, bnls, lip off, ln fat, 0\" ft, sel, cozido, grld",
     aliases: ["BEEF, LOIN, TOPLOINSTK, BNLS, LIP OFF, LN FAT, 0\" FT, SEL, CKD, GRLD"],
     kcal: 207, protein: 29.16, carbs: 0, fat: 9.12, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4033,7 +4033,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, top sirloin, steak, ln, 0\" gordura, sel, ckd, brld",
+    name: "Carne bovina, top sirloin, steak, ln, 0\" fat, sel, cozido, brld",
     aliases: ["BEEF, TOP SIRLOIN, STEAK, LN, 0\" FAT, SEL, CKD, BRLD"],
     kcal: 177, protein: 30.8, carbs: 0, fat: 5.03, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4042,7 +4042,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, shrt loin, prtrhs steak, ln, 1/8\" gordura, sel, cru",
+    name: "Carne bovina, shrt loin, prtrhs steak, ln, 1/8\" fat, sel, cru",
     aliases: ["BEEF, SHRT LOIN, PRTRHS STEAK, LN, 1/8\" FAT, SEL, RAW"],
     kcal: 145, protein: 22.61, carbs: 0, fat: 5.41, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4051,7 +4051,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, shrt loin, t-bone steak, ln, 0\" gordura, choic, ckd, brld",
+    name: "Carne bovina, shrt loin, t-bone steak, ln, 0\" fat, choic, cozido, brld",
     aliases: ["BEEF, SHRT LOIN, T-BONE STEAK, LN, 0\" FAT, CHOIC, CKD, BRLD"],
     kcal: 198, protein: 25.98, carbs: 0, fat: 9.61, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4060,7 +4060,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rib, eye, sml end (ribs 10- 12) ln, 0\" gordura, sel, ckd, brld",
+    name: "Carne bovina, rib, eye, sml end (ribs 10- 12) ln, 0\" fat, sel, cozido, brld",
     aliases: ["BEEF, RIB, EYE, SML END (RIBS 10- 12) LN, 0\" FAT, SEL, CKD, BRLD"],
     kcal: 182, protein: 29.93, carbs: 0, fat: 6.05, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4069,7 +4069,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, ground, 70% ln meat / 30% gordura, cru",
+    name: "Carne bovina, ground, 70% ln meat / 30% fat, cru",
     aliases: ["BEEF, GROUND, 70% LN MEAT / 30% FAT, RAW"],
     kcal: 332, protein: 14.35, carbs: 0, fat: 30, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4078,7 +4078,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, brisket, flat half, bnless ln, 0\" gordura, all grds, cru",
+    name: "Carne bovina, brisket, flat half, bnless ln, 0\" fat, all grds, cru",
     aliases: ["BEEF, BRISKET, FLAT HALF, BNLESS LN, 0\" FAT, ALL GRDS, RAW"],
     kcal: 132, protein: 21.47, carbs: 0, fat: 5.11, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4087,7 +4087,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck eye rst, bnls, a bf rst, ln and gordura, 0\" gordura, choic, cru",
+    name: "Carne bovina, chuck eye rst, bnls, a bf rst, ln e fat, 0\" fat, choic, cru",
     aliases: ["BEEF, CHUCK EYE RST, BNLS, A BF RST, LN AND FAT, 0\" FAT, CHOIC, RAW"],
     kcal: 185, protein: 19.14, carbs: 0, fat: 12.02, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4096,7 +4096,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, brisket, integral, ln and gordura, 1/8\"gordura, all grds, cru",
+    name: "Carne bovina, brisket, integral, ln e fat, 1/8\"fat, all grds, cru",
     aliases: ["BEEF, BRISKET, WHL, LN AND FAT, 1/8\"FAT, ALL GRDS, RAW"],
     kcal: 251, protein: 18.42, carbs: 0, fat: 19.06, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4105,7 +4105,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck, arm pot rst, ln and gordura, 1/8\"gordura, choic, cru",
+    name: "Carne bovina, chuck, arm pot rst, ln e fat, 1/8\"fat, choic, cru",
     aliases: ["BEEF, CHUCK, ARM POT RST, LN AND FAT, 1/8\"FAT, CHOIC, RAW"],
     kcal: 249, protein: 19.14, carbs: 0, fat: 18.57, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4114,7 +4114,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck, blade rst, ln and gordura, 1/8\"gordura, sel, cru",
+    name: "Carne bovina, chuck, blade rst, ln e fat, 1/8\"fat, sel, cru",
     aliases: ["BEEF, CHUCK, BLADE RST, LN AND FAT, 1/8\"FAT, SEL, RAW"],
     kcal: 230, protein: 17.37, carbs: 0, fat: 17.33, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4123,7 +4123,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rib, integral (ribs 6-12), ln and gordura, 1/8\"gordura, choic, cru",
+    name: "Carne bovina, rib, integral (ribs 6-12), ln e fat, 1/8\"fat, choic, cru",
     aliases: ["BEEF, RIB, WHL (RIBS 6-12), LN AND FAT, 1/8\"FAT, CHOIC, RAW"],
     kcal: 322, protein: 16.34, carbs: 0, fat: 27.93, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4132,7 +4132,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rib, lrg end (ribs 6-9), ln and gordura, 1/8\"gordura, all grds, cru",
+    name: "Carne bovina, rib, lrg end (ribs 6-9), ln e fat, 1/8\"fat, all grds, cru",
     aliases: ["BEEF, RIB, LRG END (RIBS 6-9), LN AND FAT, 1/8\"FAT, ALL GRDS, RAW"],
     kcal: 316, protein: 16.26, carbs: 0, fat: 27.29, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4141,7 +4141,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rib, lrg end (ribs 6-9), ln and gordura, 1/8\"gordura, sel, ckd, rstd",
+    name: "Carne bovina, rib, lrg end (ribs 6-9), ln e fat, 1/8\"fat, sel, cozido, rstd",
     aliases: ["BEEF, RIB, LRG END (RIBS 6-9), LN AND FAT, 1/8\"FAT, SEL, CKD, RSTD"],
     kcal: 333, protein: 23.4, carbs: 0, fat: 25.84, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4150,7 +4150,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rib, sml end (ribs 10-12), ln and gordura, 1/8\"gordura, choic, ckd, brld",
+    name: "Carne bovina, rib, sml end (ribs 10-12), ln e fat, 1/8\"fat, choic, cozido, brld",
     aliases: ["BEEF, RIB, SML END (RIBS 10-12), LN AND FAT, 1/8\"FAT, CHOIC, CKD, BRLD"],
     kcal: 304, protein: 24.53, carbs: 0, fat: 22.09, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4159,7 +4159,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, shldr top blde stk, bnls, ln and gordura, 0\" gordura, sel, ckd, g",
+    name: "Carne bovina, shldr top blde stk, bnls, ln e fat, 0\" fat, sel, cozido, g",
     aliases: ["BEEF, SHLDR TOP BLDE STK, BNLS, LN AND FAT, 0\" FAT, SEL, CKD, G"],
     kcal: 194, protein: 27.7, carbs: 0, fat: 9.29, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4168,7 +4168,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, bttm rnd, rst, ln and gordura, 1/8\" gordura, all grds, ckd, rstd",
+    name: "Carne bovina, rnd, bttm rnd, rst, ln e fat, 1/8\" fat, all grds, cozido, rstd",
     aliases: ["BEEF, RND, BTTM RND, RST, LN AND FAT, 1/8\" FAT, ALL GRDS, CKD, RSTD"],
     kcal: 218, protein: 26.41, carbs: 0, fat: 11.64, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4177,7 +4177,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, eye of rnd, rst, ln and gordura, 1/8\" gordura, choic, cru",
+    name: "Carne bovina, rnd, eye of rnd, rst, ln e fat, 1/8\" fat, choic, cru",
     aliases: ["BEEF, RND, EYE OF RND, RST, LN AND FAT, 1/8\" FAT, CHOIC, RAW"],
     kcal: 173, protein: 21.68, carbs: 0, fat: 8.91, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4186,7 +4186,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, tip rnd, ln and gordura, 1/8\"gordura, sel, cru",
+    name: "Carne bovina, rnd, tip rnd, ln e fat, 1/8\"fat, sel, cru",
     aliases: ["BEEF, RND, TIP RND, LN AND FAT, 1/8\"FAT, SEL, RAW"],
     kcal: 178, protein: 19.74, carbs: 0, fat: 10.39, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4195,7 +4195,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, top rnd, ln and gordura, 1/8\"gordura, choic, ckd, brsd",
+    name: "Carne bovina, rnd, top rnd, ln e fat, 1/8\"fat, choic, cozido, brsd",
     aliases: ["BEEF, RND, TOP RND, LN AND FAT, 1/8\"FAT, CHOIC, CKD, BRSD"],
     kcal: 250, protein: 34.09, carbs: 0, fat: 11.61, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4204,7 +4204,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, shldr top blade steak, bnless, ln and gordura, 0\" gordura, sel, cru",
+    name: "Carne bovina, shldr top blade steak, bnless, ln e fat, 0\" fat, sel, cru",
     aliases: ["BEEF, SHLDR TOP BLADE STEAK, BNLESS, LN AND FAT, 0\" FAT, SEL, RAW"],
     kcal: 137, protein: 20.28, carbs: 0, fat: 6.21, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4213,7 +4213,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, loin, top loin, ln and gordura, 1/8\" gordura, choic, cru",
+    name: "Carne bovina, loin, top loin, ln e fat, 1/8\" fat, choic, cru",
     aliases: ["BEEF, LOIN, TOP LOIN, LN AND FAT, 1/8\" FAT, CHOIC, RAW"],
     kcal: 237, protein: 19.32, carbs: 0, fat: 17.1, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4222,7 +4222,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, tenderloin, rst, ln and gordura, 1/8\" gordura, all grds, ckd, rstd",
+    name: "Carne bovina, tenderloin, rst, ln e fat, 1/8\" fat, all grds, cozido, rstd",
     aliases: ["BEEF, TENDERLOIN, RST, LN AND FAT, 1/8\" FAT, ALL GRDS, CKD, RSTD"],
     kcal: 324, protein: 23.9, carbs: 0, fat: 24.6, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4231,7 +4231,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, tenderloin, rst, ln and gordura, 1/8\" gordura, prime, ckd, rstd",
+    name: "Carne bovina, tenderloin, rst, ln e fat, 1/8\" fat, prime, cozido, rstd",
     aliases: ["BEEF, TENDERLOIN, RST, LN AND FAT, 1/8\" FAT, PRIME, CKD, RSTD"],
     kcal: 343, protein: 24.04, carbs: 0, fat: 26.67, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4240,7 +4240,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck, clod rst, ln, 0\" gordura, choic, ckd, rstd",
+    name: "Carne bovina, chuck, clod rst, ln, 0\" fat, choic, cozido, rstd",
     aliases: ["BEEF, CHUCK, CLOD RST, LN, 0\" FAT, CHOIC, CKD, RSTD"],
     kcal: 171, protein: 25.95, carbs: 0, fat: 6.69, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4249,7 +4249,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, ribeye, sml end(ribs 10-12), ln and gordura, 0\", all grds, ckd, brld",
+    name: "Carne bovina, ribeye, sml end(ribs 10-12), ln e fat, 0\", all grds, cozido, brld",
     aliases: ["BEEF, RIBEYE, SML END(RIBS 10-12), LN AND FAT, 0\", ALL GRDS, CKD, BRLD"],
     kcal: 249, protein: 27.27, carbs: 0, fat: 14.74, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4258,7 +4258,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck, mock tender steak, ln, 0\" gordura, choic, ckd, brld",
+    name: "Carne bovina, chuck, mock tender steak, ln, 0\" fat, choic, cozido, brld",
     aliases: ["BEEF, CHUCK, MOCK TENDER STEAK, LN, 0\" FAT, CHOIC, CKD, BRLD"],
     kcal: 161, protein: 25.74, carbs: 0, fat: 5.69, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4267,7 +4267,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chk eye rst, bnl, america's bf rst, ln, 0\" gordura, all grd, cru",
+    name: "Carne bovina, chk eye rst, bnl, america's bf rst, ln, 0\" fat, all grd, cru",
     aliases: ["BEEF, CHK EYE RST, BNL, AMERICA'S BF RST, LN, 0\" FAT, ALL GRD, RAW"],
     kcal: 137, protein: 20.61, carbs: 0, fat: 6.01, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4276,7 +4276,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, brisket, flat half, bnless, ln and gordura, 0\" gordura, sel, cru",
+    name: "Carne bovina, brisket, flat half, bnless, ln e fat, 0\" fat, sel, cru",
     aliases: ["BEEF, BRISKET, FLAT HALF, BNLESS, LN AND FAT, 0\" FAT, SEL, RAW"],
     kcal: 158, protein: 20.57, carbs: 0, fat: 8.45, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4285,7 +4285,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Alcoholic bev, daiquiri, preparado-from-recipe",
+    name: "Alcoholic bev, daiquiri, prepared-from-recipe",
     aliases: ["ALCOHOLIC BEV, DAIQUIRI, PREPARED-FROM-RECIPE"],
     kcal: 186, protein: 0.06, carbs: 6.94, fat: 0.06, fiber: 0.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4294,7 +4294,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, whiskey azedo mistura, pdr",
+    name: "Beverages, whiskey azedo mix, pdr",
     aliases: ["BEVERAGES, WHISKEY SOUR MIX, PDR"],
     kcal: 383, protein: 0.6, carbs: 97.3, fat: 0.1, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4303,7 +4303,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, abbott, eas soro de leite proteísódio pdr",
+    name: "Beverages, abbott, eas whey proteína pdr",
     aliases: ["BEVERAGES, ABBOTT, EAS WHEY PROT PDR"],
     kcal: 385, protein: 66.67, carbs: 17.95, fat: 5.13, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4312,7 +4312,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, unilever, slimfast, meal replcmnt, tradicional, rtd, 3-2-1 plan",
+    name: "Beverages, unilever, slimfast, meal replcmnt, reg, rtd, 3-2-1 plan",
     aliases: ["BEVERAGES, UNILEVER, SLIMFAST, MEAL REPLCMNT, REG, RTD, 3-2-1 PLAN"],
     kcal: 57, protein: 3.32, carbs: 7.74, fat: 1.93, fiber: 1.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4321,7 +4321,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, acai berry drk, fortificado",
+    name: "Beverages, acai berry drk, fort",
     aliases: ["BEVERAGES, ACAI BERRY DRK, FORT"],
     kcal: 62, protein: 0.83, carbs: 12.83, fat: 0.83, fiber: 1.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4357,7 +4357,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, mxd veg and fruta juc drk, com adição de nutr",
+    name: "Beverages, mxd veg e fruta juc drk, com adição de nutr",
     aliases: ["BEVERAGES, MXD VEG AND FRUIT JUC DRK, WITH ADDED NUTR"],
     kcal: 29, protein: 0.04, carbs: 7.47, fat: 0.01, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4366,7 +4366,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, carb, sprite, limão-lima, without caffeine",
+    name: "Beverages, carb, sprite, lemon-lime, sem caffeine",
     aliases: ["BEVERAGES, CARB, SPRITE, LEMON-LIME, WITHOUT CAFFEINE"],
     kcal: 40, protein: 0.05, carbs: 10.14, fat: 0.02, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4393,7 +4393,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, chocolate-sabor bev mistura, pdr, prep with integral leite",
+    name: "Beverages, chocolate-flavor bev mix, pdr, prep com integral leite",
     aliases: ["BEVERAGES, CHOCOLATE-FLAVOR BEV MIX, PDR, PREP WITH WHL MILK"],
     kcal: 85, protein: 3.23, carbs: 11.91, fat: 3.24, fiber: 0.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4402,7 +4402,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, chá, grn, ready to drk, ginseng and mel, adoçado",
+    name: "Beverages, chá, grn, ready to drk, ginseng e honey, adoçado",
     aliases: ["BEVERAGES, TEA, GRN, READY TO DRK, GINSENG AND HONEY, SWTND"],
     kcal: 30, protein: 0, carbs: 7.16, fat: 0.18, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4411,7 +4411,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cacau mistura, nestle, rich choc hot cacau mistura",
+    name: "Cocoa mix, nestle, rich chocolate hot cocoa mix",
     aliases: ["COCOA MIX, NESTLE, RICH CHOC HOT COCOA MIX"],
     kcal: 400, protein: 3, carbs: 75, fat: 15, fiber: 4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4429,7 +4429,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, ocean spray, cranberry-maçã suco drink, bottled",
+    name: "Beverages, ocean spray, cranberry-maçã juice drink, bottled",
     aliases: ["Beverages, OCEAN SPRAY, Cranberry-Apple Juice Drink, bottled"],
     kcal: 56, protein: 0.29, carbs: 13.68, fat: 0, fiber: 0.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4438,7 +4438,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, ocean spray, cran framboesa suco drink",
+    name: "Beverages, ocean spray, cran raspberry juice drink",
     aliases: ["Beverages, OCEAN SPRAY, Cran Raspberry Juice Drink"],
     kcal: 49, protein: 0.28, carbs: 11.96, fat: 0, fiber: 0.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4483,7 +4483,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, motts, appl juc leve, fortificado with vit c",
+    name: "Beverages, motts, appl juc leve, fort com vit c",
     aliases: ["BEVERAGES, MOTTS, APPL JUC LT, FORT WITH VIT C"],
     kcal: 22, protein: 0, carbs: 5.1, fat: 0.1, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4492,7 +4492,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, lemonade-sabor drk, pdr, prep with h2o",
+    name: "Beverages, lemonade-flavor drk, pdr, prep com h2o",
     aliases: ["BEVERAGES, LEMONADE-FLAVOR DRK, PDR, PREP WITH H2O"],
     kcal: 27, protein: 0, carbs: 6.9, fat: 0.07, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4501,7 +4501,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverag, malt drk mistura, choc, com adição de nutr, pdr, prep with integral leite",
+    name: "Beverag, malt drk mix, chocolate, com adição de nutr, pdr, prep com integral leite",
     aliases: ["BEVERAG, MALT DRK MIX, CHOC, WITH ADDED NUTR, PDR, PREP WITH WHL MILK"],
     kcal: 87, protein: 3.29, carbs: 11.19, fat: 3.26, fiber: 0.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4510,7 +4510,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, morango-sabor bev mistura, pdr, prep with integral leite",
+    name: "Beverages, strawberry-flavor bev mix, pdr, prep com integral leite",
     aliases: ["BEVERAGES, STRAWBERRY-FLAVOR BEV MIX, PDR, PREP WITH WHL MILK"],
     kcal: 88, protein: 3, carbs: 12.3, fat: 3.1, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4519,7 +4519,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, chá, instantâneo, limão, sem açúcar",
+    name: "Beverages, chá, inst, lemon, sem açúcar",
     aliases: ["BEVERAGES, TEA, INST, LEMON, UNSWTND"],
     kcal: 345, protein: 7.4, carbs: 78.52, fat: 0.18, fiber: 5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4528,7 +4528,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, cacau mistura, with asprt, pdr, prep with h2o",
+    name: "Beverages, cocoa mix, com asprt, pdr, prep com h2o",
     aliases: ["BEVERAGES, COCOA MIX, WITH ASPRT, PDR, PREP WITH H2O"],
     kcal: 29, protein: 1.21, carbs: 5.61, fat: 0.23, fiber: 0.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4546,7 +4546,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beve, laranja-flav drk, brkfst tipo, with pulp, frz conc, pre with h2o",
+    name: "Beve, laranja-flav drk, brkfst type, com pulp, congelado conc, pre com h2o",
     aliases: ["BEVE, ORANGE-FLAV DRK, BRKFST TYPE, WITH PULP, FRZ CONC, PRE WITH H2O"],
     kcal: 49, protein: 0.03, carbs: 12.21, fat: 0.14, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4555,7 +4555,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, drk mistura, quaker oats, gatorade, laranja sabor, pdr",
+    name: "Beverages, drk mix, quaker oats, gatorade, laranja flavor, pdr",
     aliases: ["BEVERAGES, DRK MIX, QUAKER OATS, GATORADE, ORANGE FLAVOR, PDR"],
     kcal: 388, protein: 0, carbs: 94.11, fat: 1.23, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4573,7 +4573,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, chá, black, brewed, prep with distilled h2o",
+    name: "Beverages, chá, black, brewed, prep com distilled h2o",
     aliases: ["BEVERAGES, TEA, BLACK, BREWED, PREP WITH DISTILLED H2O"],
     kcal: 1, protein: 0, carbs: 0.3, fat: 0, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4582,7 +4582,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Bebida, chocolate-sabor bev mistura for leite, pdr, com adição de nutr",
+    name: "Beverage, chocolate-flavor bev mix for leite, pdr, com adição de nutr",
     aliases: ["BEVERAGE, CHOCOLATE-FLAVOR BEV MIX FOR MILK, PDR, WITH ADDED NUTR"],
     kcal: 400, protein: 4.55, carbs: 90.28, fat: 2.27, fiber: 4.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4600,7 +4600,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beve, horchata, dry mistura, unprep, var brands, all with morro seeds",
+    name: "Beve, horchata, seco mix, unprep, var brands, all com morro seeds",
     aliases: ["BEVE, HORCHATA, DRY MIX, UNPREP, VAR  BRANDS, ALL WITH MORRO SEEDS"],
     kcal: 413, protein: 7.5, carbs: 79.05, fat: 7.46, fiber: 4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4609,7 +4609,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, energy drk, vault zero, açúcar-free, citrus sabor",
+    name: "Beverages, energy drk, vault zero, açúcar-free, citrus flavor",
     aliases: ["BEVERAGES, ENERGY DRK, VAULT ZERO, SUGAR-FREE, CITRUS FLAVOR"],
     kcal: 1, protein: 0.25, carbs: 0.7, fat: 0.08, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4618,7 +4618,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, nutritional shake mistura, hi proteísódio, pdr",
+    name: "Beverages, nutritional shake mix, hi proteína, pdr",
     aliases: ["BEVERAGES, NUTRITIONAL SHAKE MIX, HI PROT, PDR"],
     kcal: 392, protein: 53.57, carbs: 20.38, fat: 10.71, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4636,7 +4636,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cod, atlantic, ckd, dry heat",
+    name: "Cod, atlantic, cozido, seco heat",
     aliases: ["COD, ATLANTIC, CKD, DRY HEAT"],
     kcal: 105, protein: 22.83, carbs: 0, fat: 0.86, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4663,7 +4663,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Herring, atlantic, em conserva",
+    name: "Herring, atlantic, pickled",
     aliases: ["HERRING, ATLANTIC, PICKLED"],
     kcal: 262, protein: 14.19, carbs: 9.64, fat: 18, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4699,7 +4699,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Roughy, laranja crua",
+    name: "Roughy, laranja, cru",
     aliases: ["ROUGHY, ORANGE, RAW"],
     kcal: 76, protein: 16.41, carbs: 0, fat: 0.7, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4708,7 +4708,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Salmão, coho, wild, ckd, moist heat",
+    name: "Salmon, coho, wild, cozido, moist heat",
     aliases: ["SALMON, COHO, WILD, CKD, MOIST HEAT"],
     kcal: 184, protein: 27.36, carbs: 0, fat: 7.5, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4726,7 +4726,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sheepshead, ckd, dry heat",
+    name: "Sheepshead, cozido, seco heat",
     aliases: ["SHEEPSHEAD, CKD, DRY HEAT"],
     kcal: 126, protein: 26.02, carbs: 0, fat: 1.63, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4735,7 +4735,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sturgeon, mxd sp, defumado",
+    name: "Sturgeon, mxd sp, smoked",
     aliases: ["STURGEON, MXD SP, SMOKED"],
     kcal: 173, protein: 31.2, carbs: 0, fat: 4.4, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4753,7 +4753,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Atum, clara, cnd in h2o, drnd sol",
+    name: "Tuna, white, enlatado in h2o, drnd sol",
     aliases: ["TUNA, WHITE, CND IN H2O, DRND SOL"],
     kcal: 128, protein: 23.62, carbs: 0, fat: 2.97, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4780,7 +4780,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Camarão, mxd sp, ckd, breaded and frito",
+    name: "Shrimp, mxd sp, cozido, breaded e fried",
     aliases: ["SHRIMP, MXD SP, CKD, BREADED AND FRIED"],
     kcal: 242, protein: 21.39, carbs: 11.47, fat: 12.28, fiber: 0.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4789,7 +4789,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Clam, mxd sp, ckd, moist heat",
+    name: "Clam, mxd sp, cozido, moist heat",
     aliases: ["CLAM, MXD SP, CKD, MOIST HEAT"],
     kcal: 148, protein: 25.55, carbs: 5.13, fat: 1.95, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4798,7 +4798,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Oyster, eastern, enlatado",
+    name: "Oyster, eastern, canned",
     aliases: ["OYSTER, EASTERN, CANNED"],
     kcal: 68, protein: 7.06, carbs: 3.91, fat: 2.47, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4807,7 +4807,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Salmão, chinook, defumado, (lox), tradicional",
+    name: "Salmon, chinook, smoked, (lox), reg",
     aliases: ["SALMON, CHINOOK, SMOKED, (LOX), REG"],
     kcal: 117, protein: 18.28, carbs: 0, fat: 4.32, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4816,7 +4816,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Bass, freshwater, mxd sp, ckd, dry heat",
+    name: "Bass, freshwater, mxd sp, cozido, seco heat",
     aliases: ["BASS, FRESHWATER, MXD SP, CKD, DRY HEAT"],
     kcal: 146, protein: 24.18, carbs: 0, fat: 4.73, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4825,7 +4825,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Drum, freshwater, ckd, dry heat",
+    name: "Drum, freshwater, cozido, seco heat",
     aliases: ["DRUM, FRESHWATER, CKD, DRY HEAT"],
     kcal: 153, protein: 22.49, carbs: 0, fat: 6.32, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4834,7 +4834,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Monkfish, cozido, dry heat",
+    name: "Monkfish, cooked, seco heat",
     aliases: ["MONKFISH, COOKED, DRY HEAT"],
     kcal: 97, protein: 18.56, carbs: 0, fat: 1.95, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4843,7 +4843,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Salmão, chum, ckd, dry heat",
+    name: "Salmon, chum, cozido, seco heat",
     aliases: ["SALMON, CHUM, CKD, DRY HEAT"],
     kcal: 154, protein: 25.82, carbs: 0, fat: 4.83, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4852,7 +4852,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Atum, skipjack, fresco, ckd, dry heat",
+    name: "Tuna, skipjack, frsh, cozido, seco heat",
     aliases: ["TUNA, SKIPJACK, FRSH, CKD, DRY HEAT"],
     kcal: 132, protein: 28.21, carbs: 0, fat: 1.29, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4861,7 +4861,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Spiny lobster, mxd sp, ckd, moist heat",
+    name: "Spiny lobster, mxd sp, cozido, moist heat",
     aliases: ["SPINY LOBSTER, MXD SP, CKD, MOIST HEAT"],
     kcal: 143, protein: 26.41, carbs: 3.12, fat: 1.94, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4870,7 +4870,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Salmão, atlantic, farmed, cru",
+    name: "Salmon, atlantic, farmed, cru",
     aliases: ["SALMON, ATLANTIC, FARMED, RAW"],
     kcal: 208, protein: 20.42, carbs: 0, fat: 13.42, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4879,7 +4879,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Oyster, eastern, wild, ckd, dry heat",
+    name: "Oyster, eastern, wild, cozido, seco heat",
     aliases: ["OYSTER, EASTERN, WILD, CKD, DRY HEAT"],
     kcal: 79, protein: 8.87, carbs: 4.23, fat: 2.65, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4888,7 +4888,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peixe, salmão, pink, cnd, drnd sol",
+    name: "Peixe, salmon, pink, enlatado, drnd sol",
     aliases: ["FISH, SALMON, PINK, CND, DRND SOL"],
     kcal: 138, protein: 23.1, carbs: 0, fat: 5.02, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4897,7 +4897,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beans, bkd, cnd, with franks",
+    name: "Beans, bkd, enlatado, com franks",
     aliases: ["BEANS, BKD, CND, WITH FRANKS"],
     kcal: 142, protein: 6.75, carbs: 15.39, fat: 6.57, fiber: 6.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4906,7 +4906,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beans, black turtle, mature seeds, cnd",
+    name: "Beans, black turtle, mature seeds, enlatado",
     aliases: ["BEANS, BLACK TURTLE, MATURE SEEDS, CND"],
     kcal: 91, protein: 6.03, carbs: 16.55, fat: 0.29, fiber: 6.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4915,7 +4915,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beans, great northern, mature seeds, cnd",
+    name: "Beans, great northern, mature seeds, enlatado",
     aliases: ["BEANS, GREAT NORTHERN, MATURE SEEDS, CND"],
     kcal: 114, protein: 7.37, carbs: 21.02, fat: 0.39, fiber: 4.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4924,7 +4924,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beans, kidney, reduzido, mature seeds, cnd, sol and liquids",
+    name: "Beans, kidney, reduzido, mature seeds, enlatado, sol e liquids",
     aliases: ["BEANS, KIDNEY, RED, MATURE SEEDS, CND, SOL AND LIQUIDS"],
     kcal: 81, protein: 5.22, carbs: 14.83, fat: 0.36, fiber: 4.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4942,7 +4942,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beans, clara, mature seeds, cnd",
+    name: "Beans, white, mature seeds, enlatado",
     aliases: ["BEANS, WHITE, MATURE SEEDS, CND"],
     kcal: 114, protein: 7.26, carbs: 21.2, fat: 0.29, fiber: 4.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4951,7 +4951,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Chili with beans, enlatado",
+    name: "Chili com beans, canned",
     aliases: ["CHILI WITH BEANS, CANNED"],
     kcal: 103, protein: 6.12, carbs: 13.24, fat: 3.76, fiber: 3.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -4969,7 +4969,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lupins, mature seeds, ckd, bld, sem sal",
+    name: "Lupins, mature seeds, cozido, bld, sem sal",
     aliases: ["LUPINS, MATURE SEEDS, CKD, BLD, WITHOUT SALT"],
     kcal: 119, protein: 15.57, carbs: 9.88, fat: 2.92, fiber: 2.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5014,7 +5014,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Soja sau made from soja and trigo (shoyu)",
+    name: "Soja sau made from soja e trigo (shoyu)",
     aliases: ["SOY SAU MADE FROM SOY AND WHEAT (SHOYU)"],
     kcal: 53, protein: 8.14, carbs: 4.93, fat: 0.57, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5023,7 +5023,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Yardlong bns, mature seeds, ckd, bld, sem sal",
+    name: "Yardlong bns, mature seeds, cozido, bld, sem sal",
     aliases: ["YARDLONG BNS, MATURE SEEDS, CKD, BLD, WITHOUT SALT"],
     kcal: 118, protein: 8.29, carbs: 21.09, fat: 0.45, fiber: 3.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5032,7 +5032,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Amendoim creme para barrar, reduzido açúcar",
+    name: "Amendoim sprd, reduzido açúcar",
     aliases: ["PEANUT SPRD, RED SUGAR"],
     kcal: 650, protein: 24.8, carbs: 14.23, fat: 54.89, fiber: 7.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5050,7 +5050,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Refried bns, cnd, sem gordura",
+    name: "Refried bns, enlatado, sem gordura",
     aliases: ["REFRIED BNS, CND, FAT-FREE"],
     kcal: 79, protein: 5.34, carbs: 13.5, fat: 0.45, fiber: 4.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5095,7 +5095,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Silk morango soja iogurte",
+    name: "Silk strawberry soja iogurte",
     aliases: ["SILK STRAWBERRY SOY YOGURT"],
     kcal: 94, protein: 2.35, carbs: 18.24, fat: 1.18, fiber: 0.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5122,7 +5122,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beans, french, mature seeds, ckd, bld, com sal",
+    name: "Beans, french, mature seeds, cozido, bld, com sal",
     aliases: ["BEANS, FRENCH, MATURE SEEDS, CKD, BLD, WITH SALT"],
     kcal: 129, protein: 7.05, carbs: 24.02, fat: 0.76, fiber: 9.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5131,7 +5131,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beans, kidney, reduzido, mature seeds, cnd, sol and liq, baixo sódio",
+    name: "Beans, kidney, reduzido, mature seeds, enlatado, sol e liq, lo na",
     aliases: ["BEANS, KIDNEY, RED, MATURE SEEDS, CND, SOL AND LIQ, LO NA"],
     kcal: 81, protein: 5.22, carbs: 14.83, fat: 0.36, fiber: 5.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5140,7 +5140,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Chickpeas, mature seeds, ckd, bld, com sal",
+    name: "Chickpeas, mature seeds, cozido, bld, com sal",
     aliases: ["CHICKPEAS, MATURE SEEDS, CKD, BLD, WITH SALT"],
     kcal: 164, protein: 8.86, carbs: 27.42, fat: 2.59, fiber: 7.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5149,7 +5149,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lima bns, thin seeded (baby), mature seeds, ckd, bld, com sal",
+    name: "Lima bns, thin seeded (baby), mature seeds, cozido, bld, com sal",
     aliases: ["LIMA BNS, THIN SEEDED (BABY), MATURE SEEDS, CKD, BLD, WITH SALT"],
     kcal: 126, protein: 8.04, carbs: 23.31, fat: 0.38, fiber: 7.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5158,7 +5158,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peanuts, valencia, óleo-assado, sem sal",
+    name: "Peanuts, valencia, óleo-roasted, sem sal",
     aliases: ["PEANUTS, VALENCIA, OIL-ROASTED, WITHOUT SALT"],
     kcal: 589, protein: 27.04, carbs: 16.3, fat: 51.24, fiber: 8.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5176,7 +5176,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Tofu, frito, prep with ca sulfate",
+    name: "Tofu, fried, prep com ca sulfate",
     aliases: ["TOFU, FRIED, PREP WITH CA SULFATE"],
     kcal: 270, protein: 18.82, carbs: 8.86, fat: 20.18, fiber: 3.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5185,7 +5185,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Loma linda linketts, cnd, unprep",
+    name: "Loma linda linketts, enlatado, unprep",
     aliases: ["LOMA LINDA LINKETTS, CND, UNPREP"],
     kcal: 209, protein: 21.3, carbs: 4.4, fat: 11.8, fiber: 3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5194,7 +5194,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Worthington prime stakes, cnd, unprep",
+    name: "Worthington prime stakes, enlatado, unprep",
     aliases: ["WORTHINGTON PRIME STAKES, CND, UNPREP"],
     kcal: 135, protein: 10.2, carbs: 7.5, fat: 7.2, fiber: 1.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5203,7 +5203,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Worthington meatless chick roll, frz, unprep",
+    name: "Worthington meatless chick roll, congelado, unprep",
     aliases: ["WORTHINGTON MEATLESS CHICK ROLL, FRZ, UNPREP"],
     kcal: 154, protein: 16.1, carbs: 4.3, fat: 8, fiber: 2.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5212,7 +5212,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Worthington stripples, frz, unprep",
+    name: "Worthington stripples, congelado, unprep",
     aliases: ["WORTHINGTON STRIPPLES, FRZ, UNPREP"],
     kcal: 346, protein: 12.4, carbs: 14.3, fat: 26.6, fiber: 5.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5221,7 +5221,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Morningstar farms cogumelo lover's burger, frz, unprep",
+    name: "Morningstar farms cogumelo lover's burger, congelado, unprep",
     aliases: ["MORNINGSTAR FARMS MUSHROOM LOVER'S BURGER, FRZ, UNPREP"],
     kcal: 168, protein: 14.3, carbs: 9.2, fat: 8.2, fiber: 5.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5230,7 +5230,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gardenburger black feijão chipotle burger, frz, unprep",
+    name: "Gardenburger black feijão chipotle burger, congelado, unprep",
     aliases: ["GARDENBURGER BLACK BEAN CHIPOTLE BURGER, FRZ, UNPREP"],
     kcal: 133, protein: 6.5, carbs: 22, fat: 3.9, fiber: 6.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5239,7 +5239,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Morningstar farms bbq riblets, frz, unprep",
+    name: "Morningstar farms bbq riblets, congelado, unprep",
     aliases: ["MORNINGSTAR FARMS BBQ RIBLETS, FRZ, UNPREP"],
     kcal: 150, protein: 11.4, carbs: 24.6, fat: 2.3, fiber: 4.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5248,7 +5248,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Morningstar farms meal starters veggie meatballs, frz, unprep",
+    name: "Morningstar farms meal starters veggie meatballs, congelado, unprep",
     aliases: ["MORNINGSTAR FARMS MEAL STARTERS VEGGIE MEATBALLS, FRZ, UNPREP"],
     kcal: 158, protein: 17.7, carbs: 9.9, fat: 5.8, fiber: 3.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5257,7 +5257,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mornngstr frms brkfst sndwch ssge ovo and chs eng muff, frz, unprp",
+    name: "Mornngstr frms brkfst sndwch ssge ovo e chs eng muff, congelado, unprp",
     aliases: ["MORNNGSTR FRMS BRKFST SNDWCH SSGE EGG AND CHS ENG MUFF, FRZ, UNPRP"],
     kcal: 205, protein: 14.3, carbs: 18.7, fat: 9.4, fiber: 3.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5266,7 +5266,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, dom, comp of rtl cuts, ln and gordura, 1/4\"gordura, choic, cru",
+    name: "Lamb, dom, comp of rtl cuts, ln e fat, 1/4\"fat, choic, cru",
     aliases: ["LAMB, DOM, COMP OF RTL CUTS, LN AND FAT, 1/4\"FAT, CHOIC, RAW"],
     kcal: 267, protein: 16.88, carbs: 0, fat: 21.59, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5275,7 +5275,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, dom, foreshank, ln, 1/4\"gordura, choic, cru",
+    name: "Lamb, dom, foreshank, ln, 1/4\"fat, choic, cru",
     aliases: ["LAMB, DOM, FORESHANK, LN, 1/4\"FAT, CHOIC, RAW"],
     kcal: 120, protein: 21.08, carbs: 0, fat: 3.29, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5284,7 +5284,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, dom, leg, shank half, ln, 1/4\"gordura, choic, ckd, rstd",
+    name: "Lamb, dom, leg, shank half, ln, 1/4\"fat, choic, cozido, rstd",
     aliases: ["LAMB, DOM, LEG, SHANK HALF, LN, 1/4\"FAT, CHOIC, CKD, RSTD"],
     kcal: 180, protein: 28.17, carbs: 0, fat: 6.67, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5293,7 +5293,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, dom, loin, ln, 1/4\"gordura, choic, cru",
+    name: "Lamb, dom, loin, ln, 1/4\"fat, choic, cru",
     aliases: ["LAMB, DOM, LOIN, LN, 1/4\"FAT, CHOIC, RAW"],
     kcal: 143, protein: 20.88, carbs: 0, fat: 5.94, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5302,7 +5302,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, dom, rib, ln, 1/4\"gordura, choic, ckd, rstd",
+    name: "Lamb, dom, rib, ln, 1/4\"fat, choic, cozido, rstd",
     aliases: ["LAMB, DOM, RIB, LN, 1/4\"FAT, CHOIC, CKD, RSTD"],
     kcal: 232, protein: 26.16, carbs: 0, fat: 13.31, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5311,7 +5311,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, dom, shldr, integral (arm and bld), ln, 1/4\"gordura, choic, ckd, rstd",
+    name: "Lamb, dom, shldr, integral (arm e bld), ln, 1/4\"fat, choic, cozido, rstd",
     aliases: ["LAMB, DOM, SHLDR, WHL (ARM AND BLD), LN, 1/4\"FAT, CHOIC, CKD, RSTD"],
     kcal: 204, protein: 24.94, carbs: 0, fat: 10.77, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5320,7 +5320,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, dom, shldr, arm, ln, 1/4\"gordura, choic, ckd, rstd",
+    name: "Lamb, dom, shldr, arm, ln, 1/4\"fat, choic, cozido, rstd",
     aliases: ["LAMB, DOM, SHLDR, ARM, LN, 1/4\"FAT, CHOIC, CKD, RSTD"],
     kcal: 192, protein: 25.46, carbs: 0, fat: 9.26, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5329,7 +5329,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, dom, cubed for stew or kabob (leg and shldr), ln, 1/4\"gordura, cru",
+    name: "Lamb, dom, cubed for stew ou kabob (leg e shldr), ln, 1/4\"fat, cru",
     aliases: ["LAMB, DOM, CUBED FOR STEW OR KABOB (LEG AND SHLDR), LN, 1/4\"FAT, RAW"],
     kcal: 134, protein: 20.21, carbs: 0, fat: 5.28, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5338,7 +5338,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, nz, imp, frz, comp of rtl cuts, gordura, ckd",
+    name: "Lamb, nz, imp, congelado, comp of rtl cuts, fat, cozido",
     aliases: ["LAMB, NZ, IMP, FRZ, COMP OF RTL CUTS, FAT, CKD"],
     kcal: 586, protein: 9.72, carbs: 0, fat: 60.39, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5347,7 +5347,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, nz, imp, frz, leg, integral (shk and sirl), ln, ckd, rstd",
+    name: "Lamb, nz, imp, congelado, leg, integral (shk e sirl), ln, cozido, rstd",
     aliases: ["LAMB, NZ, IMP, FRZ, LEG, WHL (SHK AND SIRL), LN, CKD, RSTD"],
     kcal: 181, protein: 27.68, carbs: 0, fat: 7.01, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5356,7 +5356,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, nz, imp, rack - partly frenched, ln, ckd, fast rstd",
+    name: "Lamb, nz, imp, rack - partly frenched, ln, cozido, fast rstd",
     aliases: ["LAMB, NZ, IMP, RACK - PARTLY FRENCHED, LN, CKD, FAST RSTD"],
     kcal: 193, protein: 24.43, carbs: 0, fat: 10.63, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5365,7 +5365,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Veal, comp of rtl cuts, ln, ckd",
+    name: "Veal, comp of rtl cuts, ln, cozido",
     aliases: ["VEAL, COMP OF RTL CUTS, LN, CKD"],
     kcal: 196, protein: 31.9, carbs: 0, fat: 6.58, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5374,7 +5374,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Veal, leg (top rnd), ln, ckd, brsd",
+    name: "Veal, leg (top rnd), ln, cozido, brsd",
     aliases: ["VEAL, LEG (TOP RND), LN, CKD, BRSD"],
     kcal: 203, protein: 36.71, carbs: 0, fat: 5.09, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5383,7 +5383,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Veal, loin, ln, ckd, brsd",
+    name: "Veal, loin, ln, cozido, brsd",
     aliases: ["VEAL, LOIN, LN, CKD, BRSD"],
     kcal: 226, protein: 33.57, carbs: 0, fat: 9.15, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5392,7 +5392,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Veal, shldr, integral (arm and bld), ln and gordura, cru",
+    name: "Veal, shldr, integral (arm e bld), ln e fat, cru",
     aliases: ["VEAL, SHLDR, WHL (ARM AND BLD), LN AND FAT, RAW"],
     kcal: 130, protein: 19.27, carbs: 0, fat: 5.28, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5401,7 +5401,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Veal, shldr, arm, ln and gordura, ckd, rstd",
+    name: "Veal, shldr, arm, ln e fat, cozido, rstd",
     aliases: ["VEAL, SHLDR, ARM, LN AND FAT, CKD, RSTD"],
     kcal: 183, protein: 25.46, carbs: 0, fat: 8.25, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5410,7 +5410,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Veal, shldr, blade, ln, ckd, brsd",
+    name: "Veal, shldr, blade, ln, cozido, brsd",
     aliases: ["VEAL, SHLDR, BLADE, LN, CKD, BRSD"],
     kcal: 198, protein: 32.66, carbs: 0, fat: 6.48, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5419,7 +5419,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Veal, cubed for stew (leg and shldr), ln, cru",
+    name: "Veal, cubed for stew (leg e shldr), ln, cru",
     aliases: ["VEAL, CUBED FOR STEW (LEG AND SHLDR), LN, RAW"],
     kcal: 109, protein: 20.27, carbs: 0, fat: 2.5, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5437,7 +5437,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Game meat, bison, ln, ckd, rstd",
+    name: "Game meat, bison, ln, cozido, rstd",
     aliases: ["GAME MEAT, BISON, LN, CKD, RSTD"],
     kcal: 143, protein: 28.44, carbs: 0, fat: 2.42, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5446,7 +5446,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Game meat, deer, ckd, rstd",
+    name: "Game meat, deer, cozido, rstd",
     aliases: ["GAME MEAT, DEER, CKD, RSTD"],
     kcal: 158, protein: 30.21, carbs: 0, fat: 3.19, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5455,7 +5455,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Game meat, moose, ckd, rstd",
+    name: "Game meat, moose, cozido, rstd",
     aliases: ["GAME MEAT, MOOSE, CKD, RSTD"],
     kcal: 134, protein: 29.27, carbs: 0, fat: 0.97, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5464,7 +5464,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Game meat, rabbit, wild, ckd, stwd",
+    name: "Game meat, rabbit, wild, cozido, stwd",
     aliases: ["GAME MEAT, RABBIT, WILD, CKD, STWD"],
     kcal: 173, protein: 33.02, carbs: 0, fat: 3.51, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5473,7 +5473,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Veal, var meats and by-products, brain, ckd, pan-frito",
+    name: "Veal, var meats e by-products, brain, cozido, pan-fried",
     aliases: ["VEAL, VAR MEATS AND BY-PRODUCTS, BRAIN, CKD, PAN-FRIED"],
     kcal: 213, protein: 14.48, carbs: 0, fat: 16.75, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5482,7 +5482,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Veal, var meats and by-products, kidneys, ckd, brsd",
+    name: "Veal, var meats e by-products, kidneys, cozido, brsd",
     aliases: ["VEAL, VAR MEATS AND BY-PRODUCTS, KIDNEYS, CKD, BRSD"],
     kcal: 163, protein: 26.32, carbs: 0, fat: 5.66, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5491,7 +5491,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, var meats and by-products, lungs, ckd, brsd",
+    name: "Lamb, var meats e by-products, lungs, cozido, brsd",
     aliases: ["LAMB, VAR MEATS AND BY-PRODUCTS, LUNGS, CKD, BRSD"],
     kcal: 113, protein: 19.88, carbs: 0, fat: 3.1, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5500,7 +5500,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, var meats and by-products, spleen, cru",
+    name: "Lamb, var meats e by-products, spleen, cru",
     aliases: ["LAMB, VAR MEATS AND BY-PRODUCTS, SPLEEN, RAW"],
     kcal: 101, protein: 17.2, carbs: 0, fat: 3.1, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5509,7 +5509,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Veal, var meats and by-products, tongue, cru",
+    name: "Veal, var meats e by-products, tongue, cru",
     aliases: ["VEAL, VAR MEATS AND BY-PRODUCTS, TONGUE, RAW"],
     kcal: 131, protein: 17.18, carbs: 1.91, fat: 5.48, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5518,7 +5518,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, dom, leg, integral (shk and sirl), ln and gordura, 1/8\"gordura, choic, ckd, rstd",
+    name: "Lamb, dom, leg, integral (shk e sirl), ln e fat, 1/8\"fat, choic, cozido, rstd",
     aliases: ["LAMB, DOM, LEG, WHL (SHK AND SIRL), LN AND FAT, 1/8\"FAT, CHOIC, CKD, RSTD"],
     kcal: 242, protein: 26.2, carbs: 0, fat: 14.42, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5527,7 +5527,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, dom, rib, ln and gordura, 1/8\"gordura, choic, cru",
+    name: "Lamb, dom, rib, ln e fat, 1/8\"fat, choic, cru",
     aliases: ["LAMB, DOM, RIB, LN AND FAT, 1/8\"FAT, CHOIC, RAW"],
     kcal: 342, protein: 15.32, carbs: 0, fat: 30.71, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5536,7 +5536,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, dom, shldr, arm, ln and gordura, 1/8\"gordura, choic, ckd, brsd",
+    name: "Lamb, dom, shldr, arm, ln e fat, 1/8\"fat, choic, cozido, brsd",
     aliases: ["LAMB, DOM, SHLDR, ARM, LN AND FAT, 1/8\"FAT, CHOIC, CKD, BRSD"],
     kcal: 337, protein: 31.1, carbs: 0, fat: 22.65, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5545,7 +5545,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, nz, imp, frz, comp of rtl cuts, ln and gordura, 1/8\" gordura, ckd",
+    name: "Lamb, nz, imp, congelado, comp of rtl cuts, ln e fat, 1/8\" fat, cozido",
     aliases: ["LAMB, NZ, IMP, FRZ, COMP OF RTL CUTS, LN AND FAT, 1/8\" FAT, CKD"],
     kcal: 270, protein: 25.26, carbs: 0, fat: 17.98, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5554,7 +5554,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, nz, imp, frz, rib, ln and gordura, 1/8\" gordura, ckd, rstd",
+    name: "Lamb, nz, imp, congelado, rib, ln e fat, 1/8\" fat, cozido, rstd",
     aliases: ["LAMB, NZ, IMP, FRZ, RIB, LN AND FAT, 1/8\" FAT, CKD, RSTD"],
     kcal: 317, protein: 19.86, carbs: 0, fat: 25.74, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5563,7 +5563,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, aus, fresco, rib chop, frnched, bone-in, ln, 1/8\", ckd, grelhado",
+    name: "Lamb, aus, frsh, rib chop, frnched, bone-in, ln, 1/8\", cozido, grilled",
     aliases: ["LAMB, AUS, FRSH, RIB CHOP, FRNCHED, BONE-IN, LN, 1/8\", CKD, GRILLED"],
     kcal: 234, protein: 32.16, carbs: 0, fat: 11.68, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5581,7 +5581,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Game meat, deer, shldr clod, ln, ckd, brsd",
+    name: "Game meat, deer, shldr clod, ln, cozido, brsd",
     aliases: ["GAME MEAT, DEER, SHLDR CLOD, LN, CKD, BRSD"],
     kcal: 191, protein: 36.28, carbs: 0, fat: 3.95, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5590,7 +5590,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, nz, imp, intermuscular gordura, cru",
+    name: "Lamb, nz, imp, intermuscular fat, cru",
     aliases: ["LAMB, NZ, IMP, INTERMUSCULAR FAT, RAW"],
     kcal: 640, protein: 4.63, carbs: 1.26, fat: 68.53, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5617,7 +5617,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, nz, imp, tunnel-bned lg, chmp off, shnk off, ln, ckd, slw rstd",
+    name: "Lamb, nz, imp, tunnel-bned lg, chmp off, shnk off, ln, cozido, slw rstd",
     aliases: ["LAMB, NZ, IMP, TUNNEL-BNED LG, CHMP OFF, SHNK OFF, LN, CKD, SLW RSTD"],
     kcal: 159, protein: 25.29, carbs: 0, fat: 6.44, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5626,7 +5626,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, nz, imp, loin, bnless, ln, ckd, fast rstd",
+    name: "Lamb, nz, imp, loin, bnless, ln, cozido, fast rstd",
     aliases: ["LAMB, NZ, IMP, LOIN, BNLESS, LN, CKD, FAST RSTD"],
     kcal: 156, protein: 28.99, carbs: 0, fat: 4.49, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5635,7 +5635,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, nz, imp, rack - fully frenched, ln, ckd, fast rstd",
+    name: "Lamb, nz, imp, rack - fully frenched, ln, cozido, fast rstd",
     aliases: ["LAMB, NZ, IMP, RACK - FULLY FRENCHED, LN, CKD, FAST RSTD"],
     kcal: 173, protein: 24.39, carbs: 0, fat: 8.38, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5644,7 +5644,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, nz, imp, hind-shank, ln and gordura, cru",
+    name: "Lamb, nz, imp, hind-shank, ln e fat, cru",
     aliases: ["LAMB, NZ, IMP, HIND-SHANK, LN AND FAT, RAW"],
     kcal: 186, protein: 18.39, carbs: 0.73, fat: 12.12, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5653,7 +5653,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, nz, imp, neck chops, ln and gordura, cru",
+    name: "Lamb, nz, imp, neck chops, ln e fat, cru",
     aliases: ["LAMB, NZ, IMP, NECK CHOPS, LN AND FAT, RAW"],
     kcal: 231, protein: 17.43, carbs: 0.14, fat: 17.9, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5662,7 +5662,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, nz, imp, tun-bnd lg, chmp off, shnk off, l and f, ckd, sl rstd",
+    name: "Lamb, nz, imp, tun-bnd lg, chmp off, shnk off, l e f, cozido, sl rstd",
     aliases: ["LAMB, NZ, IMP, TUN-BND LG, CHMP OFF, SHNK OFF, L AND F, CKD, SL RSTD"],
     kcal: 208, protein: 23.41, carbs: 0.03, fat: 12.68, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5671,7 +5671,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Veal, shldr, blade chop, ln, ckd, grelhado",
+    name: "Veal, shldr, blade chop, ln, cozido, grilled",
     aliases: ["VEAL, SHLDR, BLADE CHOP, LN, CKD, GRILLED"],
     kcal: 159, protein: 27.33, carbs: 0, fat: 5.53, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5680,7 +5680,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Veal, shldr, blade chop, ln and gordura, ckd, grelhado",
+    name: "Veal, shldr, blade chop, ln e fat, cozido, grilled",
     aliases: ["VEAL, SHLDR, BLADE CHOP, LN AND FAT, CKD, GRILLED"],
     kcal: 199, protein: 25.72, carbs: 0.15, fat: 10.57, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5689,7 +5689,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, aus, imp, fresco, leg, trotter off, bone-in, ln, 1/8\" gordura, cru",
+    name: "Lamb, aus, imp, frsh, leg, trotter off, bone-in, ln, 1/8\" fat, cru",
     aliases: ["LAMB, AUS, IMP, FRSH, LEG, TROTTER OFF, BONE-IN, LN, 1/8\" FAT, RAW"],
     kcal: 131, protein: 23.11, carbs: 0, fat: 4.33, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5698,7 +5698,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, aus, imp, fresco, leg, bttm, bnless, ln and gordura, 1/8\" gordura, cru",
+    name: "Lamb, aus, imp, frsh, leg, bttm, bnless, ln e fat, 1/8\" fat, cru",
     aliases: ["LAMB, AUS, IMP, FRSH, LEG, BTTM, BNLESS, LN AND FAT, 1/8\" FAT, RAW"],
     kcal: 187, protein: 20.97, carbs: 0, fat: 11.43, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5707,7 +5707,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lamb, aus, fresco, rack, rst, frenched, bne-in, ln and ft, 1/8\", rstd",
+    name: "Lamb, aus, frsh, rack, rst, frenched, bne-in, ln e ft, 1/8\", rstd",
     aliases: ["LAMB, AUS, FRSH, RACK, RST, FRENCHED, BNE-IN, LN AND FT, 1/8\", RSTD"],
     kcal: 291, protein: 25.96, carbs: 0, fat: 20.77, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5716,7 +5716,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Biscuits, natural or bttrmlk, frz, bkd",
+    name: "Biscuits, natural ou bttrmlk, congelado, bkd",
     aliases: ["BISCUITS, PLN OR BTTRMLK, FRZ, BKD"],
     kcal: 338, protein: 6.2, carbs: 53.87, fat: 11.03, fiber: 1.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5725,7 +5725,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pão, banana, prep from recipe, made with margarina",
+    name: "Pão, banana, prep from recipe, made com margarine",
     aliases: ["BREAD, BANANA, PREP FROM RECIPE, MADE WITH MARGARINE"],
     kcal: 326, protein: 4.3, carbs: 54.6, fat: 10.5, fiber: 1.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5734,7 +5734,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pão, french or vienna, tstd (ind sourdough)",
+    name: "Pão, french ou vienna, tstd (ind sourdough)",
     aliases: ["BREAD, FRENCH OR VIENNA, TSTD (IND SOURDOUGH)"],
     kcal: 319, protein: 13, carbs: 61.93, fat: 2.14, fiber: 3.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5743,7 +5743,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pão, pita, clara, enriquecido",
+    name: "Pão, pita, white, enriched",
     aliases: ["BREAD, PITA, WHITE, ENRICHED"],
     kcal: 275, protein: 9.1, carbs: 55.7, fat: 1.2, fiber: 2.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5761,7 +5761,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pão de trigo bran",
+    name: "Pão, trigo bran",
     aliases: ["BREAD, WHEAT BRAN"],
     kcal: 248, protein: 8.8, carbs: 47.8, fat: 3.4, fiber: 4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5770,7 +5770,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pão, inteiro-trigo, prep from recipe, tstd",
+    name: "Pão, whole-trigo, prep from recipe, tstd",
     aliases: ["BREAD, WHOLE-WHEAT, PREP FROM RECIPE, TSTD"],
     kcal: 305, protein: 9.2, carbs: 56.4, fat: 5.9, fiber: 6.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5779,7 +5779,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Bolo, angelfood, dry mistura",
+    name: "Cake, angelfood, seco mix",
     aliases: ["CAKE, ANGELFOOD, DRY MIX"],
     kcal: 366, protein: 6.4, carbs: 86.13, fat: 0.27, fiber: 0.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5797,7 +5797,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Bolo, gingerbread, dry mistura",
+    name: "Cake, gingerbread, seco mix",
     aliases: ["CAKE, GINGERBREAD, DRY MIX"],
     kcal: 437, protein: 4.4, carbs: 74.6, fat: 13.8, fiber: 1.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5806,7 +5806,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Bolo, clara, prep from recipe without frstng",
+    name: "Cake, white, prep from recipe sem frstng",
     aliases: ["CAKE, WHITE, PREP FROM RECIPE WITHOUT FRSTNG"],
     kcal: 357, protein: 5.4, carbs: 57.2, fat: 12.4, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5824,7 +5824,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cookies, choc chip, refr dough, bkd",
+    name: "Cookies, chocolate chip, refr dough, bkd",
     aliases: ["COOKIES, CHOC CHIP, REFR DOUGH, BKD"],
     kcal: 492, protein: 4.9, carbs: 68.2, fat: 22.6, fiber: 1.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5833,7 +5833,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cookies, graham crackers, natural or mel (incl cinn)",
+    name: "Cookies, graham crackers, natural ou honey (incl cinn)",
     aliases: ["COOKIES, GRAHAM CRACKERS, PLN OR HONEY (INCL CINN)"],
     kcal: 430, protein: 6.69, carbs: 77.66, fat: 10.6, fiber: 3.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5851,7 +5851,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cookies, brownies, dry mistura, açúcar free",
+    name: "Cookies, brownies, seco mix, sem açúcar",
     aliases: ["COOKIES, BROWNIES, DRY MIX, SUGAR FREE"],
     kcal: 426, protein: 2.9, carbs: 80.4, fat: 12.5, fiber: 4.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5860,7 +5860,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cookies, açúcar, prep from recipe, made with margarina",
+    name: "Cookies, açúcar, prep from recipe, made com margarine",
     aliases: ["COOKIES, SUGAR, PREP FROM RECIPE, MADE WITH MARGARINE"],
     kcal: 472, protein: 5.9, carbs: 60, fat: 23.4, fiber: 1.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5869,7 +5869,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Crackers, crispbread, centeio",
+    name: "Crackers, crispbread, rye",
     aliases: ["CRACKERS, CRISPBREAD, RYE"],
     kcal: 366, protein: 7.9, carbs: 82.2, fat: 1.3, fiber: 16.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5878,7 +5878,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Crackers, centeio, sandwich-tipo with chs filling",
+    name: "Crackers, rye, sandwich-type com chs filling",
     aliases: ["CRACKERS, RYE, SANDWICH-TYPE WITH CHS FILLING"],
     kcal: 481, protein: 9.2, carbs: 60.8, fat: 22.3, fiber: 3.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5887,7 +5887,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Crackers, trigo, sndwch, with chs filling",
+    name: "Crackers, trigo, sndwch, com chs filling",
     aliases: ["CRACKERS, WHEAT, SNDWCH, WITH CHS FILLING"],
     kcal: 497, protein: 9.8, carbs: 58.2, fat: 25, fiber: 3.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5896,7 +5896,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Croutons, natural",
+    name: "Croutons, plain",
     aliases: ["CROUTONS, PLAIN"],
     kcal: 407, protein: 11.9, carbs: 73.5, fat: 6.6, fiber: 5.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5905,7 +5905,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Doughnuts, bolo-tipo, choc, adoçado or glazed",
+    name: "Doughnuts, cake-type, chocolate, sugared ou glazed",
     aliases: ["DOUGHNUTS, CAKE-TYPE, CHOC, SUGARED OR GLAZED"],
     kcal: 417, protein: 4.5, carbs: 57.4, fat: 19.9, fiber: 2.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5932,7 +5932,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Muffins, milho, dry mistura, prep",
+    name: "Muffins, milho, seco mix, prep",
     aliases: ["MUFFINS, CORN, DRY MIX, PREP"],
     kcal: 321, protein: 7.4, carbs: 49.1, fat: 10.2, fiber: 2.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5941,7 +5941,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pancakes, trigo-sarraceno, dry mistura, incomplete",
+    name: "Pancakes, buckwheat, seco mix, incomplete",
     aliases: ["PANCAKES, BUCKWHEAT, DRY MIX, INCOMPLETE"],
     kcal: 340, protein: 10.9, carbs: 71.3, fat: 2.7, fiber: 8.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5950,7 +5950,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Torta, cocnt creme, prep from mistura, no-bake tipo",
+    name: "Pie, cocnt crm, prep from mix, no-bake type",
     aliases: ["PIE, COCNT CRM, PREP FROM MIX, NO-BAKE TYPE"],
     kcal: 276, protein: 2.8, carbs: 28.5, fat: 17.6, fiber: 0.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5959,7 +5959,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Torta, pumpkin, commly prep",
+    name: "Pie, pumpkin, commly prep",
     aliases: ["PIE, PUMPKIN, COMMLY PREP"],
     kcal: 243, protein: 3.9, carbs: 34.83, fat: 9.75, fiber: 1.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5968,7 +5968,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Rolls, dinner, natural, comm preparado (inc brown -n- serve)",
+    name: "Rolls, dinner, natural, comercial prepared (inc brown -n- serve)",
     aliases: ["ROLLS, DINNER, PLN, COMM PREPARED (INC BROWN -N- SERVE)"],
     kcal: 310, protein: 10.86, carbs: 52.04, fat: 6.47, fiber: 2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5977,7 +5977,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Rolls, hamburger or hotdog, mixed-grain",
+    name: "Rolls, hamburger ou hotdog, mixed-grain",
     aliases: ["ROLLS, HAMBURGER OR HOTDOG, MIXED-GRAIN"],
     kcal: 263, protein: 9.6, carbs: 44.6, fat: 6, fiber: 3.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -5995,7 +5995,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Leavening agents, creme of tartar",
+    name: "Leavening agents, crm of tartar",
     aliases: ["LEAVENING AGENTS, CRM OF TARTAR"],
     kcal: 258, protein: 0, carbs: 61.5, fat: 0, fiber: 0.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6004,7 +6004,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Muffins, trigo bran, toaster-tipo with raisins, tstd",
+    name: "Muffins, trigo bran, toaster-type com raisins, tstd",
     aliases: ["MUFFINS, WHEAT BRAN, TOASTER-TYPE WITH RAISINS, TSTD"],
     kcal: 313, protein: 5.5, carbs: 55.5, fat: 9.4, fiber: 8.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6013,7 +6013,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Bagels, natural, unenr, with ca prop (incl cebola, poppy, gergelim)",
+    name: "Bagels, natural, unenr, com ca prop (incl cebola, poppy, sesame)",
     aliases: ["BAGELS, PLN, UNENR, WITH CA PROP (INCL ONION, POPPY, SESAME)"],
     kcal: 275, protein: 10.5, carbs: 53.4, fat: 1.6, fiber: 2.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6022,7 +6022,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Bolo, pudim-tipo, clara, unenr, dry mistura",
+    name: "Cake, pudding-type, white, unenr, seco mix",
     aliases: ["CAKE, PUDDING-TYPE, WHITE, UNENR, DRY MIX"],
     kcal: 423, protein: 3.9, carbs: 81, fat: 9.5, fiber: 0.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6031,7 +6031,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Crackers, std snack-tipo, tradicional, baixo sal",
+    name: "Crackers, std snack-type, reg, lo sal",
     aliases: ["CRACKERS, STD SNACK-TYPE, REG, LO SALT"],
     kcal: 502, protein: 7.4, carbs: 61, fat: 25.3, fiber: 1.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6040,7 +6040,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Doughnuts, yeast-leavened, glazed, unenr (incl mel buns)",
+    name: "Doughnuts, yeast-leavened, glazed, unenr (incl honey buns)",
     aliases: ["DOUGHNUTS, YEAST-LEAVENED, GLAZED, UNENR (INCL HONEY BUNS)"],
     kcal: 403, protein: 6.4, carbs: 44.3, fat: 22.8, fiber: 1.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6049,7 +6049,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Tortillas, rtb or -fry, milho, sem sal",
+    name: "Tortillas, rtb ou -fry, milho, sem sal",
     aliases: ["TORTILLAS, RTB OR -FRY, CORN, WITHOUT SALT"],
     kcal: 222, protein: 5.7, carbs: 46.6, fat: 2.5, fiber: 5.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6076,7 +6076,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Archway home estilo cookies, açúcar free oatmeal",
+    name: "Archway home style cookies, sem açúcar oatmeal",
     aliases: ["ARCHWAY HOME STYLE COOKIES, SUGAR FREE OATMEAL"],
     kcal: 442, protein: 5.54, carbs: 67.2, fat: 20.92, fiber: 1.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6085,7 +6085,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Archway home estilo cookies, melaço",
+    name: "Archway home style cookies, molasses",
     aliases: ["ARCHWAY Home Style Cookies, Molasses"],
     kcal: 403, protein: 4.25, carbs: 69.41, fat: 12.06, fiber: 1.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6094,7 +6094,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Kraft, stove top stuffing mistura frango sabor",
+    name: "Kraft, stove top stuffing mix frango flavor",
     aliases: ["KRAFT, STOVE TOP STUFFING MIX CHICKEN FLAVOR"],
     kcal: 381, protein: 12.6, carbs: 73.1, fat: 4.1, fiber: 2.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6121,7 +6121,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Waffle, natural, frz, rth, microwave",
+    name: "Waffle, natural, congelado, rth, microwave",
     aliases: ["WAFFLE, PLN, FRZ, RTH, MICROWAVE"],
     kcal: 298, protein: 6.71, carbs: 45.41, fat: 9.91, fiber: 2.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6130,7 +6130,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Torta crust, deep dish, frz, unbaked, made with enriquecido flr",
+    name: "Pie crust, deep dish, congelado, unbaked, made com enr flr",
     aliases: ["PIE CRUST, DEEP DISH, FRZ, UNBAKED, MADE WITH ENR FLR"],
     kcal: 468, protein: 5.52, carbs: 46.79, fat: 28.74, fiber: 1.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6139,7 +6139,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pão, pound bolo tipo, pan de torta salvadoran",
+    name: "Pão, pound cake type, pan de torta salvadoran",
     aliases: ["BREAD, POUND CAKE TYPE, PAN DE TORTA SALVADORAN"],
     kcal: 390, protein: 7.06, carbs: 51.29, fat: 17.45, fiber: 1.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6148,7 +6148,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Crackers, creme, la moderna rikis creme crackers",
+    name: "Crackers, crm, la moderna rikis crm crackers",
     aliases: ["CRACKERS, CRM, LA MODERNA RIKIS CRM CRACKERS"],
     kcal: 464, protein: 7.19, carbs: 64.88, fat: 19.5, fiber: 2.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6157,7 +6157,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Tortillas, rtb or -fry, flr, shelf stable",
+    name: "Tortillas, rtb ou -fry, flr, shelf stable",
     aliases: ["TORTILLAS, RTB OR -FRY, FLR, SHELF STABLE"],
     kcal: 297, protein: 8.01, carbs: 49.27, fat: 7.58, fiber: 2.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6166,7 +6166,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Kashi, mirtilo waffle",
+    name: "Kashi, blueberry waffle",
     aliases: ["KASHI, BLUEBERRY WAFFLE"],
     kcal: 192, protein: 5.7, carbs: 34.6, fat: 7.1, fiber: 9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6175,7 +6175,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Austin, grelhado chs on wafer crackers, sandwich-tipo",
+    name: "Austin, grilled chs on wafer crackers, sandwich-type",
     aliases: ["AUSTIN, GRILLED CHS ON WAFER CRACKERS, SANDWICH-TYPE"],
     kcal: 493, protein: 7.9, carbs: 62, fat: 23.8, fiber: 1.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6184,7 +6184,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Bear naked, fruta and nut cookies",
+    name: "Bear naked, fruta e nut cookies",
     aliases: ["BEAR NAKED, FRUIT AND NUT COOKIES"],
     kcal: 443, protein: 7.5, carbs: 61.6, fat: 21.4, fiber: 7.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6211,7 +6211,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Granola bars, soft, coatd, leite choc coating, choc chip",
+    name: "Granola bars, soft, coatd, leite chocolate coating, chocolate chip",
     aliases: ["GRANOLA BARS, SOFT, COATD, MILK CHOC COATING, CHOC CHIP"],
     kcal: 466, protein: 5.8, carbs: 63.8, fat: 24.9, fiber: 3.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6229,7 +6229,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Batata chips, azedo-creme-and-cebola-sabor",
+    name: "Batata chips, azedo-creme-e-cebola-flavor",
     aliases: ["POTATO CHIPS, SOUR-CREAM-AND-ONION-FLAVOR"],
     kcal: 531, protein: 8.1, carbs: 51.5, fat: 33.9, fiber: 5.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6238,7 +6238,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Arroz cakes, brown arroz, gergelim sd",
+    name: "Arroz cakes, brown arroz, sesame sd",
     aliases: ["RICE CAKES, BROWN RICE, SESAME SD"],
     kcal: 392, protein: 7.6, carbs: 81.5, fat: 3.8, fiber: 5.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6256,7 +6256,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Baking choc, sem açúcar, liq",
+    name: "Baking chocolate, sem açúcar, liq",
     aliases: ["BAKING CHOC, UNSWTND, LIQ"],
     kcal: 472, protein: 12.1, carbs: 36.2, fat: 47.7, fiber: 18.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6274,7 +6274,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Desserts, flan, caramel custard, preparado-from-recipe",
+    name: "Desserts, flan, caramel custard, prepared-from-recipe",
     aliases: ["DESSERTS, FLAN, CARAMEL CUSTARD, PREPARED-FROM-RECIPE"],
     kcal: 145, protein: 4.53, carbs: 22.78, fat: 4.03, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6283,7 +6283,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Candies, fudge, baunilha, preparado-from-recipe",
+    name: "Candies, fudge, baunilha, prepared-from-recipe",
     aliases: ["CANDIES, FUDGE, VANILLA, PREPARED-FROM-RECIPE"],
     kcal: 383, protein: 1.05, carbs: 82.15, fat: 5.45, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6310,7 +6310,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Candies, leite choc coatd raisins",
+    name: "Candies, leite chocolate coatd raisins",
     aliases: ["CANDIES, MILK CHOC COATD RAISINS"],
     kcal: 390, protein: 4.1, carbs: 68.4, fat: 14.8, fiber: 3.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6319,7 +6319,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Toppings, morango",
+    name: "Toppings, strawberry",
     aliases: ["TOPPINGS, STRAWBERRY"],
     kcal: 254, protein: 0.2, carbs: 66.3, fat: 0.1, fiber: 0.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6328,7 +6328,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Candies, nestle, crunch bar and dssrt cobertura",
+    name: "Candies, nestle, crunch bar e dssrt topping",
     aliases: ["CANDIES, NESTLE, CRUNCH BAR AND DSSRT TOPPING"],
     kcal: 500, protein: 5, carbs: 67, fat: 26, fiber: 1.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6337,7 +6337,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Candies, gergelim crunch",
+    name: "Candies, sesame crunch",
     aliases: ["CANDIES, SESAME CRUNCH"],
     kcal: 516, protein: 11.6, carbs: 50.3, fat: 33.3, fiber: 7.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6355,7 +6355,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Gelatin dssrt, dry mistura",
+    name: "Gelatin dssrt, seco mix",
     aliases: ["GELATIN DSSRT, DRY MIX"],
     kcal: 381, protein: 7.8, carbs: 90.5, fat: 0, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6364,7 +6364,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Puddings, choc, dry mistura, instantâneo",
+    name: "Puddings, chocolate, seco mix, inst",
     aliases: ["PUDDINGS, CHOC, DRY MIX, INST"],
     kcal: 378, protein: 2.3, carbs: 87.9, fat: 1.9, fiber: 3.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6382,7 +6382,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Ovo custards, dry mistura, prep with 2% leite",
+    name: "Ovo custards, seco mix, prep com 2% leite",
     aliases: ["EGG CUSTARDS, DRY MIX, PREP WITH 2% MILK"],
     kcal: 112, protein: 4.13, carbs: 17.61, fat: 2.83, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6391,7 +6391,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Candies, praline, preparado-from-recipe",
+    name: "Candies, praline, prepared-from-recipe",
     aliases: ["CANDIES, PRALINE, PREPARED-FROM-RECIPE"],
     kcal: 485, protein: 3.3, carbs: 59.59, fat: 25.9, fiber: 3.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6418,7 +6418,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frostings, baunilha, creamy, dry mistura",
+    name: "Frostings, baunilha, creamy, seco mix",
     aliases: ["FROSTINGS, VANILLA, CREAMY, DRY MIX"],
     kcal: 410, protein: 0.3, carbs: 93.8, fat: 4.9, fiber: 0.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6436,7 +6436,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Snacks, sunkist, sunkist fruta roll, morango, with vitmns a, c, and e",
+    name: "Snacks, sunkist, sunkist fruta roll, strawberry, com vitmns a, c, e e",
     aliases: ["SNACKS, SUNKIST, SUNKIST FRUIT ROLL, STRAWBERRY, WITH VITMNS A, C,  AND E"],
     kcal: 342, protein: 0.6, carbs: 82.7, fat: 1, fiber: 7.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6454,7 +6454,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Melaço",
+    name: "Molasses",
     aliases: ["MOLASSES"],
     kcal: 290, protein: 0, carbs: 74.73, fat: 0.1, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6463,7 +6463,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Torta fillings, cnd, cherry",
+    name: "Pie fillings, enlatado, cherry",
     aliases: ["PIE FILLINGS, CND, CHERRY"],
     kcal: 115, protein: 0.37, carbs: 28, fat: 0.07, fiber: 0.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6472,7 +6472,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Puddings, cocnt creme, dry mistura, tradicional",
+    name: "Puddings, cocnt crm, seco mix, reg",
     aliases: ["PUDDINGS, COCNT CRM, DRY MIX, REG"],
     kcal: 434, protein: 1, carbs: 81.84, fat: 11.36, fiber: 1.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6499,7 +6499,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Syrups, table blends, milho, refiner, and açúcar",
+    name: "Syrups, table blends, milho, refiner, e açúcar",
     aliases: ["SYRUPS, TABLE BLENDS, CORN, REFINER,  AND SUGAR"],
     kcal: 319, protein: 0, carbs: 83.9, fat: 0, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6517,7 +6517,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Congelado novelties, ice tipo, abacaxi-coco",
+    name: "Frozen novelties, ice type, abacaxi-coco",
     aliases: ["FROZEN NOVELTIES, ICE TYPE, PINEAPPLE-COCONUT"],
     kcal: 113, protein: 0, carbs: 23.9, fat: 2.6, fiber: 0.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6544,7 +6544,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Snacks, granola bar, fruta-com gordura vegetal, nonfat",
+    name: "Snacks, granola bar, fruta-filled, nonfat",
     aliases: ["SNACKS, GRANOLA BAR, FRUIT-FILLED, NONFAT"],
     kcal: 342, protein: 5.9, carbs: 77.6, fat: 0.9, fiber: 7.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6553,7 +6553,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Snacks, batata chips, frm desidratado potatoes, sem gordura, with olestra",
+    name: "Snacks, batata chips, frm desidratado potatoes, sem gordura, com olestra",
     aliases: ["SNACKS, POTATO CHIPS, FRM DRIED POTATOES, FAT-FREE, WITH OLESTRA"],
     kcal: 253, protein: 5.06, carbs: 56, fat: 0.93, fiber: 7.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6562,7 +6562,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Puddings, limão, dry mistura, tradicional, com adição de óleo, k, sódio",
+    name: "Puddings, lemon, seco mix, reg, com adição de óleo, k, na",
     aliases: ["PUDDINGS, LEMON, DRY MIX, REG, WITH ADDED OIL, K, NA"],
     kcal: 366, protein: 0.1, carbs: 90.3, fat: 1.5, fiber: 0.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6571,7 +6571,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Batata chips, natural, made with part hydr soybn óleo, unsalted",
+    name: "Batata chips, natural, made com part hydr soybn óleo, sem sal",
     aliases: ["POTATO CHIPS, PLN, MADE WITH PART HYDR SOYBN OIL, UNSALTED"],
     kcal: 536, protein: 7, carbs: 52.9, fat: 34.6, fiber: 4.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6580,7 +6580,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Congelado novelties, juc tipo, popsicle scribblers",
+    name: "Frozen novelties, juc type, popsicle scribblers",
     aliases: ["FROZEN NOVELTIES, JUC TYPE, POPSICLE SCRIBBLERS"],
     kcal: 81, protein: 0, carbs: 19.68, fat: 0.24, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6589,7 +6589,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Congelado novelties, sem açúcar adicionado, fudgsicle pops",
+    name: "Frozen novelties, sem açúcar adicionado, fudgsicle pops",
     aliases: ["FROZEN NOVELTIES, NO SUGAR ADDED, FUDGSICLE POPS"],
     kcal: 124, protein: 3.67, carbs: 23.11, fat: 1.87, fiber: 1.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6598,7 +6598,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Ice creams, breyers, sem açúcar adicionado, manteiga noz-pecã",
+    name: "Ice creams, breyers, sem açúcar adicionado, manteiga pecan",
     aliases: ["ICE CREAMS, BREYERS, NO SUGAR ADDED, BUTTER PECAN"],
     kcal: 180, protein: 3.99, carbs: 21.3, fat: 10.3, fiber: 0.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6607,7 +6607,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Congelado novelties, sem açúcar adicionado creamsicle pops",
+    name: "Frozen novelties, sem açúcar adicionado creamsicle pops",
     aliases: ["FROZEN NOVELTIES, NO SUGAR ADDED CREAMSICLE POPS"],
     kcal: 72, protein: 3.69, carbs: 12.88, fat: 0.61, fiber: 3.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6616,7 +6616,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Ice creams, tradicional, baixo carbohydrate, choc",
+    name: "Ice creams, reg, lo carbohydrate, chocolate",
     aliases: ["ICE CREAMS, REG, LO CARBOHYDRATE, CHOC"],
     kcal: 237, protein: 3.8, carbs: 26.8, fat: 12.7, fiber: 4.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6634,7 +6634,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Candies, cocnt bar, not choc covered",
+    name: "Candies, cocnt bar, not chocolate covered",
     aliases: ["CANDIES, COCNT BAR, NOT CHOC COVERED"],
     kcal: 481, protein: 2.13, carbs: 55.87, fat: 27.65, fiber: 6.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6643,7 +6643,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cevada, pearled, cozido",
+    name: "Barley, pearled, cooked",
     aliases: ["BARLEY, PEARLED, COOKED"],
     kcal: 123, protein: 2.26, carbs: 28.22, fat: 0.44, fiber: 3.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6661,7 +6661,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fubá, yel, self-rising, bolted, with trigo flr added, enriquecido",
+    name: "Cornmeal, yel, self-rising, bolted, com trigo flr added, enr",
     aliases: ["CORNMEAL, YEL, SELF-RISING, BOLTED, WITH WHEAT FLR ADDED, ENR"],
     kcal: 348, protein: 8.41, carbs: 73.43, fat: 2.85, fiber: 6.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6670,7 +6670,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Aveia bran, cozido",
+    name: "Aveia bran, cooked",
     aliases: ["OAT BRAN, COOKED"],
     kcal: 40, protein: 3.21, carbs: 11.44, fat: 0.86, fiber: 2.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6679,7 +6679,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Arroz, clara, long-grain, tradicional, cru, enriquecido",
+    name: "Arroz, white, long-grain, reg, cru, enr",
     aliases: ["RICE, WHITE, LONG-GRAIN, REG, RAW, ENR"],
     kcal: 365, protein: 7.13, carbs: 79.95, fat: 0.66, fiber: 1.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6688,7 +6688,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Arroz, clara, short-grain, enriquecido, unckd",
+    name: "Arroz, white, short-grain, enr, unckd",
     aliases: ["RICE, WHITE, SHORT-GRAIN, ENR, UNCKD"],
     kcal: 358, protein: 6.5, carbs: 79.15, fat: 0.52, fiber: 2.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6697,7 +6697,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Centeio farinha, medium",
+    name: "Rye farinha, medium",
     aliases: ["RYE FLOUR, MEDIUM"],
     kcal: 349, protein: 10.88, carbs: 75.43, fat: 1.52, fiber: 11.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6715,7 +6715,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Trigo flr, clara, bolo, enriquecido",
+    name: "Trigo flr, white, cake, enr",
     aliases: ["WHEAT FLR, WHITE, CAKE, ENR"],
     kcal: 362, protein: 8.2, carbs: 78.03, fat: 0.86, fiber: 1.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6724,7 +6724,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Macaroni, veg, enriquecido, ckd",
+    name: "Macaroni, veg, enr, cozido",
     aliases: ["MACARONI, VEG, ENR, CKD"],
     kcal: 128, protein: 4.53, carbs: 26.61, fat: 0.11, fiber: 4.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6733,7 +6733,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Massa, dry, enriquecido",
+    name: "Pasta, seco, enr",
     aliases: ["PASTA, DRY, ENR"],
     kcal: 371, protein: 13.04, carbs: 74.67, fat: 1.51, fiber: 3.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6760,7 +6760,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Massa, ckd, enriquecido, com adição de sal",
+    name: "Pasta, cozido, enr, com adição de sal",
     aliases: ["PASTA, CKD, ENR, WITH ADDED SALT"],
     kcal: 157, protein: 5.8, carbs: 30.59, fat: 0.93, fiber: 1.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6769,7 +6769,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Macarrão, ovo, dry, unenr",
+    name: "Noodles, ovo, seco, unenr",
     aliases: ["NOODLES, EGG, DRY, UNENR"],
     kcal: 384, protein: 14.16, carbs: 71.27, fat: 4.44, fiber: 3.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6778,7 +6778,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Arroz, clara, long-grain, parbld, unenr, ckd",
+    name: "Arroz, white, long-grain, parbld, unenr, cozido",
     aliases: ["RICE, WHITE, LONG-GRAIN, PARBLD, UNENR, CKD"],
     kcal: 123, protein: 2.91, carbs: 26.05, fat: 0.37, fiber: 0.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6787,7 +6787,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Trigo flr, clara, all-purpose, enriquecido, unbleached",
+    name: "Trigo flr, white, all-purpose, enr, unbleached",
     aliases: ["WHEAT FLR, WHITE, ALL-PURPOSE, ENR, UNBLEACHED"],
     kcal: 364, protein: 10.33, carbs: 76.31, fat: 0.98, fiber: 2.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6796,7 +6796,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Trigo flr, clara (industrial), 11.5% proteísódio, unbleached, enriquecido",
+    name: "Trigo flr, white (industrial), 11.5% proteína, unbleached, enr",
     aliases: ["WHEAT FLR, WHITE (INDUSTRIAL), 11.5% PROT, UNBLEACHED, ENR"],
     kcal: 363, protein: 11.5, carbs: 73.81, fat: 1.45, fiber: 2.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6814,7 +6814,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fast foods, biscuit, with ovo and bacon",
+    name: "Fast foods, biscuit, com ovo e bacon",
     aliases: ["FAST FOODS, BISCUIT, WITH EGG AND BACON"],
     kcal: 305, protein: 11.33, carbs: 19.06, fat: 20.73, fiber: 0.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6823,7 +6823,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fast foods, croissant, with ovo, chs, and ham",
+    name: "Fast foods, croissant, com ovo, chs, e ham",
     aliases: ["FAST FOODS, CROISSANT, WITH EGG, CHS,  AND HAM"],
     kcal: 261, protein: 12.45, carbs: 18.98, fat: 14.95, fiber: 0.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6832,7 +6832,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fast foods, baunilha, leve, soft-serve ice creme, with cone",
+    name: "Fast foods, baunilha, leve, soft-serve ice crm, com cone",
     aliases: ["FAST FOODS, VANILLA, LT, SOFT-SERVE ICE CRM, WITH CONE"],
     kcal: 163, protein: 4.24, carbs: 26.36, fat: 4.86, fiber: 0.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6841,7 +6841,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fast foods, nachos, with chs",
+    name: "Fast foods, nachos, com chs",
     aliases: ["FAST FOODS, NACHOS, WITH CHS"],
     kcal: 343, protein: 4.32, carbs: 34.91, fat: 21.5, fiber: 3.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6859,7 +6859,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fast foods, hamburger; double, tradicional, patty; natural",
+    name: "Fast foods, hamburger; double, reg, patty; natural",
     aliases: ["FAST FOODS, HAMBURGER; DOUBLE, REG, PATTY; PLN"],
     kcal: 295, protein: 17.08, carbs: 24.1, fat: 14.36, fiber: 0.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6868,7 +6868,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fst foods, batata, frnch frito in veg óleo",
+    name: "Fst foods, batata, frnch fried in veg óleo",
     aliases: ["FST FOODS, POTATO, FRNCH FRIED IN VEG OIL"],
     kcal: 312, protein: 3.43, carbs: 41.44, fat: 14.73, fiber: 3.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6877,7 +6877,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "School lunch, pizza, tony's smartpizza pizza 50/50 chs, frz",
+    name: "School lunch, pizza, tony's smartpizza pizza 50/50 chs, congelado",
     aliases: ["SCHOOL LUNCH, PIZZA, TONY'S SMARTPIZZA PIZZA 50/50 CHS, FRZ"],
     kcal: 233, protein: 12.08, carbs: 29.27, fat: 7.51, fiber: 3.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6886,7 +6886,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fast foods, submarine sndwch, trky brst wht brd lttc and tmt",
+    name: "Fast foods, submarine sndwch, trky brst wht brd lttc e tmt",
     aliases: ["FAST FOODS, SUBMARINE SNDWCH, TRKY BRST WHT BRD LTTC AND TMT"],
     kcal: 147, protein: 9.12, carbs: 22.42, fat: 2.31, fiber: 1.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6895,7 +6895,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fast foods, hamburger, lrg, single patty, with condmnt",
+    name: "Fast foods, hamburger, lrg, single patty, com condmnt",
     aliases: ["FAST FOODS, HAMBURGER, LRG, SINGLE PATTY, WITH CONDMNT"],
     kcal: 256, protein: 15.68, carbs: 22.14, fat: 11.6, fiber: 1.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6904,7 +6904,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pizza, meat and veg cobertura, tradicional crust, frz, ckd",
+    name: "Pizza, meat e veg topping, reg crust, congelado, cozido",
     aliases: ["PIZZA, MEAT AND VEG TOPPING, REG CRUST, FRZ, CKD"],
     kcal: 276, protein: 11.28, carbs: 25.14, fat: 14.43, fiber: 2.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6913,7 +6913,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mcdonald's, quarter pounder with chs",
+    name: "Mcdonald's, quarter pounder com chs",
     aliases: ["MCDONALD'S, QUARTER POUNDER WITH CHS"],
     kcal: 258, protein: 14.59, carbs: 19.95, fat: 14.22, fiber: 1.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6931,7 +6931,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Burger king, whopper, with chs",
+    name: "Burger king, whopper, com chs",
     aliases: ["BURGER KING, WHOPPER, WITH CHS"],
     kcal: 250, protein: 11.19, carbs: 16.7, fat: 15.33, fiber: 1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6940,7 +6940,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Taco bell, soft taco with chick, chs and alface",
+    name: "Taco bell, soft taco com chick, chs e lettuce",
     aliases: ["TACO BELL, SOFT TACO WITH CHICK, CHS AND LETTUCE"],
     kcal: 189, protein: 13.3, carbs: 19.69, fat: 6.35, fiber: 1.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6949,7 +6949,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Taco bell, taco salada",
+    name: "Taco bell, taco salad",
     aliases: ["TACO BELL, TACO SALAD"],
     kcal: 170, protein: 6.69, carbs: 15.1, fat: 9.17, fiber: 3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6967,7 +6967,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Little caesars 14\" original rnd chs pizza, tradicional crust",
+    name: "Little caesars 14\" original rnd chs pizza, reg crust",
     aliases: ["LITTLE CAESARS 14\" ORIGINAL RND CHS PIZZA, REG CRUST"],
     kcal: 265, protein: 13.39, carbs: 31.5, fat: 9.54, fiber: 1.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -6985,7 +6985,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fast fd, pizza chain, 14\" pizza, pepperoni cobertura, thick crust",
+    name: "Fast fd, pizza chain, 14\" pizza, pepperoni topping, espesso crust",
     aliases: ["FAST FD, PIZZA CHAIN, 14\" PIZZA, PEPPERONI TOPPING, THICK CRUST"],
     kcal: 287, protein: 11.49, carbs: 31.84, fat: 12.58, fiber: 2.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7003,7 +7003,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mcdonald's, baunilha gordura reduzida ice creme cone",
+    name: "Mcdonald's, baunilha gordura reduzida ice crm cone",
     aliases: ["MCDONALD'S, VANILLA RED FAT ICE CRM CONE"],
     kcal: 162, protein: 4.24, carbs: 26.36, fat: 4.86, fiber: 0.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7021,7 +7021,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mcdonald's, mcchicken sndwch (without maionese)",
+    name: "Mcdonald's, mcchicken sndwch (sem mayonnaise)",
     aliases: ["MCDONALD'S, MCCHICKEN SNDWCH (WITHOUT MAYONNAISE)"],
     kcal: 240, protein: 11.08, carbs: 30.95, fat: 8.46, fiber: 1.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7030,7 +7030,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mcdonald's, hotcakes and sausage",
+    name: "Mcdonald's, hotcakes e sausage",
     aliases: ["MCDONALD'S, HOTCAKES AND SAUSAGE"],
     kcal: 294, protein: 7.81, carbs: 37.55, fat: 12.5, fiber: 1.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7039,7 +7039,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mcdonald's, filet-o-peixe (without tartar molho)",
+    name: "Mcdonald's, filet-o-peixe (sem tartar sauce)",
     aliases: ["MCDONALD'S, FILET-O-FISH (WITHOUT TARTAR SAUCE)"],
     kcal: 243, protein: 12.47, carbs: 31.08, fat: 7.62, fiber: 1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7048,7 +7048,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fast foods, hmburgr; sng, tradicional ptty; dbl bn with cndmnt and spl sau",
+    name: "Fast foods, hmburgr; sng, reg ptty; dbl bn com cndmnt e spl sau",
     aliases: ["FAST FOODS, HMBURGR; SNG, REG PTTY; DBL BN WITH CNDMNT AND SPL SAU"],
     kcal: 259, protein: 12.17, carbs: 22.69, fat: 13.3, fiber: 1.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7057,7 +7057,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mcdonald's, premium grelhado chick classic sndwch",
+    name: "Mcdonald's, premium grilled chick classic sndwch",
     aliases: ["MCDONALD'S, PREMIUM GRILLED CHICK CLASSIC SNDWCH"],
     kcal: 183, protein: 14.16, carbs: 22.28, fat: 4.29, fiber: 1.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7066,7 +7066,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Light ice creme, soft serve, blended with leite choc candies",
+    name: "Light ice crm, soft serve, blended com leite chocolate candies",
     aliases: ["LIGHT ICE CRM, SOFT SERVE, BLENDED WITH MILK CHOC CANDIES"],
     kcal: 182, protein: 4.02, carbs: 26.82, fat: 6.46, fiber: 0.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7084,7 +7084,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Popeyes, frito chick, mild, thigh, meat and skn with breading",
+    name: "Popeyes, fried chick, mild, thigh, meat e skn com breading",
     aliases: ["POPEYES, FRIED CHICK, MILD, THIGH, MEAT AND SKN WITH BREADING"],
     kcal: 310, protein: 19.14, carbs: 11.2, fat: 20.99, fiber: 0.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7093,7 +7093,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fast foods, frito chick, wing, meat only, skn and breading removed",
+    name: "Fast foods, fried chick, wing, meat only, skn e breading removed",
     aliases: ["FAST FOODS, FRIED CHICK, WING, MEAT ONLY, SKN AND BREADING REMOVED"],
     kcal: 215, protein: 28.77, carbs: 2.13, fat: 10.2, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7102,7 +7102,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Digiorno pizza, pepperoni cobertura, chs stuffed crust, frz, bkd",
+    name: "Digiorno pizza, pepperoni topping, chs stuffed crust, congelado, bkd",
     aliases: ["DIGIORNO PIZZA, PEPPERONI TOPPING, CHS STUFFED CRUST, FRZ, BKD"],
     kcal: 279, protein: 13.92, carbs: 29.46, fat: 11.71, fiber: 2.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7111,7 +7111,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Fast fd, pizza chain, 14\" pizza, pepperoni cobertura, thin crust",
+    name: "Fast fd, pizza chain, 14\" pizza, pepperoni topping, thin crust",
     aliases: ["FAST FD, PIZZA CHAIN, 14\" PIZZA, PEPPERONI TOPPING, THIN CRUST"],
     kcal: 331, protein: 14.01, carbs: 29, fat: 17.61, fiber: 2.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7129,7 +7129,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Kashi pizza, mediterranean, frz, unprep",
+    name: "Kashi pizza, mediterranean, congelado, unprep",
     aliases: ["KASHI PIZZA, MEDITERRANEAN, FRZ, UNPREP"],
     kcal: 231, protein: 12.7, carbs: 31, fat: 7.5, fiber: 4.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7138,7 +7138,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Morningstar farms pizza, baja black feijão, single serve, frz, unp",
+    name: "Morningstar farms pizza, baja black feijão, single serve, congelado, unp",
     aliases: ["MORNINGSTAR FARMS PIZZA, BAJA BLACK BEAN, SINGLE SERVE, FRZ, UNP"],
     kcal: 235, protein: 10.6, carbs: 36.9, fat: 6.9, fiber: 5.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7147,7 +7147,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mcdonald's, ranch snack wrap, grelhado",
+    name: "Mcdonald's, ranch snack wrap, grilled",
     aliases: ["MCDONALD'S, RANCH SNACK WRAP, GRILLED"],
     kcal: 222, protein: 13.77, carbs: 18.43, fat: 10.31, fiber: 0.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7156,7 +7156,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "School lunch, pizza, ssage cobertura, thin crst, integral grain, frz, ckd",
+    name: "School lunch, pizza, ssage topping, thin crst, integral grain, congelado, cozido",
     aliases: ["SCHOOL LUNCH, PIZZA, SSAGE TOPPING, THIN CRST, WHL GRAIN, FRZ, CKD"],
     kcal: 250, protein: 12.63, carbs: 32.24, fat: 7.83, fiber: 3.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7165,7 +7165,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Morningstar farms brkfst sausage patties, frz, unprep",
+    name: "Morningstar farms brkfst sausage patties, congelado, unprep",
     aliases: ["MORNINGSTAR FARMS BRKFST SAUSAGE PATTIES, FRZ, UNPREP"],
     kcal: 210, protein: 25.8, carbs: 8.8, fat: 7.9, fiber: 4.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7174,7 +7174,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina pot torta, frz entree, prep",
+    name: "Carne bovina pot pie, congelado entree, prep",
     aliases: ["BEEF POT PIE, FRZ ENTREE, PREP"],
     kcal: 220, protein: 7.25, carbs: 22.05, fat: 11.39, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7183,7 +7183,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Chili con carne with bns, cnd entree",
+    name: "Chili con carne com bns, enlatado entree",
     aliases: ["CHILI CON CARNE WITH BNS, CND ENTREE"],
     kcal: 107, protein: 5.8, carbs: 13.1, fat: 3.47, fiber: 3.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7192,7 +7192,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lasagna with meat and sau, frz entree",
+    name: "Lasagna com meat e sau, congelado entree",
     aliases: ["LASAGNA WITH MEAT AND SAU, FRZ ENTREE"],
     kcal: 124, protein: 6.63, carbs: 14.39, fat: 4.42, fiber: 1.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7210,7 +7210,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Supper bakes meal kits, creamy stroganoff sau with massa",
+    name: "Supper bakes meal kits, creamy stroganoff sau com pasta",
     aliases: ["SUPPER BAKES MEAL KITS, CREAMY STROGANOFF SAU WITH PASTA"],
     kcal: 147, protein: 4.8, carbs: 24.8, fat: 3.2, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7219,7 +7219,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Swanson, chick and dumplings",
+    name: "Swanson, chick e dumplings",
     aliases: ["SWANSON, CHICK AND DUMPLINGS"],
     kcal: 93, protein: 4.45, carbs: 9.72, fat: 4.05, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7228,7 +7228,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mac and chs, dry mistura, prep with 2% leite and 80% stk margarina dry mx",
+    name: "Mac e chs, seco mix, prep com 2% leite e 80% stk margarine seco mx",
     aliases: ["MAC AND CHS, DRY MIX, PREP WITH 2% MILK AND 80% STK MARGARINE DRY MX"],
     kcal: 190, protein: 4.89, carbs: 23.93, fat: 8.28, fiber: 1.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7237,7 +7237,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Batata salada with ovo",
+    name: "Batata salad com ovo",
     aliases: ["POTATO SALAD WITH EGG"],
     kcal: 157, protein: 1.96, carbs: 16.18, fat: 9.4, fiber: 1.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7246,7 +7246,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Kashi, chick and chipotle bbq sau with manga, frz entree",
+    name: "Kashi, chick e chipotle bbq sau com mango, congelado entree",
     aliases: ["KASHI, CHICK AND CHIPOTLE BBQ SAU WITH MANGO, FRZ ENTREE"],
     kcal: 108, protein: 5.3, carbs: 17.6, fat: 2.1, fiber: 2.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7264,7 +7264,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Kashi three chs penne, frz, unprep",
+    name: "Kashi three chs penne, congelado, unprep",
     aliases: ["KASHI THREE CHS PENNE, FRZ, UNPREP"],
     kcal: 126, protein: 5.7, carbs: 16.8, fat: 4, fiber: 2.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7273,7 +7273,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, shrt loin, prtrhs stk, l and f, 1/8\" f, sel, ckd, grelhado",
+    name: "Carne bovina, shrt loin, prtrhs stk, l e f, 1/8\" f, sel, cozido, grilled",
     aliases: ["BEEF, SHRT LOIN, PRTRHS STK, L AND F, 1/8\" F, SEL, CKD, GRILLED"],
     kcal: 263, protein: 26.21, carbs: 0, fat: 16.75, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7282,7 +7282,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Bf, rnd, knuckle, tip side, steak, ln and gordura, 0\" gordura, se, ckd, grelhado",
+    name: "Bf, rnd, knuckle, tip side, steak, ln e fat, 0\" fat, se, cozido, grilled",
     aliases: ["BF, RND, KNUCKLE, TIP SIDE, STEAK, LN AND FAT, 0\" FAT, SE, CKD, GRILLED"],
     kcal: 160, protein: 29.24, carbs: 0, fat: 3.91, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7291,7 +7291,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Bf, chk, clod, top blade, steak, ln and gordura, 0\" gordura, ch, ckd, grelhado",
+    name: "Bf, chk, clod, top blade, steak, ln e fat, 0\" fat, ch, cozido, grilled",
     aliases: ["BF, CHK, CLOD, TOP BLADE, STEAK, LN AND FAT, 0\" FAT, CH, CKD, GRILLED"],
     kcal: 228, protein: 24.7, carbs: 0, fat: 13.59, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7300,7 +7300,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Bf, rnd, out rnd, bttm rnd, stk, ln and gordura, 0\" gordura, ch, ckd, grelhado",
+    name: "Bf, rnd, out rnd, bttm rnd, stk, ln e fat, 0\" fat, ch, cozido, grilled",
     aliases: ["BF, RND, OUT RND, BTTM RND, STK, LN AND FAT, 0\" FAT, CH, CKD, GRILLED"],
     kcal: 191, protein: 27.22, carbs: 0, fat: 8.3, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7309,7 +7309,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chck, clod, shldr top and cntr stks, ln and ft, 0\", all grds, grld",
+    name: "Carne bovina, chck, clod, shldr top e cntr stks, ln e ft, 0\", all grds, grld",
     aliases: ["BEEF, CHCK, CLOD, SHLDR TOP AND CNTR STKS, LN AND FT, 0\", ALL GRDS, GRLD"],
     kcal: 182, protein: 26.3, carbs: 0, fat: 7.66, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7318,7 +7318,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck, shrt ribs, bnless, ln, 0\" gordura, choic, cru",
+    name: "Carne bovina, chuck, shrt ribs, bnless, ln, 0\" fat, choic, cru",
     aliases: ["BEEF, CHUCK, SHRT RIBS, BNLESS, LN, 0\" FAT, CHOIC, RAW"],
     kcal: 175, protein: 19.38, carbs: 0.29, fat: 10.7, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7327,7 +7327,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chk eye country-estilo ribs, bnls, ln, 0\" gordura, all grds, cru",
+    name: "Carne bovina, chk eye country-style ribs, bnls, ln, 0\" fat, all grds, cru",
     aliases: ["BEEF, CHK EYE COUNTRY-STYLE RIBS, BNLS, LN, 0\" FAT, ALL GRDS, RAW"],
     kcal: 146, protein: 20.96, carbs: 0, fat: 6.95, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7336,7 +7336,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, shldr pot rst, bnless, ln, 0\" gordura, all grds, ckd, brsd",
+    name: "Carne bovina, shldr pot rst, bnless, ln, 0\" fat, all grds, cozido, brsd",
     aliases: ["BEEF, SHLDR POT RST, BNLESS, LN, 0\" FAT, ALL GRDS, CKD, BRSD"],
     kcal: 196, protein: 31.48, carbs: 0, fat: 7.78, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7345,7 +7345,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck for stew, ln and gordura, sel, ckd, brsd",
+    name: "Carne bovina, chuck for stew, ln e fat, sel, cozido, brsd",
     aliases: ["BEEF, CHUCK FOR STEW, LN AND FAT, SEL, CKD, BRSD"],
     kcal: 186, protein: 32.29, carbs: 0, fat: 6.34, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7354,7 +7354,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chk, und bld, pot rst, bnl, ln and gordura, 0\" gordura, all gr, ckd, br",
+    name: "Carne bovina, chk, und bld, pot rst, bnl, ln e fat, 0\" fat, all gr, cozido, br",
     aliases: ["BEEF, CHK, UND BLD, POT RST, BNL, LN AND FAT, 0\" FAT, ALL GR, CKD, BR"],
     kcal: 291, protein: 26.7, carbs: 0, fat: 20.49, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7363,7 +7363,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chk, undbl cntr stk, bnl, den ct, ln and gordura, 0\" ft, sel, ckd, gld",
+    name: "Carne bovina, chk, undbl cntr stk, bnl, den ct, ln e fat, 0\" ft, sel, cozido, gld",
     aliases: ["BEEF, CHK, UNDBL CNTR STK, BNL, DEN CT, LN AND FAT, 0\" FT, SEL, CKD, GLD"],
     kcal: 215, protein: 26.3, carbs: 0, fat: 12.25, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7372,7 +7372,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chck eye rst, bnls, a bf rst, ln and gordura, 0\", sel, c, rstd",
+    name: "Carne bovina, chck eye rst, bnls, a bf rst, ln e fat, 0\", sel, c, rstd",
     aliases: ["BEEF, CHCK EYE RST, BNLS, A BF RST, LN AND FAT, 0\", SEL, C, RSTD"],
     kcal: 229, protein: 24.86, carbs: 0, fat: 14.41, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7381,7 +7381,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chk, mock tender steak, bnless, ln and gordura, 0\" gordura, choic, cru",
+    name: "Carne bovina, chk, mock tender steak, bnless, ln e fat, 0\" fat, choic, cru",
     aliases: ["BEEF, CHK, MOCK TENDER STEAK, BNLESS, LN AND FAT, 0\" FAT, CHOIC, RAW"],
     kcal: 131, protein: 21.19, carbs: 0, fat: 5.18, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7390,7 +7390,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, shldr pot rst, bnless, ln and gordura, 0\" gordura, choic, ckd, brsd",
+    name: "Carne bovina, shldr pot rst, bnless, ln e fat, 0\" fat, choic, cozido, brsd",
     aliases: ["BEEF, SHLDR POT RST, BNLESS, LN AND FAT, 0\" FAT, CHOIC, CKD, BRSD"],
     kcal: 207, protein: 30.93, carbs: 0, fat: 9.25, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7399,7 +7399,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck eye steak, bnless, ln and gordura, 0\" gordura, all grds, ckd, gr",
+    name: "Carne bovina, chuck eye steak, bnless, ln e fat, 0\" fat, all grds, cozido, gr",
     aliases: ["BEEF, CHUCK EYE STEAK, BNLESS, LN AND FAT, 0\" FAT, ALL GRDS, CKD, GR"],
     kcal: 277, protein: 24.98, carbs: 0, fat: 19.64, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7408,7 +7408,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rib eye steak, bnles, lip-on, ln, 1/8\" gordura, choic, ckd, grild",
+    name: "Carne bovina, rib eye steak, bnles, lip-on, ln, 1/8\" fat, choic, cozido, grild",
     aliases: ["BEEF, RIB EYE STEAK, BNLES, LIP-ON, LN, 1/8\" FAT, CHOIC, CKD, GRILD"],
     kcal: 217, protein: 27.3, carbs: 0, fat: 11.97, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7417,7 +7417,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rib eye stk, bne-in, lip-on, ln, 1/8\" gordura, all grds, ckd, grld",
+    name: "Carne bovina, rib eye stk, bne-in, lip-on, ln, 1/8\" fat, all grds, cozido, grld",
     aliases: ["BEEF, RIB EYE STK, BNE-IN, LIP-ON, LN, 1/8\" FAT, ALL GRDS, CKD, GRLD"],
     kcal: 221, protein: 27.4, carbs: 0, fat: 12.43, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7426,7 +7426,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, plate stk, bnles, inside skirt, ln, 0\" gordura, choic, ckd, grld",
+    name: "Carne bovina, plate stk, bnles, inside skirt, ln, 0\" fat, choic, cozido, grld",
     aliases: ["BEEF, PLATE STK, BNLES, INSIDE SKIRT, LN, 0\" FAT, CHOIC, CKD, GRLD"],
     kcal: 242, protein: 29.56, carbs: 0, fat: 13.72, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7435,7 +7435,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, plate steak, bnless, outside skirt, ln, 0\" gordura, sel, cru",
+    name: "Carne bovina, plate steak, bnless, outside skirt, ln, 0\" fat, sel, cru",
     aliases: ["BEEF, PLATE STEAK, BNLESS, OUTSIDE SKIRT, LN, 0\" FAT, SEL, RAW"],
     kcal: 198, protein: 19.14, carbs: 0.23, fat: 13.44, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7444,7 +7444,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rib, back ribs, bone-in, ln, 0\" gordura, all grds, cru",
+    name: "Carne bovina, rib, back ribs, bone-in, ln, 0\" fat, all grds, cru",
     aliases: ["BEEF, RIB, BACK RIBS, BONE-IN, LN, 0\" FAT, ALL GRDS, RAW"],
     kcal: 239, protein: 19.11, carbs: 0.46, fat: 17.91, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7453,7 +7453,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rib eye rst, bne-in, lip-on, ln and gordura, 1/8\" ft, chc, ckd, rst",
+    name: "Carne bovina, rib eye rst, bne-in, lip-on, ln e fat, 1/8\" ft, chc, cozido, rst",
     aliases: ["BEEF, RIB EYE RST, BNE-IN, LIP-ON, LN AND FAT, 1/8\" FT, CHC, CKD, RST"],
     kcal: 307, protein: 23.53, carbs: 0, fat: 23.61, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7462,7 +7462,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rib eye stk, bnls, lip-on, ln and ft, 1/8\" ft, al grd, ckd, grld",
+    name: "Carne bovina, rib eye stk, bnls, lip-on, ln e ft, 1/8\" ft, al grd, cozido, grld",
     aliases: ["BEEF, RIB EYE STK, BNLS, LIP-ON, LN AND FT, 1/8\" FT, AL GRD, CKD, GRLD"],
     kcal: 291, protein: 23.69, carbs: 0, fat: 21.81, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7471,7 +7471,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, plate stk, bnlss, insde skrt, ln and gordura, 0\" gordura, chc, ckd, grld",
+    name: "Carne bovina, plate stk, bnlss, insde skrt, ln e fat, 0\" fat, chc, cozido, grld",
     aliases: ["BEEF, PLATE STK, BNLSS, INSDE SKRT, LN AND FAT, 0\" FAT, CHC, CKD, GRLD"],
     kcal: 253, protein: 28.9, carbs: 0, fat: 15.3, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7480,7 +7480,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, plate stek, bnls, outsde skrt, ln and gordura, 0\" gordura, all grds, rw",
+    name: "Carne bovina, plate stek, bnls, outsde skrt, ln e fat, 0\" fat, all grds, rw",
     aliases: ["BEEF, PLATE STEK, BNLS, OUTSDE SKRT, LN AND FAT, 0\" FAT, ALL GRDS, RW"],
     kcal: 232, protein: 17.98, carbs: 0.35, fat: 17.59, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7489,7 +7489,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rib eye steak, bnless, lip off, ln and gordura, 0\" gordura, sel, cru",
+    name: "Carne bovina, rib eye steak, bnless, lip off, ln e fat, 0\" fat, sel, cru",
     aliases: ["BEEF, RIB EYE STEAK, BNLESS, LIP OFF, LN AND FAT, 0\" FAT, SEL, RAW"],
     kcal: 208, protein: 20.12, carbs: 0, fat: 14.14, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7498,7 +7498,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, loin, top sirloin petite rst/filet, bnls, ln, 0\" gordura, chc, rw",
+    name: "Carne bovina, loin, top sirloin petite rst/filet, bnls, ln, 0\" fat, chc, rw",
     aliases: ["BEEF, LOIN, TOP SIRLOIN PETITE RST/FILET, BNLS, LN, 0\" FAT, CHC, RW"],
     kcal: 132, protein: 23.03, carbs: 0, fat: 4.4, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7507,7 +7507,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, top loin filet, bnless, ln, 1/8\" gordura, choic, ckd, grelhado",
+    name: "Carne bovina, top loin filet, bnless, ln, 1/8\" fat, choic, cozido, grilled",
     aliases: ["BEEF, TOP LOIN FILET, BNLESS, LN, 1/8\" FAT, CHOIC, CKD, GRILLED"],
     kcal: 203, protein: 28.99, carbs: 0.36, fat: 9.48, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7516,7 +7516,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, loin, top sirloin filet, bnls, ln, 0\" gordura, all grds, ckd, grld",
+    name: "Carne bovina, loin, top sirloin filet, bnls, ln, 0\" fat, all grds, cozido, grld",
     aliases: ["BEEF, LOIN, TOP SIRLOIN FILET, BNLS, LN, 0\" FAT, ALL GRDS, CKD, GRLD"],
     kcal: 171, protein: 30.58, carbs: 0, fat: 5.37, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7525,7 +7525,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, ribeye petite roast/filet, bnless, ln, 0\" gordura, choic, cru",
+    name: "Carne bovina, ribeye petite roast/filet, bnless, ln, 0\" fat, choic, cru",
     aliases: ["BEEF, RIBEYE PETITE ROAST/FILET, BNLESS, LN, 0\" FAT, CHOIC, RAW"],
     kcal: 138, protein: 22.52, carbs: 0.18, fat: 5.29, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7534,7 +7534,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, ribeye filet, bnless, ln, 0\" gordura, choic, ckd, grelhado",
+    name: "Carne bovina, ribeye filet, bnless, ln, 0\" fat, choic, cozido, grilled",
     aliases: ["BEEF, RIBEYE FILET, BNLESS, LN, 0\" FAT, CHOIC, CKD, GRILLED"],
     kcal: 208, protein: 28.35, carbs: 0.51, fat: 10.26, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7543,7 +7543,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, loin, top sirln cap stk, bnls, ln and gordura, 1/8\" gordura, al gds, rw",
+    name: "Carne bovina, loin, top sirln cap stk, bnls, ln e fat, 1/8\" fat, al gds, rw",
     aliases: ["BEEF, LOIN, TOP SIRLN CAP STK, BNLS, LN AND FAT, 1/8\" FAT, AL GDS, RW"],
     kcal: 191, protein: 19.9, carbs: 0, fat: 12.4, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7552,7 +7552,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, top loin petite rst, bnls, ln and gordura, 1/8\" gordura, sel, ckd, rstd",
+    name: "Carne bovina, top loin petite rst, bnls, ln e fat, 1/8\" fat, sel, cozido, rstd",
     aliases: ["BEEF, TOP LOIN PETITE RST, BNLS, LN AND FAT, 1/8\" FAT, SEL, CKD, RSTD"],
     kcal: 213, protein: 27.1, carbs: 0.9, fat: 11.2, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7561,7 +7561,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, australian, imp, grass-fed, seam gordura, cru",
+    name: "Carne bovina, australian, imp, grass-fed, seam fat, cru",
     aliases: ["BEEF, AUSTRALIAN, IMP, GRASS-FED, SEAM FAT, RAW"],
     kcal: 562, protein: 9.58, carbs: 1.06, fat: 57.73, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7570,7 +7570,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, aus, imp, grss-fed, top loin stk/rst, bnless, ln gordura, cru",
+    name: "Carne bovina, aus, imp, grss-fed, top loin stk/rst, bnless, ln fat, cru",
     aliases: ["BEEF, AUS, IMP, GRSS-FED, TOP LOIN STK/RST, BNLESS, LN FAT, RAW"],
     kcal: 199, protein: 19.9, carbs: 0.11, fat: 13.17, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7588,7 +7588,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, aus, imp, wgu, smledrib stk/rst, bnless, ln and gordura, mrb scr9, cru",
+    name: "Carne bovina, aus, imp, wgu, smledrib stk/rst, bnless, ln e fat, mrb scr9, cru",
     aliases: ["BEEF, AUS, IMP, WGU, SMLEDRIB STK/RST, BNLESS, LN AND FAT, MRB SCR9, RAW"],
     kcal: 405, protein: 14.54, carbs: 0.42, fat: 38.3, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7597,7 +7597,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, eye of rnd rst, bnless, ln and gordura, 0\" gordura, all grds, cru",
+    name: "Carne bovina, rnd, eye of rnd rst, bnless, ln e fat, 0\" fat, all grds, cru",
     aliases: ["BEEF, RND, EYE OF RND RST, BNLESS, LN AND FAT, 0\" FAT, ALL GRDS, RAW"],
     kcal: 124, protein: 23.27, carbs: 0, fat: 3.44, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7606,7 +7606,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, loin, tenderloin rst, bnless, ln and gordura, 0\" gordura, sel, cru",
+    name: "Carne bovina, loin, tenderloin rst, bnless, ln e fat, 0\" fat, sel, cru",
     aliases: ["BEEF, LOIN, TENDERLOIN RST, BNLESS, LN AND FAT, 0\" FAT, SEL, RAW"],
     kcal: 144, protein: 21.91, carbs: 0, fat: 6.21, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7615,7 +7615,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, loin, tenderloin rst, bnless, l and f, 0\" gordura, choic, ckd, rstd",
+    name: "Carne bovina, loin, tenderloin rst, bnless, l e f, 0\" fat, choic, cozido, rstd",
     aliases: ["BEEF, LOIN, TENDERLOIN RST, BNLESS, L AND F, 0\" FAT, CHOIC, CKD, RSTD"],
     kcal: 188, protein: 27.26, carbs: 0, fat: 8.82, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7624,7 +7624,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, top rnd steak, bnless, ln, 0\" gordura, choic, cru",
+    name: "Carne bovina, rnd, top rnd steak, bnless, ln, 0\" fat, choic, cru",
     aliases: ["BEEF, RND, TOP RND STEAK, BNLESS, LN, 0\" FAT, CHOIC, RAW"],
     kcal: 124, protein: 23.59, carbs: 0, fat: 3.26, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7633,7 +7633,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, eye of rnd steak, bnless, ln, 0\" gordura, all grds, cru",
+    name: "Carne bovina, rnd, eye of rnd steak, bnless, ln, 0\" fat, all grds, cru",
     aliases: ["BEEF, RND, EYE OF RND STEAK, BNLESS, LN, 0\" FAT, ALL GRDS, RAW"],
     kcal: 121, protein: 23.37, carbs: 0, fat: 3.04, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7642,7 +7642,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, loin, top loin steak, bnless, lip off, ln, 0\" gordura, sel, cru",
+    name: "Carne bovina, loin, top loin steak, bnless, lip off, ln, 0\" fat, sel, cru",
     aliases: ["BEEF, LOIN, TOP LOIN STEAK, BNLESS, LIP OFF, LN, 0\" FAT, SEL, RAW"],
     kcal: 135, protein: 23.3, carbs: 0, fat: 4.66, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7651,7 +7651,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, top rnd rst, bnless, ln, 0\" gordura, choic, ckd, rstd",
+    name: "Carne bovina, rnd, top rnd rst, bnless, ln, 0\" fat, choic, cozido, rstd",
     aliases: ["BEEF, RND, TOP RND RST, BNLESS, LN, 0\" FAT, CHOIC, CKD, RSTD"],
     kcal: 158, protein: 30.24, carbs: 0.06, fat: 4.11, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7660,7 +7660,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, ln, tp ln steak, bnless, lip-on, ln and gordura, 1/8\" gordura, sel, cru",
+    name: "Carne bovina, ln, tp ln steak, bnless, lip-on, ln e fat, 1/8\" fat, sel, cru",
     aliases: ["BEEF, LN, TP LN STEAK, BNLESS, LIP-ON, LN AND FAT, 1/8\" FAT, SEL, RAW"],
     kcal: 191, protein: 21.54, carbs: 0, fat: 11.65, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7669,7 +7669,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, loin, tp ln stk, bnless, lip-on, l and f, 1/8\" gordura, choic, cru",
+    name: "Carne bovina, loin, tp ln stk, bnless, lip-on, l e f, 1/8\" fat, choic, cru",
     aliases: ["BEEF, LOIN, TP LN STK, BNLESS, LIP-ON, L AND F, 1/8\" FAT, CHOIC, RAW"],
     kcal: 205, protein: 21.13, carbs: 0, fat: 13.36, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7678,7 +7678,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, nz, imp, cube roll, ln, ckd, fast rstd",
+    name: "Carne bovina, nz, imp, cube roll, ln, cozido, fast rstd",
     aliases: ["BEEF, NZ, IMP, CUBE ROLL, LN, CKD, FAST RSTD"],
     kcal: 239, protein: 30.09, carbs: 0, fat: 13.22, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7687,7 +7687,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, nz, imp, var meats and by-products, heart, ckd, bld",
+    name: "Carne bovina, nz, imp, var meats e by-products, heart, cozido, bld",
     aliases: ["BEEF, NZ, IMP, VAR MEATS AND BY-PRODUCTS, HEART, CKD, BLD"],
     kcal: 179, protein: 31.29, carbs: 0, fat: 6, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7696,7 +7696,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, nz, imp, knuckle, ckd, fast frito",
+    name: "Carne bovina, nz, imp, knuckle, cozido, fast fried",
     aliases: ["BEEF, NZ, IMP, KNUCKLE, CKD, FAST FRIED"],
     kcal: 178, protein: 27.51, carbs: 0, fat: 7.58, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7705,7 +7705,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, nz, imp, ribs prep, ckd, fast rstd",
+    name: "Carne bovina, nz, imp, ribs prep, cozido, fast rstd",
     aliases: ["BEEF, NZ, IMP, RIBS PREP, CKD, FAST RSTD"],
     kcal: 197, protein: 27.23, carbs: 0.09, fat: 9.74, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7723,7 +7723,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, nz, imp, bolar blade, ln and gordura, cru",
+    name: "Carne bovina, nz, imp, bolar blade, ln e fat, cru",
     aliases: ["BEEF, NZ, IMP, BOLAR BLADE, LN AND FAT, RAW"],
     kcal: 159, protein: 21.29, carbs: 0, fat: 8.22, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7732,7 +7732,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, nz, imp, cube roll, ln and gordura, cru",
+    name: "Carne bovina, nz, imp, cube roll, ln e fat, cru",
     aliases: ["BEEF, NZ, IMP, CUBE ROLL, LN AND FAT, RAW"],
     kcal: 225, protein: 18.22, carbs: 1.31, fat: 16.31, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7741,7 +7741,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, nz, imp, hind shin, ln and gordura, cru",
+    name: "Carne bovina, nz, imp, hind shin, ln e fat, cru",
     aliases: ["BEEF, NZ, IMP, HIND SHIN, LN AND FAT, RAW"],
     kcal: 147, protein: 20.61, carbs: 0, fat: 7.2, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7750,7 +7750,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, nz, imp, tenderloin, ln and gordura, cru",
+    name: "Carne bovina, nz, imp, tenderloin, ln e fat, cru",
     aliases: ["BEEF, NZ, IMP, TENDERLOIN, LN AND FAT, RAW"],
     kcal: 146, protein: 21.04, carbs: 0, fat: 6.88, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7759,7 +7759,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, ground, 97% ln meat /3% gordura, patty, ckd, pan-broiled",
+    name: "Carne bovina, ground, 97% ln meat /3% fat, patty, cozido, pan-broiled",
     aliases: ["BEEF, GROUND, 97% LN MEAT /3% FAT, PATTY, CKD, PAN-BROILED"],
     kcal: 144, protein: 26.03, carbs: 0, fat: 3.65, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7768,7 +7768,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, comp of rtl cuts, ln and gordura, 0\" gordura, choic, cru",
+    name: "Carne bovina, comp of rtl cuts, ln e fat, 0\" fat, choic, cru",
     aliases: ["BEEF, COMP OF RTL CUTS, LN AND FAT, 0\" FAT, CHOIC, RAW"],
     kcal: 176, protein: 21.34, carbs: 0.06, fat: 10.08, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7777,7 +7777,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Usda commodity, bf, patties (100%), frz, ckd",
+    name: "Usda commodity, bf, patties (100%), congelado, cozido",
     aliases: ["USDA COMMODITY, BF, PATTIES (100%), FRZ, CKD"],
     kcal: 249, protein: 22.98, carbs: 0.91, fat: 16.37, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7786,7 +7786,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck, clod rst, ln only, to 1/4\" gordura, all grds, ckd, rstd",
+    name: "Carne bovina, chuck, clod rst, ln only, to 1/4\" fat, all grds, cozido, rstd",
     aliases: ["BEEF, CHUCK, CLOD RST, LN ONLY, TO 1/4\" FAT, ALL GRDS, CKD, RSTD"],
     kcal: 173, protein: 26.36, carbs: 0, fat: 6.75, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7795,7 +7795,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck, clod rst, ln and gordura, 0\" gordura, sel, ckd, rstd",
+    name: "Carne bovina, chuck, clod rst, ln e fat, 0\" fat, sel, cozido, rstd",
     aliases: ["BEEF, CHUCK, CLOD RST, LN AND FAT, 0\" FAT, SEL, CKD, RSTD"],
     kcal: 196, protein: 27.3, carbs: 0, fat: 8.76, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7804,7 +7804,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, chuck, clod rst, ln and gordura, 0\" gordura, all grds, ckd, rstd",
+    name: "Carne bovina, chuck, clod rst, ln e fat, 0\" fat, all grds, cozido, rstd",
     aliases: ["BEEF, CHUCK, CLOD RST, LN AND FAT, 0\" FAT, ALL GRDS, CKD, RSTD"],
     kcal: 207, protein: 25.7, carbs: 0, fat: 10.84, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7813,7 +7813,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, ground, 90% ln meat / 10% gordura, patty, ckd, brld",
+    name: "Carne bovina, ground, 90% ln meat / 10% fat, patty, cozido, brld",
     aliases: ["BEEF, GROUND, 90% LN MEAT / 10% FAT, PATTY, CKD, BRLD"],
     kcal: 217, protein: 26.11, carbs: 0, fat: 11.75, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7822,7 +7822,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, ground, 80% ln meat / 20% gordura, cru",
+    name: "Carne bovina, ground, 80% ln meat / 20% fat, cru",
     aliases: ["BEEF, GROUND, 80% LN MEAT / 20% FAT, RAW"],
     kcal: 254, protein: 17.17, carbs: 0, fat: 20, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7831,7 +7831,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, ground, 75% ln meat / 25% gordura, crumbles, ckd, pan-browned",
+    name: "Carne bovina, ground, 75% ln meat / 25% fat, crumbles, cozido, pan-browned",
     aliases: ["BEEF, GROUND, 75% LN MEAT / 25% FAT, CRUMBLES, CKD, PAN-BROWNED"],
     kcal: 277, protein: 26.28, carbs: 0, fat: 18.21, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7840,7 +7840,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, top sirloin, steak, ln, 1/8\" gordura, sel, ckd, brld",
+    name: "Carne bovina, top sirloin, steak, ln, 1/8\" fat, sel, cozido, brld",
     aliases: ["BEEF, TOP SIRLOIN, STEAK, LN, 1/8\" FAT, SEL, CKD, BRLD"],
     kcal: 170, protein: 29.34, carbs: 0, fat: 4.96, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7849,7 +7849,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, brisket, flat half, ln, 1/8\" gordura, all grds, cru",
+    name: "Carne bovina, brisket, flat half, ln, 1/8\" fat, all grds, cru",
     aliases: ["BEEF, BRISKET, FLAT HALF, LN, 1/8\" FAT, ALL GRDS, RAW"],
     kcal: 127, protein: 21.57, carbs: 0, fat: 3.84, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7858,7 +7858,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, bttm rnd, rst, ln, 1/8\" gordura, all grds, ckd",
+    name: "Carne bovina, rnd, bttm rnd, rst, ln, 1/8\" fat, all grds, cozido",
     aliases: ["BEEF, RND, BTTM RND, RST, LN, 1/8\" FAT, ALL GRDS, CKD"],
     kcal: 163, protein: 28, carbs: 0, fat: 5.72, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7867,7 +7867,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, brisket, flat half, ln, 1/8\" gordura, choic, cru",
+    name: "Carne bovina, brisket, flat half, ln, 1/8\" fat, choic, cru",
     aliases: ["BEEF, BRISKET, FLAT HALF, LN, 1/8\" FAT, CHOIC, RAW"],
     kcal: 129, protein: 21.69, carbs: 0, fat: 4.06, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7876,7 +7876,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, top rnd, steak, ln, 1/8\" gordura, choic, ckd, brld",
+    name: "Carne bovina, rnd, top rnd, steak, ln, 1/8\" fat, choic, cozido, brld",
     aliases: ["BEEF, RND, TOP RND, STEAK, LN, 1/8\" FAT, CHOIC, CKD, BRLD"],
     kcal: 193, protein: 32.04, carbs: 0, fat: 6.25, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7885,7 +7885,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, top sirloin, steak, ln, 1/8\" gordura, choic, ckd, brld",
+    name: "Carne bovina, top sirloin, steak, ln, 1/8\" fat, choic, cozido, brld",
     aliases: ["BEEF, TOP SIRLOIN, STEAK, LN, 1/8\" FAT, CHOIC, CKD, BRLD"],
     kcal: 187, protein: 29.51, carbs: 0, fat: 6.72, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7894,7 +7894,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, bttm rnd, rst, ln, 1/8\" gordura, sel, cru",
+    name: "Carne bovina, rnd, bttm rnd, rst, ln, 1/8\" fat, sel, cru",
     aliases: ["BEEF, RND, BTTM RND, RST, LN, 1/8\" FAT, SEL, RAW"],
     kcal: 128, protein: 22.18, carbs: 0, fat: 3.66, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7903,7 +7903,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, rnd, tip rnd, rst, ln, 0\" gordura, all grds, cru",
+    name: "Carne bovina, rnd, tip rnd, rst, ln, 0\" fat, all grds, cru",
     aliases: ["BEEF, RND, TIP RND, RST, LN, 0\" FAT, ALL GRDS, RAW"],
     kcal: 126, protein: 21.07, carbs: 0, fat: 3.95, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7912,7 +7912,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne bovina, brisket, flat half, ln and gordura, 1/8\" gordura, choic, ckd, brsd",
+    name: "Carne bovina, brisket, flat half, ln e fat, 1/8\" fat, choic, cozido, brsd",
     aliases: ["BEEF, BRISKET, FLAT HALF, LN AND FAT, 1/8\" FAT, CHOIC, CKD, BRSD"],
     kcal: 298, protein: 28.66, carbs: 0, fat: 19.47, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7921,7 +7921,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Snacks, m and m mars, kudos integral grain bar, m and m's leite choc",
+    name: "Snacks, m e m mars, kudos integral grain bar, m e m's leite chocolate",
     aliases: ["SNACKS, M AND M MARS, KUDOS WHL GRAIN BAR, M AND M'S MILK CHOC"],
     kcal: 415, protein: 3.78, carbs: 73.01, fat: 11.95, fiber: 2.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7930,7 +7930,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Form bar, mars snackfood us, cocoavia, choc mirtilo",
+    name: "Form bar, mars snackfood us, cocoavia, chocolate blueberry",
     aliases: ["FORM BAR, MARS SNACKFOOD US, COCOAVIA, CHOC BLUEBERRY"],
     kcal: 325, protein: 6.21, carbs: 57.87, fat: 9.27, fiber: 4.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7939,7 +7939,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Snacks, banana-da-terra chips, salted",
+    name: "Snacks, plantain chips, salgado",
     aliases: ["SNACKS, PLANTAIN CHIPS, SALTED"],
     kcal: 531, protein: 2.28, carbs: 63.84, fat: 29.59, fiber: 3.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7957,7 +7957,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Snacks, nutri-grain fruta and nut bar",
+    name: "Snacks, nutri-grain fruta e nut bar",
     aliases: ["SNACKS, NUTRI-GRAIN FRUIT AND NUT BAR"],
     kcal: 403, protein: 9.38, carbs: 66.72, fat: 10.93, fiber: 7.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -7993,7 +7993,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Campbell's sopa on the go, hr chick with mini macarrão sopa",
+    name: "Campbell's soup on the go, hr chick com mini noodles soup",
     aliases: ["CAMPBELL'S SOUP ON THE GO, HR CHICK WITH MINI NOODLES SOUP"],
     kcal: 20, protein: 0.98, carbs: 2.62, fat: 0.66, fiber: 0.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8002,7 +8002,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sopa, ramen noodle, dry, any sabor, gordura reduzida, reduzido sódio",
+    name: "Soup, ramen noodle, seco, any flavor, gordura reduzida, reduzido na",
     aliases: ["SOUP, RAMEN NOODLE, DRY, ANY FLAVOR, RED FAT, RED NA"],
     kcal: 350, protein: 10.89, carbs: 70.95, fat: 2.5, fiber: 2.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8011,7 +8011,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Molho, swt and azedo, rts",
+    name: "Sauce, swt e azedo, rts",
     aliases: ["SAUCE, SWT AND SOUR, RTS"],
     kcal: 150, protein: 0.27, carbs: 38.22, fat: 0.02, fiber: 0.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8020,7 +8020,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Molho, barbecue, open pit, original",
+    name: "Sauce, barbecue, open pit, original",
     aliases: ["SAUCE, BARBECUE, OPEN PIT, ORIGINAL"],
     kcal: 132, protein: 0.44, carbs: 29.45, fat: 1.41, fiber: 0.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8029,7 +8029,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Molho, old el paso, enchilada, reduzido, mild, pronto para servir",
+    name: "Sauce, old el paso, enchilada, reduzido, mild, pronto para servir",
     aliases: ["SAUCE, OLD EL PASO, ENCHILADA, RED, MILD, READY TO SERVE"],
     kcal: 29, protein: 0.59, carbs: 5.04, fat: 0.67, fiber: 0.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8074,7 +8074,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Kashi, tlc, happy trail mistura cookies",
+    name: "Kashi, tlc, happy trail mix cookies",
     aliases: ["KASHI, TLC, HAPPY TRAIL MIX COOKIES"],
     kcal: 451, protein: 8.1, carbs: 63.86, fat: 18.1, fiber: 13.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8083,7 +8083,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Keebler, baker's treasures, oatmeal raisin biscoito, soft",
+    name: "Keebler, baker's treasures, oatmeal raisin cookie, soft",
     aliases: ["KEEBLER, BAKER'S TREASURES, OATMEAL RAISIN COOKIE, SOFT"],
     kcal: 420, protein: 6.1, carbs: 69.1, fat: 14.4, fiber: 3.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8092,7 +8092,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Keebler, chips deluxe, mini choc chip cookies",
+    name: "Keebler, chips deluxe, mini chocolate chip cookies",
     aliases: ["KEEBLER, CHIPS DELUXE, MINI CHOC CHIP COOKIES"],
     kcal: 498, protein: 5.2, carbs: 68, fat: 23.1, fiber: 2.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8119,7 +8119,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Keebler, fudge shoppe, pnut creme com gordura vegetal cookies",
+    name: "Keebler, fudge shoppe, pnut creme filled cookies",
     aliases: ["KEEBLER, FUDGE SHOPPE, PNUT CREME FILLED COOKIES"],
     kcal: 537, protein: 7.2, carbs: 57.6, fat: 31.1, fiber: 3.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8164,7 +8164,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Keebler, sandies, choc chip and noz-pecã shortbread cookies",
+    name: "Keebler, sandies, chocolate chip e pecan shortbread cookies",
     aliases: ["KEEBLER, SANDIES, CHOC CHIP AND PECAN SHORTBREAD COOKIES"],
     kcal: 546, protein: 5.6, carbs: 59.2, fat: 32.1, fiber: 2.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8191,7 +8191,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Keebler, town house, flatbread crisps, sea sal and olive óleo cra",
+    name: "Keebler, town house, flatbread crisps, sea sal e olive óleo cra",
     aliases: ["KEEBLER, TOWN HOUSE, FLATBREAD CRISPS, SEA SALT AND OLIVE OIL CRA"],
     kcal: 443, protein: 8, carbs: 72.8, fat: 14, fiber: 3.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8272,7 +8272,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Murray, açúcar free, pnut manteiga cookies",
+    name: "Murray, sem açúcar, pnut manteiga cookies",
     aliases: ["MURRAY, SUGAR FREE, PNUT BUTTER COOKIES"],
     kcal: 505, protein: 9.5, carbs: 55.8, fat: 30.8, fiber: 5.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8299,7 +8299,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sunshine, cheez-it, 100 cal right bites, ex cheesy party mistura",
+    name: "Sunshine, cheez-it, 100 cal right bites, ex cheesy party mix",
     aliases: ["SUNSHINE, CHEEZ-IT, 100 CAL RIGHT BITES, EX CHEESY PARTY MIX"],
     kcal: 473, protein: 8.5, carbs: 65.3, fat: 17.4, fiber: 3.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8308,7 +8308,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Austin, cheddar chs on wafer crackers, sandwich-tipo",
+    name: "Austin, cheddar chs on wafer crackers, sandwich-type",
     aliases: ["AUSTIN, CHEDDAR CHS ON WAFER CRACKERS, SANDWICH-TYPE"],
     kcal: 489, protein: 7.8, carbs: 62.6, fat: 23, fiber: 1.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8317,7 +8317,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Keebler, ready crust, graham torta crust (10\"), gordura reduzida",
+    name: "Keebler, ready crust, graham pie crust (10\"), gordura reduzida",
     aliases: ["KEEBLER, READY CRUST, GRAHAM PIE CRUST (10\"), RED FAT"],
     kcal: 472, protein: 4.9, carbs: 73.5, fat: 17.5, fiber: 2.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8326,7 +8326,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Murray, mel graham",
+    name: "Murray, honey graham",
     aliases: ["MURRAY, HONEY GRAHAM"],
     kcal: 445, protein: 5.9, carbs: 75.7, fat: 13.2, fiber: 2.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8335,7 +8335,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Sunshine, krispy, sopa and oyster crackers (large)",
+    name: "Sunshine, krispy, soup e oyster crackers (large)",
     aliases: ["SUNSHINE, KRISPY, SOUP AND OYSTER CRACKERS (LARGE)"],
     kcal: 416, protein: 8.6, carbs: 76.1, fat: 9.3, fiber: 2.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8344,7 +8344,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cookies, animal, with frstng or icing",
+    name: "Cookies, animal, com frstng ou icing",
     aliases: ["COOKIES, ANIMAL, WITH FRSTNG OR ICING"],
     kcal: 509, protein: 3, carbs: 70.09, fat: 24.1, fiber: 0.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8353,7 +8353,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cookies, choc sndwch, with creme filling, gordura reduzida",
+    name: "Cookies, chocolate sndwch, com creme filling, gordura reduzida",
     aliases: ["COOKIES, CHOC SNDWCH, WITH CREME FILLING, RED FAT"],
     kcal: 436, protein: 2.94, carbs: 76.17, fat: 13.24, fiber: 2.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8380,7 +8380,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pancakes, natural, com pouca gordura, dry mistura, incomplete (includes buttermilk)",
+    name: "Pancakes, natural, com pouca gordura, seco mix, incomplete (includes buttermilk)",
     aliases: ["PANCAKES, PLN, LOFAT, DRY MIX, INCOMPLETE (INCLUDES BUTTERMILK)"],
     kcal: 384, protein: 7.4, carbs: 74.69, fat: 6.17, fiber: 2.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8389,7 +8389,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cookies, gluten-free, choc sndwch, with creme filling",
+    name: "Cookies, gluten-free, chocolate sndwch, com creme filling",
     aliases: ["COOKIES, GLUTEN-FREE, CHOC SNDWCH, WITH CREME FILLING"],
     kcal: 474, protein: 2.19, carbs: 76.03, fat: 17.89, fiber: 2.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8398,7 +8398,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Rolls, gluten-free, brw arroz flr, tapioca starch, and batata starch",
+    name: "Rolls, gluten-free, brw arroz flr, tapioca starch, e batata starch",
     aliases: ["ROLLS, GLUTEN-FREE, BRW RICE FLR, TAPIOCA STARCH,  AND POTATO STARCH"],
     kcal: 310, protein: 7.99, carbs: 55.1, fat: 6.4, fiber: 3.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8470,7 +8470,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Pace, diced grn chilies",
+    name: "Pace, em cubos grn chilies",
     aliases: ["PACE, DICED GRN CHILIES"],
     kcal: 27, protein: 0, carbs: 6.67, fat: 0, fiber: 3.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8479,7 +8479,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Doce potatoes, french fr, frz as packaged, sal added",
+    name: "Sweet potatoes, french fr, congelado as packaged, sal added",
     aliases: ["SWEET POTATOES, FRENCH FR, FRZ AS PACKAGED, SALT ADDED"],
     kcal: 182, protein: 2.16, carbs: 35.58, fat: 8.92, fiber: 5.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8488,7 +8488,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Legume smoothie, naked juc, couve blazer",
+    name: "Legume smoothie, naked juc, kale blazer",
     aliases: ["VEGETABLE SMOOTHIE, NAKED JUC, KALE BLAZER"],
     kcal: 28, protein: 0.8, carbs: 7, fat: 0.07, fiber: 0.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8497,7 +8497,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Arroz and vermicelli mistura, arroz pilaf sabor, prep with 80% margarin",
+    name: "Arroz e vermicelli mix, arroz pilaf flavor, prep com 80% margarin",
     aliases: ["RICE AND VERMICELLI MIX, RICE PILAF FLAVOR, PREP WITH 80% MARGARIN"],
     kcal: 148, protein: 2.94, carbs: 25.67, fat: 3.7, fiber: 0.6,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8506,7 +8506,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Yellow arroz with seasoning, dry packet mistura, unprep",
+    name: "Yellow arroz com seasoning, seco packet mix, unprep",
     aliases: ["YELLOW RICE WITH SEASONING, DRY PACKET MIX, UNPREP"],
     kcal: 343, protein: 7.02, carbs: 74.68, fat: 1.75, fiber: 1.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8515,7 +8515,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Lasagna, chs, frz, unprep",
+    name: "Lasagna, chs, congelado, unprep",
     aliases: ["LASAGNA, CHS, FRZ, UNPREP"],
     kcal: 145, protein: 5.06, carbs: 21.61, fat: 4.22, fiber: 1.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8524,7 +8524,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Turnover, meat- and queijo-com gordura vegetal, tomate-based sau, gordura reduzida, frz",
+    name: "Turnover, meat- e queijo-filled, tomate-based sau, gordura reduzida, congelado",
     aliases: ["TURNOVER, MEAT- AND CHEESE-FILLED, TOMATO-BASED SAU, RED FAT, FRZ"],
     kcal: 215, protein: 9.45, carbs: 31.89, fat: 5.51, fiber: 0.8,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8551,7 +8551,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, gerber, banana with laranja medley",
+    name: "Babyfood, gerber, banana com laranja medley",
     aliases: ["BABYFOOD, GERBER, BANANA WITH ORANGE MEDLEY"],
     kcal: 86, protein: 1.06, carbs: 20.41, fat: 0, fiber: 2.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8569,7 +8569,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Mush, blue milho with ash (navajo)",
+    name: "Mush, blue milho com ash (navajo)",
     aliases: ["MUSH, BLUE CORN WITH ASH (NAVAJO)"],
     kcal: 54, protein: 0.66, carbs: 11.74, fat: 0.49, fiber: 1.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8578,7 +8578,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Stew, hominy with mutton (navajo)",
+    name: "Stew, hominy com mutton (navajo)",
     aliases: ["STEW, HOMINY WITH MUTTON (NAVAJO)"],
     kcal: 83, protein: 6.71, carbs: 9.38, fat: 2.06, fiber: 2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8596,7 +8596,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Seal, bearded (oogruk), meat, desidratado, em óleo (alaska native)",
+    name: "Seal, bearded (oogruk), meat, desidratado, in óleo (alaska native)",
     aliases: ["SEAL, BEARDED (OOGRUK), MEAT, DRIED, IN OIL (ALASKA NATIVE)"],
     kcal: 367, protein: 35.31, carbs: 0, fat: 25.08, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8641,7 +8641,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Wocas, tuber, ckd, oregon, yel pond lily (klamath)",
+    name: "Wocas, tuber, cozido, oregon, yel pond lily (klamath)",
     aliases: ["WOCAS, TUBER, CKD, OREGON, YEL POND LILY (KLAMATH)"],
     kcal: 34, protein: 0.69, carbs: 7.06, fat: 0.35, fiber: 2.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8659,7 +8659,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Restaurant, family estilo, chick fingers, from kid's menu",
+    name: "Restaurant, family style, chick fingers, from kid's menu",
     aliases: ["RESTAURANT, FAMILY STYLE, CHICK FINGERS, FROM KID'S MENU"],
     kcal: 307, protein: 18.68, carbs: 18.77, fat: 17.45, fiber: 1.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8677,7 +8677,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Denny's, spaghetti and meatballs",
+    name: "Denny's, spaghetti e meatballs",
     aliases: ["DENNY'S, SPAGHETTI AND MEATBALLS"],
     kcal: 170, protein: 7.84, carbs: 15.51, fat: 8.52, fiber: 1.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8686,7 +8686,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Biscoito salgado barrel, macaroni n' chs",
+    name: "Cracker barrel, macaroni n' chs",
     aliases: ["CRACKER BARREL, MACARONI N' CHS"],
     kcal: 194, protein: 6.49, carbs: 15.61, fat: 11.75, fiber: 1.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8695,7 +8695,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carrabba's italian grill, spaghetti with pomodoro sau",
+    name: "Carrabba's italian grill, spaghetti com pomodoro sau",
     aliases: ["CARRABBA'S ITALIAN GRILL, SPAGHETTI WITH POMODORO SAU"],
     kcal: 104, protein: 3.42, carbs: 18.63, fat: 1.75, fiber: 1.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8713,7 +8713,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Restaurant, latino, arroz con leche (arroz pudim)",
+    name: "Restaurant, latino, arroz con leche (arroz pudding)",
     aliases: ["RESTAURANT, LATINO, ARROZ CON LECHE (RICE PUDDING)"],
     kcal: 146, protein: 3.2, carbs: 24.92, fat: 3.69, fiber: 0.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8722,7 +8722,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Restaurant, latino, tamale, carne suísódio",
+    name: "Restaurant, latino, tamale, carne suína",
     aliases: ["RESTAURANT, LATINO, TAMALE, PORK"],
     kcal: 174, protein: 7.35, carbs: 15.75, fat: 9.04, fiber: 2.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8731,7 +8731,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Biscoito salgado barrel, chick tenderloin platter, frito, frm kid's menu",
+    name: "Cracker barrel, chick tenderloin platter, fried, frm kid's menu",
     aliases: ["CRACKER BARREL, CHICK TENDERLOIN PLATTER, FRIED, FRM KID'S MENU"],
     kcal: 294, protein: 18.67, carbs: 20.24, fat: 15.41, fiber: 1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8740,7 +8740,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Denny's, macaroni and chs, from kid's menu",
+    name: "Denny's, macaroni e chs, from kid's menu",
     aliases: ["DENNY'S, MACARONI AND CHS, FROM KID'S MENU"],
     kcal: 150, protein: 5.19, carbs: 21.16, fat: 4.92, fiber: 1.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8758,7 +8758,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Restaurant, chinese, gergelim chick",
+    name: "Restaurant, chinese, sesame chick",
     aliases: ["RESTAURANT, CHINESE, SESAME CHICK"],
     kcal: 293, protein: 14.33, carbs: 26.88, fat: 14.25, fiber: 0.7,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8767,7 +8767,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, mxd fruta juc with com pouca gordura iogurte",
+    name: "Babyfood, mxd fruta juc com com pouca gordura iogurte",
     aliases: ["BABYFOOD, MXD FRUIT JUC WITH LOFAT YOGURT"],
     kcal: 76, protein: 2.4, carbs: 14.68, fat: 0.8, fiber: 0.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8776,7 +8776,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Salada drsng, italian drsng, reduzido cal",
+    name: "Salad drsng, italian drsng, reduzido cal",
     aliases: ["SALAD DRSNG, ITALIAN DRSNG, RED CAL"],
     kcal: 200, protein: 0.3, carbs: 6.7, fat: 20, fiber: 0.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8785,7 +8785,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Creamy drsng, with azedo creme and/or bttrmlk and óleo, reduzido cal, chol-free",
+    name: "Creamy drsng, com azedo crm e/ou bttrmlk e óleo, reduzido cal, chol-free",
     aliases: ["CREAMY DRSNG, WITH SOUR CRM AND/OR BTTRMLK AND OIL, RED CAL, CHOL-FREE"],
     kcal: 140, protein: 1, carbs: 16, fat: 8, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8794,7 +8794,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Congelado yogurts, choc",
+    name: "Frozen yogurts, chocolate",
     aliases: ["FROZEN YOGURTS, CHOC"],
     kcal: 127, protein: 3, carbs: 21.6, fat: 3.6, fiber: 2.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8803,7 +8803,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Arroz bolo, biscoito salgado (incl hain mini arroz cakes)",
+    name: "Arroz cake, cracker (incl hain mini arroz cakes)",
     aliases: ["RICE CAKE, CRACKER (INCL HAIN MINI RICE CAKES)"],
     kcal: 392, protein: 7.1, carbs: 81.1, fat: 4.3, fiber: 4.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8812,7 +8812,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Cereals rte, post, mel bunches of oats, with almonds",
+    name: "Cereals rte, post, honey bunches of oats, com almonds",
     aliases: ["CEREALS RTE, POST, HONEY BUNCHES OF OATS, WITH ALMONDS"],
     kcal: 409, protein: 7.7, carbs: 79.6, fat: 7.3, fiber: 5.5,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8821,7 +8821,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Granola bar, with cocnt, choc coatd",
+    name: "Granola bar, com cocnt, chocolate coatd",
     aliases: ["GRANOLA BAR, WITH COCNT, CHOC COATD"],
     kcal: 531, protein: 5.2, carbs: 55.2, fat: 32.2, fiber: 6.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8830,7 +8830,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Babyfood, grn bns and peru, str",
+    name: "Babyfood, grn bns e peru, str",
     aliases: ["BABYFOOD, GRN BNS AND TURKEY, STR"],
     kcal: 51, protein: 4.1, carbs: 5.35, fat: 1.5, fiber: 1.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8839,7 +8839,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Margarina-like, veg óleo-manteiga creme para barrar, reduzido cal, tub, com sal",
+    name: "Margarine-like, veg óleo-manteiga sprd, reduzido cal, tub, com sal",
     aliases: ["MARGARINE-LIKE, VEG OIL-BUTTER SPRD, RED CAL, TUB, WITH SALT"],
     kcal: 450, protein: 1, carbs: 1, fat: 50, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8848,7 +8848,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Salada drsng, grn goddess, tradicional",
+    name: "Salad drsng, grn goddess, reg",
     aliases: ["SALAD DRSNG, GRN GODDESS, REG"],
     kcal: 427, protein: 1.9, carbs: 7.36, fat: 43.33, fiber: 0.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8857,7 +8857,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Candies, nougat, with almonds",
+    name: "Candies, nougat, com almonds",
     aliases: ["CANDIES, NOUGAT, WITH ALMONDS"],
     kcal: 398, protein: 3.33, carbs: 92.39, fat: 1.67, fiber: 3.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8902,7 +8902,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Queijo, creme, baixo gordura",
+    name: "Queijo, creme, low fat",
     aliases: ["CHEESE, CREAM, LOW FAT"],
     kcal: 201, protein: 7.85, carbs: 8.13, fat: 15.28, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8911,7 +8911,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Carne suísódio, oriental estilo, dehyd",
+    name: "Carne suína, oriental style, dehyd",
     aliases: ["PORK, ORIENTAL STYLE, DEHYD"],
     kcal: 615, protein: 11.8, carbs: 1.4, fat: 62.4, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8920,7 +8920,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Queijo, parmesan, baixo sódio",
+    name: "Queijo, parmesan, lo na",
     aliases: ["CHEESE, PARMESAN, LO NA"],
     kcal: 451, protein: 41.6, carbs: 3.7, fat: 29.99, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8929,7 +8929,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Peru, wing, defumado, ckd, with skn, bone removed",
+    name: "Peru, wing, smoked, cozido, com skn, bone removed",
     aliases: ["TURKEY, WING, SMOKED, CKD, WITH SKN, BONE REMOVED"],
     kcal: 221, protein: 27.4, carbs: 0, fat: 12.41, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8938,7 +8938,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Nabo grns, cnd, sem sal",
+    name: "Turnip grns, enlatado, sem sal",
     aliases: ["TURNIP GRNS, CND, NO SALT"],
     kcal: 19, protein: 1.36, carbs: 2.81, fat: 0.3, fiber: 1.3,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8947,7 +8947,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Beverages, cranberry-maçã juc drk, baixo cal, with vit c added",
+    name: "Beverages, cranberry-maçã juc drk, lo cal, com vit c added",
     aliases: ["BEVERAGES, CRANBERRY-APPLE JUC DRK, LO CAL, WITH VIT C ADDED"],
     kcal: 19, protein: 0.1, carbs: 4.7, fat: 0, fiber: 0.1,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8956,7 +8956,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Snacks, milho-based, extruded, chips, unsalted",
+    name: "Snacks, milho-based, extruded, chips, sem sal",
     aliases: ["SNACKS, CORN-BASED, EXTRUDED, CHIPS, UNSALTED"],
     kcal: 557, protein: 6.6, carbs: 57.4, fat: 33.4, fiber: 4.4,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8965,7 +8965,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Frankfurter, baixo sódio",
+    name: "Frankfurter, lo na",
     aliases: ["FRANKFURTER, LO NA"],
     kcal: 312, protein: 12, carbs: 1.8, fat: 28.51, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8983,7 +8983,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Popcorn, microwave, com pouca gordura and sódio",
+    name: "Popcorn, microwave, com pouca gordura e na",
     aliases: ["POPCORN, MICROWAVE, LOFAT AND NA"],
     kcal: 429, protein: 12.6, carbs: 73.39, fat: 9.5, fiber: 14.2,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -8992,7 +8992,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Queijo food, imitação",
+    name: "Queijo food, imitation",
     aliases: ["CHEESE FOOD, IMITATION"],
     kcal: 257, protein: 4.08, carbs: 16.18, fat: 19.5, fiber: 0,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },
@@ -9001,7 +9001,7 @@ export const USDA_SR_LEGACY_BATCH5: FoodPer100[] = [
     sourceLicense: 'CC BY 4.0',
   },
   {
-    name: "Puddings, all flavors xcpt choc, baixo cal, tradicional, dry mistura",
+    name: "Puddings, all flavors xcpt chocolate, lo cal, reg, seco mix",
     aliases: ["PUDDINGS, ALL FLAVORS XCPT CHOC, LO CAL, REG, DRY MIX"],
     kcal: 351, protein: 1.6, carbs: 86.04, fat: 0.1, fiber: 0.9,
     reportedNutrients: { protein: true, carbs: true, fat: true, fiber: true },

@@ -474,9 +474,15 @@ export async function updateFoodEntry(id: string, input: FoodEntryInput): Promis
     .update(foodToRow(input))
     .eq('id', id)
     .select()
-    .single();
+    .maybeSingle();
   fail(error, 'Não foi possível atualizar o alimento.');
-  // Mantém os favoritos ligados a este lançamento sincronizados, como no app original.
+  if (!data) {
+    throw new Error('O lançamento não foi encontrado ou não pode ser editado pela conta atual. Atualize a tela e tente novamente.');
+  }
+
+  // Salvar o lançamento é a operação principal. A sincronização de favoritos
+  // é secundária e não deve deixar o formulário aberto nem dar a impressão de
+  // que a edição falhou depois de o alimento já ter sido atualizado.
   const fav = await supabase
     .from('favorite_foods')
     .update({
@@ -486,7 +492,7 @@ export async function updateFoodEntry(id: string, input: FoodEntryInput): Promis
       nutrition_source: input.nutritionSource,
     })
     .eq('source_entry_id', id);
-  fail(fav.error, 'O alimento foi atualizado, mas não foi possível atualizar o favorito.');
+  if (fav.error) console.error('O alimento foi atualizado, mas houve falha ao sincronizar o favorito vinculado.', fav.error);
   return foodFromRow(data);
 }
 

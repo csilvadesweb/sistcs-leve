@@ -16,11 +16,11 @@
 | Worker/API de IA | **OK com melhorias** | `/api/ai/status` responde e informa Gemini disponível |
 | Supabase | **Saudável, mas com advisories** | projeto `ACTIVE_HEALTHY`, PostgreSQL 17.11 |
 | RLS | **Bom** | tabelas públicas do app e buckets privados têm políticas por usuário |
-| Testes | **OK** | 24 arquivos, 220 testes passando |
+| Testes | **CI em execução para o último commit** | Última execução concluída: 220 testes; o branch acrescenta 3 casos de payload JSON `null`, ainda aguardando validação |
 | TypeScript/build | **OK** | `typecheck` e `vite build` passam |
 | Dependências de produção | **OK no momento** | `npm audit --omit=dev`: 0 vulnerabilidades |
 | Histórico de migrations | **CRÍTICO** | migrations remotas aplicadas não estão todas no Git e há versões divergentes |
-| GitHub | **Risco alto de governança** | repositório público, `main` sem proteção, sem SECURITY.md ativo |
+| GitHub | **Proteção ativa; revisão obrigatória** | merge exige ao menos uma aprovação; `SECURITY.md` e CODEOWNERS estão propostos nesta PR, ainda não ativos na `main` |
 | Backup/restore | **Não comprovado** | workflow existe, mas não foi possível provar que secrets estão configurados nem que um restore foi testado |
 | Escalabilidade do front-end | **Precisa melhorar** | chunk de receitas ~1 MB e carregamento inicial de dados sem paginação em várias tabelas |
 
@@ -28,7 +28,7 @@
 
 1. **P0 — Antes de novas migrations:** reconciliar o histórico Supabase e criar uma baseline reproduzível.
 2. **P0 — Antes de aceitar dados reais em escala:** testar restore de backup e confirmar secrets/retention.
-3. **P0 — Segurança operacional:** proteger `main`, exigir CI, adicionar política de segurança e revisar permissões do GitHub.
+3. **P0 — Segurança operacional:** concluir revisão independente, confirmar checks obrigatórios e integrar `SECURITY.md`/CODEOWNERS sem bypass da proteção.
 4. **P1 — Supabase:** corrigir os três advisories de segurança e revisar o índice não utilizado.
 5. **P1 — Privacidade/LGPD:** fechar ciclo de exclusão, retenção, consentimento e incident response para fotos, medicamentos e dados de saúde.
 6. **P1 — Escala/performance:** paginação/limites no cliente, code splitting e estratégia de cache/observabilidade.
@@ -40,8 +40,8 @@
 
 - Repositório público: `csilvadesweb/sistcs-leve`.
 - Branch padrão: `main`.
-- Não há proteção de branch: a API retornou `Branch not protected`.
-- Não há `SECURITY.md`/security policy ativo.
+- A proteção de `main` está ativa: a tentativa de merge da PR #130 foi rejeitada pelo GitHub com HTTP 405 porque é exigida ao menos uma revisão aprovadora de alguém com permissão de escrita. Não fazer bypass.
+- A `main` ainda não contém `SECURITY.md`; o arquivo está sendo adicionado na PR #129 e só passa a valer após merge.
 - CI, E2E, Android e backup estão versionados.
 - O workflow usa `npm install`, não `npm ci`; no estado clonado não havia `package-lock.json` versionado. O `npm install` usado na auditoria criou um lockfile local não versionado.
 - O workflow `validate.yml` dispara push apenas em uma branch específica (`feat/visual-parity-nutrition-ui`), portanto não é uma validação geral da `main`.
@@ -110,7 +110,7 @@ No Git há apenas parte dos scripts. Além disso, os nomes/versões de alguns ar
 
 ## P0 — Backup e restauração comprovados
 
-Existe workflow semanal `.github/workflows/backup.yml` com dump criptografado, mas a auditoria não conseguiu verificar se `SUPABASE_DB_URL` e `BACKUP_PASSPHRASE` estão realmente configurados, pois a integração GitHub retornou 403 para a listagem de secrets. O próprio workflow apenas avisa e termina com sucesso quando os secrets faltam.
+Existe workflow semanal `.github/workflows/backup.yml` com dump criptografado, mas a auditoria não conseguiu verificar se `SUPABASE_DB_URL` e `BACKUP_PASSPHRASE` estão realmente configurados, pois a integração GitHub retornou 403 para a listagem de secrets. Na PR #129, o workflow foi corrigido para falhar explicitamente se os secrets estiverem ausentes; o backup só será operacional após validar a configuração e um teste de restauração.
 
 **Melhorias:**
 
@@ -125,9 +125,9 @@ Existe workflow semanal `.github/workflows/backup.yml` com dump criptografado, m
 
 **Observação:** fotos e outros objetos do Storage não são cobertos por um `pg_dump` comum. É necessário backup separado de objetos ou aceitar formalmente que as fotos não são recuperáveis.
 
-## P0 — Proteger a branch principal
+## P0 — Concluir a governança da branch principal
 
-A `main` está sem branch protection e o repositório é público.
+A `main` já exige ao menos uma aprovação de revisor com permissão de escrita. Não foi feito bypass. Confirmar separadamente quais checks são obrigatórios e concluir a revisão independente das PRs antes do merge.
 
 **Configurar:**
 
@@ -316,10 +316,10 @@ Para elevar a robustez:
 ### Fase 0 — 1 dia: bloquear riscos de release
 
 - Não executar `db push`/`db reset`.
-- Proteger `main` e tornar CI obrigatório.
+- Confirmar os checks obrigatórios de `main` e manter a revisão humana exigida pela proteção.
 - Confirmar secrets de backup por canal administrativo.
 - Ativar Leaked Password Protection.
-- Adicionar `SECURITY.md`.
+- Integrar e validar o `SECURITY.md` proposto na PR #129.
 - Versionar lockfile e trocar workflows para `npm ci`.
 - Corrigir README que ainda sugere que algumas migrations não foram aplicadas.
 
@@ -360,7 +360,8 @@ Para elevar a robustez:
 - [ ] Backup automático comprovadamente produzido.
 - [ ] Restore testado e cronometrado.
 - [ ] Auth com proteção contra senha comprometida.
-- [ ] `main` protegida e checks obrigatórios.
+- [x] `main` exige ao menos uma revisão aprovadora.
+- [ ] Confirmar que CI/E2E são checks obrigatórios da proteção.
 - [ ] Lockfile no Git e CI/deploy usando `npm ci`.
 - [ ] Nenhum segredo privado no repositório ou bundle.
 - [ ] Rate limit de IA por conta e por abuso de origem.
@@ -383,7 +384,7 @@ Para elevar a robustez:
 ## 7. Evidências técnicas executadas
 
 - `npm run typecheck`: passou.
-- `npm test`: **24 arquivos / 220 testes passaram**.
+- `npm test`: **24 arquivos / 220 testes passaram na execução anterior**; o commit atual adiciona 3 testes para payloads `null`, aguardando a nova CI.
 - `npm run build`: passou.
 - `npm audit --omit=dev`: **0 vulnerabilidades**.
 - HTTP `https://leve.sistcs.com`: 200.
@@ -398,11 +399,11 @@ Foram executadas as primeiras etapas de hardening:
 
 - branch `fix/production-hardening-20261015` criada e publicada;
 - pull request [#129](https://github.com/csilvadesweb/sistcs-leve/pull/129) aberto;
-- `main` protegida com revisão de CODEOWNER, checks `verify`/`e2e`, bloqueio de force-push e resolução de conversas;
+- `main` exige revisão aprovadora; a exigência de checks, bloqueio de force-push e resolução de conversas ainda deve ser confirmada por leitura das regras ativas;
 - Edge Function `delete-account` publicada como versão 4, com JWT obrigatório, CORS restrito e limpeza paginada;
 - Worker preview aprovado pelo Cloudflare Workers Builds;
 - Node 22 fixado nos workflows, `.node-version` e `package.json`;
-- `npm ci`, typecheck, 220 testes, build, E2E e validação Wrangler aprovados;
+- No commit anterior da PR, `npm ci`, typecheck, 220 testes, build, E2E e validação Wrangler passaram; o commit mais recente adiciona testes e correção de timeout e aguarda nova CI;
 - policy explícita de negação criada em `public.ai_usage`, removendo o advisory INFO de RLS sem abrir acesso aos dados;
 - preflight público da Edge Function retornando HTTP 204 e Worker público retornando HTTP 200.
 

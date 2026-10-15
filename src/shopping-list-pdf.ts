@@ -209,7 +209,7 @@ export async function downloadShoppingListPdf(items: ShoppingIngredient[], plann
     canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error('Não foi possível gerar a imagem do PDF.')), 'image/jpeg', 0.94);
   });
   const pdf = makePdf(new Uint8Array(await jpegBlob.arrayBuffer()));
-  const blob = new Blob([pdf], { type: 'application/pdf' });
+  const blob = new Blob([pdf.buffer.slice(pdf.byteOffset, pdf.byteOffset + pdf.byteLength) as ArrayBuffer], { type: 'application/pdf' });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement('a');
   anchor.href = url;

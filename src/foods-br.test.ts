@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { FOODS_BR, foodConfidence, foodSourceLabel, gramsFor, lookupBarcode, normalizeBarcodeInput, parseQuery, scale, searchLocal, searchOpenFoodFacts, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { FOODS_BR, foodConfidence, foodSourceLabel, gramsFor, householdUnitsForFood, lookupBarcode, normalizeBarcodeInput, parseQuery, scale, searchLocal, searchOpenFoodFacts, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 afterEach(() => vi.unstubAllGlobals());
 
@@ -533,5 +533,26 @@ describe('estimativas brasileiras (lote 3) e internacionais', () => {
   it('são encontradas pela busca local', () => {
     expect(searchLocal('sushi nigiri').some((food) => food.code === 'estimate-intl-sushi-nigiri-de-salmao')).toBe(true);
     expect(searchLocal('espetinho de carne').some((food) => food.code === 'estimate-br3-espetinho-de-carne')).toBe(true);
+  });
+});
+
+
+describe('ameixa seca — referência USDA FoodData Central', () => {
+  it('encontra ameixa seca em português com nutrientes licenciados e medidas por unidade', () => {
+    const food = searchLocal('ameixa seca').find((item) => item.code === 'usda-sr-legacy-prunes-uncooked');
+    expect(food).toMatchObject({
+      name: 'Ameixa seca, desidratada (referência USDA)',
+      kcal: 240,
+      protein: 2.18,
+      carbs: 63.88,
+      fat: 0.38,
+      fiber: 7.1,
+      origin: 'usda',
+      sourceLicense: 'CC0 1.0',
+    });
+    expect(food && householdUnitsForFood(food)).toEqual([
+      ['unidade média', 9.5],
+      ['porção (5 unidades)', 47.5],
+    ]);
   });
 });

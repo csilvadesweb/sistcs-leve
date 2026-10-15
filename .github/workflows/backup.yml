@@ -1,7 +1,7 @@
 # Backup semanal do banco (o Supabase Free não faz backup restaurável).
 # Requer o secret SUPABASE_DB_URL: a connection string do Session pooler (IPv4) do Supabase, com a senha do banco.
 # O repositório é PÚBLICO: o dump é criptografado (AES-256) com o secret BACKUP_PASSPHRASE antes de virar artefato.
-# Sem SUPABASE_DB_URL ou sem BACKUP_PASSPHRASE o job só avisa e termina (nunca sobe dump sem criptografia).
+# Sem SUPABASE_DB_URL ou sem BACKUP_PASSPHRASE o job falha explicitamente.
 name: backup
 on:
   schedule:
@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Verificar secret
         run: |
-          if [ -z "$DB_URL" ] || [ -z "$BACKUP_PASSPHRASE" ]; then echo "::warning::SUPABASE_DB_URL ou BACKUP_PASSPHRASE não configurado; backup ignorado."; exit 0; fi
+          if [ -z "$DB_URL" ] || [ -z "$BACKUP_PASSPHRASE" ]; then echo "::error::SUPABASE_DB_URL ou BACKUP_PASSPHRASE não configurado; backup não pode ser considerado válido."; exit 1; fi
       - name: Dump
         if: env.DB_URL != '' && env.BACKUP_PASSPHRASE != ''
         run: |

@@ -22,6 +22,58 @@ const corsHeaders = {
   "access-control-allow-headers": "Authorization, Content-Type",
   "vary": "Origin",
 };
+const MAX_REQUEST_BYTES = 6_000_000;
+const EXTERNAL_TIMEOUT_MS = 15_000;
+// Análise de imagem pelo modelo pode levar mais tempo que as consultas ao Supabase.
+const GEMINI_TIMEOUT_MS = 30_000;
+
+function requestBodyTooLarge(request: Request): boolean {
+  const contentLength = Number(request.headers.get("content-length"));
+  return Number.isFinite(contentLength) && contentLength > MAX_REQUEST_BYTES;
+}
+
+type JsonBodyResult = { ok: true; value: unknown } | { ok: false; reason: "too_large" | "invalid" };
+
+/** Reads JSON with a hard streaming limit, including requests without Content-Length. */
+async function readJsonBody(request: Request): Promise<JsonBodyResult> {
+  if (!request.body) return { ok: false, reason: "invalid" };
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > MAX_REQUEST_BYTES) {
+        try { await reader.cancel(); } catch { /* stream already closed */ }
+        return { ok: false, reason: "too_large" };
+      }
+      chunks.push(value);
+    }
+    const bytes = new Uint8Array(size);
+    let offset = 0;
+    for (const chunk of chunks) {
+      bytes.set(chunk, offset);
+      offset += chunk.byteLength;
+    }
+    return { ok: true, value: JSON.parse(new TextDecoder().decode(bytes)) as unknown };
+  } catch {
+    return { ok: false, reason: "invalid" };
+  } finally {
+    try { reader.releaseLock(); } catch { /* stream may already be released */ }
+  }
+}
+
+async function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit = {}): Promise<Response> {
+  // Keep the deadline active while callers consume the response body, not just until headers arrive.
+  const signal = AbortSignal.timeout(EXTERNAL_TIMEOUT_MS);
+  return fetch(input, { ...init, signal });
+}
+
+async function fetchGemini(input: RequestInfo | URL, init: RequestInit = {}): Promise<Response> {
+  return fetch(input, { ...init, signal: AbortSignal.timeout(GEMINI_TIMEOUT_MS) });
+}
 
 function withCors(response: Response) {
   const headers = new Headers(response.headers);
@@ -33,7 +85,7 @@ async function authenticatedUser(request: Request, env: Env): Promise<boolean> {
   const authorization = request.headers.get("authorization") ?? "";
   if (!/^Bearer\s+[^\s]+$/i.test(authorization)) return false;
   try {
-    const response = await fetch(`${env.SUPABASE_URL}/auth/v1/user`, {
+    const response = await fetchWithTimeout(`${env.SUPABASE_URL}/auth/v1/user`, {
       headers: { authorization, apikey: env.SUPABASE_ANON_KEY },
     });
     if (!response.ok) return false;
@@ -47,7 +99,7 @@ async function authenticatedUser(request: Request, env: Env): Promise<boolean> {
 /** Limite diário por conta (30 mensagens), aplicado no banco via RPC com o token do próprio usuário. */
 async function consumeQuota(request: Request, env: Env): Promise<"ok" | "limit" | "error"> {
   try {
-    const response = await fetch(`${env.SUPABASE_URL}/rest/v1/rpc/consume_ai_quota`, {
+    const response = await fetchWithTimeout(`${env.SUPABASE_URL}/rest/v1/rpc/consume_ai_quota`, {
       method: "POST",
       headers: {
         authorization: request.headers.get("authorization") ?? "",
@@ -67,15 +119,19 @@ async function consumeQuota(request: Request, env: Env): Promise<"ok" | "limit" 
 /** Lê uma foto de tabela nutricional sem armazenar a imagem. Os valores retornam para revisão humana. */
 async function handleLabelScan(request: Request, env: Env): Promise<Response> {
   if (request.method !== "POST") return withCors(json({ error: "Método não permitido." }, 405));
+  if (requestBodyTooLarge(request)) return withCors(json({ error: "A solicitação é muito grande." }, 413));
   if (!(await authenticatedUser(request, env))) return withCors(json({ error: "Entre na sua conta para ler um rótulo." }, 401));
   if (!env.GEMINI_API_KEY) return withCors(json({ error: "A leitura por IA ainda não está configurada." }, 503));
 
-  let payload: { mimeType?: unknown; imageBase64?: unknown };
-  try {
-    payload = await request.json() as typeof payload;
-  } catch {
+  const bodyResult = await readJsonBody(request);
+  if (!bodyResult.ok) {
+    const tooLarge = bodyResult.reason === "too_large";
+    return withCors(json({ error: tooLarge ? "A solicitação é muito grande." : "Envie uma imagem válida." }, tooLarge ? 413 : 400));
+  }
+  if (!bodyResult.value || typeof bodyResult.value !== "object" || Array.isArray(bodyResult.value)) {
     return withCors(json({ error: "Envie uma imagem válida." }, 400));
   }
+  const payload = bodyResult.value as { mimeType?: unknown; imageBase64?: unknown };
   const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
   if (typeof payload.mimeType !== "string" || !allowedTypes.has(payload.mimeType)) {
     return withCors(json({ error: "Use uma imagem JPG, PNG ou WebP." }, 400));
@@ -100,7 +156,7 @@ async function handleLabelScan(request: Request, env: Env): Promise<Response> {
 
   try {
     const model = (env.GEMINI_MODEL || "gemini-3.5-flash-lite").trim();
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    const response = await fetchGemini(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST",
       headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
       body: JSON.stringify({
@@ -159,15 +215,19 @@ async function handleLabelScan(request: Request, env: Env): Promise<Response> {
 /** Sugere alimentos visíveis em uma foto de prato; toda a saída é estimativa e exige confirmação. */
 async function handleMealPhoto(request: Request, env: Env): Promise<Response> {
   if (request.method !== "POST") return withCors(json({ error: "Método não permitido." }, 405));
+  if (requestBodyTooLarge(request)) return withCors(json({ error: "A solicitação é muito grande." }, 413));
   if (!(await authenticatedUser(request, env))) return withCors(json({ error: "Entre na sua conta para analisar a foto do prato." }, 401));
   if (!env.GEMINI_API_KEY) return withCors(json({ error: "A análise de foto ainda não está configurada." }, 503));
 
-  let payload: { mimeType?: unknown; imageBase64?: unknown };
-  try {
-    payload = await request.json() as typeof payload;
-  } catch {
+  const bodyResult = await readJsonBody(request);
+  if (!bodyResult.ok) {
+    const tooLarge = bodyResult.reason === "too_large";
+    return withCors(json({ error: tooLarge ? "A solicitação é muito grande." : "Envie uma imagem válida." }, tooLarge ? 413 : 400));
+  }
+  if (!bodyResult.value || typeof bodyResult.value !== "object" || Array.isArray(bodyResult.value)) {
     return withCors(json({ error: "Envie uma imagem válida." }, 400));
   }
+  const payload = bodyResult.value as { mimeType?: unknown; imageBase64?: unknown };
   const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
   if (typeof payload.mimeType !== "string" || !allowedTypes.has(payload.mimeType)) {
     return withCors(json({ error: "Use uma imagem JPG, PNG ou WebP." }, 400));
@@ -191,7 +251,7 @@ async function handleMealPhoto(request: Request, env: Env): Promise<Response> {
 
   try {
     const model = (env.GEMINI_MODEL || "gemini-3.5-flash-lite").trim();
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    const response = await fetchGemini(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST",
       headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
       body: JSON.stringify({
@@ -248,13 +308,17 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (url.pathname === "/api/ai/meal-photo") return handleMealPhoto(request, env);
   if (url.pathname !== "/api/ai/chat") return withCors(json({ error: "Rota não encontrada." }, 404));
   if (request.method !== "POST") return withCors(json({ error: "Método não permitido." }, 405));
+  if (requestBodyTooLarge(request)) return withCors(json({ error: "A solicitação é muito grande." }, 413));
   if (!(await authenticatedUser(request, env))) return withCors(json({ error: "Entre na sua conta para usar o assistente." }, 401));
-  let payload: { message?: unknown; history?: unknown; diaryContext?: unknown };
-  try {
-    payload = await request.json() as typeof payload;
-  } catch {
+  const bodyResult = await readJsonBody(request);
+  if (!bodyResult.ok) {
+    const tooLarge = bodyResult.reason === "too_large";
+    return withCors(json({ error: tooLarge ? "A solicitação é muito grande." : "Envie uma mensagem válida." }, tooLarge ? 413 : 400));
+  }
+  if (!bodyResult.value || typeof bodyResult.value !== "object" || Array.isArray(bodyResult.value)) {
     return withCors(json({ error: "Envie uma mensagem válida." }, 400));
   }
+  const payload = bodyResult.value as { message?: unknown; history?: unknown; diaryContext?: unknown };
   if (typeof payload.message !== "string" || !payload.message.trim()) {
     return withCors(json({ error: "Escreva uma pergunta para continuar." }, 400));
   }
@@ -326,7 +390,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
 
   try {
     const model = (env.GEMINI_MODEL || "gemini-3.5-flash-lite").trim();
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    const response = await fetchGemini(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST",
       headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
       body: JSON.stringify({

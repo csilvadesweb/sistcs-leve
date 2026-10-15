@@ -374,7 +374,7 @@ Para elevar a robustez:
 
 ## 6. Limitações da auditoria
 
-- Não foram feitas alterações em GitHub, Supabase ou Cloudflare.
+- Nenhuma alteração de schema/dados foi feita diretamente no Supabase e nenhuma publicação Cloudflare foi feita durante a auditoria. As correções de código estão em PRs e aguardam a revisão exigida pela proteção do repositório.
 - Não foi possível validar o conteúdo dos GitHub Actions secrets nem Code Scanning devido a `403` da integração.
 - Não foi feito teste destrutivo de RLS com identidades reais nem exclusão de conta em produção.
 - O segundo Worker Cloudflare (`sistcs`) foi listado, mas não foi atribuído com segurança a este sistema; deve ser auditado separadamente se fizer parte da mesma operação.
@@ -407,3 +407,23 @@ Foram executadas as primeiras etapas de hardening:
 - preflight público da Edge Function retornando HTTP 204 e Worker público retornando HTTP 200.
 
 O PR permanece **bloqueado por revisão humana obrigatória**. O preview Cloudflare está aprovado, mas o Worker de produção continuará na versão anterior até o PR ser revisado e integrado na `main`; não foi feito bypass da proteção. Permanecem dois advisories intencionais/pendentes no Supabase: a RPC de quota `SECURITY DEFINER` ainda precisa de uma arquitetura RPC privada ou revisão explícita da exceção, e a proteção contra senhas comprometidas precisa ser ativada no painel Auth do Supabase.
+
+
+## Complemento de auditoria — validação adicional em 15/10/2026
+
+### Novos achados confirmados
+
+- O workflow agendado `keepalive` falhou com HTTP 401 no run [38748992057](https://github.com/csilvadesweb/sistcs-leve/actions/runs/38748992057). A versão em revisão troca a consulta a `profiles` (sem permissão de leitura anônima) por uma leitura limitada de `ai_usage`, usando o JWT público de papel `anon` no cabeçalho `Authorization`. A validação HTTP real dessa alteração ainda depende de executar o workflow depois da integração.
+- A Edge Function publicada `delete-account` ainda contém uma expressão regular de extração do Bearer diferente do arquivo revisado: o código publicado contém duas barras invertidas antes de `s`, que casa o texto literal `\\s` em vez de espaços. Não foi feito teste destrutivo com conta real. A correção no PR extrai um Bearer estrito em módulo testado, remove recursivamente arquivos e pastas dos dois buckets e propaga erros de Storage. **Não considerar a exclusão de conta corrigida em produção até publicar a versão integrada e testar com conta descartável.**
+- O Worker aceitava um corpo grande quando `Content-Length` estava ausente, pois a validação principal ocorria depois de ler o JSON. O PR passou a ler o corpo por streaming com limite de bytes e inclui teste de regressão sem `Content-Length`.
+- O catálogo atual contém **1.137 receitas**, com IDs e nomes normalizados únicos. Isso deixa 263 para a meta de 1.400 e 1.863 para alcançar o volume publicamente anunciado pelo YAZIO (3.000+). A contagem não comprova qualidade laboratorial: os valores das receitas próprias permanecem estimativas editoriais.
+- A busca local já contempla strogonoff de carne e o alias castanha-do-Pará/castanha-do-Brasil. A ameixa seca não estava disponível no catálogo estático; a correção com referência USDA FoodData Central (SR Legacy, FDC 168162, CC0) e medidas caseiras está na PR [#130](https://github.com/csilvadesweb/sistcs-leve/pull/130), ainda sem merge.
+- `loadAll()` ainda carrega sem paginação várias tabelas de histórico e limita outras a 200/500 registros. O planejador semanal e favoritos de receitas usam `localStorage`, portanto não sincronizam entre dispositivos. Essas melhorias dependem de um plano separado; não criar migrations até reconciliar o histórico do banco.
+- O advisor do Supabase ainda indica a proteção contra senhas vazadas desativada. A integração disponível não permite alterar essa configuração de Auth com segurança nesta execução.
+- A tentativa de merge da PR #129 foi recusada pelo GitHub porque é obrigatória pelo menos uma aprovação de revisor com acesso de escrita. Nenhum bypass foi realizado; o código e o deploy de produção continuam pendentes dessa revisão.
+
+### Estado das correções
+
+- PR #129: hardening de CI/dependências, exclusão de conta, limite de corpo do Worker e keepalive; integrar somente com todos os checks verdes e aprovação humana.
+- PR #130: entrada de ameixa seca com origem/licença e teste de regressão; integrar somente com todos os checks verdes e aprovação humana.
+- Não foi executado `db push`, `db reset` ou migration de produção. O histórico local/remoto continua divergente e precisa de baseline reproduzível.

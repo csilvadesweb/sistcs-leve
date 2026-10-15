@@ -15,14 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     env:
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+      # Valores públicos (a URL e a chave publicável já vão embutidas no app). Os secrets, se existirem, têm prioridade.
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL || 'https://yzcmxdbnitturlbozvqu.supabase.co' }}
+      SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY || 'sb_publishable_8NA8UB_55isWrQJawod7OQ_tvNKEJNz' }}
     steps:
       - name: Validar configuração do ping
         shell: bash
         run: |
           if [[ -z "$SUPABASE_URL" || -z "$SUPABASE_PUBLISHABLE_KEY" ]]; then
-            echo "::error::Configure os secrets SUPABASE_URL e SUPABASE_PUBLISHABLE_KEY no repositório."
+            echo "::error::SUPABASE_URL e SUPABASE_PUBLISHABLE_KEY ausentes."
             exit 1
           fi
           if [[ ! "$SUPABASE_URL" =~ ^https://[a-zA-Z0-9.-]+$ ]]; then

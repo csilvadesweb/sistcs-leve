@@ -24,6 +24,8 @@ const corsHeaders = {
 };
 const MAX_REQUEST_BYTES = 6_000_000;
 const EXTERNAL_TIMEOUT_MS = 15_000;
+// Análise de imagem pelo modelo pode levar mais tempo que as consultas ao Supabase.
+const GEMINI_TIMEOUT_MS = 30_000;
 
 function requestBodyTooLarge(request: Request): boolean {
   const contentLength = Number(request.headers.get("content-length"));
@@ -67,6 +69,10 @@ async function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit = {}
   // Keep the deadline active while callers consume the response body, not just until headers arrive.
   const signal = AbortSignal.timeout(EXTERNAL_TIMEOUT_MS);
   return fetch(input, { ...init, signal });
+}
+
+async function fetchGemini(input: RequestInfo | URL, init: RequestInit = {}): Promise<Response> {
+  return fetch(input, { ...init, signal: AbortSignal.timeout(GEMINI_TIMEOUT_MS) });
 }
 
 function withCors(response: Response) {
@@ -150,7 +156,7 @@ async function handleLabelScan(request: Request, env: Env): Promise<Response> {
 
   try {
     const model = (env.GEMINI_MODEL || "gemini-3.5-flash-lite").trim();
-    const response = await fetchWithTimeout(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    const response = await fetchGemini(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST",
       headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
       body: JSON.stringify({
@@ -245,7 +251,7 @@ async function handleMealPhoto(request: Request, env: Env): Promise<Response> {
 
   try {
     const model = (env.GEMINI_MODEL || "gemini-3.5-flash-lite").trim();
-    const response = await fetchWithTimeout(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    const response = await fetchGemini(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST",
       headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
       body: JSON.stringify({
@@ -384,7 +390,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
 
   try {
     const model = (env.GEMINI_MODEL || "gemini-3.5-flash-lite").trim();
-    const response = await fetchWithTimeout(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    const response = await fetchGemini(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST",
       headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
       body: JSON.stringify({

@@ -52,6 +52,20 @@ describe('endpoint do assistente Gemini', () => {
     }), env);
     expect(response.status).toBe(413);
   });
+  it('limita o corpo em streaming mesmo sem Content-Length', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(JSON.stringify({ id: 'user-1' }), {
+      status: 200, headers: { 'content-type': 'application/json' },
+    })));
+    const request = new Request('https://leve.sistcs.com/api/ai/chat', {
+      method: 'POST',
+      headers: { authorization: 'Bearer test-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ message: 'x'.repeat(6_100_000) }),
+    });
+    expect(request.headers.has('content-length')).toBe(false);
+    const response = await worker.fetch(request, env);
+    expect(response.status).toBe(413);
+    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(1);
+  });
 
   it('bloqueia com 429 quando o limite diário acabou, sem chamar o Google', async () => {
     const envComChave = { ...env, GEMINI_API_KEY: 'segredo-de-teste' } as unknown as Parameters<typeof worker.fetch>[1];

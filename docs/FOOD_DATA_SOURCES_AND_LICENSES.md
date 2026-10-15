@@ -48,3 +48,14 @@ Esta política orienta a expansão do catálogo do SISTCS Leve, que deve continu
 ## Correção de fuso horário do Health Connect
 
 Datas de atividade são datas de calendário brasileiras. A consulta deve calcular os últimos sete dias a partir de `America/Sao_Paulo`, em vez de cortar a data UTC de `Date.now() - 6 dias`; perto da meia-noite, UTC pode estar no dia seguinte e ocultar registros válidos. A função `dateDaysAgoInSaoPaulo` centraliza esse cálculo e tem testes de regressão.
+
+
+## Lote 5 — 1.000 referências USDA SR28
+
+O módulo `src/foods-usda-batch5.ts` acrescenta 1.000 referências genéricas de composição nutricional derivadas do USDA National Nutrient Database for Standard Reference (SR28), por 100 g. O dataset derivado consultado é o projeto foodWeb de Russell Steadman, que identifica a fonte de dados como USDA SR e sua licença de dados como CC BY 4.0. A atribuição fica registrada no módulo e em cada item; nomes originais em inglês são preservados como aliases de busca.
+
+- Dataset USDA: https://catalog.data.gov/dataset/usda-national-nutrient-database-for-standard-reference-legacy-release
+- Dataset derivado: https://github.com/russellsteadman/foodweb
+- Licença de dados declarada pela fonte derivada: CC BY 4.0; atribuição ao USDA e a Russell Steadman/foodWeb mantida no código.
+- Os nomes são traduções automáticas de referência e devem ser revisados editorialmente; os nutrientes vêm da tabela de referência, não de rótulos atuais de marcas brasileiras.
+- O lote é adicionado depois dos dados existentes, com prioridade inferior na busca, para preservar os resultados atuais.

@@ -5,6 +5,7 @@
 import { TACO } from './foods-taco';
 import { ESTIMATES_BATCH4 } from './foods-batch4';
 import { USDA_SR_LEGACY_BATCH5 } from './foods-usda-batch5';
+import { supabase } from './supabase';
 
 export interface FoodPer100 {
   name: string;
@@ -563,6 +564,89 @@ export function searchLocal(query: string, limit = 8): FoodPer100[] {
   return hits.sort((a, b) => score(a) - score(b)).slice(0, limit).map((food) =>
     food.code === 'taco-589' ? { ...food, name: 'Castanha-do-Pará (Castanha-do-Brasil), crua' } : food,
   );
+}
+
+
+/* ---------- Catálogo USDA carregado no Supabase ---------- */
+type FoodCatalogRow = {
+  fdc_id: number;
+  name_en: string;
+  name_pt: string | null;
+  category_en: string | null;
+  kcal: number | string;
+  protein_g: number | string;
+  fat_g: number | string;
+  carbs_g: number | string;
+  fiber_g: number | string | null;
+};
+
+const CATALOG_SOURCE_URL = 'https://fdc.nal.usda.gov/food-details/';
+const CATALOG_LICENSE = 'CC0 1.0';
+
+function catalogNumber(value: number | string | null): number | null {
+  if (value === null || value === undefined || value === '') return null;
+  const parsed = typeof value === 'number' ? value : Number(value);
+  return Number.isFinite(parsed) && parsed >= 0 ? round1(parsed) : null;
+}
+
+/**
+ * Pesquisa o catálogo completo do banco. O RLS da tabela exige autenticação;
+ * a função não tenta contornar a política nem retorna linhas sem nutrientes essenciais.
+ */
+export async function searchFoodCatalog(query: string, limit = 20): Promise<FoodPer100[]> {
+  const raw = query.trim().replace(/[^\\p{L}\\p{N}\\s'-]/gu, ' ').replace(/\\s+/g, ' ').slice(0, 100).trim();
+  const terms = normalize(raw).split(/\\s+/).filter((term) => term.length >= 2);
+  if (!raw || !terms.length) return [];
+
+  const safeLimit = Math.max(1, Math.min(30, Math.floor(limit)));
+  const searchableTerms = [...new Set([raw, ...raw.split(/\\s+/).filter((term) => term.length >= 3)])];
+  const batches = await Promise.all(searchableTerms.slice(0, 4).map(async (term) => {
+    const safeTerm = term.replace(/[%_(),]/g, ' ').replace(/\\s+/g, ' ').trim();
+    if (!safeTerm) return [] as FoodCatalogRow[];
+    const pattern = `%${safeTerm}%`;
+    const { data, error } = await supabase
+      .from('food_catalog')
+      .select('fdc_id,name_en,name_pt,category_en,kcal,protein_g,fat_g,carbs_g,fiber_g')
+      .or(`name_pt.ilike.${pattern},name_en.ilike.${pattern}`)
+      .limit(40);
+    if (error) throw new Error('Não foi possível consultar o catálogo de alimentos.');
+    return (data ?? []) as FoodCatalogRow[];
+  }));
+
+  const unique = new Map<number, FoodCatalogRow>();
+  for (const row of batches.flat()) unique.set(row.fdc_id, row);
+  const normalizedTerms = terms.map((term) => term.replace(/[^a-z0-9]/g, '')).filter(Boolean);
+  return [...unique.values()]
+    .filter((row) => {
+      const searchable = normalize(`${row.name_pt ?? ''} ${row.name_en ?? ''}`).replace(/[^a-z0-9\\s]/g, ' ');
+      const words = searchable.split(/\\s+/).filter(Boolean);
+      return normalizedTerms.every((term) => words.some((word) => word === term || word.startsWith(term)));
+    })
+    .map((row): FoodPer100 | null => {
+      const name = row.name_pt?.trim() || row.name_en?.trim();
+      const kcal = catalogNumber(row.kcal);
+      const protein = catalogNumber(row.protein_g);
+      const carbs = catalogNumber(row.carbs_g);
+      const fat = catalogNumber(row.fat_g);
+      const fiber = catalogNumber(row.fiber_g);
+      if (!name || kcal === null || protein === null || carbs === null || fat === null) return null;
+      return {
+        name,
+        aliases: row.name_en ? [row.name_en] : undefined,
+        kcal,
+        protein,
+        carbs,
+        fat,
+        fiber: fiber ?? 0,
+        reportedNutrients: { protein: true, carbs: true, fat: true, fiber: fiber !== null },
+        origin: 'usda',
+        code: `usda-fdc-${row.fdc_id}`,
+        sourceUrl: `${CATALOG_SOURCE_URL}${row.fdc_id}/nutrients`,
+        sourceLicense: CATALOG_LICENSE,
+      };
+    })
+    .filter((food): food is FoodPer100 => food !== null)
+    .slice(0, safeLimit);
 }
 
 /* ---------- Referências genéricas USDA via TempoLife (somente linhas licenciadas) ---------- */

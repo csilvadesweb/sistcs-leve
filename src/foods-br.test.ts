@@ -480,3 +480,25 @@ describe('Open Food Facts — integração externa resiliente', () => {
     await expect(searchOpenFoodFacts('produto indisponivel')).rejects.toThrow('A busca de produtos está indisponível agora.');
   });
 });
+describe('estimativas brasileiras comuns (estimate-br2-*)', () => {
+  const batch = FOODS_BR.filter((food) => food.code?.startsWith('estimate-br2-'));
+  it('estão presentes, marcadas como estimativa e com códigos únicos', () => {
+    expect(batch.length).toBeGreaterThanOrEqual(40);
+    expect(new Set(batch.map((food) => food.code)).size).toBe(batch.length);
+    for (const food of batch) {
+      expect(food.origin).toBe('estimate');
+      expect(food.name).toMatch(/\(estimativa\)$/);
+      expect(food.units?.length ?? 0).toBeGreaterThan(0);
+    }
+  });
+  it('têm calorias coerentes com os macronutrientes (±12%)', () => {
+    for (const food of batch) {
+      const atwater = 4 * food.protein + 4 * food.carbs + 9 * food.fat;
+      expect(Math.abs(atwater - food.kcal) / food.kcal, food.name).toBeLessThanOrEqual(0.12);
+    }
+  });
+  it('são encontradas pela busca local', () => {
+    expect(searchLocal('pizza de mussarela').some((food) => food.code === 'estimate-br2-pizza-de-mussarela-fatia')).toBe(true);
+    expect(searchLocal('refrigerante de cola').some((food) => food.basis === '100ml')).toBe(true);
+  });
+});

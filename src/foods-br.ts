@@ -155,9 +155,61 @@ const BRAZILIAN_ESTIMATES_MORE: FoodPer100[] = [
 ];
 
 
+/**
+ * Alimentos brasileiros comuns de lanchonete, padaria, marmita e bebidas ausentes da referência genérica.
+ * ESTIMATIVAS aproximadas por 100 g (ou 100 ml), baseadas em composições típicas; NÃO são análises nem rótulos.
+ * Marcas e receitas variam: confira o rótulo ou a receita. Todas aparecem como "(estimativa)" no app.
+ */
+const BRAZILIAN_ESTIMATES_COMMON: FoodPer100[] = [
+  { name: 'Pizza de mussarela, fatia (estimativa)', kcal: 270, protein: 11, carbs: 31, fat: 11, fiber: 2, origin: 'estimate', code: 'estimate-br2-pizza-de-mussarela-fatia', units: [['fatia média', 110]] },
+  { name: 'Pizza de calabresa, fatia (estimativa)', kcal: 285, protein: 12, carbs: 30, fat: 13, fiber: 2, origin: 'estimate', code: 'estimate-br2-pizza-de-calabresa-fatia', units: [['fatia média', 110]] },
+  { name: 'Hambúrguer simples com pão (estimativa)', kcal: 250, protein: 13, carbs: 25, fat: 11, fiber: 1, origin: 'estimate', code: 'estimate-br2-hamburguer-simples-com-pao', units: [['unidade', 150]] },
+  { name: 'X-burger (cheeseburger) com pão (estimativa)', kcal: 270, protein: 14, carbs: 24, fat: 13, fiber: 1, origin: 'estimate', code: 'estimate-br2-x-burger-cheeseburger-com-pao', units: [['unidade', 180]] },
+  { name: 'Cachorro-quente completo (estimativa)', kcal: 250, protein: 10, carbs: 22, fat: 13, fiber: 1, origin: 'estimate', code: 'estimate-br2-cachorro-quente-completo', units: [['unidade', 180]] },
+  { name: 'Empada de frango (estimativa)', kcal: 360, protein: 8, carbs: 32, fat: 22, fiber: 1, origin: 'estimate', code: 'estimate-br2-empada-de-frango', units: [['unidade', 60]] },
+  { name: 'Kibe frito (estimativa)', kcal: 250, protein: 12, carbs: 20, fat: 13, fiber: 2, origin: 'estimate', code: 'estimate-br2-kibe-frito', units: [['unidade', 80]] },
+  { name: 'Enroladinho de salsicha assado (estimativa)', kcal: 300, protein: 9, carbs: 30, fat: 16, fiber: 1, origin: 'estimate', code: 'estimate-br2-enroladinho-de-salsicha-assado', units: [['unidade', 60]] },
+  { name: 'Risole de carne frito (estimativa)', kcal: 280, protein: 9, carbs: 28, fat: 15, fiber: 1, origin: 'estimate', code: 'estimate-br2-risole-de-carne-frito', units: [['unidade', 50]] },
+  { name: 'Misto quente (estimativa)', kcal: 290, protein: 13, carbs: 28, fat: 14, fiber: 1.5, origin: 'estimate', code: 'estimate-br2-misto-quente', units: [['unidade', 130]] },
+  { name: 'Pão na chapa com manteiga (estimativa)', kcal: 330, protein: 8, carbs: 50, fat: 11, fiber: 2, origin: 'estimate', code: 'estimate-br2-pao-na-chapa-com-manteiga', units: [['unidade', 50]] },
+  { name: 'Sanduíche natural de frango (estimativa)', kcal: 190, protein: 12, carbs: 24, fat: 5, fiber: 2, origin: 'estimate', code: 'estimate-br2-sanduiche-natural-de-frango', units: [['unidade', 160]] },
+  { name: 'Batata frita de lanchonete (estimativa)', kcal: 310, protein: 3.5, carbs: 41, fat: 15, fiber: 3.5, origin: 'estimate', code: 'estimate-br2-batata-frita-de-lanchonete', units: [['porção pequena', 75], ['porção média', 110]] },
+  { name: 'Pão com ovo (estimativa)', kcal: 260, protein: 11, carbs: 30, fat: 10, fiber: 1.5, origin: 'estimate', code: 'estimate-br2-pao-com-ovo', units: [['unidade', 130]] },
+  { name: 'Pão francês com manteiga (estimativa)', kcal: 320, protein: 8, carbs: 50, fat: 10, fiber: 2, origin: 'estimate', code: 'estimate-br2-pao-frances-com-manteiga', units: [['unidade', 60]] },
+  { name: 'Maionese de batata e legumes (salada de maionese) (estimativa)', kcal: 160, protein: 2, carbs: 12, fat: 12, fiber: 1.5, origin: 'estimate', code: 'estimate-br2-maionese-de-batata-e-legumes-salada-de-maionese', units: [['colher de servir', 50]] },
+  { name: 'Strogonoff de frango (estimativa)', kcal: 150, protein: 12, carbs: 5, fat: 9, fiber: 0.5, origin: 'estimate', code: 'estimate-br2-strogonoff-de-frango', units: [['porção', 150]] },
+  { name: 'Arroz à grega (estimativa)', kcal: 140, protein: 3, carbs: 24, fat: 3, fiber: 1.5, origin: 'estimate', code: 'estimate-br2-arroz-a-grega', units: [['porção', 120]] },
+  { name: 'Farofa de manteiga (estimativa)', kcal: 420, protein: 3, carbs: 65, fat: 16, fiber: 4, origin: 'estimate', code: 'estimate-br2-farofa-de-manteiga', units: [['colher de sopa', 15]] },
+  { name: 'Escondidinho de carne com purê (estimativa)', kcal: 150, protein: 9, carbs: 14, fat: 6, fiber: 1, origin: 'estimate', code: 'estimate-br2-escondidinho-de-carne-com-pure', units: [['porção', 200]] },
+  { name: 'Lasanha à bolonhesa (estimativa)', kcal: 160, protein: 9, carbs: 15, fat: 7, fiber: 1, origin: 'estimate', code: 'estimate-br2-lasanha-a-bolonhesa', units: [['pedaço', 200]] },
+  { name: 'Macarrão à bolonhesa (estimativa)', kcal: 140, protein: 7, carbs: 20, fat: 3.5, fiber: 1.5, origin: 'estimate', code: 'estimate-br2-macarrao-a-bolonhesa', units: [['prato', 250]] },
+  { name: 'Nuggets de frango (estimativa)', kcal: 270, protein: 15, carbs: 17, fat: 16, fiber: 1, origin: 'estimate', code: 'estimate-br2-nuggets-de-frango', units: [['unidade', 20], ['porção (6 unidades)', 120]] },
+  { name: 'Panqueca de carne (estimativa)', kcal: 190, protein: 9, carbs: 20, fat: 8, fiber: 1, origin: 'estimate', code: 'estimate-br2-panqueca-de-carne', units: [['unidade', 100]] },
+  { name: 'Pudim de leite (estimativa)', kcal: 170, protein: 4.5, carbs: 27, fat: 5, fiber: 0, origin: 'estimate', code: 'estimate-br2-pudim-de-leite', units: [['fatia', 120]] },
+  { name: 'Mousse de maracujá (estimativa)', kcal: 190, protein: 3, carbs: 25, fat: 9, fiber: 0.5, origin: 'estimate', code: 'estimate-br2-mousse-de-maracuja', units: [['porção', 100]] },
+  { name: 'Beijinho de coco (estimativa)', kcal: 400, protein: 3, carbs: 60, fat: 17, fiber: 2, origin: 'estimate', code: 'estimate-br2-beijinho-de-coco', units: [['unidade', 20]] },
+  { name: 'Paçoca de amendoim (estimativa)', kcal: 520, protein: 17, carbs: 53, fat: 27, fiber: 5, origin: 'estimate', code: 'estimate-br2-pacoca-de-amendoim', units: [['unidade', 20]] },
+  { name: 'Doce de leite (estimativa)', kcal: 320, protein: 6, carbs: 55, fat: 8, fiber: 0, origin: 'estimate', code: 'estimate-br2-doce-de-leite', units: [['colher de sopa', 20]] },
+  { name: 'Sorvete de creme (estimativa)', kcal: 210, protein: 3.5, carbs: 24, fat: 11, fiber: 0.5, origin: 'estimate', code: 'estimate-br2-sorvete-de-creme', units: [['bola', 60]] },
+  { name: 'Barra de cereal (estimativa)', kcal: 390, protein: 5, carbs: 70, fat: 10, fiber: 4, origin: 'estimate', code: 'estimate-br2-barra-de-cereal', units: [['unidade', 25]] },
+  { name: 'Chocolate ao leite em barra (estimativa)', kcal: 540, protein: 7, carbs: 58, fat: 30, fiber: 2, origin: 'estimate', code: 'estimate-br2-chocolate-ao-leite-em-barra', units: [['quadrado', 5], ['barra pequena', 25]] },
+  { name: 'Biscoito recheado (estimativa)', kcal: 480, protein: 6, carbs: 70, fat: 20, fiber: 2, origin: 'estimate', code: 'estimate-br2-biscoito-recheado', units: [['unidade', 15]] },
+  { name: 'Biscoito cream cracker (estimativa)', kcal: 430, protein: 10, carbs: 68, fat: 13, fiber: 2.5, origin: 'estimate', code: 'estimate-br2-biscoito-cream-cracker', units: [['unidade', 6]] },
+  { name: 'Bolo de chocolate simples (estimativa)', kcal: 370, protein: 5, carbs: 55, fat: 15, fiber: 2, origin: 'estimate', code: 'estimate-br2-bolo-de-chocolate-simples', units: [['fatia média', 60]] },
+  { name: 'Refrigerante de cola (estimativa)', kcal: 42, protein: 0, carbs: 10.6, fat: 0, fiber: 0, basis: '100ml', origin: 'estimate', code: 'estimate-br2-refrigerante-de-cola', units: [['lata', 350], ['copo', 200]] },
+  { name: 'Refrigerante de guaraná (estimativa)', kcal: 38, protein: 0, carbs: 9.5, fat: 0, fiber: 0, basis: '100ml', origin: 'estimate', code: 'estimate-br2-refrigerante-de-guarana', units: [['lata', 350], ['copo', 200]] },
+  { name: 'Suco de laranja natural (estimativa)', kcal: 45, protein: 0.7, carbs: 10, fat: 0.2, fiber: 0.2, basis: '100ml', origin: 'estimate', code: 'estimate-br2-suco-de-laranja-natural', units: [['copo', 200]] },
+  { name: 'Café com açúcar (estimativa)', kcal: 30, protein: 0.1, carbs: 7.5, fat: 0, fiber: 0, basis: '100ml', origin: 'estimate', code: 'estimate-br2-cafe-com-acucar', units: [['xícara pequena', 50], ['xícara', 150]] },
+  { name: 'Achocolatado pronto (leite com chocolate) (estimativa)', kcal: 70, protein: 3, carbs: 11, fat: 1.8, fiber: 0.5, basis: '100ml', origin: 'estimate', code: 'estimate-br2-achocolatado-pronto-leite-com-chocolate', units: [['copo', 200]] },
+  { name: 'Vitamina de banana com leite (estimativa)', kcal: 80, protein: 3, carbs: 14, fat: 1.5, fiber: 0.8, basis: '100ml', origin: 'estimate', code: 'estimate-br2-vitamina-de-banana-com-leite', units: [['copo', 300]] },
+  { name: 'Água de coco (estimativa)', kcal: 22, protein: 0, carbs: 5.3, fat: 0, fiber: 0, basis: '100ml', origin: 'estimate', code: 'estimate-br2-agua-de-coco', units: [['copo', 200]] },
+  { name: 'Caldo de cana (estimativa)', kcal: 66, protein: 0, carbs: 17, fat: 0, fiber: 0, basis: '100ml', origin: 'estimate', code: 'estimate-br2-caldo-de-cana', units: [['copo', 300]] },
+];
+
 export const FOODS_BR: FoodPer100[] = [
   ...BRAZILIAN_ESTIMATES,
   ...BRAZILIAN_ESTIMATES_MORE,
+  ...BRAZILIAN_ESTIMATES_COMMON,
   ...[...TACO, ...EXTRA].map(([id, name, kcal, protein, carbs, fat, fiber]) => ({
   name,
   kcal,

@@ -1,31 +1,40 @@
-# Mantém o projeto Supabase ativo com credenciais configuradas no GitHub.
-# Chaves são fornecidas por secrets; nenhuma fica gravada no workflow.
+# Mantém o projeto Supabase ativo com uma verificação pública de saúde.
+# Usa apenas a chave publicável; não consulta tabelas de negócio nem depende de RLS de usuário.
 name: keepalive
 on:
   schedule:
     - cron: '17 9 * * 1,4'
   workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: supabase-keepalive
+  cancel-in-progress: true
 jobs:
   ping:
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
-      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
     steps:
       - name: Validar configuração do ping
         shell: bash
         run: |
-          if [[ -z "$SUPABASE_URL" || -z "$SUPABASE_PUBLISHABLE_KEY" || -z "$SUPABASE_ANON_KEY" ]]; then
-            echo "::error::Configure os secrets SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY e SUPABASE_ANON_KEY no repositório antes de ativar o keepalive."
+          if [[ -z "$SUPABASE_URL" || -z "$SUPABASE_PUBLISHABLE_KEY" ]]; then
+            echo "::error::Configure os secrets SUPABASE_URL e SUPABASE_PUBLISHABLE_KEY no repositório."
             exit 1
           fi
-      - name: Consultar endpoint REST com autenticação pública
+          if [[ ! "$SUPABASE_URL" =~ ^https://[a-zA-Z0-9.-]+$ ]]; then
+            echo "::error::SUPABASE_URL deve ser a URL HTTPS do projeto Supabase."
+            exit 1
+          fi
+      - name: Verificar endpoint de saúde do Auth
         shell: bash
         run: |
           curl --fail --silent --show-error --retry 2 --retry-delay 3 \
-            "$SUPABASE_URL/rest/v1/profiles?select=user_id&limit=1" \
+            --max-time 15 \
+            "$SUPABASE_URL/auth/v1/health" \
             -H "apikey: $SUPABASE_PUBLISHABLE_KEY" \
-            -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
             -H "Accept: application/json" \
             --output /dev/null

@@ -40,7 +40,7 @@
 
 - Repositório público: `csilvadesweb/sistcs-leve`.
 - Branch padrão: `main`.
-- A proteção de `main` está ativa: a tentativa de merge da PR #130 foi rejeitada pelo GitHub com HTTP 405 porque é exigida ao menos uma revisão aprovadora de alguém com permissão de escrita. Não fazer bypass.
+- A proteção de `main` está ativa: as tentativas de merge das PRs #129 e #130 foram rejeitadas pelo GitHub com HTTP 405 porque é exigida ao menos uma revisão aprovadora de alguém com permissão de escrita. Não fazer bypass.
 - A `main` ainda não contém `SECURITY.md`; o arquivo está sendo adicionado na PR #129 e só passa a valer após merge.
 - CI, E2E, Android e backup estão versionados.
 - O workflow usa `npm install`, não `npm ci`; no estado clonado não havia `package-lock.json` versionado. O `npm install` usado na auditoria criou um lockfile local não versionado.
@@ -418,13 +418,13 @@ O PR permanece **bloqueado por revisão humana obrigatória**. O preview Cloudfl
 - A Edge Function publicada `delete-account` ainda contém uma expressão regular de extração do Bearer diferente do arquivo revisado: o código publicado contém duas barras invertidas antes de `s`, que casa o texto literal `\\s` em vez de espaços. Não foi feito teste destrutivo com conta real. A correção no PR extrai um Bearer estrito em módulo testado, remove recursivamente arquivos e pastas dos dois buckets e propaga erros de Storage. **Não considerar a exclusão de conta corrigida em produção até publicar a versão integrada e testar com conta descartável.**
 - O Worker aceitava um corpo grande quando `Content-Length` estava ausente, pois a validação principal ocorria depois de ler o JSON. O PR passou a ler o corpo por streaming com limite de bytes e inclui teste de regressão sem `Content-Length`.
 - O catálogo atual contém **1.137 receitas**, com IDs e nomes normalizados únicos. Isso deixa 263 para a meta de 1.400 e 1.863 para alcançar o volume publicamente anunciado pelo YAZIO (3.000+). A contagem não comprova qualidade laboratorial: os valores das receitas próprias permanecem estimativas editoriais.
-- A busca local já contempla strogonoff de carne e o alias castanha-do-Pará/castanha-do-Brasil. A ameixa seca não estava disponível no catálogo estático; a correção com referência USDA FoodData Central (SR Legacy, FDC 168162, CC0) e medidas caseiras está na PR [#130](https://github.com/csilvadesweb/sistcs-leve/pull/130), ainda sem merge.
+- A busca local já contempla strogonoff de carne e o alias castanha-do-Pará/castanha-do-Brasil. A ameixa seca foi adicionada à branch da PR #129 com referência USDA FoodData Central (SR Legacy, FDC 168162, CC0), medidas caseiras e teste de regressão. A PR #130 original foi fechada como duplicada após a consolidação.
 - `loadAll()` ainda carrega sem paginação várias tabelas de histórico e limita outras a 200/500 registros. O planejador semanal e favoritos de receitas usam `localStorage`, portanto não sincronizam entre dispositivos. Essas melhorias dependem de um plano separado; não criar migrations até reconciliar o histórico do banco.
 - O advisor do Supabase ainda indica a proteção contra senhas vazadas desativada. A integração disponível não permite alterar essa configuração de Auth com segurança nesta execução.
 - A tentativa de merge da PR #129 foi recusada pelo GitHub porque é obrigatória pelo menos uma aprovação de revisor com acesso de escrita. Nenhum bypass foi realizado; o código e o deploy de produção continuam pendentes dessa revisão.
 
 ### Estado das correções
 
-- PR #129: hardening de CI/dependências, exclusão de conta, limite de corpo do Worker e keepalive; integrar somente com todos os checks verdes e aprovação humana.
-- PR #130: entrada de ameixa seca com origem/licença e teste de regressão; integrar somente com todos os checks verdes e aprovação humana.
+- PR #129: concentra hardening de CI/dependências, exclusão de conta, limite de corpo do Worker, keepalive corrigido e ameixa seca licenciada com teste de regressão. Os checks de CI, typecheck, testes unitários, build, E2E e preview do Worker passaram no commit final; o merge continua bloqueado por aprovação humana obrigatória.
+- PRs #124–#128 foram fechadas por falhas de CI ou por terem sido supersedidas; a PR #130 foi consolidada na #129. A #129 é a única PR aberta no momento desta auditoria.
 - Não foi executado `db push`, `db reset` ou migration de produção. O histórico local/remoto continua divergente e precisa de baseline reproduzível.

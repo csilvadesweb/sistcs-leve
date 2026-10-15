@@ -595,7 +595,7 @@ function catalogNumber(value: number | string | null): number | null {
  */
 export async function searchFoodCatalog(query: string, limit = 20): Promise<FoodPer100[]> {
   const raw = query.trim().replace(/[^\\p{L}\\p{N}\\s'-]/gu, ' ').replace(/\\s+/g, ' ').slice(0, 100).trim();
-  const terms = normalize(raw).split(/\\s+/).filter((term) => term.length >= 2);
+  const terms = normalize(raw).split(/\\s+/).filter((term) => term.length >= 2 && !['de', 'da', 'do', 'das', 'dos', 'e', 'com', 'em'].includes(term));
   if (!raw || !terms.length) return [];
 
   const safeLimit = Math.max(1, Math.min(30, Math.floor(limit)));

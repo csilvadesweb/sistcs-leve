@@ -657,7 +657,7 @@ export function FoodTracking() {
                     <div className="ft-record-actions">
                       <Button variant="ghost" size="sm" onClick={() => copyFoodEntry(entry)} disabled={busy}><Copy aria-hidden="true" /> Copiar para o dia</Button>
                       <Button variant="ghost" size="sm" onClick={() => toggleFavorite(entry)} disabled={busy} aria-pressed={favoriteBySource.has(entry.id)}><Heart aria-hidden="true" /> {favoriteBySource.has(entry.id) ? 'Salvo' : 'Favoritar'}</Button>
-                      <Button variant="ghost" size="sm" onClick={() => openEditFood(entry)}><Pencil aria-hidden="true" /> Editar</Button>
+                      <Button type="button" variant="ghost" size="sm" onClick={() => openEditFood(entry)} disabled={busy} aria-label={`Editar ${entry.name}`}><Pencil aria-hidden="true" /> Editar</Button>
                       <Button variant="ghost" size="sm" onClick={() => removeFood(entry)} disabled={busy}><Trash2 aria-hidden="true" /> Excluir</Button>
                     </div>
                   </article>

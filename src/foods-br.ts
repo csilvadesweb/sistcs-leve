@@ -4,10 +4,13 @@
  */
 import { TACO } from './foods-taco';
 import { ESTIMATES_BATCH4 } from './foods-batch4';
+import { USDA_SR_LEGACY_BATCH5 } from './foods-usda-batch5';
 
 export interface FoodPer100 {
   name: string;
   brand?: string;
+  /** Nome original em outro idioma usado para busca, sem alterar o nome de exibição. */
+  aliases?: string[];
   kcal: number;
   protein: number;
   carbs: number;
@@ -430,8 +433,9 @@ export const FOODS_BR: FoodPer100[] = [
     sourceUrl: 'https://www.fatsecret.com.br/calorias-nutri%C3%A7%C3%A3o/danone/mais-prote%C3%ADnas-morango/1-unidade',
     units: [['pote', 160]],
   },
-  // Lote 4 por último: não altera a ordem dos resultados já existentes.
+  // Lotes adicionais no fim: preserva a prioridade dos resultados já existentes.
   ...ESTIMATES_BATCH4,
+  ...USDA_SR_LEGACY_BATCH5,
 ];
 
 const RANK = new Map<string, number>(
@@ -543,7 +547,7 @@ export function searchLocal(query: string, limit = 8): FoodPer100[] {
     .flatMap((t) => (ALIASES[t] ?? t).split(' '));
   if (!terms.length) return [];
   const hits = FOODS_BR.filter((f) => {
-    const words = stemAll(f.name).split(' ');
+    const words = stemAll([f.name, ...(f.aliases ?? [])].join(' ')).split(' ');
     return terms.every((t, i) =>
       words.some((w) => w === t || (w.startsWith(t) && ((i === terms.length - 1 && t.length >= 3) || w.length - t.length <= 2))),
     );
@@ -553,7 +557,7 @@ export function searchLocal(query: string, limit = 8): FoodPer100[] {
     const words = f.name.split(',').length;
     const raw = /\b(cru|crua|crus|cruas)\b/i.test(f.name) ? 3 : 0;
     // Lote 4 (estimativas amplas) só preenche as vagas restantes: nunca passa à frente de TACO/itens anteriores.
-    const lateBatch = f.code?.startsWith('estimate-br4-') ? 100 : 0;
+    const lateBatch = f.code?.startsWith('estimate-br4-') ? 100 : f.code?.startsWith('usda-sr28-') ? 200 : 0;
     return rank < 0 ? rank : words + raw + lateBatch + rank / 10000;
   };
   return hits.sort((a, b) => score(a) - score(b)).slice(0, limit).map((food) =>

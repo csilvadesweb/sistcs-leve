@@ -64,13 +64,9 @@ async function readJsonBody(request: Request): Promise<JsonBodyResult> {
 }
 
 async function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit = {}): Promise<Response> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort("external_request_timeout"), EXTERNAL_TIMEOUT_MS);
-  try {
-    return await fetch(input, { ...init, signal: controller.signal });
-  } finally {
-    clearTimeout(timeout);
-  }
+  // Keep the deadline active while callers consume the response body, not just until headers arrive.
+  const signal = AbortSignal.timeout(EXTERNAL_TIMEOUT_MS);
+  return fetch(input, { ...init, signal });
 }
 
 function withCors(response: Response) {

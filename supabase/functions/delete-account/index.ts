@@ -1,6 +1,7 @@
 // Fonte da Edge Function `delete-account`.
 // Valida o token do usuário, apaga todos os objetos privados e remove a conta.
 import { createClient } from 'npm:@supabase/supabase-js@2';
+import { extractBearerToken } from './token.ts';
 
 const ALLOWED_ORIGINS = new Set(['https://leve.sistcs.com', 'http://localhost:5173']);
 const ALLOWED_HEADERS = 'authorization, x-client-info, apikey, content-type';
@@ -27,17 +28,39 @@ const json = (req: Request, body: unknown, status = 200) =>
 async function removeAllUserObjects(admin: ReturnType<typeof createClient>, bucket: string, userId: string) {
   const storage = admin.storage.from(bucket);
   const pageSize = 100;
-  for (let page = 0; page < 100; page += 1) {
-    const { data: files, error: listError } = await storage.list(userId, { limit: pageSize, offset: 0 });
-    if (listError) throw listError;
-    const names = (files ?? [])
-      .filter((file) => Boolean(file.id) && Boolean(file.name))
-      .map((file) => `${userId}/${file.name}`);
-    if (!names.length) return;
-    const { error: removeError } = await storage.remove(names);
-    if (removeError) throw removeError;
+  const maxBatches = 100;
+
+  async function clearFolder(prefix: string, depth = 0): Promise<void> {
+    if (depth > 20) throw new Error('storage_cleanup_depth_limit');
+    for (let batch = 0; batch < maxBatches; batch += 1) {
+      // Re-read from offset zero after deletion so the next batch is not skipped.
+      const { data: entries, error: listError } = await storage.list(prefix, {
+        limit: pageSize,
+        offset: 0,
+        sortBy: { column: 'name', order: 'asc' },
+      });
+      if (listError) throw listError;
+      if (!entries?.length) return;
+
+      const files = entries
+        .filter((entry) => Boolean(entry.id) && Boolean(entry.name))
+        .map((entry) => `${prefix}/${entry.name}`);
+      const folders = entries.filter((entry) => !entry.id && Boolean(entry.name));
+
+      for (const folder of folders) {
+        await clearFolder(`${prefix}/${folder.name}`, depth + 1);
+      }
+      if (files.length) {
+        const { error: removeError } = await storage.remove(files);
+        if (removeError) throw removeError;
+      } else if (!folders.length) {
+        return;
+      }
+    }
+    throw new Error('storage_cleanup_limit');
   }
-  throw new Error('storage_cleanup_limit');
+
+  await clearFolder(userId);
 }
 
 Deno.serve(async (req) => {
@@ -46,7 +69,7 @@ Deno.serve(async (req) => {
 
   const url = Deno.env.get('SUPABASE_URL');
   const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-  const token = (req.headers.get('Authorization') ?? '').replace(/^Bearer\s+/i, '').trim();
+  const token = extractBearerToken(req.headers.get('Authorization'));
   if (!url || !serviceRoleKey || !token) return json(req, { error: 'unauthorized' }, 401);
 
   const admin = createClient(url, serviceRoleKey, {
@@ -61,7 +84,7 @@ Deno.serve(async (req) => {
     }
   } catch (error) {
     console.error('account deletion storage cleanup failed', {
-      userId: auth.user.id,
+      bucket: 'avatars or progress-photos',
       message: error instanceof Error ? error.message : 'unknown_error',
     });
     return json(req, { error: 'delete_failed' }, 500);
@@ -69,7 +92,7 @@ Deno.serve(async (req) => {
 
   const { error } = await admin.auth.admin.deleteUser(auth.user.id);
   if (error) {
-    console.error('account deletion failed', { userId: auth.user.id, message: error.message });
+    console.error('account deletion failed', { message: error.message });
     return json(req, { error: 'delete_failed' }, 500);
   }
   return json(req, { ok: true });

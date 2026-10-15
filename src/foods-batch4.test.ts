@@ -65,12 +65,18 @@ describe('estimativas (lote 4)', () => {
     }
   });
 
-  it('só preenche vagas depois dos itens anteriores do catálogo', () => {
+  it('lotes adicionais só preenchem vagas depois dos itens anteriores do catálogo', () => {
     for (const query of ['arroz', 'pão', 'queijo', 'bolo', 'suco']) {
       const results = searchLocal(query, 50);
       const firstBatch4 = results.findIndex((food) => food.code?.startsWith('estimate-br4-'));
+      const firstUsdaBatch5 = results.findIndex((food) => food.code?.startsWith('usda-sr28-'));
       if (firstBatch4 >= 0) {
-        expect(results.slice(firstBatch4).every((food) => food.code?.startsWith('estimate-br4-')), query).toBe(true);
+        expect(results.slice(firstBatch4).every((food) =>
+          food.code?.startsWith('estimate-br4-') || food.code?.startsWith('usda-sr28-'),
+        ), query).toBe(true);
+      }
+      if (firstUsdaBatch5 >= 0) {
+        expect(results.slice(firstUsdaBatch5).every((food) => food.code?.startsWith('usda-sr28-')), query).toBe(true);
       }
     }
   });

@@ -30,6 +30,39 @@ function requestBodyTooLarge(request: Request): boolean {
   return Number.isFinite(contentLength) && contentLength > MAX_REQUEST_BYTES;
 }
 
+type JsonBodyResult = { ok: true; value: unknown } | { ok: false; reason: "too_large" | "invalid" };
+
+/** Reads JSON with a hard streaming limit, including requests without Content-Length. */
+async function readJsonBody(request: Request): Promise<JsonBodyResult> {
+  if (!request.body) return { ok: false, reason: "invalid" };
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > MAX_REQUEST_BYTES) {
+        try { await reader.cancel(); } catch { /* stream already closed */ }
+        return { ok: false, reason: "too_large" };
+      }
+      chunks.push(value);
+    }
+    const bytes = new Uint8Array(size);
+    let offset = 0;
+    for (const chunk of chunks) {
+      bytes.set(chunk, offset);
+      offset += chunk.byteLength;
+    }
+    return { ok: true, value: JSON.parse(new TextDecoder().decode(bytes)) as unknown };
+  } catch {
+    return { ok: false, reason: "invalid" };
+  } finally {
+    try { reader.releaseLock(); } catch { /* stream may already be released */ }
+  }
+}
+
 async function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit = {}): Promise<Response> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort("external_request_timeout"), EXTERNAL_TIMEOUT_MS);
@@ -88,12 +121,12 @@ async function handleLabelScan(request: Request, env: Env): Promise<Response> {
   if (!(await authenticatedUser(request, env))) return withCors(json({ error: "Entre na sua conta para ler um rótulo." }, 401));
   if (!env.GEMINI_API_KEY) return withCors(json({ error: "A leitura por IA ainda não está configurada." }, 503));
 
-  let payload: { mimeType?: unknown; imageBase64?: unknown };
-  try {
-    payload = await request.json() as typeof payload;
-  } catch {
-    return withCors(json({ error: "Envie uma imagem válida." }, 400));
+  const bodyResult = await readJsonBody(request);
+  if (!bodyResult.ok) {
+    const tooLarge = bodyResult.reason === "too_large";
+    return withCors(json({ error: tooLarge ? "A solicitação é muito grande." : "Envie uma imagem válida." }, tooLarge ? 413 : 400));
   }
+  const payload = bodyResult.value as { mimeType?: unknown; imageBase64?: unknown };
   const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
   if (typeof payload.mimeType !== "string" || !allowedTypes.has(payload.mimeType)) {
     return withCors(json({ error: "Use uma imagem JPG, PNG ou WebP." }, 400));
@@ -181,12 +214,12 @@ async function handleMealPhoto(request: Request, env: Env): Promise<Response> {
   if (!(await authenticatedUser(request, env))) return withCors(json({ error: "Entre na sua conta para analisar a foto do prato." }, 401));
   if (!env.GEMINI_API_KEY) return withCors(json({ error: "A análise de foto ainda não está configurada." }, 503));
 
-  let payload: { mimeType?: unknown; imageBase64?: unknown };
-  try {
-    payload = await request.json() as typeof payload;
-  } catch {
-    return withCors(json({ error: "Envie uma imagem válida." }, 400));
+  const bodyResult = await readJsonBody(request);
+  if (!bodyResult.ok) {
+    const tooLarge = bodyResult.reason === "too_large";
+    return withCors(json({ error: tooLarge ? "A solicitação é muito grande." : "Envie uma imagem válida." }, tooLarge ? 413 : 400));
   }
+  const payload = bodyResult.value as { mimeType?: unknown; imageBase64?: unknown };
   const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
   if (typeof payload.mimeType !== "string" || !allowedTypes.has(payload.mimeType)) {
     return withCors(json({ error: "Use uma imagem JPG, PNG ou WebP." }, 400));
@@ -269,12 +302,12 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (request.method !== "POST") return withCors(json({ error: "Método não permitido." }, 405));
   if (requestBodyTooLarge(request)) return withCors(json({ error: "A solicitação é muito grande." }, 413));
   if (!(await authenticatedUser(request, env))) return withCors(json({ error: "Entre na sua conta para usar o assistente." }, 401));
-  let payload: { message?: unknown; history?: unknown; diaryContext?: unknown };
-  try {
-    payload = await request.json() as typeof payload;
-  } catch {
-    return withCors(json({ error: "Envie uma mensagem válida." }, 400));
+  const bodyResult = await readJsonBody(request);
+  if (!bodyResult.ok) {
+    const tooLarge = bodyResult.reason === "too_large";
+    return withCors(json({ error: tooLarge ? "A solicitação é muito grande." : "Envie uma mensagem válida." }, tooLarge ? 413 : 400));
   }
+  const payload = bodyResult.value as { message?: unknown; history?: unknown; diaryContext?: unknown };
   if (typeof payload.message !== "string" || !payload.message.trim()) {
     return withCors(json({ error: "Escreva uma pergunta para continuar." }, 400));
   }

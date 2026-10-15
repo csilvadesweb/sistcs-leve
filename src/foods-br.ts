@@ -376,6 +376,20 @@ export const FOODS_BR: FoodPer100[] = [
   units: UNITS[id],
   })),
   {
+    // Referência USDA FoodData Central SR Legacy; valores por 100 g de ameixa seca não cozida.
+    name: 'Ameixa seca, desidratada (referência USDA)',
+    kcal: 240,
+    protein: 2.18,
+    carbs: 63.88,
+    fat: 0.38,
+    fiber: 7.1,
+    origin: 'usda',
+    code: 'usda-sr-legacy-prunes-uncooked',
+    sourceUrl: 'https://fdc.nal.usda.gov/food-details/168162/nutrients',
+    sourceLicense: 'CC0 1.0',
+    units: [['unidade média', 9.5], ['porção (5 unidades)', 47.5]],
+  },
+  {
   // Estimativa genérica de receita caseira; não é um valor oficial da TACO nem substitui rótulo/receita específica.
   name: 'Strogonoff de carne bovina (estimativa caseira)',
   kcal: 170,

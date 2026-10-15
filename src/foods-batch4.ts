@@ -334,7 +334,6 @@ export const ESTIMATES_BATCH4: FoodPer100[] = [
   { name: 'Carne moída com legumes (estimativa)', kcal: 152, protein: 16.0, carbs: 4.0, fat: 8.0, fiber: 1.5, origin: 'estimate', code: 'estimate-br4-carne-moida-com-legumes', units: [['porção', 150]] },
   { name: 'Hambúrguer de carne grelhado (estimativa)', kcal: 210, protein: 20.0, carbs: 1.0, fat: 14.0, fiber: 0.0, origin: 'estimate', code: 'estimate-br4-hamburguer-de-carne-grelhado', units: [['unidade', 90]] },
   { name: 'Almôndega de frango (estimativa)', kcal: 164, protein: 17.0, carbs: 6.0, fat: 8.0, fiber: 0.5, origin: 'estimate', code: 'estimate-br4-almondega-de-frango', units: [['unidade', 30]] },
-  { name: 'Strogonoff de carne (estimativa)', kcal: 154, protein: 11.0, carbs: 5.0, fat: 10.0, fiber: 0.5, origin: 'estimate', code: 'estimate-br4-strogonoff-de-carne', units: [['porção', 180]] },
   { name: 'Bife à rolê (estimativa)', kcal: 190, protein: 22.0, carbs: 3.0, fat: 10.0, fiber: 1.0, origin: 'estimate', code: 'estimate-br4-bife-a-role', units: [['unidade', 120]] },
   { name: 'Costelinha de porco barbecue (estimativa)', kcal: 270, protein: 19.0, carbs: 8.0, fat: 18.0, fiber: 0.0, origin: 'estimate', code: 'estimate-br4-costelinha-de-porco-barbecue', units: [['porção', 120]] },
   { name: 'Lombo de porco assado (estimativa)', kcal: 207, protein: 27.0, carbs: 0.0, fat: 11.0, fiber: 0.0, origin: 'estimate', code: 'estimate-br4-lombo-de-porco-assado', units: [['fatia', 100]] },

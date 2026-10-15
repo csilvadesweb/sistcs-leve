@@ -594,14 +594,14 @@ function catalogNumber(value: number | string | null): number | null {
  * a função não tenta contornar a política nem retorna linhas sem nutrientes essenciais.
  */
 export async function searchFoodCatalog(query: string, limit = 20): Promise<FoodPer100[]> {
-  const raw = query.trim().replace(/[^\\p{L}\\p{N}\\s'-]/gu, ' ').replace(/\\s+/g, ' ').slice(0, 100).trim();
-  const terms = normalize(raw).split(/\\s+/).filter((term) => term.length >= 2 && !['de', 'da', 'do', 'das', 'dos', 'e', 'com', 'em'].includes(term));
+  const raw = query.trim().replace(/[^\p{L}\p{N}\s'-]/gu, ' ').replace(/\s+/g, ' ').slice(0, 100).trim();
+  const terms = normalize(raw).split(/\s+/).filter((term) => term.length >= 2 && !['de', 'da', 'do', 'das', 'dos', 'e', 'com', 'em'].includes(term));
   if (!raw || !terms.length) return [];
 
   const safeLimit = Math.max(1, Math.min(30, Math.floor(limit)));
-  const searchableTerms = [...new Set([raw, ...raw.split(/\\s+/).filter((term) => term.length >= 3)])];
+  const searchableTerms = [...new Set([raw, ...raw.split(/\s+/).filter((term) => term.length >= 3)])];
   const batches = await Promise.all(searchableTerms.slice(0, 4).map(async (term) => {
-    const safeTerm = term.replace(/[%_(),]/g, ' ').replace(/\\s+/g, ' ').trim();
+    const safeTerm = term.replace(/[%_(),]/g, ' ').replace(/\s+/g, ' ').trim();
     if (!safeTerm) return [] as FoodCatalogRow[];
     const pattern = `%${safeTerm}%`;
     const { data, error } = await supabase
@@ -618,8 +618,8 @@ export async function searchFoodCatalog(query: string, limit = 20): Promise<Food
   const normalizedTerms = terms.map((term) => term.replace(/[^a-z0-9]/g, '')).filter(Boolean);
   return [...unique.values()]
     .filter((row) => {
-      const searchable = normalize(`${row.name_pt ?? ''} ${row.name_en ?? ''}`).replace(/[^a-z0-9\\s]/g, ' ');
-      const words = searchable.split(/\\s+/).filter(Boolean);
+      const searchable = normalize(`${row.name_pt ?? ''} ${row.name_en ?? ''}`).replace(/[^a-z0-9\s]/g, ' ');
+      const words = searchable.split(/\s+/).filter(Boolean);
       return normalizedTerms.every((term) => words.some((word) => word === term || word.startsWith(term)));
     })
     .map((row): FoodPer100 | null => {

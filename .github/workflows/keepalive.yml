@@ -1,5 +1,5 @@
-# Mantém o projeto Supabase gratuito ativo (projetos free pausam após 7 dias sem uso).
-# A chave abaixo é a chave PÚBLICA (publishable); ela já vai embutida no app e é protegida por RLS.
+# Mantém o projeto Supabase ativo com credenciais configuradas no GitHub.
+# Não manter chaves de API em texto literal no workflow; o ping usa apenas uma chave pública.
 name: keepalive
 on:
   schedule:
@@ -8,8 +8,22 @@ on:
 jobs:
   ping:
     runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
     steps:
-      - run: |
-          curl -fsS "https://yzcmxdbnitturlbozvqu.supabase.co/rest/v1/ai_usage?select=user_id&limit=1" \
-            -H "apikey: sb_publishable_8NA8UB_55isWrQJawod7OQ_tvNKEJNz" \
-            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl6Y214ZGJuaXR0dXJsYm96dnF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2NzkyNDYsImV4cCI6MjEwNzI1NTI0Nn0.yENRsEi28uTLuQ1cT4QX2rtV2qx73WuKUOAgTEp-qWY"
+      - name: Validar configuração do ping
+        shell: bash
+        run: |
+          if [[ -z "$SUPABASE_URL" || -z "$SUPABASE_PUBLISHABLE_KEY" ]]; then
+            echo "::error::Configure os secrets SUPABASE_URL e SUPABASE_PUBLISHABLE_KEY no repositório antes de ativar o keepalive."
+            exit 1
+          fi
+      - name: Consultar endpoint REST com chave pública
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --retry 2 --retry-delay 3 \
+            "$SUPABASE_URL/rest/v1/profiles?select=user_id&limit=1" \
+            -H "apikey: $SUPABASE_PUBLISHABLE_KEY" \
+            -H "Accept: application/json" \
+            --output /dev/null

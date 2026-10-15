@@ -52,6 +52,19 @@ describe('endpoint do assistente Gemini', () => {
     }), env);
     expect(response.status).toBe(413);
   });
+  it('responde 400 para JSON null sem lançar exceção', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(JSON.stringify({ id: 'user-1' }), {
+      status: 200, headers: { 'content-type': 'application/json' },
+    })));
+    const response = await worker.fetch(new Request('https://leve.sistcs.com/api/ai/chat', {
+      method: 'POST',
+      headers: { authorization: 'Bearer test-token', 'content-type': 'application/json' },
+      body: 'null',
+    }), env);
+    expect(response.status).toBe(400);
+    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(1);
+  });
+
   it('limita o corpo em streaming mesmo sem Content-Length', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => new Response(JSON.stringify({ id: 'user-1' }), {
       status: 200, headers: { 'content-type': 'application/json' },
@@ -117,6 +130,14 @@ describe('endpoint de leitura de rótulo nutricional', () => {
     expect(response.status).toBe(401);
   });
 
+  it('responde 400 para JSON null antes de consumir quota', async () => {
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ id: 'user-1' }), { status: 200 }));
+    vi.stubGlobal('fetch', fetchMock);
+    const response = await worker.fetch(labelRequest(null), envWithKey);
+    expect(response.status).toBe(400);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
   it('recusa tipo de imagem não permitido antes de consumir quota', async () => {
     const fetchMock = vi.fn(async () => new Response(JSON.stringify({ id: 'user-1' }), { status: 200 }));
     vi.stubGlobal('fetch', fetchMock);
@@ -165,6 +186,14 @@ describe('endpoint de estimativa por foto do prato', () => {
     method: 'POST',
     headers: { 'content-type': 'application/json', authorization: 'Bearer test-token' },
     body: JSON.stringify(body),
+  });
+
+  it('responde 400 para JSON null antes de consumir quota', async () => {
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ id: 'user-1' }), { status: 200 }));
+    vi.stubGlobal('fetch', fetchMock);
+    const response = await worker.fetch(mealRequest(null), envWithKey);
+    expect(response.status).toBe(400);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   it('recusa tipos de imagem não permitidos', async () => {

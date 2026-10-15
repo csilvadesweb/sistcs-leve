@@ -1,0 +1,7 @@
+# Revisão obrigatória para mudanças de produção, banco, autenticação e dados sensíveis
+/supabase/ @csilvadesweb
+/supabase/functions/ @csilvadesweb
+worker.ts @csilvadesweb
+wrangler.jsonc @csilvadesweb
+.github/ @csilvadesweb
+SECURITY.md @csilvadesweb

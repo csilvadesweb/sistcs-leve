@@ -22,6 +22,23 @@ const corsHeaders = {
   "access-control-allow-headers": "Authorization, Content-Type",
   "vary": "Origin",
 };
+const MAX_REQUEST_BYTES = 6_000_000;
+const EXTERNAL_TIMEOUT_MS = 15_000;
+
+function requestBodyTooLarge(request: Request): boolean {
+  const contentLength = Number(request.headers.get("content-length"));
+  return Number.isFinite(contentLength) && contentLength > MAX_REQUEST_BYTES;
+}
+
+async function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit = {}): Promise<Response> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort("external_request_timeout"), EXTERNAL_TIMEOUT_MS);
+  try {
+    return await fetch(input, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
+  }
+}
 
 function withCors(response: Response) {
   const headers = new Headers(response.headers);
@@ -33,7 +50,7 @@ async function authenticatedUser(request: Request, env: Env): Promise<boolean> {
   const authorization = request.headers.get("authorization") ?? "";
   if (!/^Bearer\s+[^\s]+$/i.test(authorization)) return false;
   try {
-    const response = await fetch(`${env.SUPABASE_URL}/auth/v1/user`, {
+    const response = await fetchWithTimeout(`${env.SUPABASE_URL}/auth/v1/user`, {
       headers: { authorization, apikey: env.SUPABASE_ANON_KEY },
     });
     if (!response.ok) return false;
@@ -47,7 +64,7 @@ async function authenticatedUser(request: Request, env: Env): Promise<boolean> {
 /** Limite diário por conta (30 mensagens), aplicado no banco via RPC com o token do próprio usuário. */
 async function consumeQuota(request: Request, env: Env): Promise<"ok" | "limit" | "error"> {
   try {
-    const response = await fetch(`${env.SUPABASE_URL}/rest/v1/rpc/consume_ai_quota`, {
+    const response = await fetchWithTimeout(`${env.SUPABASE_URL}/rest/v1/rpc/consume_ai_quota`, {
       method: "POST",
       headers: {
         authorization: request.headers.get("authorization") ?? "",
@@ -67,6 +84,7 @@ async function consumeQuota(request: Request, env: Env): Promise<"ok" | "limit" 
 /** Lê uma foto de tabela nutricional sem armazenar a imagem. Os valores retornam para revisão humana. */
 async function handleLabelScan(request: Request, env: Env): Promise<Response> {
   if (request.method !== "POST") return withCors(json({ error: "Método não permitido." }, 405));
+  if (requestBodyTooLarge(request)) return withCors(json({ error: "A solicitação é muito grande." }, 413));
   if (!(await authenticatedUser(request, env))) return withCors(json({ error: "Entre na sua conta para ler um rótulo." }, 401));
   if (!env.GEMINI_API_KEY) return withCors(json({ error: "A leitura por IA ainda não está configurada." }, 503));
 
@@ -100,7 +118,7 @@ async function handleLabelScan(request: Request, env: Env): Promise<Response> {
 
   try {
     const model = (env.GEMINI_MODEL || "gemini-3.5-flash-lite").trim();
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    const response = await fetchWithTimeout(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST",
       headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
       body: JSON.stringify({
@@ -159,6 +177,7 @@ async function handleLabelScan(request: Request, env: Env): Promise<Response> {
 /** Sugere alimentos visíveis em uma foto de prato; toda a saída é estimativa e exige confirmação. */
 async function handleMealPhoto(request: Request, env: Env): Promise<Response> {
   if (request.method !== "POST") return withCors(json({ error: "Método não permitido." }, 405));
+  if (requestBodyTooLarge(request)) return withCors(json({ error: "A solicitação é muito grande." }, 413));
   if (!(await authenticatedUser(request, env))) return withCors(json({ error: "Entre na sua conta para analisar a foto do prato." }, 401));
   if (!env.GEMINI_API_KEY) return withCors(json({ error: "A análise de foto ainda não está configurada." }, 503));
 
@@ -191,7 +210,7 @@ async function handleMealPhoto(request: Request, env: Env): Promise<Response> {
 
   try {
     const model = (env.GEMINI_MODEL || "gemini-3.5-flash-lite").trim();
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    const response = await fetchWithTimeout(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST",
       headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
       body: JSON.stringify({
@@ -248,6 +267,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (url.pathname === "/api/ai/meal-photo") return handleMealPhoto(request, env);
   if (url.pathname !== "/api/ai/chat") return withCors(json({ error: "Rota não encontrada." }, 404));
   if (request.method !== "POST") return withCors(json({ error: "Método não permitido." }, 405));
+  if (requestBodyTooLarge(request)) return withCors(json({ error: "A solicitação é muito grande." }, 413));
   if (!(await authenticatedUser(request, env))) return withCors(json({ error: "Entre na sua conta para usar o assistente." }, 401));
   let payload: { message?: unknown; history?: unknown; diaryContext?: unknown };
   try {
@@ -326,7 +346,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
 
   try {
     const model = (env.GEMINI_MODEL || "gemini-3.5-flash-lite").trim();
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    const response = await fetchWithTimeout(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST",
       headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
       body: JSON.stringify({

@@ -101,19 +101,26 @@ const blankFood = (date: string): FoodForm => ({
 });
 
 function foodToForm(entry: FoodEntry): FoodForm {
-  const n = entry.nutrientsPerPortion;
+  // Older or partially populated records must remain editable instead of
+  // throwing before the editor's open state can render.
+  const n = entry.nutrientsPerPortion ?? {};
+  const safeNumber = (value: unknown, fallback: number) =>
+    typeof value === 'number' && Number.isFinite(value) ? value : fallback;
+  const validMeals: MealType[] = ['breakfast', 'lunch', 'snack', 'dinner', 'other'];
+  const source: NutritionSource =
+    entry.nutritionSource === 'user-reported' ? 'user-reported' : 'user-estimated';
   return {
-    date: entry.date,
-    meal: entry.meal,
-    name: entry.name,
-    portion: entry.portion,
-    quantity: decimalInputText(entry.quantity),
-    calories: decimalInputText(n.calories),
-    proteins: decimalInputText(n.proteins),
-    carbohydrates: decimalInputText(n.carbohydrates),
-    fats: decimalInputText(n.fats),
-    fiber: decimalInputText(n.fiber),
-    nutritionSource: entry.nutritionSource,
+    date: typeof entry.date === 'string' && dateRegex.test(entry.date) ? entry.date : todayInSaoPaulo(),
+    meal: validMeals.includes(entry.meal) ? entry.meal : 'other',
+    name: typeof entry.name === 'string' ? entry.name : '',
+    portion: typeof entry.portion === 'string' ? entry.portion : '',
+    quantity: decimalInputText(safeNumber(entry.quantity, 1)),
+    calories: decimalInputText(safeNumber(n.calories, 0)),
+    proteins: decimalInputText(safeNumber(n.proteins, 0)),
+    carbohydrates: decimalInputText(safeNumber(n.carbohydrates, 0)),
+    fats: decimalInputText(safeNumber(n.fats, 0)),
+    fiber: decimalInputText(safeNumber(n.fiber, 0)),
+    nutritionSource: source,
   };
 }
 

@@ -123,7 +123,7 @@ export async function downloadRecipePdf(recipe: Recipe, servings = 1): Promise<v
     canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error('Não foi possível gerar o PDF da receita.')), 'image/jpeg', 0.94);
   });
   const pdf = makePdf(new Uint8Array(await jpeg.arrayBuffer()));
-  const url = URL.createObjectURL(new Blob([pdf], { type: 'application/pdf' }));
+  const url = URL.createObjectURL(new Blob([pdf.buffer.slice(pdf.byteOffset, pdf.byteOffset + pdf.byteLength) as ArrayBuffer], { type: 'application/pdf' }));
   const anchor = document.createElement('a');
   const safeName = recipe.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'receita';
   anchor.href = url;

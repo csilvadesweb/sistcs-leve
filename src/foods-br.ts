@@ -3,6 +3,7 @@
  * A origem/licença dos dados externos é preservada e os valores devem ser conferidos antes de registrar.
  */
 import { TACO } from './foods-taco';
+import { ESTIMATES_BATCH4 } from './foods-batch4';
 
 export interface FoodPer100 {
   name: string;
@@ -428,7 +429,9 @@ export const FOODS_BR: FoodPer100[] = [
     code: '7891025124573',
     sourceUrl: 'https://www.fatsecret.com.br/calorias-nutri%C3%A7%C3%A3o/danone/mais-prote%C3%ADnas-morango/1-unidade',
     units: [['pote', 160]],
-  }
+  },
+  // Lote 4 por último: não altera a ordem dos resultados já existentes.
+  ...ESTIMATES_BATCH4,
 ];
 
 const RANK = new Map<string, number>(
@@ -549,7 +552,9 @@ export function searchLocal(query: string, limit = 8): FoodPer100[] {
     const rank = RANK.get(f.code ?? '') ?? 5000;
     const words = f.name.split(',').length;
     const raw = /\b(cru|crua|crus|cruas)\b/i.test(f.name) ? 3 : 0;
-    return rank < 0 ? rank : words + raw + rank / 10000;
+    // Lote 4 (estimativas amplas) só preenche as vagas restantes: nunca passa à frente de TACO/itens anteriores.
+    const lateBatch = f.code?.startsWith('estimate-br4-') ? 100 : 0;
+    return rank < 0 ? rank : words + raw + lateBatch + rank / 10000;
   };
   return hits.sort((a, b) => score(a) - score(b)).slice(0, limit).map((food) =>
     food.code === 'taco-589' ? { ...food, name: 'Castanha-do-Pará (Castanha-do-Brasil), crua' } : food,

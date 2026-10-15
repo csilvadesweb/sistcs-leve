@@ -10,5 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          curl -fsS "https://yzcmxdbnitturlbozvqu.supabase.co/rest/v1/profiles?select=user_id&limit=1" \
-            -H "apikey: sb_publishable_8NA8UB_55isWrQJawod7OQ_tvNKEJNz"
+          curl -fsS "https://yzcmxdbnitturlbozvqu.supabase.co/rest/v1/ai_usage?select=user_id&limit=1" \
+            -H "apikey: sb_publishable_8NA8UB_55isWrQJawod7OQ_tvNKEJNz" \
+            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl6Y214ZGJuaXR0dXJsYm96dnF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2NzkyNDYsImV4cCI6MjEwNzI1NTI0Nn0.yENRsEi28uTLuQ1cT4QX2rtV2qx73WuKUOAgTEp-qWY"

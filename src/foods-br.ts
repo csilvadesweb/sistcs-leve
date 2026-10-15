@@ -583,6 +583,26 @@ type FoodCatalogRow = {
 const CATALOG_SOURCE_URL = 'https://fdc.nal.usda.gov/food-details/';
 const CATALOG_LICENSE = 'CC0 1.0';
 
+const CATALOG_ACCENTS: Record<string, string[]> = {
+  a: ['á', 'à', 'ã', 'â'], e: ['é', 'ê'], i: ['í'], o: ['ó', 'õ', 'ô'], u: ['ú'], c: ['ç'],
+};
+
+function catalogSearchVariants(term: string): string[] {
+  const variants = new Set([term]);
+  for (let index = 0; index < term.length && variants.size < 12; index += 1) {
+    const accents = CATALOG_ACCENTS[term[index]!.toLowerCase()];
+    if (!accents) continue;
+    for (const current of [...variants]) {
+      for (const accent of accents) {
+        variants.add(current.slice(0, index) + accent + current.slice(index + 1));
+        if (variants.size >= 12) break;
+      }
+      if (variants.size >= 12) break;
+    }
+  }
+  return [...variants];
+}
+
 function catalogNumber(value: number | string | null): number | null {
   if (value === null || value === undefined || value === '') return null;
   const parsed = typeof value === 'number' ? value : Number(value);
@@ -594,7 +614,7 @@ function catalogNumber(value: number | string | null): number | null {
  * a função não tenta contornar a política nem retorna linhas sem nutrientes essenciais.
  */
 export async function searchFoodCatalog(query: string, limit = 20): Promise<FoodPer100[]> {
-  const raw = query.trim().replace(/[^\p{L}\p{N}\s'-]/gu, ' ').replace(/\s+/g, ' ').slice(0, 100).trim();
+  const raw = query.trim().replace(/[^\p{L}\p{N}\s-]/gu, ' ').replace(/\s+/g, ' ').slice(0, 100).trim();
   const terms = normalize(raw).split(/\s+/).filter((term) => term.length >= 2 && !['de', 'da', 'do', 'das', 'dos', 'e', 'com', 'em'].includes(term));
   if (!raw || !terms.length) return [];
 
@@ -603,11 +623,15 @@ export async function searchFoodCatalog(query: string, limit = 20): Promise<Food
   const batches = await Promise.all(searchableTerms.slice(0, 4).map(async (term) => {
     const safeTerm = term.replace(/[%_(),]/g, ' ').replace(/\s+/g, ' ').trim();
     if (!safeTerm) return [] as FoodCatalogRow[];
-    const pattern = `%${safeTerm}%`;
+    const variants = catalogSearchVariants(safeTerm);
+    const filters = variants.flatMap((variant) => [
+      `name_pt.ilike.%${variant}%`,
+      `name_en.ilike.%${variant}%`,
+    ]);
     const { data, error } = await supabase
       .from('food_catalog')
-      .select('fdc_id,name_en,name_pt,category_en,kcal,protein_g,fat_g,carbs_g,fiber_g')
-      .or(`name_pt.ilike.${pattern},name_en.ilike.${pattern}`)
+      .select('fdc_id,name_en,name_pt,kcal,protein_g,fat_g,carbs_g,fiber_g')
+      .or(filters.join(','))
       .limit(40);
     if (error) throw new Error('Não foi possível consultar o catálogo de alimentos.');
     return (data ?? []) as FoodCatalogRow[];

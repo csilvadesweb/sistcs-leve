@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
-import { foodConfidence, foodSourceLabel, foodSourceUrl, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { foodConfidence, foodSourceLabel, foodSourceUrl, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchFoodCatalog, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 export interface PickedFood {
   name: string;
@@ -120,6 +120,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   const [measureAmount, setMeasureAmount] = useState('100');
   const [online, setOnline] = useState<FoodPer100[]>([]);
   const [referenceFoods, setReferenceFoods] = useState<FoodPer100[]>([]);
+  const [catalogFoods, setCatalogFoods] = useState<FoodPer100[]>([]);
   const [onlinePage, setOnlinePage] = useState(1);
   const [hasMoreOnline, setHasMoreOnline] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -137,7 +138,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   // Mantém a identidade dos resultados estável enquanto o nome pesquisado não muda.
   // Isso evita reexecutar o efeito de preenchimento nutricional em cada renderização do formulário.
   const matches = useMemo(() => (parsed.name ? searchLocal(parsed.name, 6) : []), [parsed.name]);
-  const food = manualPick ?? matches[0] ?? null;
+  const food = manualPick ?? matches[0] ?? catalogFoods[0] ?? null;
   const auto = food ? gramsFor(food, parsed) : null;
   const measureOptions = useMemo(() => {
     const defaults: Array<{ value: string; label: string; grams: number }> = [
@@ -188,6 +189,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   useEffect(() => {
     setOnline([]);
     setReferenceFoods([]);
+    setCatalogFoods([]);
     setOnlinePage(1);
     setHasMoreOnline(false);
     setLoadingMore(false);
@@ -205,12 +207,15 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
         const results = await Promise.allSettled([
           searchOpenFoodFactsPage(parsed.name, 1, ctl.signal),
           searchTempoLifeFoods(parsed.name, 20),
+          searchFoodCatalog(parsed.name, 20),
         ]);
         if (ctl.signal.aborted) return;
         const productResult = results[0].status === 'fulfilled' ? results[0].value : { foods: [], hasMore: false };
         const referenceResult = results[1].status === 'fulfilled' ? results[1].value : [];
+        const catalogResult = results[2].status === 'fulfilled' ? results[2].value : [];
         setOnline(productResult.foods);
         setReferenceFoods(referenceResult);
+        setCatalogFoods(catalogResult);
         setHasMoreOnline(productResult.hasMore);
         setStatus(results.every((result) => result.status === 'rejected') ? 'error' : 'done');
       } catch {
@@ -284,7 +289,13 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
     }
   }
 
-  const others = [...matches.filter((m) => m !== food), ...online.filter((o) => o !== food), ...referenceFoods.filter((r) => r !== food)];
+  const localNames = new Set(matches.map((item) => normalize(item.name)));
+  const others = [
+    ...matches.filter((m) => m !== food),
+    ...catalogFoods.filter((item) => item !== food && !localNames.has(normalize(item.name))),
+    ...online.filter((o) => o !== food),
+    ...referenceFoods.filter((r) => r !== food),
+  ];
   const row = (f: FoodPer100, key: string) => (
     <li key={key} className="fs-row">
       <div>

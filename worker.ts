@@ -126,6 +126,9 @@ async function handleLabelScan(request: Request, env: Env): Promise<Response> {
     const tooLarge = bodyResult.reason === "too_large";
     return withCors(json({ error: tooLarge ? "A solicitação é muito grande." : "Envie uma imagem válida." }, tooLarge ? 413 : 400));
   }
+  if (!bodyResult.value || typeof bodyResult.value !== "object" || Array.isArray(bodyResult.value)) {
+    return withCors(json({ error: "Envie uma imagem válida." }, 400));
+  }
   const payload = bodyResult.value as { mimeType?: unknown; imageBase64?: unknown };
   const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
   if (typeof payload.mimeType !== "string" || !allowedTypes.has(payload.mimeType)) {
@@ -219,6 +222,9 @@ async function handleMealPhoto(request: Request, env: Env): Promise<Response> {
     const tooLarge = bodyResult.reason === "too_large";
     return withCors(json({ error: tooLarge ? "A solicitação é muito grande." : "Envie uma imagem válida." }, tooLarge ? 413 : 400));
   }
+  if (!bodyResult.value || typeof bodyResult.value !== "object" || Array.isArray(bodyResult.value)) {
+    return withCors(json({ error: "Envie uma imagem válida." }, 400));
+  }
   const payload = bodyResult.value as { mimeType?: unknown; imageBase64?: unknown };
   const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
   if (typeof payload.mimeType !== "string" || !allowedTypes.has(payload.mimeType)) {
@@ -306,6 +312,9 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (!bodyResult.ok) {
     const tooLarge = bodyResult.reason === "too_large";
     return withCors(json({ error: tooLarge ? "A solicitação é muito grande." : "Envie uma mensagem válida." }, tooLarge ? 413 : 400));
+  }
+  if (!bodyResult.value || typeof bodyResult.value !== "object" || Array.isArray(bodyResult.value)) {
+    return withCors(json({ error: "Envie uma mensagem válida." }, 400));
   }
   const payload = bodyResult.value as { message?: unknown; history?: unknown; diaryContext?: unknown };
   if (typeof payload.message !== "string" || !payload.message.trim()) {

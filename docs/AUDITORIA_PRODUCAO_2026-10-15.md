@@ -1,7 +1,7 @@
 # Auditoria de produção — SISTCS Leve
 
-**Data:** 15/10/2026  
-**Escopo:** GitHub `csilvadesweb/sistcs-leve`, Supabase `yzcmxdbnitturlbozvqu` e Cloudflare Worker `sistcs-leve`.  
+**Data:** 15/10/2026
+**Escopo:** GitHub `csilvadesweb/sistcs-leve`, Supabase `yzcmxdbnitturlbozvqu` e Cloudflare Worker `sistcs-leve`.
 **Método:** inspeção somente leitura do código/configuração, inventário remoto, advisories do Supabase, validação HTTP do domínio publicado, testes, build e auditoria de dependências.
 
 > “100%” não é uma propriedade verificável de um sistema real. Neste relatório, significa **seguro para produção, reproduzível, observável, recuperável, testado e preparado para crescer**, com riscos conhecidos aceitos explicitamente.
@@ -391,3 +391,19 @@ Para elevar a robustez:
 - Supabase: `ACTIVE_HEALTHY`, PostgreSQL 17.11.
 - Cloudflare: Worker `sistcs-leve` publicado; D1/KV ausentes; R2 não habilitado.
 - Advisories Supabase: 3 de segurança e 1 de performance, detalhados acima.
+
+## Atualização de execução — 15/10/2026
+
+Foram executadas as primeiras etapas de hardening:
+
+- branch `fix/production-hardening-20261015` criada e publicada;
+- pull request [#129](https://github.com/csilvadesweb/sistcs-leve/pull/129) aberto;
+- `main` protegida com revisão de CODEOWNER, checks `verify`/`e2e`, bloqueio de force-push e resolução de conversas;
+- Edge Function `delete-account` publicada como versão 4, com JWT obrigatório, CORS restrito e limpeza paginada;
+- Worker preview aprovado pelo Cloudflare Workers Builds;
+- Node 22 fixado nos workflows, `.node-version` e `package.json`;
+- `npm ci`, typecheck, 220 testes, build, E2E e validação Wrangler aprovados;
+- policy explícita de negação criada em `public.ai_usage`, removendo o advisory INFO de RLS sem abrir acesso aos dados;
+- preflight público da Edge Function retornando HTTP 204 e Worker público retornando HTTP 200.
+
+O PR permanece **bloqueado por revisão humana obrigatória**. O preview Cloudflare está aprovado, mas o Worker de produção continuará na versão anterior até o PR ser revisado e integrado na `main`; não foi feito bypass da proteção. Permanecem dois advisories intencionais/pendentes no Supabase: a RPC de quota `SECURITY DEFINER` ainda precisa de uma arquitetura RPC privada ou revisão explícita da exceção, e a proteção contra senhas comprometidas precisa ser ativada no painel Auth do Supabase.

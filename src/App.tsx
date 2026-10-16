@@ -1,18 +1,5 @@
 import { Suspense, lazy, useEffect, useRef, useState, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
-import {
-  Apple,
-  CalendarDays,
-  ChartNoAxesCombined,
-  CircleUserRound,
-  ClipboardList,
-  Heart,
-  House,
-  Dumbbell,
-  Pill,
-  Timer,
-  CookingPot,
-  Sparkles,
-} from 'lucide-react';
+import { Apple, CalendarDays, ChartNoAxesCombined, CircleUserRound, Heart, House, Dumbbell } from 'lucide-react';
 import { Link, Route, Router as WouterRouter, Switch, useLocation } from 'wouter';
 import { useHashLocation } from 'wouter/use-hash-location';
 import { AuthGate, useAppData } from './session';
@@ -30,17 +17,16 @@ const Exercises = lazy(() => import('./pages/Exercises').then((m) => ({ default:
 const ProfileSettings = lazy(() => import('./pages/Profile').then((m) => ({ default: m.ProfileSettings })));
 const Recipes = lazy(() => import('./pages/Recipes').then((m) => ({ default: m.Recipes })));
 const Assistant = lazy(() => import('./pages/Assistant').then((m) => ({ default: m.Assistant })));
+const FoodHub = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.FoodHub })));
+const ActivityHub = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.ActivityHub })));
+const EvolutionHub = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.EvolutionHub })));
+const HydrationPage = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.HydrationPage })));
 
 const destinations = [
   { href: '/', label: 'Início', short: 'Início', icon: House },
-  { href: '/alimentacao', label: 'Alimentação', short: 'Comida', icon: Apple },
-  { href: '/receitas', label: 'Receitas', short: 'Receitas', icon: CookingPot },
-  { href: '/assistente', label: 'Coach de IA', short: 'Coach IA', icon: Sparkles },
-  { href: '/exercicios', label: 'Exercícios', short: 'Exercícios', icon: Dumbbell },
-  { href: '/registros', label: 'Registros', short: 'Evolução', icon: ClipboardList },
-  { href: '/jejum', label: 'Jejum', short: 'Jejum', icon: Timer },
-  { href: '/medicamentos', label: 'Medicamentos', short: 'Remédio', icon: Pill },
-  { href: '/relatorios', label: 'Relatórios', short: 'Gráficos', icon: ChartNoAxesCombined },
+  { href: '/alimentacao', label: 'Alimentação', short: 'Alimentação', icon: Apple },
+  { href: '/atividade', label: 'Atividade', short: 'Atividade', icon: Dumbbell },
+  { href: '/evolucao', label: 'Evolução', short: 'Evolução', icon: ChartNoAxesCombined },
   { href: '/perfil', label: 'Perfil', short: 'Perfil', icon: CircleUserRound },
 ];
 
@@ -99,6 +85,15 @@ function Shell({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (navigationPreferences?.order) setMobileOrder([...navigationPreferences.order]);
   }, [savedOrderKey]);
+
+  const isDestinationActive = (href: string) => {
+    if (href === '/') return location === '/';
+    if (href === '/alimentacao') return ['/alimentacao', '/diario', '/assistente', '/hidratacao', '/jejum', '/receitas'].includes(location);
+    if (href === '/atividade') return ['/atividade', '/exercicios'].includes(location);
+    if (href === '/evolucao') return ['/evolucao', '/registros', '/relatorios'].includes(location);
+    if (href === '/perfil') return ['/perfil', '/medicamentos'].includes(location);
+    return location === href;
+  };
 
   const orderedDestinations = [...destinations]
     .sort((a, b) => {
@@ -237,7 +232,7 @@ function Shell({ children }: { children: ReactNode }) {
         <p className="sidebar-caption">SEU ESPAÇO DE CUIDADO</p>
         <nav className="desktop-nav" aria-label="Áreas do aplicativo">
           {orderedDestinations.map(({ href, label, icon }) => (
-            <NavLink key={href} href={href} label={label} icon={icon} active={location === href} />
+            <NavLink key={href} href={href} label={label} icon={icon} active={isDestinationActive(href)} />
           ))}
         </nav>
         <div className="sidebar-foot">
@@ -277,14 +272,14 @@ function Shell({ children }: { children: ReactNode }) {
               data-nav-href={href}
               draggable={false}
               aria-label={`${label}. Mantenha pressionado por um instante e, quando o ícone destacar, arraste para reorganizar.`}
-              aria-current={location === href ? 'page' : undefined}
-              className={`nav-link nav-link-mobile ${location === href ? 'nav-link-active' : ''} ${pressingHref === href ? 'nav-link-pressing' : ''} ${draggingHref === href ? 'nav-link-dragging' : ''}`}
+              aria-current={isDestinationActive(href) ? 'page' : undefined}
+              className={`nav-link nav-link-mobile ${isDestinationActive(href) ? 'nav-link-active' : ''} ${pressingHref === href ? 'nav-link-pressing' : ''} ${draggingHref === href ? 'nav-link-dragging' : ''}`}
               onPointerDown={(event) => startNavPointer(event, href)}
               onClick={handleNavClick}
               onContextMenu={(event) => event.preventDefault()}
               onDragStart={(event) => event.preventDefault()}
             >
-              <Icon aria-hidden="true" strokeWidth={location === href ? 2.1 : 1.7} />
+              <Icon aria-hidden="true" strokeWidth={isDestinationActive(href) ? 2.1 : 1.7} />
               <span>{navigationPreferences?.labels?.[href]?.trim() || short}</span>
             </Link>
           ))}
@@ -315,7 +310,11 @@ export default function App() {
           <Suspense fallback={<p className="auth-loading" role="status">Carregando…</p>}>
           <Switch>
             <Route path="/" component={Home} />
-            <Route path="/alimentacao" component={FoodTracking} />
+            <Route path="/alimentacao" component={FoodHub} />
+            <Route path="/diario" component={FoodTracking} />
+            <Route path="/atividade" component={ActivityHub} />
+            <Route path="/evolucao" component={EvolutionHub} />
+            <Route path="/hidratacao" component={HydrationPage} />
             <Route path="/receitas" component={Recipes} />
             <Route path="/assistente" component={Assistant} />
             <Route path="/exercicios" component={Exercises} />

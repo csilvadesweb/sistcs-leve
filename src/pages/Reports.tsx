@@ -15,6 +15,7 @@ export function Reports() {
   const { data, loading, error: loadError } = useAppData();
   const [range, setRange] = useState<(typeof RANGES)[number]>(7);
   const [activeReportTab, setActiveReportTab] = useState<'summary' | 'food' | 'movement' | 'wellbeing'>('summary');
+  const [activeChartMetric, setActiveChartMetric] = useState<'calories' | 'protein' | 'water' | 'exercise' | 'weight'>('calories');
   const today = todayInSaoPaulo();
   const goals = data.profile?.goals ?? null;
 
@@ -169,6 +170,59 @@ export function Reports() {
         <button type="button" role="tab" aria-selected={activeReportTab === 'wellbeing'} aria-controls="report-panel-wellbeing" className={activeReportTab === 'wellbeing' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveReportTab('wellbeing')}>Água e peso</button>
       </div>
       {activeReportTab === 'summary' && <div id="report-panel-summary" role="tabpanel">
+      <section className="ft-card progress-chart-dashboard" aria-labelledby="progress-chart-title">
+        <div className="progress-chart-heading">
+          <div>
+            <p className="ft-kicker">SEU PROGRESSO EM DADOS</p>
+            <h2 className="rep-title" id="progress-chart-title">Gráfico de evolução</h2>
+            <p className="ft-explainer" style={{ marginLeft: 0 }}>Selecione um indicador para acompanhar seus registros no período.</p>
+          </div>
+          <span className="progress-chart-period">{range} dias</span>
+        </div>
+        <div className="progress-chart-metrics" role="group" aria-label="Indicador do gráfico">
+          {([
+            { key: 'calories', label: 'Calorias' },
+            { key: 'protein', label: 'Proteínas' },
+            { key: 'water', label: 'Água' },
+            { key: 'exercise', label: 'Exercícios' },
+            { key: 'weight', label: 'Peso' },
+          ] as const).map((metric) => (
+            <button key={metric.key} type="button" className={activeChartMetric === metric.key ? 'progress-chart-metric is-active' : 'progress-chart-metric'} aria-pressed={activeChartMetric === metric.key} onClick={() => setActiveChartMetric(metric.key)}>
+              {metric.label}
+            </button>
+          ))}
+        </div>
+        <div className="progress-chart-summary">
+          <div>
+            <span className="progress-chart-label">{({
+              calories: 'Consumo de calorias',
+              protein: 'Consumo de proteínas',
+              water: 'Água registrada',
+              exercise: 'Atividade física',
+              weight: 'Peso corporal',
+            })[activeChartMetric]}</span>
+            <strong>{activeChartMetric === 'calories'
+              ? (loggedDays.length ? `${decimalText(Math.round(average(loggedDays.map((d) => d.totals.calories))))} kcal` : 'Sem dados')
+              : activeChartMetric === 'protein'
+                ? (loggedDays.length ? `${decimalText(Math.round(average(loggedDays.map((d) => d.totals.proteins))))} g` : 'Sem dados')
+                : activeChartMetric === 'water'
+                  ? (waterDays.length ? `${decimalText(Math.round(average(waterDays.map((d) => d.water))))} ml` : 'Sem dados')
+                  : activeChartMetric === 'exercise'
+                    ? (exerciseDays.length ? `${exerciseMinutes} min` : 'Sem dados')
+                    : (weightInRange.length ? `${decimalText(wLatest?.weightKg ?? weightInRange[weightInRange.length - 1].weightKg)} kg` : 'Sem dados')}</strong>
+            <small>{activeChartMetric === 'exercise' ? 'tempo total registrado no período' : activeChartMetric === 'weight' ? 'último peso registrado no período' : 'média dos dias com registro'}</small>
+          </div>
+          <span className="progress-chart-mark" aria-hidden="true"><ChartNoAxesCombined size={25} /></span>
+        </div>
+        <div className="chart-wrap progress-chart-canvas">
+          {activeChartMetric === 'calories' && (loggedDays.length ? <BarChart days={loggedDays.map((d) => ({ date: d.date, value: Math.round(d.totals.calories) }))} goal={kcalGoal} label="Gráfico de calorias por dia com registro" /> : <p className="progress-chart-empty">Ainda não há registros de alimentação neste período. Quando você registrar refeições, o gráfico aparecerá aqui.</p>)}
+          {activeChartMetric === 'protein' && (loggedDays.length ? <BarChart days={loggedDays.map((d) => ({ date: d.date, value: Math.round(d.totals.proteins) }))} goal={proteinGoal} label="Gráfico de proteínas por dia com registro" color="#8a6bd1" /> : <p className="progress-chart-empty">Ainda não há registros de proteínas neste período.</p>)}
+          {activeChartMetric === 'water' && (waterDays.length ? <BarChart days={waterDays.map((d) => ({ date: d.date, value: Math.round(d.water) }))} goal={waterGoal} label="Gráfico de água por dia com registro, em mililitros" color="#398fa5" /> : <p className="progress-chart-empty">Ainda não há registros de água neste período.</p>)}
+          {activeChartMetric === 'exercise' && (!data.exerciseTrackingAvailable ? <p className="progress-chart-empty">O diário de exercícios ainda não está habilitado no banco conectado. <Link href="/exercicios">Abrir exercícios</Link></p> : exerciseDays.length ? <BarChart days={exerciseDays.map((d) => ({ date: d.date, value: Math.round(d.exerciseMinutes) }))} goal={null} label="Minutos de exercício por dia com registro" color="#b58a42" /> : <p className="progress-chart-empty">Nenhum exercício registrado neste período. Os dias sem registro não são tratados como exercícios de duração zero.</p>)}
+          {activeChartMetric === 'weight' && (weightInRange.length ? <WeightChart points={weightInRange.map((w) => ({ date: w.date, value: w.weightKg }))} target={data.profile?.targetWeightKg ?? null} /> : <p className="progress-chart-empty">Nenhum peso registrado neste período. <Link href="/registros">Registrar peso</Link></p>)}
+        </div>
+        <p className="progress-chart-footnote">Visualização baseada exclusivamente nos seus registros. Dias sem registro não são interpretados como metas cumpridas ou dados reais iguais a zero.</p>
+      </section>
       <section className="stat-grid stat-grid-3" aria-label="Resumo do período">
         {stats.map((s) => (
           <div className="stat" key={s.label}>

@@ -918,10 +918,10 @@ export function normalizeBarcodeInput(raw: string): string {
 
 /** Pesquisa produtos de suplemento com dados nutricionais efetivamente preenchidos no banco. */
 export async function searchSupplementCatalog(query: string, limit = 20): Promise<FoodPer100[]> {
-  const raw = query.trim().replace(/[^\\p{L}\\p{N}\\s-]/gu, ' ').replace(/\\s+/g, ' ').slice(0, 100).trim();
+  const raw = query.trim().replace(/[^\p{L}\p{N}\s-]/gu, ' ').replace(/\s+/g, ' ').slice(0, 100).trim();
   if (raw.length < 2) return [];
   const safeLimit = Math.max(1, Math.min(30, Math.floor(limit)));
-  const safeTerm = raw.replace(/[%_(),]/g, ' ').replace(/\\s+/g, ' ').trim();
+  const safeTerm = raw.replace(/[%_(),]/g, ' ').replace(/\s+/g, ' ').trim();
   const { data, error } = await supabase
     .from('supplement_catalog')
     .select('id,name,brand,barcode,nutrition_basis,calories_kcal,protein_g,carbohydrates_g,total_fat_g,fiber_g,source_url,data_status')

@@ -114,7 +114,7 @@ export function ActivityDevicesPage() {
         {deviceApps.map((device) => (
           <button className="hub-card" type="button" key={device.name} onClick={() => setSelectedDevice(device)} aria-label={`Opções de conexão: ${device.name}`} style={{textAlign:'left',width:'100%',font:'inherit',color:'inherit',cursor:'pointer'}}>
             <span className="hub-card-icon" style={{background:'#fff',border:'1px solid var(--border, #e4e9e4)',display:'grid',placeItems:'center',overflow:'hidden',width:'64px',height:'64px',minWidth:'64px',flex:'0 0 64px',padding:'4px',boxSizing:'border-box'}}>
-              <img src={device.logoUrl ?? `${import.meta.env.BASE_URL}device-logos/${device.logo}`} alt={device.alt} width="56" height="56" loading="eager" decoding="async" style={{width:'56px',height:'56px',objectFit:'contain',display:'block'}} onError={(event) => { event.currentTarget.style.display = 'none'; }} />
+              <img src={`${import.meta.env.BASE_URL}device-logos/${device.logo}`} alt={device.alt} width="56" height="56" loading="eager" decoding="async" style={{width:'56px',height:'56px',objectFit:'contain',display:'block'}} onError={(event) => { event.currentTarget.style.display = 'none'; }} />
             </span>
             <span className="hub-card-copy"><strong>{device.name}</strong><small>{device.detail}</small><small style={{display:'block',marginTop:'.35rem',fontWeight:600}}>Toque para conectar <span aria-hidden="true">→</span></small></span>
           </button>

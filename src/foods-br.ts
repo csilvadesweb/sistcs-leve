@@ -921,13 +921,13 @@ export function normalizeBarcodeInput(raw: string): string {
 
 /** Pesquisa produtos de suplemento com dados nutricionais efetivamente preenchidos no banco. */
 export async function searchSupplementCatalog(query: string, limit = 20): Promise<FoodPer100[]> {
-  const raw = query.trim().replace(/[^\\p{L}\\p{N}\\s-]/gu, ' ').replace(/\\s+/g, ' ').slice(0, 100).trim();
+  const raw = query.trim().replace(/[^\p{L}\p{N}\s-]/gu, ' ').replace(/\s+/g, ' ').slice(0, 100).trim();
   if (raw.length < 2) return [];
   const safeLimit = Math.max(1, Math.min(30, Math.floor(limit)));
-  const safeTerm = raw.replace(/[%_(),]/g, ' ').replace(/\\s+/g, ' ').trim();
+  const safeTerm = raw.replace(/[%_(),]/g, ' ').replace(/\s+/g, ' ').trim();
   const tokens = safeTerm.split(' ').filter(Boolean).slice(0, 6);
   const filters = tokens.flatMap((token) => [`name.ilike.%${token}%`, `brand.ilike.%${token}%`]);
-  const barcode = raw.replace(/\\D/g, '');
+  const barcode = raw.replace(/\D/g, '');
   if (barcode.length >= 8 && barcode.length <= 14) filters.push(`barcode.eq.${barcode}`);
   const { data, error } = await supabase
     .from('supplement_catalog')

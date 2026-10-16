@@ -91,10 +91,10 @@ export function HydrationPage() {
 
 
 const deviceApps = [
-  { name: 'Samsung Health', detail: 'Fonte de atividade para dispositivos Samsung, quando a sincronização com Health Connect estiver habilitada.', logo: 'samsung-health.svg', alt: 'Logotipo Samsung Health' },
-  { name: 'Google Fit', detail: 'Pode compartilhar dados compatíveis quando instalado e configurado no aparelho.', logo: 'google-fit.svg', alt: 'Logotipo Google Fit' },
-  { name: 'Fitbit', detail: 'A disponibilidade depende da configuração do aplicativo e do compartilhamento com Health Connect.', logo: 'fitbit.svg', alt: 'Logotipo Fitbit' },
-  { name: 'Garmin Connect', detail: 'A sincronização depende da integração habilitada no ecossistema Garmin/Health Connect.', logo: 'garmin-connect.svg', alt: 'Logotipo Garmin Connect' },
+  { name: 'Samsung Health', detail: 'Fonte de atividade para dispositivos Samsung, quando a sincronização com Health Connect estiver habilitada.', logoUrl: 'https://d3unf4s5rp9dfh.cloudfront.net/SHealth_doc/samsung-health_72x72.png', alt: 'Ícone oficial Samsung Health' },
+  { name: 'Google Fit', detail: 'Pode compartilhar dados compatíveis quando instalado e configurado no aparelho.', logoUrl: 'https://developers.google.com/fit/images/fit_icon_512x512.png', alt: 'Ícone oficial Google Fit' },
+  { name: 'Fitbit', detail: 'A disponibilidade depende da configuração do aplicativo e do compartilhamento com Health Connect.', logo: 'fitbit.svg', alt: 'Ícone Fitbit' },
+  { name: 'Garmin Connect', detail: 'A sincronização depende da integração habilitada no ecossistema Garmin/Health Connect.', logoUrl: 'https://static.garmincdn.com/com.garmin.connect/content/images/developer/gc-app-tile/xhdpi/gc-app-tile_@240.png', alt: 'Ícone oficial Garmin Connect' },
 ];
 
 export function ActivityDevicesPage() {
@@ -111,7 +111,7 @@ export function ActivityDevicesPage() {
         {deviceApps.map((device) => (
           <article className="hub-card" key={device.name} style={{cursor:'default'}}>
             <span className="hub-card-icon" style={{background:'#fff',border:'1px solid var(--border, #e4e9e4)',display:'grid',placeItems:'center',overflow:'hidden'}}>
-              <img src={`${import.meta.env.BASE_URL}device-logos/${device.logo}`} alt={device.alt} width="132" height="48" loading="eager" decoding="async" style={{width:'132px',height:'48px',objectFit:'contain',display:'block'}} />
+              <img src={device.logoUrl ?? `${import.meta.env.BASE_URL}device-logos/${device.logo}`} alt={device.alt} width="132" height="48" loading="eager" decoding="async" style={{width:'132px',height:'48px',objectFit:'contain',display:'block'}} />
             </span>
             <span className="hub-card-copy"><strong>{device.name}</strong><small>{device.detail}</small></span>
           </article>

@@ -23,6 +23,9 @@ export interface FoodPer100 {
   saturatedFat?: number;
   sugars?: number;
   sodiumMg?: number;
+  servingSize?: string;
+  ingredients?: string;
+  micronutrients?: Record<string, number | string>;
   reportedNutrients?: { protein: boolean; carbs: boolean; fat: boolean; fiber: boolean };
   origin: 'local' | 'off' | 'estimate' | 'usda' | 'supplement';
   sourceUrl?: string;
@@ -922,10 +925,14 @@ export async function searchSupplementCatalog(query: string, limit = 20): Promis
   if (raw.length < 2) return [];
   const safeLimit = Math.max(1, Math.min(30, Math.floor(limit)));
   const safeTerm = raw.replace(/[%_(),]/g, ' ').replace(/\s+/g, ' ').trim();
+  const tokens = safeTerm.split(' ').filter(Boolean).slice(0, 6);
+  const filters = tokens.flatMap((token) => [`name.ilike.%${token}%`, `brand.ilike.%${token}%`]);
+  const barcode = raw.replace(/\D/g, '');
+  if (barcode.length >= 8 && barcode.length <= 14) filters.push(`barcode.eq.${barcode}`);
   const { data, error } = await supabase
     .from('supplement_catalog')
-    .select('id,name,brand,barcode,nutrition_basis,calories_kcal,protein_g,carbohydrates_g,total_fat_g,fiber_g,source_url,data_status')
-    .or(`name.ilike.%${safeTerm}%,brand.ilike.%${safeTerm}%,barcode.eq.${safeTerm.replace(/[^0-9]/g, '') || 'NO_BARCODE_MATCH'}`)
+    .select('id,name,brand,barcode,serving_size,nutrition_basis,calories_kcal,protein_g,carbohydrates_g,total_fat_g,saturated_fat_g,fiber_g,sugars_g,sodium_mg,micronutrients,ingredients,source_url,data_status')
+    .or(filters.join(','))
     .not('calories_kcal', 'is', null)
     .not('protein_g', 'is', null)
     .not('carbohydrates_g', 'is', null)
@@ -946,11 +953,17 @@ export async function searchSupplementCatalog(query: string, limit = 20): Promis
     return [{
       name, brand: typeof row.brand === 'string' ? row.brand : undefined,
       kcal, protein, carbs, fat, fiber: fiber ?? 0,
+      saturatedFat: catalogNumber(row.saturated_fat_g) ?? undefined,
+      sugars: catalogNumber(row.sugars_g) ?? undefined,
+      sodiumMg: catalogNumber(row.sodium_mg) ?? undefined,
+      servingSize: typeof row.serving_size === 'string' ? row.serving_size : undefined,
+      ingredients: typeof row.ingredients === 'string' ? row.ingredients : undefined,
+      micronutrients: row.micronutrients && typeof row.micronutrients === 'object' && !Array.isArray(row.micronutrients) ? row.micronutrients as Record<string, number | string> : undefined,
       basis: row.nutrition_basis === '100ml' ? '100ml' : '100g',
       reportedNutrients: { protein: true, carbs: true, fat: true, fiber: fiber !== null },
       origin: 'supplement', code: typeof row.barcode === 'string' ? row.barcode : `supplement-${row.id}`,
       sourceUrl: typeof row.source_url === 'string' ? row.source_url : undefined,
-      sourceLicense: 'Dados de rótulo/cadastro do produto; conferir fonte e embalagem',
+      sourceLicense: 'Dados transcritos do rótulo/ficha do fabricante; confira a embalagem',
     }];
   });
 }
@@ -962,7 +975,7 @@ export async function lookupBarcode(code: string, signal?: AbortSignal): Promise
   // Prioriza produtos de suplementos cadastrados no banco, quando o rótulo já foi conferido.
   const { data: supplementRows } = await supabase
     .from('supplement_catalog')
-    .select('id,name,brand,barcode,nutrition_basis,calories_kcal,protein_g,carbohydrates_g,total_fat_g,fiber_g,source_url')
+    .select('id,name,brand,barcode,serving_size,nutrition_basis,calories_kcal,protein_g,carbohydrates_g,total_fat_g,saturated_fat_g,fiber_g,sugars_g,sodium_mg,micronutrients,ingredients,source_url')
     .eq('barcode', normalizedCode)
     .not('calories_kcal', 'is', null)
     .not('protein_g', 'is', null)
@@ -979,6 +992,12 @@ export async function lookupBarcode(code: string, signal?: AbortSignal): Promise
       return {
         name: supplement.name, brand: supplement.brand ?? undefined, kcal, protein, carbs, fat,
         fiber: catalogNumber(supplement.fiber_g) ?? 0,
+        saturatedFat: catalogNumber(supplement.saturated_fat_g) ?? undefined,
+        sugars: catalogNumber(supplement.sugars_g) ?? undefined,
+        sodiumMg: catalogNumber(supplement.sodium_mg) ?? undefined,
+        servingSize: typeof supplement.serving_size === 'string' ? supplement.serving_size : undefined,
+        ingredients: typeof supplement.ingredients === 'string' ? supplement.ingredients : undefined,
+        micronutrients: supplement.micronutrients && typeof supplement.micronutrients === 'object' && !Array.isArray(supplement.micronutrients) ? supplement.micronutrients as Record<string, number | string> : undefined,
         basis: supplement.nutrition_basis === '100ml' ? '100ml' : '100g',
         origin: 'supplement', code: normalizedCode, sourceUrl: supplement.source_url ?? undefined,
         sourceLicense: 'Dados de rótulo/cadastro do produto; conferir embalagem',

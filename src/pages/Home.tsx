@@ -103,7 +103,7 @@ export function Home() {
       <section className="today-card" aria-labelledby="today-title">
         <div className="today-head">
           <div><p className="ft-kicker">HOJE</p><h2 id="today-title">Calorias e nutrientes</h2></div>
-          <Link href="/alimentacao" className="today-link">Registrar alimento <ChevronRight size={15} aria-hidden="true" /></Link>
+          <Link href="/diario" className="today-link">Registrar alimento <ChevronRight size={15} aria-hidden="true" /></Link>
         </div>
 
         <div className="today-body">

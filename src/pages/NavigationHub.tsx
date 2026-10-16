@@ -91,15 +91,15 @@ export function HydrationPage() {
 
 
 const deviceApps = [
-  { name: 'Samsung Health', detail: 'Fonte de atividade para dispositivos Samsung, quando a sincronização com Health Connect estiver habilitada.', logoUrl: 'https://d3unf4s5rp9dfh.cloudfront.net/SHealth_doc/samsung-health_72x72.png', alt: 'Ícone oficial Samsung Health' },
-  { name: 'Google Fit', detail: 'Pode compartilhar dados compatíveis quando instalado e configurado no aparelho.', logoUrl: 'https://developers.google.com/fit/images/fit_icon_512x512.png', alt: 'Ícone oficial Google Fit' },
-  { name: 'Fitbit', detail: 'A disponibilidade depende da configuração do aplicativo e do compartilhamento com Health Connect.', logo: 'fitbit.svg', alt: 'Ícone Fitbit' },
-  { name: 'Garmin Connect', detail: 'A sincronização depende da integração habilitada no ecossistema Garmin/Health Connect.', logoUrl: 'https://static.garmincdn.com/com.garmin.connect/content/images/developer/gc-app-tile/xhdpi/gc-app-tile_@240.png', alt: 'Ícone oficial Garmin Connect' },
+  { name: 'Samsung Health', detail: 'Fonte de atividade Samsung; os dados chegam pelo Health Connect quando autorizado.', logo: 'samsung-health.svg', alt: 'Samsung Health' },
+  { name: 'Google Fit', detail: 'Dados compatíveis dependem da configuração do aplicativo e do compartilhamento com Health Connect.', logo: 'google-fit.svg', alt: 'Google Fit' },
+  { name: 'Fitbit', detail: 'A disponibilidade depende da configuração do aplicativo e do compartilhamento com Health Connect.', logo: 'fitbit.svg', alt: 'Fitbit' },
+  { name: 'Garmin Connect', detail: 'A sincronização depende da integração habilitada no ecossistema Garmin/Health Connect.', logo: 'garmin-connect.svg', alt: 'Garmin Connect' },
 ];
 
 export function ActivityDevicesPage() {
   const [selectedDevice, setSelectedDevice] = useState<(typeof deviceApps)[number] | null>(null);
-  const connectionIntent = 'intent://connect/#Intent;scheme=sistcs;package=com.sistcs.leve.activitysync;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;end';
+  const connectionIntent = 'intent://connect/#Intent;scheme=sistcs;package=com.sistcs.leve.activitysync;action=android.intent.action.VIEW;category=android.intent.category.DEFAULT;category=android.intent.category.BROWSABLE;end';
 
   return (
     <div className="page page-enter">

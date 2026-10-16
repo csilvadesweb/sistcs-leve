@@ -57,8 +57,10 @@ const TIMER_EXERCISES = [
   { name: 'Outro', activityId: 'other' },
 ] as const;
 
-/** Cores dos anéis do Apple Watch: vermelho (dia), verde-limão (semana), ciano (mês). */
-const RING_COLORS: Record<GoalPeriod, string> = { day: '#fa114f', week: '#a4ff00', month: '#1eeaef' };
+/** Cores dos anéis do Apple Watch (vermelho, verde, ciano), um pouco mais fortes para ter contraste no fundo claro. */
+const RING_COLORS: Record<GoalPeriod, string> = { day: '#fa114f', week: '#3fae00', month: '#00a3b8' };
+/** Versões mais escuras para texto pequeno. */
+const RING_TEXT: Record<GoalPeriod, string> = { day: '#d70a40', week: '#3d7d00', month: '#067a80' };
 const RING_RADII: Record<GoalPeriod, number> = { day: 86, week: 62, month: 38 };
 const PERIOD_LABEL: Record<GoalPeriod, string> = { day: 'Hoje', week: 'Esta semana', month: 'Este mês' };
 const PERIOD_FIELD: Record<GoalPeriod, string> = { day: 'Meta diária', week: 'Meta semanal', month: 'Meta mensal' };
@@ -361,7 +363,7 @@ export function ActivityGoalsPage() {
         </div>
       </section>
 
-      <section className="ag-dark" aria-labelledby="ag-rings-title">
+      <section className="ag-card" aria-labelledby="ag-rings-title">
         <p className="ag-kicker">ANÉIS DE ATIVIDADE</p>
         <h2 id="ag-rings-title">Seu movimento</h2>
         <div className="ag-rings-wrap">
@@ -369,7 +371,7 @@ export function ActivityGoalsPage() {
           <ul className="ag-legend">
             {progress.map((p) => (
               <li key={p.period}>
-                <span className="ag-legend-label" style={{ color: RING_COLORS[p.period] }}>{PERIOD_LABEL[p.period]}</span>
+                <span className="ag-legend-label" style={{ color: RING_TEXT[p.period] }}>{PERIOD_LABEL[p.period]}</span>
                 <strong>{p.goal ? `${fmtMin(p.minutes)} / ${fmtMin(p.goal)}` : fmtMin(p.minutes)}</strong>
                 <small>{p.goal ? `${Math.round(p.ratio * 100)}%${p.done ? ' · meta batida 🏅' : ''}` : 'Sem meta definida'}</small>
               </li>
@@ -381,7 +383,7 @@ export function ActivityGoalsPage() {
         )}
       </section>
 
-      <section className="ag-dark ag-timer" aria-labelledby="ag-timer-title">
+      <section className="ag-card ag-timer" aria-labelledby="ag-timer-title">
         <div className="ag-timer-head">
           <div>
             <p className="ag-kicker">CRONÔMETRO</p>
@@ -443,7 +445,7 @@ export function ActivityGoalsPage() {
         {timerNotice && <p className={`ag-notice ag-notice-${timerNotice.kind}`} role={timerNotice.kind === 'error' ? 'alert' : 'status'}>{timerNotice.text}</p>}
       </section>
 
-      <section className="ag-dark" aria-labelledby="ag-goals-title">
+      <section className="ag-card" aria-labelledby="ag-goals-title">
         <p className="ag-kicker">MINHAS METAS</p>
         <h2 id="ag-goals-title">Defina suas metas</h2>
         <p className="ag-hint">Quantos minutos de atividade você quer praticar? Deixe em branco o período que não quiser acompanhar.</p>
@@ -467,7 +469,7 @@ export function ActivityGoalsPage() {
         <p className="ag-hint">As metas ficam guardadas neste dispositivo. Ao alterar uma meta, as medalhas dela passam a contar a partir de hoje.</p>
       </section>
 
-      <section className="ag-dark" aria-labelledby="ag-awards-title">
+      <section className="ag-card" aria-labelledby="ag-awards-title">
         <p className="ag-kicker">PRÊMIOS</p>
         <h2 id="ag-awards-title"><Trophy size={20} aria-hidden="true" /> Suas medalhas <span className="ag-count">{awards.length}</span></h2>
         <ul className="ag-collection">

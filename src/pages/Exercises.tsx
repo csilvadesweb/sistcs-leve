@@ -6,7 +6,7 @@ import {EXERCISE_ACTIVITIES,estimateExerciseCalories,validateExerciseInput} from
 import {decimalText,todayInSaoPaulo} from '../ui';
 import {HealthActivityCard} from '../components/HealthActivityCard';
 type FormState={date:string;activityId:string;duration:string;weight:string;note:string};
-const blank=(date:string,weight:number|null):FormState=>({date,activityId:'walking_brisk',duration:'30',weight:weight?String(weight):'',note:''});
+const blank=(date:string,weight:number|null):FormState=>({date,activityId:'walking_moderate',duration:'30',weight:weight?String(weight):'',note:''});
 export function Exercises(){
 const{data,error:loadError,loading,reload}=useAppData();const[date,setDate]=useState(todayInSaoPaulo());
 const latestWeight=useMemo(()=>[...data.weightEntries].sort((a,b)=>b.date.localeCompare(a.date))[0]?.weightKg??null,[data.weightEntries]);

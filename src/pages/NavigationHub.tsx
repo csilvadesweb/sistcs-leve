@@ -91,10 +91,10 @@ export function HydrationPage() {
 
 
 const deviceApps = [
-  { name: 'Samsung Health', detail: 'Fonte de atividade para dispositivos Samsung, quando a sincronização com Health Connect estiver habilitada.', logo: 'https://cdn.simpleicons.org/samsunghealth/1428A0', alt: 'Logo oficial Samsung Health' },
-  { name: 'Google Fit', detail: 'Pode compartilhar dados compatíveis quando instalado e configurado no aparelho.', logo: 'https://cdn.simpleicons.org/googlefit/4285F4', alt: 'Logo oficial Google Fit' },
-  { name: 'Fitbit', detail: 'A disponibilidade depende da configuração do aplicativo e do compartilhamento com Health Connect.', logo: 'https://cdn.simpleicons.org/fitbit/00B0B9', alt: 'Logo oficial Fitbit' },
-  { name: 'Garmin Connect', detail: 'A sincronização depende da integração habilitada no ecossistema Garmin/Health Connect.', logo: 'https://cdn.simpleicons.org/garmin/007CC3', alt: 'Logo oficial Garmin Connect' },
+  { name: 'Samsung Health', detail: 'Fonte de atividade para dispositivos Samsung, quando a sincronização com Health Connect estiver habilitada.', logo: 'samsung-health.svg', alt: 'Logotipo Samsung Health' },
+  { name: 'Google Fit', detail: 'Pode compartilhar dados compatíveis quando instalado e configurado no aparelho.', logo: 'google-fit.svg', alt: 'Logotipo Google Fit' },
+  { name: 'Fitbit', detail: 'A disponibilidade depende da configuração do aplicativo e do compartilhamento com Health Connect.', logo: 'fitbit.svg', alt: 'Logotipo Fitbit' },
+  { name: 'Garmin Connect', detail: 'A sincronização depende da integração habilitada no ecossistema Garmin/Health Connect.', logo: 'garmin-connect.svg', alt: 'Logotipo Garmin Connect' },
 ];
 
 export function ActivityDevicesPage() {
@@ -111,7 +111,7 @@ export function ActivityDevicesPage() {
         {deviceApps.map((device) => (
           <article className="hub-card" key={device.name} style={{cursor:'default'}}>
             <span className="hub-card-icon" style={{background:'#fff',border:'1px solid var(--border, #e4e9e4)',display:'grid',placeItems:'center',overflow:'hidden'}}>
-              <img src={device.logo} alt={device.alt} width="42" height="42" loading="lazy" style={{objectFit:'contain'}} />
+              <img src={`${import.meta.env.BASE_URL}device-logos/${device.logo}`} alt={device.alt} width="132" height="48" loading="eager" decoding="async" style={{width:'132px',height:'48px',objectFit:'contain',display:'block'}} />
             </span>
             <span className="hub-card-copy"><strong>{device.name}</strong><small>{device.detail}</small></span>
           </article>
@@ -135,6 +135,8 @@ export function ActivityDevicesPage() {
 }
 
 const GOAL_STORAGE_KEY = 'sistcs-leve-activity-goal-minutes';
+const GOAL_EXERCISE_STORAGE_KEY = 'sistcs-leve-activity-goal-exercise';
+const ACTIVITY_EXERCISES = ['Caminhada', 'Corrida', 'Bicicleta', 'Musculação', 'Natação', 'Dança', 'Yoga / Pilates', 'Alongamento', 'Outro'];
 const formatClock = (seconds: number) => {
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
@@ -148,6 +150,12 @@ export function ActivityGoalsPage() {
   });
   const [savedGoal, setSavedGoal] = useState(() => {
     try { return window.localStorage.getItem(GOAL_STORAGE_KEY) ?? ''; } catch { return ''; }
+  });
+  const [selectedExercise, setSelectedExercise] = useState(() => {
+    try { return window.localStorage.getItem(GOAL_EXERCISE_STORAGE_KEY) ?? 'Caminhada'; } catch { return 'Caminhada'; }
+  });
+  const [savedExercise, setSavedExercise] = useState(() => {
+    try { return window.localStorage.getItem(GOAL_EXERCISE_STORAGE_KEY) ?? ''; } catch { return ''; }
   });
   const [elapsed, setElapsed] = useState(0);
   const [running, setRunning] = useState(false);
@@ -171,8 +179,10 @@ export function ActivityGoalsPage() {
     }
     try {
       window.localStorage.setItem(GOAL_STORAGE_KEY, String(minutes));
+      window.localStorage.setItem(GOAL_EXERCISE_STORAGE_KEY, selectedExercise);
       setSavedGoal(String(minutes));
-      setMessage('Sua meta foi salva neste dispositivo.');
+      setSavedExercise(selectedExercise);
+      setMessage('Sua meta e o exercício escolhido foram salvos neste dispositivo.');
     } catch {
       setMessage('Não foi possível guardar a meta neste dispositivo. Verifique as permissões do navegador.');
     }
@@ -209,18 +219,23 @@ export function ActivityGoalsPage() {
       <section className="initial-card" style={{marginBottom:'1rem'}}>
         <div className="hub-card-copy"><p className="eyebrow">MINHA META</p><h2>Defina sua meta semanal</h2><p className="empty-description">Escolha quantos minutos de atividade você quer praticar por semana.</p></div>
         <form onSubmit={saveGoal} style={{display:'flex',alignItems:'end',gap:'.75rem',flexWrap:'wrap',marginTop:'1rem'}}>
+          <label className="exercise-field" style={{flex:'1 1 220px'}}>Exercício que vou fazer
+            <select required value={selectedExercise} onChange={(event) => setSelectedExercise(event.target.value)}>
+              {ACTIVITY_EXERCISES.map((exercise) => <option key={exercise} value={exercise}>{exercise}</option>)}
+            </select>
+          </label>
           <label className="exercise-field" style={{flex:'1 1 180px'}}>Minutos por semana
             <input type="number" min="1" max="10080" step="1" required value={goalInput} onChange={(event) => setGoalInput(event.target.value)} placeholder="Ex.: 150" />
           </label>
           <button className="btn" type="submit"><Save size={16} /> Salvar meta</button>
         </form>
-        {savedGoal && <p role="status" style={{marginTop:'.75rem'}}><strong>Meta atual:</strong> {savedGoal} minutos por semana.</p>}
+        {savedGoal && <p role="status" style={{marginTop:'.75rem'}}><strong>Meta atual:</strong> {savedExercise || selectedExercise} · {savedGoal} minutos por semana.</p>}
         {message && <p role="status" style={{marginTop:'.5rem'}}>{message}</p>}
       </section>
       <section className="initial-card">
         <p className="eyebrow">CRONÔMETRO</p>
-        <h2>Tempo de exercício</h2>
-        <p className="empty-description">Toque em iniciar quando começar e pause ao terminar. O tempo é contado mesmo se a tela ficar em segundo plano.</p>
+        <h2>Tempo de {selectedExercise.toLocaleLowerCase('pt-BR')}</h2>
+        <p className="empty-description">Exercício selecionado: {selectedExercise}. Toque em iniciar quando começar e pause ao terminar. O cronômetro mede a duração desta sessão; registre a atividade ao concluir para incluí-la no histórico.</p>
         <p aria-live="off" style={{fontVariantNumeric:'tabular-nums',fontSize:'clamp(2.5rem,12vw,4rem)',fontWeight:750,letterSpacing:'.04em',textAlign:'center',margin:'1.5rem 0'}}>{formatClock(elapsed)}</p>
         <div style={{display:'flex',justifyContent:'center',gap:'.75rem',flexWrap:'wrap'}}>
           <button className="btn" type="button" onClick={toggleTimer}>{running ? <><Pause size={17}/> Pausar</> : <><Play size={17}/> {elapsed ? 'Continuar' : 'Iniciar cronômetro'}</>}</button>

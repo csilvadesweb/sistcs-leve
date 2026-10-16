@@ -73,7 +73,7 @@ export function Exercises(){
         <div><p style={{margin:0,fontSize:'.72rem',fontWeight:700,letterSpacing:'.12em',opacity:.82}}>SEU PROGRESSO</p><h2 style={{margin:'.2rem 0 0',fontSize:'1.1rem',fontWeight:700}}>Resumo dos exercícios</h2></div>
         <div style={{display:'flex',alignItems:'center',gap:'.5rem',flexWrap:'wrap'}}>
           <span style={{fontSize:'.82rem',padding:'.35rem .65rem',borderRadius:'999px',background:'rgba(255,255,255,.14)'}}>{date===todayInSaoPaulo()?'Hoje':'Dia selecionado'}</span>
-          <button type="button" onClick={()=>newEntry()} disabled={busy||!data.exerciseTrackingAvailable} style={{display:'inline-flex',alignItems:'center',justifyContent:'center',gap:'.4rem',minHeight:'42px',padding:'.65rem .9rem',borderRadius:'.75rem',border:'1px solid rgba(255,255,255,.35)',background:'#fff',color:'var(--primary, #315b43)',fontWeight:700,cursor:busy?'not-allowed':'pointer',opacity:busy||!data.exerciseTrackingAvailable?.65:1}}><Plus size={16}/> Registrar exercício</button>
+          <button type="button" onClick={()=>newEntry()} disabled={busy||!data.exerciseTrackingAvailable} style={{display:'inline-flex',alignItems:'center',justifyContent:'center',gap:'.4rem',minHeight:'42px',padding:'.65rem .9rem',borderRadius:'.75rem',border:'1px solid rgba(255,255,255,.35)',background:'#fff',color:'var(--primary, #315b43)',fontWeight:700,cursor:busy?'not-allowed':'pointer',opacity:(busy || !data.exerciseTrackingAvailable) ? 0.65 : 1}}><Plus size={16}/> Registrar exercício</button>
         </div>
       </div>
       <div className="exercise-summary" style={{margin:0,display:'grid',gridTemplateColumns:'repeat(3,minmax(0,1fr))',gap:'.65rem'}}>

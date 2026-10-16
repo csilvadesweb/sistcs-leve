@@ -235,7 +235,7 @@ export function ActivityGoalsPage() {
       <section className="initial-card">
         <p className="eyebrow">CRONÔMETRO</p>
         <h2>Tempo de {selectedExercise.toLocaleLowerCase('pt-BR')}</h2>
-        <p className="empty-description">Exercício selecionado: {selectedExercise{'}'}. Toque em iniciar quando começar e pause ao terminar. O cronômetro mede a duração desta sessão; registre a atividade ao concluir para incluí-la no histórico.</p>
+        <p className="empty-description">Exercício selecionado: {selectedExercise}. Toque em iniciar quando começar e pause ao terminar. O cronômetro mede a duração desta sessão; registre a atividade ao concluir para incluí-la no histórico.</p>
         <p aria-live="off" style={{fontVariantNumeric:'tabular-nums',fontSize:'clamp(2.5rem,12vw,4rem)',fontWeight:750,letterSpacing:'.04em',textAlign:'center',margin:'1.5rem 0'}}>{formatClock(elapsed)}</p>
         <div style={{display:'flex',justifyContent:'center',gap:'.75rem',flexWrap:'wrap'}}>
           <button className="btn" type="button" onClick={toggleTimer}>{running ? <><Pause size={17}/> Pausar</> : <><Play size={17}/> {elapsed ? 'Continuar' : 'Iniciar cronômetro'}</>}</button>

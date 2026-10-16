@@ -1,4 +1,4 @@
-import {useMemo,useState,type FormEvent} from 'react';
+import {useEffect,useMemo,useRef,useState,type FormEvent} from 'react';
 import {Activity,Bike,Dumbbell,Footprints,Music,Plus,Save,Trash2,Trophy,Waves} from 'lucide-react';
 import {useAppData} from '../session';
 import {deleteExerciseEntry,type ExerciseEntry} from '../data';
@@ -28,6 +28,8 @@ export function Exercises(){
   const[editing,setEditing]=useState<ExerciseEntry|null>(null);
   const[open,setOpen]=useState(false),[busy,setBusy]=useState(false);
   const[feedback,setFeedback]=useState<{kind:'success'|'error';message:string}|null>(null);
+  const durationInputRef=useRef<HTMLInputElement>(null);
+  useEffect(()=>{if(!open)return;durationInputRef.current?.focus();function onKeyDown(event:KeyboardEvent){if(event.key==='Escape')setOpen(false)}window.addEventListener('keydown',onKeyDown);return()=>window.removeEventListener('keydown',onKeyDown)},[open]);
   const entries=useMemo(()=>data.exerciseEntries.filter(e=>e.date===date),[data.exerciseEntries,date]);
   const minutes=entries.reduce((s,e)=>s+e.durationMinutes,0),calories=entries.reduce((s,e)=>s+e.caloriesBurned,0);
   const activity=EXERCISE_ACTIVITIES.find(a=>a.id===form.activityId)??EXERCISE_ACTIVITIES[0]!;
@@ -82,16 +84,20 @@ export function Exercises(){
       {!data.exerciseTrackingAvailable&&<p className="ft-feedback ft-feedback-error" role="status">Você pode informar a duração e visualizar a estimativa agora. Para salvar o registro, é necessário ativar a tabela de exercícios no banco conectado.</p>}
     </section>
 
-    {open&&<section className="ft-card"><div className="ft-card-heading"><h2 className="rep-title">{editing?'Editar atividade':'Registrar '+(EXERCISE_ACTIVITIES.find(a=>a.id===form.activityId)?.label??'atividade')}</h2><button type="button" onClick={()=>setOpen(false)}>Fechar</button></div>
-      <form onSubmit={submit}><div className="exercise-form-grid">
-        <label className="exercise-field">Data<input type="date" required value={form.date} onChange={e=>setForm(v=>({...v,date:e.target.value}))}/></label>
-        <label className="exercise-field">Atividade<select value={form.activityId} onChange={e=>setForm(v=>({...v,activityId:e.target.value}))}>{EXERCISE_ACTIVITIES.map(a=><option value={a.id} key={a.id}>{a.label}</option>)}</select></label>
-        <label className="exercise-field">Duração (minutos)<input type="number" min="1" max="1440" required value={form.duration} onChange={e=>setForm(v=>({...v,duration:e.target.value}))}/></label>
-        <label className="exercise-field">Peso usado (kg)<input type="number" min="20" max="400" step=".1" required value={form.weight} onChange={e=>setForm(v=>({...v,weight:e.target.value}))} placeholder={latestWeight?String(latestWeight):'Ex.: 70'}/></label>
-      </div><label className="exercise-field">Observações<textarea maxLength={300} rows={2} value={form.note} onChange={e=>setForm(v=>({...v,note:e.target.value}))}/></label>
-      <p className="ft-preview"><strong>{decimalText(estimateExerciseCalories(activity.met,Number(form.weight),Number(form.duration)))} kcal estimadas</strong><span>Estimativa aproximada por MET; o gasto real varia.</span></p>
-      <div className="exercise-actions"><button className="btn" type="submit" disabled={busy||!data.exerciseTrackingAvailable}><Save size={16}/>{busy?' Salvando…':' Salvar exercício'}</button><button type="button" onClick={()=>setOpen(false)}>Cancelar</button></div></form>
-    </section>}
+    {open&&<div role="presentation" onMouseDown={event=>{if(event.target===event.currentTarget)setOpen(false)}} style={{position:'fixed',inset:0,zIndex:1000,display:'grid',placeItems:'center',padding:'1rem',background:'rgba(15,25,18,.58)',backdropFilter:'blur(3px)'}}>
+      <section className="ft-card" role="dialog" aria-modal="true" aria-labelledby="exercise-form-title" style={{width:'min(100%,680px)',maxHeight:'min(90dvh,760px)',overflowY:'auto',overscrollBehavior:'contain',boxShadow:'0 24px 80px rgba(0,0,0,.28)',border:'1px solid var(--border, rgba(90,110,90,.2))'}}>
+        <div className="ft-card-heading"><div><p className="ft-kicker">REGISTRO DE ATIVIDADE</p><h2 className="rep-title" id="exercise-form-title">{editing?'Editar atividade':'Registrar '+(EXERCISE_ACTIVITIES.find(a=>a.id===form.activityId)?.label??'atividade')}</h2></div><button type="button" onClick={()=>setOpen(false)} aria-label="Fechar formulário">Fechar</button></div>
+        <form onSubmit={submit}><div className="exercise-form-grid">
+          <label className="exercise-field">Data<input type="date" required value={form.date} onChange={e=>setForm(v=>({...v,date:e.target.value}))}/></label>
+          <label className="exercise-field">Atividade<select value={form.activityId} onChange={e=>setForm(v=>({...v,activityId:e.target.value}))}>{EXERCISE_ACTIVITIES.map(a=><option value={a.id} key={a.id}>{a.label}</option>)}</select></label>
+          <label className="exercise-field">Duração (minutos)<input ref={durationInputRef} type="number" min="1" max="1440" required value={form.duration} onChange={e=>setForm(v=>({...v,duration:e.target.value}))}/></label>
+          <label className="exercise-field">Peso usado (kg)<input type="number" min="20" max="400" step=".1" required value={form.weight} onChange={e=>setForm(v=>({...v,weight:e.target.value}))} placeholder={latestWeight?String(latestWeight):'Ex.: 70'}/></label>
+        </div><label className="exercise-field">Observações<textarea maxLength={300} rows={2} value={form.note} onChange={e=>setForm(v=>({...v,note:e.target.value}))}/></label>
+        <p className="ft-preview"><strong>{decimalText(estimateExerciseCalories(activity.met,Number(form.weight),Number(form.duration)))} kcal estimadas</strong><span>Estimativa aproximada por MET; o gasto real varia.</span></p>
+        {!data.exerciseTrackingAvailable&&<p className="ft-feedback ft-feedback-error" role="status">A estimativa aparece aqui, mas o banco ainda não permite salvar este registro.</p>}
+        <div className="exercise-actions"><button className="btn" type="submit" disabled={busy||!data.exerciseTrackingAvailable}><Save size={16}/>{busy?' Salvando…':' Salvar exercício'}</button><button type="button" onClick={()=>setOpen(false)}>Cancelar</button></div></form>
+      </section>
+    </div>}
 
     <section className="exercise-summary"><div><span>Calorias estimadas</span><strong>{decimalText(calories)} kcal</strong></div><div><span>Tempo ativo</span><strong>{minutes} min</strong></div><div><span>Atividades</span><strong>{entries.length}</strong></div></section>
     <section className="ft-card">

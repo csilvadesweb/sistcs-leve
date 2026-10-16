@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
-import { foodConfidence, foodSourceLabel, foodSourceUrl, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchFoodCatalog, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { foodConfidence, foodSourceLabel, foodSourceUrl, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchFoodCatalog, searchLocal, searchOpenFoodFactsPage, searchSupplementCatalog, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 import { SUPPLEMENT_SEARCH_TERMS } from './supplement-catalog';
 
 export interface PickedFood {
@@ -209,14 +209,17 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           searchOpenFoodFactsPage(parsed.name, 1, ctl.signal),
           searchTempoLifeFoods(parsed.name, 20),
           searchFoodCatalog(parsed.name, 20),
+          searchSupplementCatalog(parsed.name, 20),
         ]);
         if (ctl.signal.aborted) return;
         const productResult = results[0].status === 'fulfilled' ? results[0].value : { foods: [], hasMore: false };
         const referenceResult = results[1].status === 'fulfilled' ? results[1].value : [];
         const catalogResult = results[2].status === 'fulfilled' ? results[2].value : [];
+        const supplementResult = results[3].status === 'fulfilled' ? results[3].value : [];
         setOnline(productResult.foods);
         setReferenceFoods(referenceResult);
-        setCatalogFoods(catalogResult);
+        // Produtos cadastrados de suplementos aparecem antes das referências genéricas.
+        setCatalogFoods([...supplementResult, ...catalogResult]);
         setHasMoreOnline(productResult.hasMore);
         setStatus(results.every((result) => result.status === 'rejected') ? 'error' : 'done');
       } catch {

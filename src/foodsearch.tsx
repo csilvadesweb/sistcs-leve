@@ -360,8 +360,9 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
               {foodSourceUrl(food) && <a href={foodSourceUrl(food)} target="_blank" rel="noreferrer">Consultar fonte</a>}
             </div>
           </div>
-          {food.origin === 'off' && <section className="fs-nutrition-details" aria-label="Tabela nutricional por 100 gramas">
-            <strong>Tabela nutricional por 100 g</strong>
+          {(food.origin === 'off' || food.origin === 'supplement') && <section className="fs-nutrition-details" aria-label="Tabela nutricional por 100 gramas">
+            <strong>Tabela nutricional por 100 {food.basis === '100ml' ? 'ml' : 'g'}</strong>
+            {food.servingSize && <p className="field-hint">Porção indicada no rótulo: {food.servingSize}</p>}
             <dl>
               <div><dt>Energia</dt><dd>{decimalText(food.kcal)} kcal</dd></div>
               <div><dt>Proteínas</dt><dd>{food.reportedNutrients?.protein === false ? 'Não informado' : `${decimalText(food.protein)} g`}</dd></div>
@@ -371,7 +372,9 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
               <div><dt>Fibra alimentar</dt><dd>{food.reportedNutrients?.fiber === false ? 'Não informado' : `${decimalText(food.fiber)} g`}</dd></div>
               <div><dt>Açúcares</dt><dd>{food.sugars === undefined ? 'Não informado' : `${decimalText(food.sugars)} g`}</dd></div>
               <div><dt>Sódio</dt><dd>{food.sodiumMg === undefined ? 'Não informado' : `${decimalText(food.sodiumMg)} mg`}</dd></div>
+              {Object.entries(food.micronutrients ?? {}).map(([name, value]) => <div key={name}><dt>{name.replaceAll('_', ' ')}</dt><dd>{String(value)}</dd></div>)}
             </dl>
+            {food.ingredients && <p><strong>Ingredientes e alergênicos:</strong> {food.ingredients}</p>}
             {food.reportedNutrients && Object.values(food.reportedNutrients).some((available) => !available) && <p>Alguns nutrientes não foram informados pela fonte; o cálculo desses itens pode ficar incompleto.</p>}
           </section>}
           <label className="fs-g-label" htmlFor="fs-measure">Medida do alimento</label>

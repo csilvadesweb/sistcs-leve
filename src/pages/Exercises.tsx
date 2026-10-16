@@ -68,6 +68,18 @@ export function Exercises(){
 
   return <div className="ft-page page-enter">
     <header className="ft-heading"><div><p className="eyebrow"><span className="eyebrow-dot"/>MOVIMENTO E ENERGIA</p><h1 className="serif-display">Exercícios</h1><p>Escolha uma atividade, informe o tempo praticado e acompanhe a estimativa de calorias queimadas.</p></div><div className="ft-heading-icon" aria-hidden="true"><Dumbbell size={29}/></div></header>
+    <section aria-label="Resumo de atividade do dia" style={{marginBlock:'1rem 1.5rem',padding:'1rem',borderRadius:'1.1rem',background:'linear-gradient(135deg, var(--primary, #315b43), #244634)',color:'#fff',boxShadow:'0 8px 24px rgba(25,55,35,.14)'}}>
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'.75rem',flexWrap:'wrap',marginBottom:'.9rem'}}>
+        <div><p style={{margin:0,fontSize:'.72rem',fontWeight:700,letterSpacing:'.12em',opacity:.82}}>SEU PROGRESSO</p><h2 style={{margin:'.2rem 0 0',fontSize:'1.1rem',fontWeight:700}}>Resumo dos exercícios</h2></div>
+        <span style={{fontSize:'.82rem',padding:'.35rem .65rem',borderRadius:'999px',background:'rgba(255,255,255,.14)'}}>{date===todayInSaoPaulo()?'Hoje':'Dia selecionado'}</span>
+      </div>
+      <div className="exercise-summary" style={{margin:0,display:'grid',gridTemplateColumns:'repeat(3,minmax(0,1fr))',gap:'.65rem'}}>
+        <div style={{padding:'.8rem .65rem',borderRadius:'.8rem',background:'rgba(255,255,255,.12)',minWidth:0}}><span style={{display:'block',fontSize:'.76rem',lineHeight:1.3,opacity:.86}}>Calorias queimadas</span><strong style={{display:'block',fontSize:'clamp(1.05rem,4vw,1.55rem)',lineHeight:1.25,marginTop:'.35rem',overflowWrap:'anywhere'}}>{decimalText(calories)} kcal</strong></div>
+        <div style={{padding:'.8rem .65rem',borderRadius:'.8rem',background:'rgba(255,255,255,.12)',minWidth:0}}><span style={{display:'block',fontSize:'.76rem',lineHeight:1.3,opacity:.86}}>Tempo ativo</span><strong style={{display:'block',fontSize:'clamp(1.05rem,4vw,1.55rem)',lineHeight:1.25,marginTop:'.35rem'}}>{minutes} min</strong></div>
+        <div style={{padding:'.8rem .65rem',borderRadius:'.8rem',background:'rgba(255,255,255,.12)',minWidth:0}}><span style={{display:'block',fontSize:'.76rem',lineHeight:1.3,opacity:.86}}>Atividades</span><strong style={{display:'block',fontSize:'clamp(1.05rem,4vw,1.55rem)',lineHeight:1.25,marginTop:'.35rem'}}>{entries.length}</strong></div>
+      </div>
+      <p style={{fontSize:'.76rem',lineHeight:1.4,margin:'.75rem 0 0',opacity:.78}}>Estimativas calculadas a partir dos exercícios registrados na data selecionada.</p>
+    </section>
     {loadError&&<p className="ft-feedback ft-feedback-error" role="alert">{loadError}</p>}
     {loading&&<p role="status">Carregando registros…</p>}
     <HealthActivityCard />
@@ -75,8 +87,8 @@ export function Exercises(){
 
     <section aria-labelledby="exercise-menu-title" style={{marginBlock:'1.25rem'}}>
       <div className="ft-card-heading" style={{marginBottom:'.85rem'}}><div><p className="ft-kicker">ESCOLHA SUA ATIVIDADE</p><h2 className="rep-title" id="exercise-menu-title">O que você praticou?</h2></div></div>
-      <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,220px),1fr))',gap:'.8rem'}}>
-        {activityMenu.map(item=>{const Icon=item.icon;return <button key={item.title} type="button" className="ft-card exercise-menu-card" onClick={()=>newEntry(item.activityId)} disabled={busy} style={{display:'flex',alignItems:'center',gap:'.85rem',padding:'1rem',textAlign:'left',width:'100%',cursor:!busy?'pointer':'not-allowed',border:'1px solid var(--border, rgba(90,110,90,.2))',borderRadius:'1rem',background:'var(--card, #fff)',color:'inherit',minHeight:'88px'}}>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,260px),1fr))',gap:'.8rem'}}>
+        {activityMenu.map(item=>{const Icon=item.icon;return <button key={item.title} type="button" className="ft-card exercise-menu-card" onClick={()=>newEntry(item.activityId)} disabled={busy} style={{display:'flex',alignItems:'center',gap:'.85rem',padding:'1rem',textAlign:'left',width:'100%',cursor:!busy?'pointer':'not-allowed',border:'1px solid var(--border, rgba(90,110,90,.16))',borderRadius:'1rem',background:'var(--card, #fff)',color:'inherit',minHeight:'92px',boxShadow:'0 3px 12px rgba(25,45,30,.045)',transition:'transform .16s ease, box-shadow .16s ease'}}>
           <span aria-hidden="true" style={{display:'grid',placeItems:'center',width:'44px',height:'44px',flexShrink:0,borderRadius:'.8rem',background:'var(--surface-muted, #edf3ed)',color:'var(--primary, #315b43)'}}><Icon size={22}/></span>
           <span style={{display:'flex',flexDirection:'column',gap:'.25rem',flex:1,minWidth:0}}><strong>{item.title}</strong><span style={{fontSize:'.84rem',lineHeight:1.35,opacity:.75}}>{item.description}</span></span><Plus size={18} aria-hidden="true"/>
         </button>})}
@@ -99,7 +111,7 @@ export function Exercises(){
       </section>
     </div>}
 
-    <section className="exercise-summary"><div><span>Calorias estimadas</span><strong>{decimalText(calories)} kcal</strong></div><div><span>Tempo ativo</span><strong>{minutes} min</strong></div><div><span>Atividades</span><strong>{entries.length}</strong></div></section>
+    
     <section className="ft-card">
       <div className="ft-card-heading"><div><p className="ft-kicker">HISTÓRICO DIÁRIO</p><h2 className="rep-title">Seus exercícios</h2></div><button className="btn" type="button" onClick={()=>newEntry()} disabled={!data.exerciseTrackingAvailable||busy}><Plus size={17}/> Adicionar</button></div>
       <label className="exercise-field">Data<input type="date" value={date} onChange={e=>setDate(e.target.value)}/></label>

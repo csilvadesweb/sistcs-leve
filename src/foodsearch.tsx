@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
 import { foodConfidence, foodSourceLabel, foodSourceUrl, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchFoodCatalog, searchLocal, searchOpenFoodFactsPage, searchSupplementCatalog, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
-import { SUPPLEMENT_SEARCH_TERMS } from './supplement-catalog';
 
 export interface PickedFood {
   name: string;
@@ -332,20 +331,10 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           autoFocus
         />
       </div>
-      <section className="fs-supplement-shortcuts" aria-label="Atalhos para buscar suplementos">
-        <strong>Buscar suplementos</strong>
-        <p className="field-hint">Pesquise produtos disponíveis no catálogo online; confira sempre a marca e o rótulo.</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-          {SUPPLEMENT_SEARCH_TERMS.map((term) => (
-            <Button key={term} variant="outline" size="sm" onClick={() => {
-              setQuery(term);
-              setManualPick(null);
-              setGramsText(null);
-              setMessage('');
-            }}>{term}</Button>
-          ))}
-        </div>
-        <small className="field-hint">A cobertura varia por produto e marca. Valores ausentes não são estimados automaticamente; use “Fotografar tabela nutricional” para ler o rótulo e revise antes de registrar.</small>
+      <section className="fs-supplement-shortcuts" aria-label="Catálogo de suplementos">
+        <strong>Catálogo de suplementos</strong>
+        <p className="field-hint">Digite o nome do produto ou da marca — por exemplo, “creatina Integralmédica” ou “ISO Triple Zero”. Também pode consultar pelo código de barras. Os resultados mostram produtos identificados, não categorias genéricas.</p>
+        <small className="field-hint">Confira a porção e o rótulo antes de registrar. Quando os dados nutricionais não estiverem disponíveis, eles não serão inventados.</small>
       </section>
       <div className="fs-bar">
         <label className="sr-only" htmlFor="fs-code">Código de barras</label>

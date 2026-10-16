@@ -2,10 +2,11 @@ import { Link } from 'wouter';
 import {
   BrainCircuit, ChartNoAxesCombined, ChefHat, ChevronRight, ClipboardList,
   Footprints, GlassWater, Scale, Timer, Utensils, Watch, Dumbbell,
+  type LucideIcon,
 } from 'lucide-react';
 import { WaterReminders } from '../WaterReminders';
 
-type HubItem = { title: string; description: string; href: string; icon: typeof Apple };
+type HubItem = { title: string; description: string; href: string; icon: LucideIcon };
 
 const groups: Record<string, { eyebrow: string; title: string; intro: string; items: HubItem[] }> = {
   food: {

@@ -17,7 +17,10 @@ const Exercises = lazy(() => import('./pages/Exercises').then((m) => ({ default:
 const ProfileSettings = lazy(() => import('./pages/Profile').then((m) => ({ default: m.ProfileSettings })));
 const Recipes = lazy(() => import('./pages/Recipes').then((m) => ({ default: m.Recipes })));
 const Assistant = lazy(() => import('./pages/Assistant').then((m) => ({ default: m.Assistant })));
-const NavigationHub = lazy(() => import('./pages/NavigationHub'));
+const FoodHub = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.FoodHub })));
+const ActivityHub = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.ActivityHub })));
+const EvolutionHub = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.EvolutionHub })));
+const HydrationPage = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.HydrationPage })));
 
 const destinations = [
   { href: '/', label: 'Início', short: 'Início', icon: House },
@@ -307,11 +310,11 @@ export default function App() {
           <Suspense fallback={<p className="auth-loading" role="status">Carregando…</p>}>
           <Switch>
             <Route path="/" component={Home} />
-            <Route path="/alimentacao" component={NavigationHub.FoodHub} />
+            <Route path="/alimentacao" component={FoodHub} />
             <Route path="/diario" component={FoodTracking} />
-            <Route path="/atividade" component={NavigationHub.ActivityHub} />
-            <Route path="/evolucao" component={NavigationHub.EvolutionHub} />
-            <Route path="/hidratacao" component={NavigationHub.HydrationPage} />
+            <Route path="/atividade" component={ActivityHub} />
+            <Route path="/evolucao" component={EvolutionHub} />
+            <Route path="/hidratacao" component={HydrationPage} />
             <Route path="/receitas" component={Recipes} />
             <Route path="/assistente" component={Assistant} />
             <Route path="/exercicios" component={Exercises} />

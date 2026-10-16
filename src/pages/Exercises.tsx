@@ -74,19 +74,12 @@ export function Exercises(){
     <section aria-labelledby="exercise-menu-title" style={{marginBlock:'1.25rem'}}>
       <div className="ft-card-heading" style={{marginBottom:'.85rem'}}><div><p className="ft-kicker">ESCOLHA SUA ATIVIDADE</p><h2 className="rep-title" id="exercise-menu-title">O que você praticou?</h2></div></div>
       <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,220px),1fr))',gap:'.8rem'}}>
-        {activityMenu.map(item=>{const Icon=item.icon;return <button key={item.title} type="button" className="ft-card exercise-menu-card" onClick={()=>newEntry(item.activityId)} disabled={!data.exerciseTrackingAvailable||busy} style={{display:'flex',alignItems:'center',gap:'.85rem',padding:'1rem',textAlign:'left',width:'100%',cursor:data.exerciseTrackingAvailable&&!busy?'pointer':'not-allowed',border:'1px solid var(--border, rgba(90,110,90,.2))',borderRadius:'1rem',background:'var(--card, #fff)',color:'inherit',minHeight:'88px'}}>
+        {activityMenu.map(item=>{const Icon=item.icon;return <button key={item.title} type="button" className="ft-card exercise-menu-card" onClick={()=>newEntry(item.activityId)} disabled={busy} style={{display:'flex',alignItems:'center',gap:'.85rem',padding:'1rem',textAlign:'left',width:'100%',cursor:!busy?'pointer':'not-allowed',border:'1px solid var(--border, rgba(90,110,90,.2))',borderRadius:'1rem',background:'var(--card, #fff)',color:'inherit',minHeight:'88px'}}>
           <span aria-hidden="true" style={{display:'grid',placeItems:'center',width:'44px',height:'44px',flexShrink:0,borderRadius:'.8rem',background:'var(--surface-muted, #edf3ed)',color:'var(--primary, #315b43)'}}><Icon size={22}/></span>
           <span style={{display:'flex',flexDirection:'column',gap:'.25rem',flex:1,minWidth:0}}><strong>{item.title}</strong><span style={{fontSize:'.84rem',lineHeight:1.35,opacity:.75}}>{item.description}</span></span><Plus size={18} aria-hidden="true"/>
         </button>})}
       </div>
-      {!data.exerciseTrackingAvailable&&<p className="ft-feedback ft-feedback-error" role="status">O registro será habilitado quando a tabela de exercícios estiver disponível no banco conectado.</p>}
-    </section>
-
-    <section className="exercise-summary"><div><span>Calorias estimadas</span><strong>{decimalText(calories)} kcal</strong></div><div><span>Tempo ativo</span><strong>{minutes} min</strong></div><div><span>Atividades</span><strong>{entries.length}</strong></div></section>
-    <section className="ft-card">
-      <div className="ft-card-heading"><div><p className="ft-kicker">HISTÓRICO DIÁRIO</p><h2 className="rep-title">Seus exercícios</h2></div><button className="btn" type="button" onClick={()=>newEntry()} disabled={!data.exerciseTrackingAvailable||busy}><Plus size={17}/> Adicionar</button></div>
-      <label className="exercise-field">Data<input type="date" value={date} onChange={e=>setDate(e.target.value)}/></label>
-      {entries.length?entries.map(e=><article className="exercise-entry" key={e.id}><div><strong>{e.activity}</strong><p>{e.durationMinutes} min · {decimalText(e.caloriesBurned)} kcal estimadas</p>{e.note&&<small>{e.note}</small>}</div><div className="exercise-actions"><button type="button" onClick={()=>void editEntry(e)} disabled={busy}>Editar</button><button type="button" onClick={()=>void remove(e)} disabled={busy} aria-label={'Excluir '+e.activity}><Trash2 size={16}/></button></div></article>):<p className="ft-favorites-empty">Nenhuma atividade registrada nesta data.</p>}
+      {!data.exerciseTrackingAvailable&&<p className="ft-feedback ft-feedback-error" role="status">Você pode informar a duração e visualizar a estimativa agora. Para salvar o registro, é necessário ativar a tabela de exercícios no banco conectado.</p>}
     </section>
 
     {open&&<section className="ft-card"><div className="ft-card-heading"><h2 className="rep-title">{editing?'Editar atividade':'Registrar '+(EXERCISE_ACTIVITIES.find(a=>a.id===form.activityId)?.label??'atividade')}</h2><button type="button" onClick={()=>setOpen(false)}>Fechar</button></div>
@@ -99,6 +92,14 @@ export function Exercises(){
       <p className="ft-preview"><strong>{decimalText(estimateExerciseCalories(activity.met,Number(form.weight),Number(form.duration)))} kcal estimadas</strong><span>Estimativa aproximada por MET; o gasto real varia.</span></p>
       <div className="exercise-actions"><button className="btn" type="submit" disabled={busy||!data.exerciseTrackingAvailable}><Save size={16}/>{busy?' Salvando…':' Salvar exercício'}</button><button type="button" onClick={()=>setOpen(false)}>Cancelar</button></div></form>
     </section>}
+
+    <section className="exercise-summary"><div><span>Calorias estimadas</span><strong>{decimalText(calories)} kcal</strong></div><div><span>Tempo ativo</span><strong>{minutes} min</strong></div><div><span>Atividades</span><strong>{entries.length}</strong></div></section>
+    <section className="ft-card">
+      <div className="ft-card-heading"><div><p className="ft-kicker">HISTÓRICO DIÁRIO</p><h2 className="rep-title">Seus exercícios</h2></div><button className="btn" type="button" onClick={()=>newEntry()} disabled={!data.exerciseTrackingAvailable||busy}><Plus size={17}/> Adicionar</button></div>
+      <label className="exercise-field">Data<input type="date" value={date} onChange={e=>setDate(e.target.value)}/></label>
+      {entries.length?entries.map(e=><article className="exercise-entry" key={e.id}><div><strong>{e.activity}</strong><p>{e.durationMinutes} min · {decimalText(e.caloriesBurned)} kcal estimadas</p>{e.note&&<small>{e.note}</small>}</div><div className="exercise-actions"><button type="button" onClick={()=>void editEntry(e)} disabled={busy}>Editar</button><button type="button" onClick={()=>void remove(e)} disabled={busy} aria-label={'Excluir '+e.activity}><Trash2 size={16}/></button></div></article>):<p className="ft-favorites-empty">Nenhuma atividade registrada nesta data.</p>}
+    </section>
+
     {feedback&&<p className={'ft-feedback '+(feedback.kind==='error'?'ft-feedback-error':'')} role={feedback.kind==='error'?'alert':'status'}>{feedback.message}</p>}
   </div>;
 }

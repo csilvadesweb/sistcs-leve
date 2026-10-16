@@ -328,6 +328,26 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           autoFocus
         />
       </div>
+      <section className="fs-supplement-shortcuts" aria-label="Atalhos para buscar suplementos">
+        <strong>Buscar suplementos</strong>
+        <p className="field-hint">Pesquise produtos disponíveis no catálogo online; confira sempre a marca e o rótulo.</p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+          {[
+            'Whey protein', 'Creatina', 'Albumina', 'Hipercalórico',
+            'BCAA', 'Glutamina', 'Beta-alanina', 'Cafeína',
+            'Colágeno', 'Multivitamínico', 'Ômega 3', 'Eletrólitos',
+            'Pré-treino', 'Proteína vegetal',
+          ].map((term) => (
+            <Button key={term} variant="outline" size="sm" onClick={() => {
+              setQuery(term);
+              setManualPick(null);
+              setGramsText(null);
+              setMessage('');
+            }}>{term}</Button>
+          ))}
+        </div>
+        <small className="field-hint">A cobertura varia por produto e marca. Valores ausentes não são estimados automaticamente; use “Fotografar tabela nutricional” para ler o rótulo e revise antes de registrar.</small>
+      </section>
       <div className="fs-bar">
         <label className="sr-only" htmlFor="fs-code">Código de barras</label>
         <input id="fs-code" className="input" inputMode="numeric" placeholder="Ou o código de barras (EAN)" value={code} onChange={(e) => setCode(normalizeBarcodeInput(e.target.value))} />

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import type { FormEvent } from 'react';
 import { Link } from 'wouter';
 import {
   BrainCircuit, ChartNoAxesCombined, ChefHat, ChevronRight, ClipboardList,

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
 import { foodConfidence, foodSourceLabel, foodSourceUrl, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchFoodCatalog, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { SUPPLEMENT_SEARCH_TERMS } from './supplement-catalog';
 
 export interface PickedFood {
   name: string;
@@ -332,12 +333,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
         <strong>Buscar suplementos</strong>
         <p className="field-hint">Pesquise produtos disponíveis no catálogo online; confira sempre a marca e o rótulo.</p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-          {[
-            'Whey protein', 'Creatina', 'Albumina', 'Hipercalórico',
-            'BCAA', 'Glutamina', 'Beta-alanina', 'Cafeína',
-            'Colágeno', 'Multivitamínico', 'Ômega 3', 'Eletrólitos',
-            'Pré-treino', 'Proteína vegetal',
-          ].map((term) => (
+          {SUPPLEMENT_SEARCH_TERMS.map((term) => (
             <Button key={term} variant="outline" size="sm" onClick={() => {
               setQuery(term);
               setManualPick(null);

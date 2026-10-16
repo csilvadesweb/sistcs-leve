@@ -71,7 +71,10 @@ export function Exercises(){
     <section aria-label="Resumo de atividade do dia" style={{marginBlock:'1rem 1.5rem',padding:'1rem',borderRadius:'1.1rem',background:'linear-gradient(135deg, var(--primary, #315b43), #244634)',color:'#fff',boxShadow:'0 8px 24px rgba(25,55,35,.14)'}}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'.75rem',flexWrap:'wrap',marginBottom:'.9rem'}}>
         <div><p style={{margin:0,fontSize:'.72rem',fontWeight:700,letterSpacing:'.12em',opacity:.82}}>SEU PROGRESSO</p><h2 style={{margin:'.2rem 0 0',fontSize:'1.1rem',fontWeight:700}}>Resumo dos exercícios</h2></div>
-        <span style={{fontSize:'.82rem',padding:'.35rem .65rem',borderRadius:'999px',background:'rgba(255,255,255,.14)'}}>{date===todayInSaoPaulo()?'Hoje':'Dia selecionado'}</span>
+        <div style={{display:'flex',alignItems:'center',gap:'.5rem',flexWrap:'wrap'}}>
+          <span style={{fontSize:'.82rem',padding:'.35rem .65rem',borderRadius:'999px',background:'rgba(255,255,255,.14)'}}>{date===todayInSaoPaulo()?'Hoje':'Dia selecionado'}</span>
+          <button type="button" onClick={()=>newEntry()} disabled={busy||!data.exerciseTrackingAvailable} style={{display:'inline-flex',alignItems:'center',justifyContent:'center',gap:'.4rem',minHeight:'42px',padding:'.65rem .9rem',borderRadius:'.75rem',border:'1px solid rgba(255,255,255,.35)',background:'#fff',color:'var(--primary, #315b43)',fontWeight:700,cursor:busy?'not-allowed':'pointer',opacity:busy||!data.exerciseTrackingAvailable?.65:1}}><Plus size={16}/> Registrar exercício</button>
+        </div>
       </div>
       <div className="exercise-summary" style={{margin:0,display:'grid',gridTemplateColumns:'repeat(3,minmax(0,1fr))',gap:'.65rem'}}>
         <div style={{padding:'.8rem .65rem',borderRadius:'.8rem',background:'rgba(255,255,255,.12)',minWidth:0}}><span style={{display:'block',fontSize:'.76rem',lineHeight:1.3,opacity:.86}}>Calorias queimadas</span><strong style={{display:'block',fontSize:'clamp(1.05rem,4vw,1.55rem)',lineHeight:1.25,marginTop:'.35rem',overflowWrap:'anywhere'}}>{decimalText(calories)} kcal</strong></div>
@@ -82,7 +85,6 @@ export function Exercises(){
     </section>
     {loadError&&<p className="ft-feedback ft-feedback-error" role="alert">{loadError}</p>}
     {loading&&<p role="status">Carregando registros…</p>}
-    <HealthActivityCard />
     {!data.exerciseTrackingAvailable&&<div className="exercise-notice" role="status"><strong>Ativação pendente.</strong> A tabela ainda não existe no banco conectado. Aplique <code>supabase/migrations/20261012_exercise_entries.sql</code> no projeto correto para habilitar gravação. Dados existentes não são removidos.</div>}
 
     <section aria-labelledby="exercise-menu-title" style={{marginBlock:'1.25rem'}}>
@@ -95,6 +97,8 @@ export function Exercises(){
       </div>
       {!data.exerciseTrackingAvailable&&<p className="ft-feedback ft-feedback-error" role="status">Você pode informar a duração e visualizar a estimativa agora. Para salvar o registro, é necessário ativar a tabela de exercícios no banco conectado.</p>}
     </section>
+
+    <HealthActivityCard />
 
     {open&&<div role="presentation" onMouseDown={event=>{if(event.target===event.currentTarget)setOpen(false)}} style={{position:'fixed',inset:0,zIndex:1000,display:'flex',alignItems:'flex-start',justifyContent:'center',overflowY:'auto',WebkitOverflowScrolling:'touch',padding:'max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom))',boxSizing:'border-box',background:'rgba(15,25,18,.58)',backdropFilter:'blur(3px)'}}>
       <section className="ft-card" role="dialog" aria-modal="true" aria-labelledby="exercise-form-title" style={{width:'min(100%,680px)',maxHeight:'calc(100dvh - 2rem)',overflowY:'auto',overscrollBehavior:'contain',WebkitOverflowScrolling:'touch',boxSizing:'border-box',flexShrink:0,marginBlock:'auto',boxShadow:'0 24px 80px rgba(0,0,0,.28)',border:'1px solid var(--border, rgba(90,110,90,.2))'}}>

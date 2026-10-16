@@ -23,8 +23,11 @@ export interface FoodPer100 {
   saturatedFat?: number;
   sugars?: number;
   sodiumMg?: number;
+  servingSize?: string;
+  ingredients?: string;
+  micronutrients?: Record<string, number | string>;
   reportedNutrients?: { protein: boolean; carbs: boolean; fat: boolean; fiber: boolean };
-  origin: 'local' | 'off' | 'estimate' | 'usda';
+  origin: 'local' | 'off' | 'estimate' | 'usda' | 'supplement';
   sourceUrl?: string;
   sourceLicense?: string;
   code?: string;
@@ -881,6 +884,7 @@ export function foodSourceLabel(food: FoodPer100): string {
   if (food.origin === 'local') return 'TACO · NEPA/UNICAMP';
   if (food.origin === 'usda') return 'USDA FoodData Central / SR Legacy via TempoLife';
   if (food.origin === 'off') return 'Open Food Facts · base colaborativa';
+  if (food.origin === 'supplement') return 'Catálogo de suplementos SISTCS Leve';
   return food.sourceUrl ? 'Estimativa com referência externa a conferir' : 'Estimativa nutricional caseira';
 }
 
@@ -889,6 +893,7 @@ export function foodSourceUrl(food: FoodPer100): string | undefined {
   if (food.origin === 'local') return 'https://www.nepa.unicamp.br/taco/';
   if (food.origin === 'usda') return 'https://fdc.nal.usda.gov/';
   if (food.origin === 'off') return 'https://world.openfoodfacts.org/';
+  if (food.origin === 'supplement') return undefined;
   return undefined;
 }
 
@@ -896,6 +901,7 @@ export function foodConfidence(food: FoodPer100): { level: 'alta' | 'média' | '
   if (food.origin === 'local') return { level: 'média', explanation: 'Fonte publicada identificada; a cópia do catálogo ainda deve ser conferida com a tabela original, e o preparo real pode diferir.' };
   if (food.origin === 'usda') return { level: 'média', explanation: 'Referência internacional genérica; confira se o alimento e o preparo correspondem.' };
   if (food.origin === 'off') return { level: 'baixa', explanation: 'Registro colaborativo que pode estar incompleto ou desatualizado; confirme marca, variante e nutrientes no rótulo antes de confiar nos valores.' };
+  if (food.origin === 'supplement') return { level: 'média', explanation: 'Registro do catálogo do SISTCS Leve; confira a embalagem e a base de porção antes de registrar.' };
   return { level: 'baixa', explanation: 'Valor aproximado; receita, porção e ingredientes podem alterar os nutrientes.' };
 }
 
@@ -913,11 +919,92 @@ export function normalizeBarcodeInput(raw: string): string {
   return raw.replace(/\D/g, '').slice(0, 14);
 }
 
+/** Pesquisa produtos de suplemento com dados nutricionais efetivamente preenchidos no banco. */
+export async function searchSupplementCatalog(query: string, limit = 20): Promise<FoodPer100[]> {
+  const raw = query.trim().replace(/[^\p{L}\p{N}\s-]/gu, ' ').replace(/\s+/g, ' ').slice(0, 100).trim();
+  if (raw.length < 2) return [];
+  const safeLimit = Math.max(1, Math.min(30, Math.floor(limit)));
+  const safeTerm = raw.replace(/[%_(),]/g, ' ').replace(/\s+/g, ' ').trim();
+  const tokens = safeTerm.split(' ').filter(Boolean).slice(0, 6);
+  const filters = tokens.flatMap((token) => [`name.ilike.%${token}%`, `brand.ilike.%${token}%`]);
+  const barcode = raw.replace(/\D/g, '');
+  if (barcode.length >= 8 && barcode.length <= 14) filters.push(`barcode.eq.${barcode}`);
+  const { data, error } = await supabase
+    .from('supplement_catalog')
+    .select('id,name,brand,barcode,serving_size,nutrition_basis,calories_kcal,protein_g,carbohydrates_g,total_fat_g,saturated_fat_g,fiber_g,sugars_g,sodium_mg,micronutrients,ingredients,source_url,data_status')
+    .or(filters.join(','))
+    .not('calories_kcal', 'is', null)
+    .not('protein_g', 'is', null)
+    .not('carbohydrates_g', 'is', null)
+    .not('total_fat_g', 'is', null)
+    .limit(safeLimit);
+  if (error) {
+    // Não quebra a busca principal caso a tabela esteja temporariamente indisponível.
+    return [];
+  }
+  return (data ?? []).flatMap((row: any): FoodPer100[] => {
+    const name = typeof row.name === 'string' ? row.name.trim() : '';
+    const kcal = catalogNumber(row.calories_kcal);
+    const protein = catalogNumber(row.protein_g);
+    const carbs = catalogNumber(row.carbohydrates_g);
+    const fat = catalogNumber(row.total_fat_g);
+    const fiber = catalogNumber(row.fiber_g);
+    if (!name || kcal === null || protein === null || carbs === null || fat === null) return [];
+    return [{
+      name, brand: typeof row.brand === 'string' ? row.brand : undefined,
+      kcal, protein, carbs, fat, fiber: fiber ?? 0,
+      saturatedFat: catalogNumber(row.saturated_fat_g) ?? undefined,
+      sugars: catalogNumber(row.sugars_g) ?? undefined,
+      sodiumMg: catalogNumber(row.sodium_mg) ?? undefined,
+      servingSize: typeof row.serving_size === 'string' ? row.serving_size : undefined,
+      ingredients: typeof row.ingredients === 'string' ? row.ingredients : undefined,
+      micronutrients: row.micronutrients && typeof row.micronutrients === 'object' && !Array.isArray(row.micronutrients) ? row.micronutrients as Record<string, number | string> : undefined,
+      basis: row.nutrition_basis === '100ml' ? '100ml' : '100g',
+      reportedNutrients: { protein: true, carbs: true, fat: true, fiber: fiber !== null },
+      origin: 'supplement', code: typeof row.barcode === 'string' ? row.barcode : `supplement-${row.id}`,
+      sourceUrl: typeof row.source_url === 'string' ? row.source_url : undefined,
+      sourceLicense: 'Dados transcritos do rótulo/ficha do fabricante; confira a embalagem',
+    }];
+  });
+}
+
 export async function lookupBarcode(code: string, signal?: AbortSignal): Promise<FoodPer100 | null> {
   // Leitores e campos manuais podem inserir espaços ou hífens; não enviar caracteres inesperados à API.
   const normalizedCode = code.trim().replace(/[\s-]/g, '');
   if (!normalizedCode || !/^\d+$/.test(normalizedCode) || signal?.aborted) return null;
-  // Produtos cadastrados localmente continuam disponíveis se não existirem no Open Food Facts.
+  // Prioriza produtos de suplementos cadastrados no banco, quando o rótulo já foi conferido.
+  const { data: supplementRows } = await supabase
+    .from('supplement_catalog')
+    .select('id,name,brand,barcode,serving_size,nutrition_basis,calories_kcal,protein_g,carbohydrates_g,total_fat_g,saturated_fat_g,fiber_g,sugars_g,sodium_mg,micronutrients,ingredients,source_url')
+    .eq('barcode', normalizedCode)
+    .not('calories_kcal', 'is', null)
+    .not('protein_g', 'is', null)
+    .not('carbohydrates_g', 'is', null)
+    .not('total_fat_g', 'is', null)
+    .limit(1);
+  const supplement = supplementRows?.[0] as any;
+  if (supplement) {
+    const kcal = catalogNumber(supplement.calories_kcal);
+    const protein = catalogNumber(supplement.protein_g);
+    const carbs = catalogNumber(supplement.carbohydrates_g);
+    const fat = catalogNumber(supplement.total_fat_g);
+    if (kcal !== null && protein !== null && carbs !== null && fat !== null) {
+      return {
+        name: supplement.name, brand: supplement.brand ?? undefined, kcal, protein, carbs, fat,
+        fiber: catalogNumber(supplement.fiber_g) ?? 0,
+        saturatedFat: catalogNumber(supplement.saturated_fat_g) ?? undefined,
+        sugars: catalogNumber(supplement.sugars_g) ?? undefined,
+        sodiumMg: catalogNumber(supplement.sodium_mg) ?? undefined,
+        servingSize: typeof supplement.serving_size === 'string' ? supplement.serving_size : undefined,
+        ingredients: typeof supplement.ingredients === 'string' ? supplement.ingredients : undefined,
+        micronutrients: supplement.micronutrients && typeof supplement.micronutrients === 'object' && !Array.isArray(supplement.micronutrients) ? supplement.micronutrients as Record<string, number | string> : undefined,
+        basis: supplement.nutrition_basis === '100ml' ? '100ml' : '100g',
+        origin: 'supplement', code: normalizedCode, sourceUrl: supplement.source_url ?? undefined,
+        sourceLicense: 'Dados de rótulo/cadastro do produto; conferir embalagem',
+      };
+    }
+  }
+  // Produtos genéricos locais continuam disponíveis antes da consulta externa.
   const localMatch = FOODS_BR.find((food) => food.code === normalizedCode);
   if (localMatch) return { ...localMatch };
   const res = await fetch(`${OFF}/api/v2/product/${encodeURIComponent(normalizedCode)}.json?fields=${FIELDS}`, { signal });

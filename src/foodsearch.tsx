@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
-import { foodConfidence, foodSourceLabel, foodSourceUrl, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchFoodCatalog, searchLocal, searchOpenFoodFactsPage, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { foodConfidence, foodSourceLabel, foodSourceUrl, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchFoodCatalog, searchLocal, searchOpenFoodFactsPage, searchSupplementCatalog, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 export interface PickedFood {
   name: string;
@@ -208,14 +208,17 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           searchOpenFoodFactsPage(parsed.name, 1, ctl.signal),
           searchTempoLifeFoods(parsed.name, 20),
           searchFoodCatalog(parsed.name, 20),
+          searchSupplementCatalog(parsed.name, 20),
         ]);
         if (ctl.signal.aborted) return;
         const productResult = results[0].status === 'fulfilled' ? results[0].value : { foods: [], hasMore: false };
         const referenceResult = results[1].status === 'fulfilled' ? results[1].value : [];
         const catalogResult = results[2].status === 'fulfilled' ? results[2].value : [];
+        const supplementResult = results[3].status === 'fulfilled' ? results[3].value : [];
         setOnline(productResult.foods);
         setReferenceFoods(referenceResult);
-        setCatalogFoods(catalogResult);
+        // Produtos cadastrados de suplementos aparecem antes das referências genéricas.
+        setCatalogFoods([...supplementResult, ...catalogResult]);
         setHasMoreOnline(productResult.hasMore);
         setStatus(results.every((result) => result.status === 'rejected') ? 'error' : 'done');
       } catch {
@@ -328,6 +331,11 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           autoFocus
         />
       </div>
+      <section className="fs-supplement-shortcuts" aria-label="Catálogo de suplementos">
+        <strong>Catálogo de suplementos</strong>
+        <p className="field-hint">Digite o nome do produto ou da marca — por exemplo, “creatina Integralmédica” ou “ISO Triple Zero”. Também pode consultar pelo código de barras. Os resultados mostram produtos identificados, não categorias genéricas.</p>
+        <small className="field-hint">Confira a porção e o rótulo antes de registrar. Quando os dados nutricionais não estiverem disponíveis, eles não serão inventados.</small>
+      </section>
       <div className="fs-bar">
         <label className="sr-only" htmlFor="fs-code">Código de barras</label>
         <input id="fs-code" className="input" inputMode="numeric" placeholder="Ou o código de barras (EAN)" value={code} onChange={(e) => setCode(normalizeBarcodeInput(e.target.value))} />
@@ -352,8 +360,9 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
               {foodSourceUrl(food) && <a href={foodSourceUrl(food)} target="_blank" rel="noreferrer">Consultar fonte</a>}
             </div>
           </div>
-          {food.origin === 'off' && <section className="fs-nutrition-details" aria-label="Tabela nutricional por 100 gramas">
-            <strong>Tabela nutricional por 100 g</strong>
+          {(food.origin === 'off' || food.origin === 'supplement') && <section className="fs-nutrition-details" aria-label="Tabela nutricional por 100 gramas">
+            <strong>Tabela nutricional por 100 {food.basis === '100ml' ? 'ml' : 'g'}</strong>
+            {food.servingSize && <p className="field-hint">Porção indicada no rótulo: {food.servingSize}</p>}
             <dl>
               <div><dt>Energia</dt><dd>{decimalText(food.kcal)} kcal</dd></div>
               <div><dt>Proteínas</dt><dd>{food.reportedNutrients?.protein === false ? 'Não informado' : `${decimalText(food.protein)} g`}</dd></div>
@@ -363,7 +372,9 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
               <div><dt>Fibra alimentar</dt><dd>{food.reportedNutrients?.fiber === false ? 'Não informado' : `${decimalText(food.fiber)} g`}</dd></div>
               <div><dt>Açúcares</dt><dd>{food.sugars === undefined ? 'Não informado' : `${decimalText(food.sugars)} g`}</dd></div>
               <div><dt>Sódio</dt><dd>{food.sodiumMg === undefined ? 'Não informado' : `${decimalText(food.sodiumMg)} mg`}</dd></div>
+              {Object.entries(food.micronutrients ?? {}).map(([name, value]) => <div key={name}><dt>{name.replaceAll('_', ' ')}</dt><dd>{String(value)}</dd></div>)}
             </dl>
+            {food.ingredients && <p><strong>Ingredientes e alergênicos:</strong> {food.ingredients}</p>}
             {food.reportedNutrients && Object.values(food.reportedNutrients).some((available) => !available) && <p>Alguns nutrientes não foram informados pela fonte; o cálculo desses itens pode ficar incompleto.</p>}
           </section>}
           <label className="fs-g-label" htmlFor="fs-measure">Medida do alimento</label>

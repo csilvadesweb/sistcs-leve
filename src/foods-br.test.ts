@@ -451,7 +451,7 @@ describe('Open Food Facts — integração externa resiliente', () => {
     }) });
     vi.stubGlobal('fetch', fetchMock);
     await expect(lookupBarcode(' 789-123-456 ')).resolves.toMatchObject({ code: '789123456', name: 'Produto com código' });
-    expect(fetchMock.mock.calls[0]?.[0]).toContain('/product/789123456.json');
+    expect(fetchMock.mock.calls.some(([url]) => String(url).includes('/product/789123456.json'))).toBe(true);
   });
 
   it('não consulta a API para códigos vazios ou com caracteres inválidos', async () => {

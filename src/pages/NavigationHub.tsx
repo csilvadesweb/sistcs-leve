@@ -1,8 +1,7 @@
 import { Link } from 'wouter';
 import {
-  Apple, BrainCircuit, CalendarDays, ChartNoAxesCombined, ChefHat, ChevronRight,
-  ClipboardList, Droplets, Footprints, GlassWater, Pill, Scale, ShoppingBasket,
-  Sparkles, Timer, Utensils, Watch, Dumbbell, BellRing, Target, FileChartColumn,
+  BrainCircuit, ChartNoAxesCombined, ChefHat, ChevronRight, ClipboardList,
+  Footprints, GlassWater, Scale, Timer, Utensils, Watch, Dumbbell,
 } from 'lucide-react';
 import { WaterReminders } from '../WaterReminders';
 

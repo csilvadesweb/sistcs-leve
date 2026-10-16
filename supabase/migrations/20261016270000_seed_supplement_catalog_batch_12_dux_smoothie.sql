@@ -1,7 +1,7 @@
 -- Batch 12: DUX Whey Protein Smoothie Dark Cookies, official product nutrition panel.
 with products(name,brand,barcode,serving_size,nutrition_basis,calories_kcal,protein_g,carbohydrates_g,total_fat_g,saturated_fat_g,trans_fat_g,fiber_g,sugars_g,sodium_mg,micronutrients,ingredients,source,source_url,data_status) as (
  values
- ('Whey Protein Smoothie Dark Cookies 900 g','DUX Human Health',null,'35 g (1 dosador); embalagem 900 g','100g',388.5714,57.1429,22.2857,7.1429,4.5714,null,7.1429,9.1429,454.2857,
+ ('Whey Protein Smoothie Dark Cookies 900 g','DUX Human Health',null,'35 g (1 dosador); embalagem 900 g','100g',388.5714,57.1429,22.2857,7.1429,4.5714,null::numeric,7.1429,9.1429,454.2857,
   '{"rotulo_por_porcao_35g":{"energia_kcal":136,"carboidratos_g":7.8,"acucares_totais_g":3.2,"acucares_adicionados_g":0.1,"proteinas_g":20,"gorduras_totais_g":2.5,"gorduras_saturadas_g":1.6,"fibras_g":2.5,"sodio_mg":159}}'::jsonb,
   'Proteína de soro do leite concentrada, biscoito (cookies), cacau em pó, aromatizantes, goma guar, sucralose e acessulfame de potássio. Alérgicos: contém derivados de soja e leite; pode conter trigo, centeio, cevada, aveia, ovos, peixes, amendoim, amêndoa, avelãs, castanha-de-caju, castanha-do-Pará, macadâmias, nozes, pistaches e castanhas. Contém lactose e glúten.','manufacturer-label','https://www.duxhumanhealth.com/whey-protein-smoothie-pote-900g/','label_transcribed')
 )

@@ -110,8 +110,8 @@ export function ActivityDevicesPage() {
       <section className="hub-grid" aria-label="Aplicativos e integrações compatíveis">
         {deviceApps.map((device) => (
           <article className="hub-card" key={device.name} style={{cursor:'default'}}>
-            <span className="hub-card-icon" style={{background:'#fff',border:'1px solid var(--border, #e4e9e4)',display:'grid',placeItems:'center',overflow:'hidden'}}>
-              <img src={device.logoUrl ?? `${import.meta.env.BASE_URL}device-logos/${device.logo}`} alt={device.alt} width="132" height="48" loading="eager" decoding="async" style={{width:'132px',height:'48px',objectFit:'contain',display:'block'}} />
+            <span className="hub-card-icon" style={{background:'#fff',border:'1px solid var(--border, #e4e9e4)',display:'grid',placeItems:'center',overflow:'hidden',width:'64px',height:'64px',minWidth:'64px',flex:'0 0 64px',padding:'4px',boxSizing:'border-box'}}>
+              <img src={device.logoUrl ?? `${import.meta.env.BASE_URL}device-logos/${device.logo}`} alt={device.alt} width="56" height="56" loading="eager" decoding="async" style={{width:'56px',height:'56px',objectFit:'contain',display:'block'}} />
             </span>
             <span className="hub-card-copy"><strong>{device.name}</strong><small>{device.detail}</small></span>
           </article>

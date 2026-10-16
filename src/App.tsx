@@ -19,6 +19,8 @@ const Recipes = lazy(() => import('./pages/Recipes').then((m) => ({ default: m.R
 const Assistant = lazy(() => import('./pages/Assistant').then((m) => ({ default: m.Assistant })));
 const FoodHub = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.FoodHub })));
 const ActivityHub = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.ActivityHub })));
+const ActivityDevicesPage = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.ActivityDevicesPage })));
+const ActivityGoalsPage = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.ActivityGoalsPage })));
 const EvolutionHub = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.EvolutionHub })));
 const HydrationPage = lazy(() => import('./pages/NavigationHub').then((m) => ({ default: m.HydrationPage })));
 
@@ -313,6 +315,8 @@ export default function App() {
             <Route path="/alimentacao" component={FoodHub} />
             <Route path="/diario" component={FoodTracking} />
             <Route path="/atividade" component={ActivityHub} />
+            <Route path="/dispositivos" component={ActivityDevicesPage} />
+            <Route path="/metas-atividade" component={ActivityGoalsPage} />
             <Route path="/evolucao" component={EvolutionHub} />
             <Route path="/hidratacao" component={HydrationPage} />
             <Route path="/receitas" component={Recipes} />

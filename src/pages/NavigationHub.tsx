@@ -98,6 +98,9 @@ const deviceApps = [
 ];
 
 export function ActivityDevicesPage() {
+  const [selectedDevice, setSelectedDevice] = useState<(typeof deviceApps)[number] | null>(null);
+  const connectionIntent = 'intent://connect/#Intent;scheme=sistcs;package=com.sistcs.leve.activitysync;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;end';
+
   return (
     <div className="page page-enter">
       <section className="page-heading">
@@ -109,14 +112,33 @@ export function ActivityDevicesPage() {
       </section>
       <section className="hub-grid" aria-label="Aplicativos e integrações compatíveis">
         {deviceApps.map((device) => (
-          <article className="hub-card" key={device.name} style={{cursor:'default'}}>
+          <button className="hub-card" type="button" key={device.name} onClick={() => setSelectedDevice(device)} aria-label={`Opções de conexão: ${device.name}`} style={{textAlign:'left',width:'100%',font:'inherit',color:'inherit',cursor:'pointer'}}>
             <span className="hub-card-icon" style={{background:'#fff',border:'1px solid var(--border, #e4e9e4)',display:'grid',placeItems:'center',overflow:'hidden',width:'64px',height:'64px',minWidth:'64px',flex:'0 0 64px',padding:'4px',boxSizing:'border-box'}}>
-              <img src={device.logoUrl ?? `${import.meta.env.BASE_URL}device-logos/${device.logo}`} alt={device.alt} width="56" height="56" loading="eager" decoding="async" style={{width:'56px',height:'56px',objectFit:'contain',display:'block'}} />
+              <img src={device.logoUrl ?? `${import.meta.env.BASE_URL}device-logos/${device.logo}`} alt={device.alt} width="56" height="56" loading="eager" decoding="async" style={{width:'56px',height:'56px',objectFit:'contain',display:'block'}} onError={(event) => { event.currentTarget.style.display = 'none'; }} />
             </span>
-            <span className="hub-card-copy"><strong>{device.name}</strong><small>{device.detail}</small></span>
-          </article>
+            <span className="hub-card-copy"><strong>{device.name}</strong><small>{device.detail}</small><small style={{display:'block',marginTop:'.35rem',fontWeight:600}}>Toque para conectar <span aria-hidden="true">→</span></small></span>
+          </button>
         ))}
       </section>
+      {selectedDevice && (
+        <div role="presentation" onClick={(event) => { if (event.target === event.currentTarget) setSelectedDevice(null); }} style={{position:'fixed',inset:0,zIndex:1000,background:'rgba(12,20,16,.58)',display:'grid',placeItems:'center',padding:'1rem'}}>
+          <section role="dialog" aria-modal="true" aria-labelledby="device-connect-title" className="initial-card" style={{width:'100%',maxWidth:'440px',boxSizing:'border-box'}}>
+            <p className="eyebrow">CONECTIVIDADE</p>
+            <h2 id="device-connect-title">Conectar {selectedDevice.name}</h2>
+            <p>O SISTCS Leve recebe passos e exercícios pelo Health Connect usando o aplicativo Android complementar. O toque aqui abre o fluxo real de autorização e sincronização; não simula uma conexão.</p>
+            <ol>
+              <li>Confirme que {selectedDevice.name} está instalado e compartilhando dados com o Health Connect, quando compatível.</li>
+              <li>No app complementar do SISTCS Leve, entre na mesma conta e toque em <strong>Conectar e sincronizar</strong> (ou <strong>Sincronizar agora</strong>).</li>
+              <li>Autorize a leitura de passos e exercícios no Android, se solicitado.</li>
+            </ol>
+            <div style={{display:'flex',gap:'.75rem',flexWrap:'wrap',marginTop:'1rem'}}>
+              <a className="btn btn-primary" href={connectionIntent} style={{textDecoration:'none'}}>Abrir conexão no Android</a>
+              <button className="btn btn-outline" type="button" onClick={() => setSelectedDevice(null)}>Fechar</button>
+            </div>
+            <p className="empty-description" style={{marginTop:'.75rem'}}>Se o app complementar não estiver instalado, instale-o primeiro no aparelho. No computador, a conexão por Health Connect não está disponível.</p>
+          </section>
+        </div>
+      )}
       <section className="initial-card" style={{marginTop:'1rem'}}>
         <h2>Health Connect é a ponte de sincronização</h2>
         <p>Ele não é um dispositivo. É o recurso do Android que permite compartilhar dados entre aplicativos compatíveis, depois que você concede as permissões.</p>

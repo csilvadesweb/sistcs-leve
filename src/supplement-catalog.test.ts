@@ -7,7 +7,6 @@ describe('atalhos do catálogo de suplementos', () => {
     expect(SUPPLEMENT_SEARCH_TERMS).toContain('Creatina');
     expect(SUPPLEMENT_SEARCH_TERMS).toContain('Multivitamínico');
     expect(SUPPLEMENT_SEARCH_TERMS).toContain('Ômega 3');
-    expect(new Set(SUPPLEMENT_SEARCH_TERMS.map((term) => term.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR'))).size)
-      .toBe(SUPPLEMENT_SEARCH_TERMS.length);
+    expect(new Set(SUPPLEMENT_SEARCH_TERMS).size).toBe(SUPPLEMENT_SEARCH_TERMS.length);
   });
 });

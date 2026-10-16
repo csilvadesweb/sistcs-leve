@@ -921,14 +921,18 @@ export function normalizeBarcodeInput(raw: string): string {
 
 /** Pesquisa produtos de suplemento com dados nutricionais efetivamente preenchidos no banco. */
 export async function searchSupplementCatalog(query: string, limit = 20): Promise<FoodPer100[]> {
-  const raw = query.trim().replace(/[^\p{L}\p{N}\s-]/gu, ' ').replace(/\s+/g, ' ').slice(0, 100).trim();
+  const raw = query.trim().replace(/[^\\p{L}\\p{N}\\s-]/gu, ' ').replace(/\\s+/g, ' ').slice(0, 100).trim();
   if (raw.length < 2) return [];
   const safeLimit = Math.max(1, Math.min(30, Math.floor(limit)));
-  const safeTerm = raw.replace(/[%_(),]/g, ' ').replace(/\s+/g, ' ').trim();
+  const safeTerm = raw.replace(/[%_(),]/g, ' ').replace(/\\s+/g, ' ').trim();
+  const tokens = safeTerm.split(' ').filter(Boolean).slice(0, 6);
+  const filters = tokens.flatMap((token) => [`name.ilike.%${token}%`, `brand.ilike.%${token}%`]);
+  const barcode = raw.replace(/\\D/g, '');
+  if (barcode.length >= 8 && barcode.length <= 14) filters.push(`barcode.eq.${barcode}`);
   const { data, error } = await supabase
     .from('supplement_catalog')
     .select('id,name,brand,barcode,serving_size,nutrition_basis,calories_kcal,protein_g,carbohydrates_g,total_fat_g,saturated_fat_g,fiber_g,sugars_g,sodium_mg,micronutrients,ingredients,source_url,data_status')
-    .or(`name.ilike.%${safeTerm}%,brand.ilike.%${safeTerm}%,barcode.eq.${safeTerm.replace(/[^0-9]/g, '') || 'NO_BARCODE_MATCH'}`)
+    .or(filters.join(','))
     .not('calories_kcal', 'is', null)
     .not('protein_g', 'is', null)
     .not('carbohydrates_g', 'is', null)
@@ -959,7 +963,7 @@ export async function searchSupplementCatalog(query: string, limit = 20): Promis
       reportedNutrients: { protein: true, carbs: true, fat: true, fiber: fiber !== null },
       origin: 'supplement', code: typeof row.barcode === 'string' ? row.barcode : `supplement-${row.id}`,
       sourceUrl: typeof row.source_url === 'string' ? row.source_url : undefined,
-      sourceLicense: 'Dados de rótulo/cadastro do produto; conferir fonte e embalagem',
+      sourceLicense: 'Dados transcritos do rótulo/ficha do fabricante; confira a embalagem',
     }];
   });
 }

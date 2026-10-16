@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'wouter';
 import {
   BrainCircuit, ChartNoAxesCombined, ChefHat, ChevronRight, ClipboardList,
-  Footprints, GlassWater, Scale, Timer, Utensils, Watch, Play, Pause, RotateCcw, Save, Target,
+  Footprints, GlassWater, Scale, Timer, Utensils, Watch, Target,
   type LucideIcon,
 } from 'lucide-react';
 import { WaterReminders } from '../WaterReminders';
@@ -156,115 +156,4 @@ export function ActivityDevicesPage() {
   );
 }
 
-const GOAL_STORAGE_KEY = 'sistcs-leve-activity-goal-minutes';
-const GOAL_EXERCISE_STORAGE_KEY = 'sistcs-leve-activity-goal-exercise';
-const ACTIVITY_EXERCISES = ['Caminhada', 'Corrida', 'Bicicleta', 'Musculação', 'Natação', 'Dança', 'Yoga / Pilates', 'Alongamento', 'Outro'];
-const formatClock = (seconds: number) => {
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = seconds % 60;
-  return [h, m, s].map((part) => String(part).padStart(2, '0')).join(':');
-};
-
-export function ActivityGoalsPage() {
-  const [goalInput, setGoalInput] = useState(() => {
-    try { return window.localStorage.getItem(GOAL_STORAGE_KEY) ?? ''; } catch { return ''; }
-  });
-  const [savedGoal, setSavedGoal] = useState(() => {
-    try { return window.localStorage.getItem(GOAL_STORAGE_KEY) ?? ''; } catch { return ''; }
-  });
-  const [selectedExercise, setSelectedExercise] = useState(() => {
-    try { return window.localStorage.getItem(GOAL_EXERCISE_STORAGE_KEY) ?? 'Caminhada'; } catch { return 'Caminhada'; }
-  });
-  const [savedExercise, setSavedExercise] = useState(() => {
-    try { return window.localStorage.getItem(GOAL_EXERCISE_STORAGE_KEY) ?? ''; } catch { return ''; }
-  });
-  const [elapsed, setElapsed] = useState(0);
-  const [running, setRunning] = useState(false);
-  const [startedAt, setStartedAt] = useState<number | null>(null);
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    if (!running || startedAt === null) return;
-    const tick = () => setElapsed(Math.floor((Date.now() - startedAt) / 1000));
-    tick();
-    const timer = window.setInterval(tick, 250);
-    return () => window.clearInterval(timer);
-  }, [running, startedAt]);
-
-  function saveGoal(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const minutes = Number(goalInput);
-    if (!Number.isInteger(minutes) || minutes < 1 || minutes > 10080) {
-      setMessage('Informe uma meta semanal entre 1 e 10.080 minutos.');
-      return;
-    }
-    try {
-      window.localStorage.setItem(GOAL_STORAGE_KEY, String(minutes));
-      window.localStorage.setItem(GOAL_EXERCISE_STORAGE_KEY, selectedExercise);
-      setSavedGoal(String(minutes));
-      setSavedExercise(selectedExercise);
-      setMessage('Sua meta e o exercício escolhido foram salvos neste dispositivo.');
-    } catch {
-      setMessage('Não foi possível guardar a meta neste dispositivo. Verifique as permissões do navegador.');
-    }
-  }
-
-  function toggleTimer() {
-    if (running) {
-      setRunning(false);
-      setStartedAt(null);
-      setMessage('Cronômetro pausado. O tempo continua exibido até você zerá-lo.');
-    } else {
-      setStartedAt(Date.now() - elapsed * 1000);
-      setRunning(true);
-      setMessage('Cronômetro em andamento.');
-    }
-  }
-
-  function resetTimer() {
-    setRunning(false);
-    setStartedAt(null);
-    setElapsed(0);
-    setMessage('Cronômetro zerado.');
-  }
-
-  return (
-    <div className="page page-enter">
-      <section className="page-heading">
-        <div className="heading-copy">
-          <p className="eyebrow"><span className="eyebrow-dot" />SEU OBJETIVO, SEU RITMO</p>
-          <h1 className="serif-display">Metas de atividade</h1>
-          <p className="page-intro">Crie uma meta pessoal e marque a duração do exercício com o cronômetro.</p>
-        </div>
-      </section>
-      <section className="initial-card" style={{marginBottom:'1rem'}}>
-        <div className="hub-card-copy"><p className="eyebrow">MINHA META</p><h2>Defina sua meta semanal</h2><p className="empty-description">Escolha quantos minutos de atividade você quer praticar por semana.</p></div>
-        <form onSubmit={saveGoal} style={{display:'flex',alignItems:'end',gap:'.75rem',flexWrap:'wrap',marginTop:'1rem'}}>
-          <label className="exercise-field" style={{flex:'1 1 220px'}}>Exercício que vou fazer
-            <select required value={selectedExercise} onChange={(event) => setSelectedExercise(event.target.value)}>
-              {ACTIVITY_EXERCISES.map((exercise) => <option key={exercise} value={exercise}>{exercise}</option>)}
-            </select>
-          </label>
-          <label className="exercise-field" style={{flex:'1 1 180px'}}>Minutos por semana
-            <input type="number" min="1" max="10080" step="1" required value={goalInput} onChange={(event) => setGoalInput(event.target.value)} placeholder="Ex.: 150" />
-          </label>
-          <button className="btn" type="submit"><Save size={16} /> Salvar meta</button>
-        </form>
-        {savedGoal && <p role="status" style={{marginTop:'.75rem'}}><strong>Meta atual:</strong> {savedExercise || selectedExercise} · {savedGoal} minutos por semana.</p>}
-        {message && <p role="status" style={{marginTop:'.5rem'}}>{message}</p>}
-      </section>
-      <section className="initial-card">
-        <p className="eyebrow">CRONÔMETRO</p>
-        <h2>Tempo de {selectedExercise.toLocaleLowerCase('pt-BR')}</h2>
-        <p className="empty-description">Exercício selecionado: {selectedExercise}. Toque em iniciar quando começar e pause ao terminar. O cronômetro mede a duração desta sessão; registre a atividade ao concluir para incluí-la no histórico.</p>
-        <p aria-live="off" style={{fontVariantNumeric:'tabular-nums',fontSize:'clamp(2.5rem,12vw,4rem)',fontWeight:750,letterSpacing:'.04em',textAlign:'center',margin:'1.5rem 0'}}>{formatClock(elapsed)}</p>
-        <div style={{display:'flex',justifyContent:'center',gap:'.75rem',flexWrap:'wrap'}}>
-          <button className="btn" type="button" onClick={toggleTimer}>{running ? <><Pause size={17}/> Pausar</> : <><Play size={17}/> {elapsed ? 'Continuar' : 'Iniciar cronômetro'}</>}</button>
-          <button className="btn btn-outline" type="button" onClick={resetTimer} disabled={elapsed===0&&!running}><RotateCcw size={16}/> Zerar</button>
-        </div>
-      </section>
-      <p className="hub-footnote"><Link href="/exercicios">Registrar exercício</Link> · <Link href="/atividade">Voltar para Atividade</Link></p>
-    </div>
-  );
-}
+export { ActivityGoalsPage } from './ActivityGoals';

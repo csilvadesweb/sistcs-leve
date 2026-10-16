@@ -35,6 +35,34 @@ a.btn { text-decoration: none; }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 .chart .bar { transform-box: fill-box; transform-origin: bottom; animation: grow-y .9s var(--ease) both; }
 @keyframes grow-y { from { transform: scaleY(0); } }
+
+.progress-chart-dashboard { margin: 16px 0 18px; padding: clamp(18px, 3vw, 30px); overflow: hidden; background: radial-gradient(ellipse at 100% 0%, rgba(196,154,74,.12), transparent 42%), var(--surface); }
+.progress-chart-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.progress-chart-heading .ft-explainer { margin-top: 7px; }
+.progress-chart-period { flex: 0 0 auto; padding: 7px 11px; border: 1px solid var(--line-soft); border-radius: 999px; color: var(--text-2); background: var(--surface-2); font-size: 13px; font-weight: 750; font-variant-numeric: tabular-nums; }
+.progress-chart-metrics { display: flex; gap: 7px; margin-top: 22px; padding-bottom: 3px; overflow-x: auto; scrollbar-width: thin; }
+.progress-chart-metric { min-height: 42px; flex: 0 0 auto; padding: 0 15px; border: 1px solid var(--line-soft); border-radius: 999px; color: var(--text-2); background: var(--surface-2); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease; }
+.progress-chart-metric:hover { border-color: rgba(196,154,74,.6); transform: translateY(-1px); }
+.progress-chart-metric.is-active { border-color: transparent; background: var(--leaf-grad); color: #fff; box-shadow: 0 7px 20px -12px rgba(47,107,82,.8); }
+.progress-chart-summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 18px; padding: 18px 20px; border: 1px solid var(--line-soft); border-radius: 18px; background: var(--surface-2); }
+.progress-chart-summary > div:first-child { display: grid; gap: 4px; min-width: 0; }
+.progress-chart-label { color: var(--text-3); font-size: 13px; font-weight: 750; letter-spacing: .025em; }
+.progress-chart-summary strong { color: var(--text); font-family: var(--app-font-display); font-size: clamp(25px, 4vw, 34px); font-variant-numeric: tabular-nums; letter-spacing: -.04em; overflow-wrap: anywhere; }
+.progress-chart-summary small { color: var(--text-3); font-size: 13px; }
+.progress-chart-mark { display: grid; place-items: center; width: 48px; height: 48px; flex: 0 0 auto; border-radius: 15px; color: var(--gold-2); background: rgba(196,154,74,.14); }
+.progress-chart-canvas { min-height: 190px; margin-top: 16px; padding: 12px 8px 2px; border: 1px solid var(--line-soft); border-radius: 18px; background: var(--surface); }
+.progress-chart-canvas .chart { min-width: 0; }
+.progress-chart-empty { display: grid; place-items: center; min-height: 175px; margin: 0; padding: 24px; color: var(--text-2); text-align: center; line-height: 1.65; }
+.progress-chart-empty a { color: var(--gold-2); font-weight: 700; text-underline-offset: 3px; }
+.progress-chart-footnote { margin: 12px 2px 0; color: var(--text-3); font-size: 12px; line-height: 1.5; }
+@media (max-width: 480px) {
+  .progress-chart-dashboard { padding: 17px 13px; border-radius: 20px; }
+  .progress-chart-summary { padding: 15px; }
+  .progress-chart-metrics { margin-top: 17px; }
+  .progress-chart-metric { padding-inline: 13px; }
+  .progress-chart-canvas { padding-inline: 0; }
+  .progress-chart-canvas .chart { min-width: 420px; }
+}
 .rep-title { margin: 2px 0 0; color: var(--text); font-size: 21px; letter-spacing: -.03em; }
 .seg { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 5px; border: 1px solid var(--line-soft); border-radius: 16px; background: var(--surface-2); }
 .seg button { min-height: 44px; padding: 0 18px; border: 0; border-radius: 12px; background: transparent; color: var(--text-2); font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; transition: background-color .25s ease, color .25s ease, transform .15s ease; }

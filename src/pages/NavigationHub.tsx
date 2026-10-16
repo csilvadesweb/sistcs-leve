@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
 import {
   BrainCircuit, ChartNoAxesCombined, ChefHat, ChevronRight, ClipboardList,
-  Footprints, GlassWater, Scale, Timer, Utensils, Watch, Dumbbell, Play, Pause, RotateCcw, Save, Target,
+  Footprints, GlassWater, Scale, Timer, Utensils, Watch, Play, Pause, RotateCcw, Save, Target,
   type LucideIcon,
 } from 'lucide-react';
 import { WaterReminders } from '../WaterReminders';
@@ -92,7 +92,6 @@ export function HydrationPage() {
 
 const deviceApps = [
   { name: 'Samsung Health', detail: 'Fonte de atividade para dispositivos Samsung, quando a sincronização com Health Connect estiver habilitada.', logo: 'https://cdn.simpleicons.org/samsunghealth/1428A0', alt: 'Logo oficial Samsung Health' },
-  { name: 'Health Connect', detail: 'Camada de integração do Android. Autorize os dados de atividade nas configurações do aparelho.', logo: 'https://cdn.simpleicons.org/android/3DDC84', alt: 'Logo oficial Android — Health Connect' },
   { name: 'Google Fit', detail: 'Pode compartilhar dados compatíveis quando instalado e configurado no aparelho.', logo: 'https://cdn.simpleicons.org/googlefit/4285F4', alt: 'Logo oficial Google Fit' },
   { name: 'Fitbit', detail: 'A disponibilidade depende da configuração do aplicativo e do compartilhamento com Health Connect.', logo: 'https://cdn.simpleicons.org/fitbit/00B0B9', alt: 'Logo oficial Fitbit' },
   { name: 'Garmin Connect', detail: 'A sincronização depende da integração habilitada no ecossistema Garmin/Health Connect.', logo: 'https://cdn.simpleicons.org/garmin/007CC3', alt: 'Logo oficial Garmin Connect' },
@@ -119,6 +118,8 @@ export function ActivityDevicesPage() {
         ))}
       </section>
       <section className="initial-card" style={{marginTop:'1rem'}}>
+        <h2>Health Connect é a ponte de sincronização</h2>
+        <p>Ele não é um dispositivo. É o recurso do Android que permite compartilhar dados entre aplicativos compatíveis, depois que você concede as permissões.</p>
         <h2>Como conectar no Android</h2>
         <ol>
           <li>Instale e abra o aplicativo oficial do dispositivo ou relógio.</li>

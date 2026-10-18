@@ -55,27 +55,6 @@ a { color: var(--gold); }
 ::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 10px; border: 2px solid var(--bg); }
 
 /* ---------- controles ---------- */
-.btn {
-  position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-  min-height: 48px; padding: 0 20px; border: 1px solid transparent; border-radius: 14px;
-  font: inherit; font-size: 15px; font-weight: 650; letter-spacing: .01em; cursor: pointer; white-space: nowrap;
-  transition: transform .18s var(--ease), box-shadow .25s ease, background-color .2s ease, border-color .2s ease, opacity .2s ease, color .2s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-.btn svg { width: 19px; height: 19px; flex: 0 0 auto; }
-.btn:active:not(:disabled) { transform: scale(.97); }
-.btn:disabled { opacity: .5; cursor: not-allowed; }
-.btn-default { background: var(--green-grad); color: #fff; box-shadow: 0 10px 26px -12px rgba(19, 122, 66, .7), inset 0 1px 0 rgba(255, 255, 255, .35); }
-.btn-default::after { position: absolute; inset: 0; content: ''; background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .5) 50%, transparent 70%); transform: translateX(-120%); }
-.btn-default:hover:not(:disabled) { box-shadow: 0 12px 34px -8px rgba(232, 196, 108, .8), inset 0 1px 0 rgba(255, 255, 255, .55); transform: translateY(-1px); }
-.btn-default:hover:not(:disabled)::after { transform: translateX(120%); transition: transform .8s var(--ease); }
-.btn-outline { background: rgba(20, 50, 35, 0.03); color: var(--text); border-color: var(--line); }
-.btn-outline:hover:not(:disabled) { background: rgba(232, 196, 108, .1); border-color: rgba(232, 196, 108, .5); }
-.btn-ghost { background: transparent; color: var(--text-2); }
-.btn-ghost:hover:not(:disabled) { background: var(--surface-2); color: var(--text); }
-.btn-destructive { background: linear-gradient(135deg, #e5604f, #c23a2b); color: #fff; }
-.btn-destructive:hover:not(:disabled) { filter: brightness(1.08); }
-.btn-sm { min-height: 42px; padding: 0 14px; font-size: 14px; }
 .link-button { padding: 0; border: 0; background: none; color: var(--gold); font: inherit; font-weight: 650; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 
 .input {
@@ -392,18 +371,6 @@ body::before, body::after { display: none; }
 .today-card, .ft-card { background: #fff; }
 .today-head, .ft-section-heading { border-color: #e4ece6; }
 .today-link, .ft-kicker { color: #218548; }
-.btn { border-radius: 10px; box-shadow: none; }
-.btn-default {
-  background: #218548;
-  box-shadow: none;
-}
-.btn-default:hover:not(:disabled) {
-  background: #176b38;
-  box-shadow: 0 3px 10px rgba(33, 133, 72, .16);
-}
-.btn-default::after { display: none; }
-.btn-outline { background: #fff; border-color: #cbdccf; }
-.btn-outline:hover:not(:disabled) { background: #f2f8f3; border-color: #218548; }
 .input { border-color: #d4e0d7; border-radius: 10px; }
 .input:focus { border-color: #218548; box-shadow: 0 0 0 3px rgba(33, 133, 72, .12); background: #fff; }
 .goal-bar { background: #e8efe9; border-radius: 999px; }
@@ -545,12 +512,11 @@ body::before, body::after { display: none; }
 .ft-meal-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .ft-meal-heading > div { display: flex; flex-direction: column; gap: 3px; }
 .ft-meal-heading > div > span { color: #68766c; font-size: 12px; font-variant-numeric: tabular-nums; }
-.ft-meal-heading .btn { flex: 0 0 auto; min-height: 34px; padding: 6px 10px; font-size: 12px; }
+.ft-meal-heading .btn { flex: 0 0 auto; }
 .ft-meal-group { background: #fff; }
 @media (max-width: 420px) {
   .ft-calorie-overview { padding: 15px; }
   .ft-calorie-main strong { font-size: 32px; }
-  .ft-meal-heading .btn { gap: 4px; padding: 6px 8px; }
 }
 
 .auth-consent { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.5; color: var(--text-2, var(--text)); }
@@ -574,73 +540,17 @@ body::before, body::after { display: none; }
 
 
 /* Navegação por abas compactas para diário alimentar e hidratação */
-.ft-meal-tabs { display: flex; gap: 8px; margin: 16px 0; padding: 4px; overflow-x: auto; border: 1px solid var(--line-soft, #e1e7e2); border-radius: 14px; background: var(--surface-muted, #f5f8f5); scrollbar-width: thin; }
-.ft-meal-tabs button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; flex: 0 0 auto; min-height: 40px; padding: 9px 13px; border: 1px solid transparent; border-radius: 10px; background: transparent; color: var(--text-2, #526459); font: inherit; font-size: 13px; font-weight: 650; white-space: nowrap; cursor: pointer; }
-.ft-meal-tabs button.is-active { border-color: var(--line-soft, #dce6de); background: var(--surface, #fff); color: var(--text, #26352b); box-shadow: 0 2px 8px rgba(27, 68, 40, .06); }
-.ft-meal-tabs button span { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; background: #e8efe9; color: #3e5a46; font-size: 11px; font-variant-numeric: tabular-nums; }
+.ft-meal-tabs { margin: 16px 0; }
 .ft-meal-summary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
 .ft-meal-summary-card { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; min-width: 0; padding: 16px; border: 1px solid var(--line-soft, #e1e7e2); border-radius: 14px; background: var(--surface, #fff); color: var(--text, #26352b); text-align: left; cursor: pointer; }
 .ft-meal-summary-card span { color: var(--text-2, #68766c); font-size: 12px; }
 .ft-meal-summary-card strong { font-size: 18px; font-variant-numeric: tabular-nums; }
 .ft-meal-summary-card small { color: var(--text-2, #68766c); font-size: 12px; }
 .ft-water-tabs { margin-top: 12px; }
-@media (max-width: 420px) { .ft-meal-summary-grid { gap: 8px; } .ft-meal-summary-card { padding: 13px 11px; } .ft-meal-summary-card strong { font-size: 16px; } .ft-meal-tabs button { padding-inline: 11px; } }
+@media (max-width: 420px) { .ft-meal-summary-grid { gap: 8px; } .ft-meal-summary-card { padding: 13px 11px; } .ft-meal-summary-card strong { font-size: 16px; } }
 
 
 /* Navegação por abas nas telas extensas de receitas. */
-.recipes-tabs {
-  display: flex;
-  gap: 8px;
-  padding: 6px;
-  margin: 0 0 20px;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  border: 1px solid var(--line);
-  border-radius: 17px;
-  background: var(--surface);
-  box-shadow: var(--shadow);
-  scrollbar-width: thin;
-}
-.recipes-tab {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  flex: 1 0 max-content;
-  min-height: 48px;
-  padding: 0 16px;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  background: transparent;
-  color: var(--text-2);
-  font: inherit;
-  font-weight: 650;
-  cursor: pointer;
-  transition: color .2s ease, background .2s ease, border-color .2s ease;
-}
-.recipes-tab:hover { background: var(--surface-2); color: var(--text); }
-.recipes-tab.is-active {
-  color: var(--gold-2);
-  background: linear-gradient(135deg, rgba(232, 196, 108, .24), rgba(232, 196, 108, .08));
-  border-color: var(--line);
-}
-.recipes-tab-count {
-  display: inline-grid;
-  min-width: 24px;
-  height: 24px;
-  padding: 0 6px;
-  place-items: center;
-  border-radius: 999px;
-  background: var(--surface-3);
-  color: var(--text);
-  font-size: 12px;
-  font-weight: 750;
-}
-.recipes-tab:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-@media (max-width: 480px) {
-  .recipes-tabs { gap: 5px; padding: 5px; }
-  .recipes-tab { min-height: 46px; padding: 0 12px; font-size: 14px; }
-}
 
 
 /* Abas progressivas para telas extensas: acessíveis, responsivas e sem ocultar funcionalidades. */

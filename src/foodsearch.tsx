@@ -401,7 +401,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           <p className="field-hint">Equivalência estimada: {decimalText(calculatedGrams)} g. Para maior precisão, escolha gramas. Colheres e utensílios variam de tamanho e densidade conforme o alimento.</p>
           <div className="fs-chips" role="group" aria-label="Quantidades rápidas em gramas">
             {GRAM_CHIPS.map((c) => (
-              <button type="button" key={c} className={`fs-chip ${gramsOk && grams === c ? 'on' : ''}`} onClick={() => { setMeasureUnit('g'); setMeasureAmount(String(c)); setGramsText(String(c)); }}>{c} g</button>
+              <Button key={c} size="sm" variant={gramsOk && grams === c ? 'default' : 'outline'} aria-pressed={gramsOk && grams === c} onClick={() => { setMeasureUnit('g'); setMeasureAmount(String(c)); setGramsText(String(c)); }}>{c} g</Button>
             ))}
           </div>
           {(!amountValid || !gramsOk || calculatedGrams > 5000) && <p className="field-error" role="alert">Informe uma quantidade válida, maior que zero e de até 5000 g.</p>}

@@ -1,5 +1,6 @@
 import { useEffect, useState, type ChangeEvent } from 'react';
 import { BellRing, BellOff, Droplets } from 'lucide-react';
+import { Button, buttonClass } from './ui';
 import {
   DEFAULT_WATER_REMINDER_SETTINGS,
   normalizeWaterReminderSettings,
@@ -208,9 +209,9 @@ export function WaterReminders() {
 
       <div className="water-reminder-actions">
         {settings.enabled ? (
-          <button className="btn btn-default btn-md" type="button" onClick={disableReminders}><BellOff size={17} aria-hidden="true" /> Desativar lembretes</button>
+          <Button variant="outline" onClick={disableReminders}><BellOff size={17} aria-hidden="true" /> Desativar lembretes</Button>
         ) : (
-          <button className="btn btn-primary btn-md" type="button" onClick={() => void enableReminders()}><BellRing size={17} aria-hidden="true" /> Ativar notificações</button>
+          <Button onClick={() => void enableReminders()}><BellRing size={17} aria-hidden="true" /> Ativar notificações</Button>
         )}
         <span className="water-reminder-status" role="status">{settings.enabled ? 'Ativo neste dispositivo' : 'Desativado'}</span>
       </div>
@@ -219,15 +220,15 @@ export function WaterReminders() {
           <input type="checkbox" checked={settings.soundEnabled} onChange={(event) => setSettings((current) => ({ ...current, soundEnabled: event.target.checked }))} />
           Tocar som nos lembretes
         </label>
-        <button className="btn btn-outline btn-sm" type="button" onClick={() => void testReminderSound()}>Testar som</button>
+        <Button variant="outline" size="sm" onClick={() => void testReminderSound()}>Testar som</Button>
       </div>
       <div className="water-reminder-actions">
-        <label className="btn btn-outline btn-sm" htmlFor="water-reminder-custom-sound">Escolher som do celular</label>
+        <label className={buttonClass({ variant: 'outline', size: 'sm' })} htmlFor="water-reminder-custom-sound">Escolher som do celular</label>
         <input id="water-reminder-custom-sound" type="file" accept="audio/*" hidden onChange={(event) => void chooseCustomSound(event)} />
         {customSoundName && (
           <>
             <span className="water-reminder-status">Som: {customSoundName}</span>
-            <button className="btn btn-outline btn-sm" type="button" onClick={() => void removeCustomSound()}>Remover</button>
+            <Button variant="outline" size="sm" onClick={() => void removeCustomSound()}>Remover</Button>
           </>
         )}
       </div>

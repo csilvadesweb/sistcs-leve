@@ -2,7 +2,7 @@ import { Link } from 'wouter';
 import { Apple, ChevronRight, Droplets, Flame, Pill, Scale, Sprout, Trophy } from 'lucide-react';
 import { useAppData } from '../session';
 import { calculateFoodNutrientTotals, weightSummary } from '../data';
-import { decimalText, todayInSaoPaulo } from '../ui';
+import { buttonClass, decimalText, todayInSaoPaulo } from '../ui';
 import { WaterReminders } from '../WaterReminders';
 import { achievements, loggingStreak, weeklySummary } from '../insights';
 
@@ -96,7 +96,7 @@ export function Home() {
               ajustar tudo depois.
             </p>
           </div>
-          <Link href="/perfil" className="btn btn-default btn-md">Configurar agora</Link>
+          <Link href="/perfil" className={buttonClass()}>Configurar agora</Link>
         </section>
       )}
 

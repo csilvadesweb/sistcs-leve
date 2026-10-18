@@ -169,7 +169,7 @@ export function BeforeAfter() {
                   <strong>{KIND_LABEL[p.kind]}</strong>
                   <span>{formatDate(p.date)}</span>
                 </div>
-                <Button variant="ghost" size="sm" onClick={() => remove(p)} disabled={busy} aria-label={`Excluir foto de ${formatDate(p.date)}`}>
+                <Button variant="ghost" size="icon" className="btn-overlay" onClick={() => remove(p)} disabled={busy} aria-label={`Excluir foto de ${formatDate(p.date)}`} title="Excluir foto">
                   <Trash2 aria-hidden="true" />
                 </Button>
               </li>

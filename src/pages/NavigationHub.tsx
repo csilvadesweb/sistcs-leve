@@ -6,6 +6,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { WaterReminders } from '../WaterReminders';
+import { Button, buttonClass } from '../ui';
 
 type HubItem = { title: string; description: string; href: string; icon: LucideIcon };
 
@@ -132,8 +133,8 @@ export function ActivityDevicesPage() {
               <li>Autorize a leitura de passos e exercícios no Android, se solicitado.</li>
             </ol>
             <div style={{display:'flex',gap:'.75rem',flexWrap:'wrap',marginTop:'1rem'}}>
-              <a className="btn btn-primary" href={connectionIntent} style={{textDecoration:'none'}}>Abrir conexão no Android</a>
-              <button className="btn btn-outline" type="button" onClick={() => setSelectedDevice(null)}>Fechar</button>
+              <a className={buttonClass()} href={connectionIntent}>Abrir conexão no Android</a>
+              <Button variant="outline" onClick={() => setSelectedDevice(null)}>Fechar</Button>
             </div>
             <p className="empty-description" style={{marginTop:'.75rem'}}>Se o app complementar não estiver instalado, instale-o primeiro no aparelho. No computador, a conexão por Health Connect não está disponível.</p>
           </section>

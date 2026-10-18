@@ -5,7 +5,7 @@ import { useAppData } from '../session';
 import { calculateFoodNutrientTotals, lastDays, weightSummary } from '../data';
 import { analyzeAdaptiveProgress } from '../adaptive-goals';
 import { BarChart, WeightChart } from '../charts';
-import { decimalText, formatDate, todayInSaoPaulo } from '../ui';
+import { Button, decimalText, formatDate, todayInSaoPaulo } from '../ui';
 
 const RANGES = [7, 14, 30] as const;
 
@@ -123,9 +123,9 @@ export function Reports() {
             <p className="ft-kicker">RESUMO PARA ACOMPANHAMENTO</p>
             <h2 className="rep-title" id="nutritionist-report-title">Resumo para compartilhar com seu nutricionista</h2>
           </div>
-          <button type="button" className="btn btn-primary" onClick={() => window.print()} aria-label="Imprimir ou salvar resumo em PDF">
+          <Button onClick={() => window.print()} aria-label="Imprimir ou salvar resumo em PDF">
             Imprimir / salvar PDF
-          </button>
+          </Button>
         </div>
         <p className="ft-explainer" style={{ marginLeft: 0 }}>
           {data.profile?.displayName ? `Pessoa: ${data.profile.displayName} · ` : ''}Período: {formatDate(days[0])} a {formatDate(days[days.length - 1])}. Este resumo contém apenas registros do aplicativo e pode ser salvo localmente como PDF pelo navegador.
@@ -154,11 +154,11 @@ export function Reports() {
         <p className="ft-privacy-note">Relatório gerado no dispositivo a pedido do usuário. Não é enviado automaticamente a ninguém e não substitui avaliação clínica.</p>
       </section>
 
-      <div className="seg" role="group" aria-label="Período">
+      <div className="btn-group" role="group" aria-label="Período">
         {RANGES.map((r) => (
-          <button key={r} type="button" className={r === range ? 'is-on' : ''} aria-pressed={r === range} onClick={() => setRange(r)}>
+          <Button key={r} size="sm" variant={r === range ? 'default' : 'outline'} aria-pressed={r === range} onClick={() => setRange(r)}>
             Últimos {r} dias
-          </button>
+          </Button>
         ))}
       </div>
       <p className="ft-explainer" style={{ marginLeft: 0 }}>{formatDate(days[0])} a {formatDate(days[days.length - 1])}</p>
@@ -187,9 +187,9 @@ export function Reports() {
             { key: 'exercise', label: 'Exercícios' },
             { key: 'weight', label: 'Peso' },
           ] as const).map((metric) => (
-            <button key={metric.key} type="button" className={activeChartMetric === metric.key ? 'progress-chart-metric is-active' : 'progress-chart-metric'} aria-pressed={activeChartMetric === metric.key} onClick={() => setActiveChartMetric(metric.key)}>
+            <Button key={metric.key} size="sm" variant={activeChartMetric === metric.key ? 'default' : 'outline'} aria-pressed={activeChartMetric === metric.key} onClick={() => setActiveChartMetric(metric.key)}>
               {metric.label}
-            </button>
+            </Button>
           ))}
         </div>
         <div className="progress-chart-summary">

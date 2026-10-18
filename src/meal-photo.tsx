@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent } from 'react';
 import { Camera, ScanLine } from 'lucide-react';
 import { supabase } from './supabase';
+import { Button, buttonClass } from './ui';
 import type { PickedFood } from './foodsearch';
 import { normalizeMealPhotoEstimates, type MealPhotoEstimate } from './photo-nutrition';
 
@@ -66,7 +67,7 @@ export function MealPhotoScanner({ onPick }: { onPick: (food: PickedFood) => voi
           <strong>Identificar alimentos pela foto do prato</strong>
           <p className="ft-explainer" style={{ margin: '4px 0 0' }}>A IA sugere alimentos e porções aproximadas; você confirma cada item.</p>
         </div>
-        <label className="button button-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, cursor: busy ? 'wait' : 'pointer' }}>
+        <label className={buttonClass({ variant: 'outline' })} style={{ cursor: busy ? 'wait' : 'pointer' }}>
           <Camera size={16} />{busy ? 'Analisando…' : 'Foto do prato'}
           <input type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={analyze} disabled={busy} hidden />
         </label>
@@ -79,7 +80,7 @@ export function MealPhotoScanner({ onPick }: { onPick: (food: PickedFood) => voi
             <article key={`${item.name}-${index}`} style={{ border: '1px solid var(--border, #ddd)', borderRadius: 12, padding: 12 }}>
               <strong>{item.name}</strong>
               <p className="ft-explainer" style={{ margin: '4px 0' }}>~{Math.round(item.grams)} g · {Math.round(item.calories)} kcal · proteína {Math.round(item.proteins * 10) / 10} g · confiança {item.confidence}</p>
-              <button type="button" className="button button-outline" onClick={() => {
+              <Button variant="outline" size="sm" onClick={() => {
                 onPick({
                   name: item.name,
                   portion: `~${Math.round(item.grams)} g (estimativa por foto)`,
@@ -93,7 +94,7 @@ export function MealPhotoScanner({ onPick }: { onPick: (food: PickedFood) => voi
                   },
                 });
                 setNotice(`“${item.name}” foi transferido ao formulário. Confira e ajuste antes de salvar.`);
-              }}>Revisar no formulário</button>
+              }}>Revisar no formulário</Button>
             </article>
           ))}
         </div>

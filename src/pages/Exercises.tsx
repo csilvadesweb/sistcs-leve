@@ -4,7 +4,7 @@ import {useAppData} from '../session';
 import {deleteExerciseEntry,type ExerciseEntry} from '../data';
 import {getSavedExerciseMetrics,saveExerciseWithMetrics} from '../exercise-persistence';
 import {EXERCISE_ACTIVITIES,estimateExerciseCalories,validateExerciseInput} from '../exercise';
-import {decimalText,todayInSaoPaulo} from '../ui';
+import {Button,decimalText,todayInSaoPaulo} from '../ui';
 import {HealthActivityCard} from '../components/HealthActivityCard';
 
 type FormState={date:string;activityId:string;duration:string;weight:string;note:string};
@@ -73,7 +73,7 @@ export function Exercises(){
         <div><p style={{margin:0,fontSize:'.72rem',fontWeight:700,letterSpacing:'.12em',opacity:.82}}>SEU PROGRESSO</p><h2 style={{margin:'.2rem 0 0',fontSize:'1.1rem',fontWeight:700,color:'#fff'}}>Resumo dos exercícios</h2></div>
         <div style={{display:'flex',alignItems:'center',gap:'.5rem',flexWrap:'wrap'}}>
           <span style={{fontSize:'.82rem',padding:'.35rem .65rem',borderRadius:'999px',background:'rgba(255,255,255,.14)'}}>{date===todayInSaoPaulo()?'Hoje':'Dia selecionado'}</span>
-          <button type="button" onClick={()=>newEntry()} disabled={busy||!data.exerciseTrackingAvailable} style={{display:'inline-flex',alignItems:'center',justifyContent:'center',gap:'.4rem',minHeight:'42px',padding:'.65rem .9rem',borderRadius:'.75rem',border:'1px solid rgba(255,255,255,.35)',background:'#fff',color:'var(--primary, #315b43)',fontWeight:700,cursor:busy?'not-allowed':'pointer',opacity:(busy || !data.exerciseTrackingAvailable) ? 0.65 : 1}}><Plus size={16}/> Registrar exercício</button>
+          <Button variant="outline" size="sm" onClick={()=>newEntry()} disabled={busy||!data.exerciseTrackingAvailable}><Plus size={16}/> Registrar exercício</Button>
         </div>
       </div>
       <div className="exercise-summary" style={{margin:0,display:'grid',gridTemplateColumns:'repeat(3,minmax(0,1fr))',gap:'.65rem'}}>
@@ -102,7 +102,7 @@ export function Exercises(){
 
     {open&&<div role="presentation" onMouseDown={event=>{if(event.target===event.currentTarget)setOpen(false)}} style={{position:'fixed',inset:0,zIndex:1000,display:'flex',alignItems:'flex-start',justifyContent:'center',overflowY:'auto',WebkitOverflowScrolling:'touch',padding:'max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom))',boxSizing:'border-box',background:'rgba(15,25,18,.58)',backdropFilter:'blur(3px)'}}>
       <section className="ft-card" role="dialog" aria-modal="true" aria-labelledby="exercise-form-title" style={{width:'min(100%,680px)',maxHeight:'calc(100dvh - 2rem)',overflowY:'auto',overscrollBehavior:'contain',WebkitOverflowScrolling:'touch',boxSizing:'border-box',flexShrink:0,marginBlock:'auto',boxShadow:'0 24px 80px rgba(0,0,0,.28)',border:'1px solid var(--border, rgba(90,110,90,.2))'}}>
-        <div className="ft-card-heading"><div><p className="ft-kicker">REGISTRO DE ATIVIDADE</p><h2 className="rep-title" id="exercise-form-title">{editing?'Editar atividade':'Registrar '+(EXERCISE_ACTIVITIES.find(a=>a.id===form.activityId)?.label??'atividade')}</h2></div><button type="button" onClick={()=>setOpen(false)} aria-label="Fechar formulário">Fechar</button></div>
+        <div className="ft-card-heading"><div><p className="ft-kicker">REGISTRO DE ATIVIDADE</p><h2 className="rep-title" id="exercise-form-title">{editing?'Editar atividade':'Registrar '+(EXERCISE_ACTIVITIES.find(a=>a.id===form.activityId)?.label??'atividade')}</h2></div><Button variant="ghost" size="sm" onClick={()=>setOpen(false)} aria-label="Fechar formulário">Fechar</Button></div>
         <form onSubmit={submit}><div className="exercise-form-grid">
           <label className="exercise-field">Data<input type="date" required value={form.date} onChange={e=>setForm(v=>({...v,date:e.target.value}))}/></label>
           <label className="exercise-field">Atividade<select value={form.activityId} onChange={e=>setForm(v=>({...v,activityId:e.target.value}))}>{EXERCISE_ACTIVITIES.map(a=><option value={a.id} key={a.id}>{a.label}</option>)}</select></label>
@@ -111,15 +111,15 @@ export function Exercises(){
         </div><label className="exercise-field">Observações<textarea maxLength={300} rows={2} value={form.note} onChange={e=>setForm(v=>({...v,note:e.target.value}))}/></label>
         <p className="ft-preview"><strong>{decimalText(estimateExerciseCalories(activity.met,Number(form.weight),Number(form.duration)))} kcal estimadas</strong><span>Estimativa aproximada por MET; o gasto real varia.</span></p>
         {!data.exerciseTrackingAvailable&&<p className="ft-feedback ft-feedback-error" role="status">A estimativa aparece aqui, mas o banco ainda não permite salvar este registro.</p>}
-        <div className="exercise-actions"><button className="btn" type="submit" disabled={busy||!data.exerciseTrackingAvailable}><Save size={16}/>{busy?' Salvando…':' Salvar exercício'}</button><button type="button" onClick={()=>setOpen(false)}>Cancelar</button></div></form>
+        <div className="exercise-actions"><Button type="submit" disabled={busy||!data.exerciseTrackingAvailable}><Save size={16}/>{busy?' Salvando…':' Salvar exercício'}</Button><Button variant="outline" onClick={()=>setOpen(false)}>Cancelar</Button></div></form>
       </section>
     </div>}
 
     
     <section className="ft-card">
-      <div className="ft-card-heading"><div><p className="ft-kicker">HISTÓRICO DIÁRIO</p><h2 className="rep-title">Seus exercícios</h2></div><button className="btn" type="button" onClick={()=>newEntry()} disabled={!data.exerciseTrackingAvailable||busy}><Plus size={17}/> Adicionar</button></div>
+      <div className="ft-card-heading"><div><p className="ft-kicker">HISTÓRICO DIÁRIO</p><h2 className="rep-title">Seus exercícios</h2></div><Button onClick={()=>newEntry()} disabled={!data.exerciseTrackingAvailable||busy}><Plus size={17}/> Adicionar</Button></div>
       <label className="exercise-field">Data<input type="date" value={date} onChange={e=>setDate(e.target.value)}/></label>
-      {entries.length?entries.map(e=><article className="exercise-entry" key={e.id}><div><strong>{e.activity}</strong><p>{e.durationMinutes} min · {decimalText(e.caloriesBurned)} kcal estimadas</p>{e.note&&<small>{e.note}</small>}</div><div className="exercise-actions"><button type="button" onClick={()=>void editEntry(e)} disabled={busy}>Editar</button><button type="button" onClick={()=>void remove(e)} disabled={busy} aria-label={'Excluir '+e.activity}><Trash2 size={16}/></button></div></article>):<p className="ft-favorites-empty">Nenhuma atividade registrada nesta data.</p>}
+      {entries.length?entries.map(e=><article className="exercise-entry" key={e.id}><div><strong>{e.activity}</strong><p>{e.durationMinutes} min · {decimalText(e.caloriesBurned)} kcal estimadas</p>{e.note&&<small>{e.note}</small>}</div><div className="exercise-actions"><Button variant="outline" size="sm" onClick={()=>void editEntry(e)} disabled={busy}>Editar</Button><Button variant="outline" size="icon" onClick={()=>void remove(e)} disabled={busy} aria-label={'Excluir '+e.activity}><Trash2 size={16}/></Button></div></article>):<p className="ft-favorites-empty">Nenhuma atividade registrada nesta data.</p>}
     </section>
 
     {feedback&&<p className={'ft-feedback '+(feedback.kind==='error'?'ft-feedback-error':'')} role={feedback.kind==='error'?'alert':'status'}>{feedback.message}</p>}

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { CookingPot, Clock3, Search, Users, UtensilsCrossed, Plus, CheckCircle2, Star, Download } from 'lucide-react';
 import { useAppData } from '../session';
 import { createFoodEntry, type MealType } from '../data';
-import { decimalText, todayInSaoPaulo } from '../ui';
+import { Button, decimalText, todayInSaoPaulo } from '../ui';
 import { filterRecipes, RECIPES, scaleRecipeNutrients, type Recipe, type RecipeFilter } from '../recipes';
 import { buildShoppingList, resolvePlannedMeals, validatePlannedMeals, WEEK_DAYS, type PlannedMeal } from '../meal-plan';
 import { toggleFavoriteId, validateFavoriteIds } from '../recipe-favorites';
@@ -165,12 +165,12 @@ export function Recipes() {
         <div><strong>Comida de verdade, do seu jeito</strong><p>Receitas práticas para seus objetivos. Os valores nutricionais são estimativas por porção.</p><p className="recipe-nutrition-note">{RECIPES.length} receitas. Favoritas e planejamento semanal ficam salvos apenas neste aparelho.</p></div>
       </section>
 
-      <div className="recipes-tabs" role="tablist" aria-label="Seções de receitas">
-        <button type="button" role="tab" id="recipes-tab-explore" aria-selected={activeRecipesTab === 'recipes'} aria-controls="recipes-panel-explore" className={activeRecipesTab === 'recipes' ? 'recipes-tab is-active' : 'recipes-tab'} onClick={() => setActiveRecipesTab('recipes')}>
+      <div className="progressive-tabs" role="tablist" aria-label="Seções de receitas">
+        <button type="button" role="tab" id="recipes-tab-explore" aria-selected={activeRecipesTab === 'recipes'} aria-controls="recipes-panel-explore" className={activeRecipesTab === 'recipes' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveRecipesTab('recipes')}>
           <CookingPot size={17} aria-hidden="true" /> Explorar receitas
         </button>
-        <button type="button" role="tab" id="recipes-tab-planner" aria-selected={activeRecipesTab === 'planner'} aria-controls="recipes-panel-planner" className={activeRecipesTab === 'planner' ? 'recipes-tab is-active' : 'recipes-tab'} onClick={() => setActiveRecipesTab('planner')}>
-          <CheckCircle2 size={17} aria-hidden="true" /> Planejamento semanal <span className="recipes-tab-count">{planItems.length}</span>
+        <button type="button" role="tab" id="recipes-tab-planner" aria-selected={activeRecipesTab === 'planner'} aria-controls="recipes-panel-planner" className={activeRecipesTab === 'planner' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setActiveRecipesTab('planner')}>
+          <CheckCircle2 size={17} aria-hidden="true" /> Planejamento semanal <span className="progressive-tab-count">{planItems.length}</span>
         </button>
       </div>
 
@@ -211,31 +211,31 @@ export function Recipes() {
               </select>
             </label>
           </div>
-          <button className="recipe-plan-button" type="button" disabled={!planRecipeId} onClick={addSelectedRecipeToPlan}>
-            <Plus size={16} aria-hidden="true" /> Adicionar ao dia e refeição escolhidos
-          </button>
+          <Button block disabled={!planRecipeId} onClick={addSelectedRecipeToPlan}>
+            <Plus aria-hidden="true" /> Adicionar ao dia e refeição escolhidos
+          </Button>
         </div>
         {plannedWithRecipes.length ? <div className="meal-plan-list">
           {WEEK_DAYS.filter((day) => plannedWithRecipes.some((item) => item.day === day)).map((day) => <section className="meal-plan-day" key={day}>
             <h3>{day}</h3>
             {plannedWithRecipes.filter((item) => item.day === day).map((item) => <div className="meal-plan-item" key={item.id}>
               <div><strong>{item.recipe.name}</strong><span>{MEAL_LABELS[item.meal]} · {item.recipe.nutrientsPerServing.calories} kcal estimadas/porção</span></div>
-              <button type="button" className="meal-plan-remove" aria-label={`Remover ${item.recipe.name} de ${day}`} onClick={() => { setPlanItems((items) => items.filter((entry) => entry.id !== item.id)); setShoppingOpen(false); }}>Remover</button>
+              <Button variant="ghost" size="sm" aria-label={`Remover ${item.recipe.name} de ${day}`} onClick={() => { setPlanItems((items) => items.filter((entry) => entry.id !== item.id)); setShoppingOpen(false); }}>Remover</Button>
             </div>)}
           </section>)}
         </div> : <p className="meal-plan-empty">Seu planejamento está vazio. Escolha o dia e a refeição, busque uma receita no campo acima e toque em “Adicionar ao dia e refeição escolhidos”.</p>}
         <div className="shopping-list-actions">
-          <button className="recipe-details-button" type="button" disabled={!plannedWithRecipes.length} aria-expanded={shoppingOpen} onClick={() => setShoppingOpen((open) => !open)}>{shoppingOpen ? 'Ocultar lista de compras' : 'Gerar lista de compras'}</button>
-          {planItems.length > 0 && <button type="button" className="meal-plan-clear" onClick={() => { setPlanItems([]); setShoppingOpen(false); }}>Limpar semana</button>}
+          <Button variant="outline" disabled={!plannedWithRecipes.length} aria-expanded={shoppingOpen} onClick={() => setShoppingOpen((open) => !open)}>{shoppingOpen ? 'Ocultar lista de compras' : 'Gerar lista de compras'}</Button>
+          {planItems.length > 0 && <Button variant="ghost" size="sm" onClick={() => { setPlanItems([]); setShoppingOpen(false); }}>Limpar semana</Button>}
         </div>
         {shoppingOpen && plannedWithRecipes.length > 0 && <div className="shopping-list" aria-live="polite">
           <h3>Lista de compras</h3>
           <p>Ingredientes das {plannedWithRecipes.length} refeições planejadas. Ingredientes com a mesma descrição foram agrupados; confira as quantidades para o número de porções desejado.</p>
           <ul>{shoppingIngredients.map((entry) => <li key={entry.ingredient}><span>{entry.ingredient}</span>{entry.count > 1 && <small>usado em {entry.count} receitas</small>}</li>)}</ul>
-          <button type="button" className="meal-plan-print" onClick={() => void downloadShoppingList()} disabled={shoppingPdfBusy || !shoppingIngredients.length}>
-            {shoppingPdfBusy ? <Clock3 size={17} aria-hidden="true" /> : <Download size={17} aria-hidden="true" />}
+          <Button variant="outline" onClick={() => void downloadShoppingList()} disabled={shoppingPdfBusy || !shoppingIngredients.length}>
+            {shoppingPdfBusy ? <Clock3 aria-hidden="true" /> : <Download aria-hidden="true" />}
             {shoppingPdfBusy ? 'Preparando PDF…' : 'Baixar lista em PDF'}
-          </button>
+          </Button>
           {shoppingPdfError && <p className="ft-feedback ft-feedback-error" role="alert">{shoppingPdfError}</p>}
         </div>}
       </section>
@@ -257,8 +257,8 @@ export function Recipes() {
       </div>
 
       <div className="recipes-categories" aria-label="Filtrar receitas por categoria">
-        {categories.map((item) => <button key={item} type="button" className={category === item && !favoritesOnly ? 'is-active' : ''} aria-pressed={category === item && !favoritesOnly} onClick={() => { setCategory(item); setFavoritesOnly(false); }}>{item}</button>)}
-        <button type="button" className={favoritesOnly ? 'is-active favorites-filter' : 'favorites-filter'} aria-pressed={favoritesOnly} onClick={() => setFavoritesOnly((value) => !value)}><Star size={15} fill={favoritesOnly ? 'currentColor' : 'none'} /> Favoritas ({favorites.length})</button>
+        {categories.map((item) => <Button key={item} size="sm" variant={category === item && !favoritesOnly ? 'default' : 'outline'} aria-pressed={category === item && !favoritesOnly} onClick={() => { setCategory(item); setFavoritesOnly(false); }}>{item}</Button>)}
+        <Button size="sm" variant={favoritesOnly ? 'default' : 'outline'} aria-pressed={favoritesOnly} onClick={() => setFavoritesOnly((value) => !value)}><Star fill={favoritesOnly ? 'currentColor' : 'none'} aria-hidden="true" /> Favoritas ({favorites.length})</Button>
       </div>
 
       <div className="recipes-results" role="status">{recipes.length} {recipes.length === 1 ? 'receita encontrada' : 'receitas encontradas'}</div>
@@ -268,7 +268,7 @@ export function Recipes() {
           const nutrients = scaleRecipeNutrients(recipe.nutrientsPerServing, amount);
           const isExpanded = expanded === recipe.id;
           return <article className="recipe-card" key={recipe.id}>
-            <div className="recipe-card-top"><span className="recipe-category">{recipe.category}</span><div className="recipe-card-meta"><span className="recipe-time"><Clock3 size={14} /> {recipe.minutes} min</span><button type="button" className={`recipe-favorite-button${favorites.includes(recipe.id) ? ' is-favorite' : ''}`} aria-label={favorites.includes(recipe.id) ? `Remover ${recipe.name} das favoritas` : `Adicionar ${recipe.name} às favoritas`} aria-pressed={favorites.includes(recipe.id)} onClick={() => toggleFavorite(recipe.id)}><Star size={18} fill={favorites.includes(recipe.id) ? 'currentColor' : 'none'} /></button></div></div>
+            <div className="recipe-card-top"><span className="recipe-category">{recipe.category}</span><div className="recipe-card-meta"><span className="recipe-time"><Clock3 size={14} /> {recipe.minutes} min</span><Button variant="ghost" size="icon" className={favorites.includes(recipe.id) ? 'is-favorite' : ''} aria-label={favorites.includes(recipe.id) ? `Remover ${recipe.name} das favoritas` : `Adicionar ${recipe.name} às favoritas`} aria-pressed={favorites.includes(recipe.id)} onClick={() => toggleFavorite(recipe.id)}><Star fill={favorites.includes(recipe.id) ? 'currentColor' : 'none'} aria-hidden="true" /></Button></div></div>
             <h2>{recipe.name}</h2>
             <p className="recipe-description">{recipe.description}</p>
             <div className="recipe-nutrients">
@@ -280,25 +280,27 @@ export function Recipes() {
             <label className="recipe-portions"><Users size={16} /> Porções
               <input type="number" min="0.25" max="20" step="0.25" value={amount} onChange={(event) => setServings((current) => ({ ...current, [recipe.id]: Math.min(20, Math.max(0.25, Number(event.target.value) || 0.25)) }))} />
             </label>
-            <button className="recipe-details-button" type="button" aria-expanded={isExpanded} onClick={() => setExpanded(isExpanded ? null : recipe.id)}>{isExpanded ? 'Ocultar preparo' : 'Ver ingredientes e preparo'}</button>
-            <button className="recipe-download-button" type="button" disabled={recipePdfBusyId !== null} onClick={() => void downloadRecipe(recipe)}><Download size={16} aria-hidden="true" />{recipePdfBusyId === recipe.id ? 'Preparando PDF…' : 'Baixar receita em PDF'}</button>
+            <div className="recipe-actions">
+            <Button variant="ghost" block aria-expanded={isExpanded} onClick={() => setExpanded(isExpanded ? null : recipe.id)}>{isExpanded ? 'Ocultar preparo' : 'Ver ingredientes e preparo'}</Button>
+            <Button variant="outline" block disabled={recipePdfBusyId !== null} onClick={() => void downloadRecipe(recipe)}><Download aria-hidden="true" />{recipePdfBusyId === recipe.id ? 'Preparando PDF…' : 'Baixar receita em PDF'}</Button>
             {recipePdfError?.id === recipe.id && <p className="ft-feedback ft-feedback-error" role="alert">{recipePdfError.message}</p>}
-            <button className="recipe-plan-button" type="button" onClick={() => addToPlan(recipe)}>Adicionar ao planejamento semanal</button>
+            <Button variant="outline" block onClick={() => addToPlan(recipe)}>Adicionar ao planejamento semanal</Button>
+            </div>
             {isExpanded && <div className="recipe-details">
               <h3>Ingredientes</h3><ul>{recipe.ingredients.map((ingredient) => <li key={ingredient}>{ingredient}</li>)}</ul>
               <h3>Modo de preparo</h3><ol>{recipe.steps.map((step) => <li key={step}>{step}</li>)}</ol>
               <p className="recipe-nutrition-note">{recipe.nutritionNote}</p>
               <p className="recipe-fiber">Fibras: {decimalText(nutrients.fiber)} g por quantidade selecionada.</p>
             </div>}
-            <button className="btn recipe-add-button" type="button" disabled={busyId !== null} onClick={() => void addToDiary(recipe)}>
-              {feedback?.id === recipe.id && !feedback.error ? <CheckCircle2 size={17} /> : <Plus size={17} />}
+            <Button block className="recipe-add-button" disabled={busyId !== null} onClick={() => void addToDiary(recipe)}>
+              {feedback?.id === recipe.id && !feedback.error ? <CheckCircle2 aria-hidden="true" /> : <Plus aria-hidden="true" />}
               {busyId === recipe.id ? 'Adicionando…' : 'Adicionar ao diário'}
-            </button>
+            </Button>
             {feedback?.id === recipe.id && <p className={feedback.error ? 'ft-feedback ft-feedback-error' : 'ft-feedback recipe-feedback'} role={feedback.error ? 'alert' : 'status'}>{feedback.message}</p>}
           </article>;
         })}
       </div>
-      {recipes.length > visible && <div className="recipes-more"><button type="button" className="btn" onClick={() => setVisible((v) => v + PAGE_SIZE)}>Mostrar mais receitas ({recipes.length - visible} restantes)</button></div>}
+      {recipes.length > visible && <div className="recipes-more"><Button variant="outline" onClick={() => setVisible((v) => v + PAGE_SIZE)}>Mostrar mais receitas ({recipes.length - visible} restantes)</Button></div>}
       </> : <section className="ft-card recipes-empty"><CookingPot size={26} /><h2>{favoritesOnly ? 'Você ainda não tem receitas favoritas' : 'Nenhuma receita encontrada'}</h2><p>{favoritesOnly ? 'Toque na estrela de uma receita para salvá-la aqui.' : 'Tente outro nome ou selecione “Todas”.'}</p></section>}
       </div>}
     </div>

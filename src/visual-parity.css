@@ -120,9 +120,6 @@ a.mini-card:hover {
   border-color: rgba(28,66,45,.17);
   border-radius: 12px;
 }
-.btn { border-radius: 12px; }
-.btn-default { box-shadow: 0 5px 14px rgba(19,122,66,.16); }
-.btn-default:hover:not(:disabled) { box-shadow: 0 8px 18px rgba(19,122,66,.22); }
 .fs-selected { background: #fff; }
 .fs-calc { background: #f1f8f2; border-color: rgba(31,154,82,.16); }
 .fs-calc strong { color: #13783f; }
@@ -166,11 +163,6 @@ a.mini-card:hover {
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
   outline: 3px solid rgba(154, 108, 18, .78);
   outline-offset: 3px;
-}
-button:disabled, .btn:disabled {
-  cursor: not-allowed;
-  opacity: .58;
-  box-shadow: none;
 }
 @media (hover: none) {
   a.mini-card:hover { transform: none; }
@@ -273,18 +265,6 @@ a.mini-card:hover, .ft-card:hover {
 }
 .fs-calc { background: #eaf5ed; }
 .ft-preview { background: #fbf5e7; }
-.btn { font-weight: 680; transition: transform .18s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease; }
-.btn-default {
-  background: linear-gradient(135deg, #176b40, #104d30);
-  box-shadow: 0 5px 14px rgba(16, 77, 48, .18);
-}
-.btn-default:hover:not(:disabled) {
-  background: linear-gradient(135deg, #1c7849, #125b38);
-  box-shadow: 0 8px 20px rgba(16, 77, 48, .22);
-  transform: translateY(-1px);
-}
-.btn-outline { border-color: #d4dfd3; background: #fff; }
-.btn-outline:hover:not(:disabled) { border-color: #b5cdb8; background: #f4f8f2; }
 .input, select.input, textarea.input {
   background: #fff;
   border-color: #d4dfd6;
@@ -318,7 +298,6 @@ a.mini-card:hover, .ft-card:hover {
   outline: 3px solid var(--visual-focus);
   outline-offset: 3px;
 }
-button:disabled, .btn:disabled { filter: saturate(.72); }
 @media (min-width: 720px) {
   .main-content { padding-top: clamp(26px, 3.4vw, 44px); }
   .page-heading { margin-bottom: 22px; }

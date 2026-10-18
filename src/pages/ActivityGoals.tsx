@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, 
 import { Link } from 'wouter';
 import { Flame, Pause, Play, RotateCcw, Save, Square, Trophy } from 'lucide-react';
 import { useAppData } from '../session';
-import { todayInSaoPaulo } from '../ui';
+import { Button, todayInSaoPaulo } from '../ui';
 import { saveExerciseWithMetrics } from '../exercise-persistence';
 import { EXERCISE_ACTIVITIES, estimateExerciseCalories, validateExerciseInput } from '../exercise';
 import {
@@ -196,7 +196,7 @@ function Celebration({ awards, onClose }: { awards: Award[]; onClose: () => void
             ))}
           </ul>
         )}
-        <button ref={closeRef} type="button" className="ag-btn ag-btn-green" onClick={onClose}>Continuar</button>
+        <Button ref={closeRef} block onClick={onClose}>Continuar</Button>
       </section>
     </div>
   );
@@ -403,24 +403,24 @@ export function ActivityGoalsPage() {
 
         <div className="ag-actions">
           {timer.status === 'idle' && (
-            <button type="button" className="ag-btn ag-btn-green" onClick={start}><Play size={20} aria-hidden="true" /> Iniciar</button>
+            <Button onClick={start}><Play aria-hidden="true" /> Iniciar</Button>
           )}
           {timer.status === 'running' && (
-            <button type="button" className="ag-btn ag-btn-yellow" onClick={pause}><Pause size={20} aria-hidden="true" /> Pausar</button>
+            <Button variant="outline" onClick={pause}><Pause aria-hidden="true" /> Pausar</Button>
           )}
           {timer.status === 'paused' && (
-            <button type="button" className="ag-btn ag-btn-green" onClick={resume}><Play size={20} aria-hidden="true" /> Continuar</button>
+            <Button onClick={resume}><Play aria-hidden="true" /> Continuar</Button>
           )}
           {(timer.status === 'running' || timer.status === 'paused') && (
-            <button type="button" className="ag-btn ag-btn-red" onClick={stop}><Square size={18} aria-hidden="true" /> Parar</button>
+            <Button variant="destructive" onClick={stop}><Square aria-hidden="true" /> Parar</Button>
           )}
           {timer.status === 'stopped' && (
-            <button type="button" className="ag-btn ag-btn-green" onClick={() => void saveSession()} disabled={saving || minutesToSave === null || !data.exerciseTrackingAvailable}>
-              <Save size={19} aria-hidden="true" /> {saving ? 'Salvando…' : 'Salvar treino'}
-            </button>
+            <Button onClick={() => void saveSession()} disabled={saving || minutesToSave === null || !data.exerciseTrackingAvailable}>
+              <Save aria-hidden="true" /> {saving ? 'Salvando…' : 'Salvar treino'}
+            </Button>
           )}
           {timer.status !== 'idle' && (
-            <button type="button" className="ag-btn ag-btn-gray" onClick={reset} disabled={saving}><RotateCcw size={18} aria-hidden="true" /> Zerar</button>
+            <Button variant="ghost" onClick={reset} disabled={saving}><RotateCcw aria-hidden="true" /> Zerar</Button>
           )}
         </div>
 
@@ -461,8 +461,8 @@ export function ActivityGoalsPage() {
             </label>
           ))}
           <div className="ag-actions ag-actions-left">
-            <button type="submit" className="ag-btn ag-btn-green"><Save size={19} aria-hidden="true" /> Salvar metas</button>
-            <button type="button" className="ag-btn ag-btn-gray" onClick={() => setGoalInput({ day: '30', week: '150', month: '600' })}>Usar sugestão (30 · 150 · 600)</button>
+            <Button type="submit"><Save aria-hidden="true" /> Salvar metas</Button>
+            <Button variant="outline" onClick={() => setGoalInput({ day: '30', week: '150', month: '600' })}>Usar sugestão (30 · 150 · 600)</Button>
           </div>
         </form>
         {goalsNotice && <p className={`ag-notice ag-notice-${goalsNotice.kind}`} role={goalsNotice.kind === 'error' ? 'alert' : 'status'}>{goalsNotice.text}</p>}

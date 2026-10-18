@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Button } from './ui';
 
 /* ---------- instalação (captura o evento antes do React montar) ---------- */
 
@@ -140,7 +141,7 @@ export function PwaBanners() {
       {update.ready && (
         <p className="pwa-banner pwa-update" role="status">
           <span>Há uma nova versão do app.</span>
-          <button type="button" className="pwa-banner-btn" onClick={update.apply}>Atualizar agora</button>
+          <Button variant="outline" size="sm" onClick={update.apply}>Atualizar agora</Button>
         </p>
       )}
     </div>
@@ -161,9 +162,7 @@ export function InstallCard() {
         ) : canInstall ? (
           <>
             <p>Abre direto da tela inicial, em tela cheia, e carrega mais rápido.</p>
-            <button
-              type="button"
-              className="btn btn-default btn-md"
+            <Button
               onClick={async () => {
                 try {
                   setMsg((await install()) ? 'App instalado.' : 'Instalação não concluída. Use o menu do navegador para tentar novamente.');
@@ -173,7 +172,7 @@ export function InstallCard() {
               }}
             >
               Instalar app
-            </button>
+            </Button>
           </>
         ) : ios ? (
           <p>No iPhone ou iPad, abra no Safari, toque em Compartilhar e escolha “Adicionar à Tela de Início”.</p>

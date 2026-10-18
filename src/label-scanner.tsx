@@ -1,6 +1,7 @@
 import { useRef, useState, type ChangeEvent } from 'react';
 import { Camera, LoaderCircle, ScanText } from 'lucide-react';
 import { supabase } from './supabase';
+import { Button, buttonClass } from './ui';
 import type { PickedFood } from './foodsearch';
 import { hasCompleteNonNegativeNutrition } from './photo-nutrition';
 
@@ -112,7 +113,7 @@ export function NutritionLabelScanner({ onPick }: { onPick: (food: PickedFood) =
           <strong>Fotografar tabela nutricional</strong>
           <p className="ft-explainer" style={{ margin: '4px 0 0' }}>A IA tenta transcrever o rótulo; você revisa antes de registrar.</p>
         </div>
-        <label className="button button-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, cursor: busy ? 'wait' : 'pointer' }}>
+        <label className={buttonClass({ variant: 'outline' })} style={{ cursor: busy ? 'wait' : 'pointer' }}>
           {busy ? <LoaderCircle size={16} /> : <Camera size={16} />}
           {busy ? 'Lendo…' : 'Enviar foto'}
           <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={scan} disabled={busy} hidden />
@@ -142,7 +143,7 @@ export function NutritionLabelScanner({ onPick }: { onPick: (food: PickedFood) =
             ))}
           </div>
           {preview.notes && <p className="ft-explainer">{preview.notes}</p>}
-          <button type="button" className="button" onClick={useResult}>Revisar no formulário de alimento</button>
+          <Button block onClick={useResult}>Revisar no formulário de alimento</Button>
         </div>
       )}
     </section>

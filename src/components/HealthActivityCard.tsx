@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Activity, RefreshCw, Smartphone } from 'lucide-react';
 import { supabase } from '../supabase';
-import { dateDaysAgoInSaoPaulo, todayInSaoPaulo } from '../ui';
+import { Button, dateDaysAgoInSaoPaulo, todayInSaoPaulo } from '../ui';
 
 type HealthRecord = {
   id: string;
@@ -77,9 +77,9 @@ export function HealthActivityCard() {
               <strong>{todaySteps ? Number(todaySteps.value).toLocaleString('pt-BR') : '—'} passos</strong>
               <p>{todaySteps ? 'Último valor de passos de hoje sincronizado.' : 'Ainda não há passos de hoje sincronizados.'}</p>
             </div>
-            <button className="btn btn-outline btn-sm" type="button" onClick={() => void load()} disabled={loading} aria-label="Atualizar atividade sincronizada">
+            <Button variant="outline" size="sm" onClick={() => void load()} disabled={loading} aria-label="Atualizar atividade sincronizada">
               <RefreshCw size={16} aria-hidden="true" /> {loading ? 'Atualizando…' : 'Atualizar'}
-            </button>
+            </Button>
           </div>
           {loading && <p role="status">Carregando atividade…</p>}
           {error && <p className="profile-state-error" role="alert">{error}</p>}

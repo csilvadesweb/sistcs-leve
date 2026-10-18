@@ -18,14 +18,12 @@
 .ft-water-mark { color: var(--water); background: rgba(92, 201, 220, .12); }
 .ft-kicker { margin: 0 0 4px; color: var(--gold); font-size: 13px; font-weight: 750; letter-spacing: .16em; }
 .ft-section-heading h2 { margin: 0; color: var(--text); font-size: 22px; letter-spacing: -.03em; line-height: 1.25; }
-.ft-section-heading > .btn { min-height: 46px; padding-inline: 16px; font-size: 14.5px; }
 .ft-explainer { max-width: 660px; margin: 18px 0 0 61px; color: var(--text-2); font-size: 15px; line-height: 1.65; }
 .ft-feedback { margin: 18px 0 0; padding: 14px 16px; border: 1px solid rgba(114, 212, 76, .3); border-radius: 14px; color: #0f7a3d; background: rgba(114, 212, 76, .09); font-size: 15px; line-height: 1.5; animation: rise .4s var(--ease) both; }
 .ft-feedback-error { border-color: rgba(255, 146, 131, .4); color: var(--danger); background: rgba(255, 146, 131, .09); }
 .ft-editor { margin-top: 20px; padding: 22px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface-2); animation: rise .5s var(--ease) both; }
 .ft-editor-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
 .ft-editor-top h3 { margin: 0; color: var(--text); font-size: 19px; }
-.ft-editor-top .btn { min-height: 42px; }
 .ft-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .ft-field > label { font-size: 15px; color: var(--text); }
 .ft-field .input { min-height: 50px; font-size: 16px; }
@@ -59,13 +57,10 @@
 .ft-record-nutrients { display: grid; gap: 3px; justify-items: end; color: var(--gold-2); font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .ft-record-nutrients span { color: var(--text-3); font-size: 14px; font-weight: 500; }
 .ft-record-actions { display: flex; grid-column: 1 / -1; flex-wrap: wrap; gap: 6px; }
-.ft-record-actions .btn, .ft-water-row .btn { min-height: 40px; padding: 0 12px; color: var(--text-2); font-size: 14px; }
-.ft-record-actions .btn svg, .ft-water-row .btn svg { width: 16px; height: 16px; }
 .ft-empty { display: grid; justify-items: center; padding: 34px 15px 26px; text-align: center; }
 .ft-empty-icon { display: grid; width: 54px; height: 54px; place-items: center; color: var(--gold); border-radius: 50%; background: rgba(232, 196, 108, .12); animation: float 5s ease-in-out infinite; }
 .ft-empty h3 { margin: 14px 0 6px; color: var(--text); font-size: 18px; }
 .ft-empty p { max-width: 420px; margin: 0 0 16px; color: var(--text-2); font-size: 15px; line-height: 1.6; }
-.ft-empty .btn { min-height: 44px; font-size: 14px; }
 .ft-favorites { margin-top: 20px; padding: 18px 0 0; border-top: 1px solid var(--line-soft); }
 .ft-favorites-heading { display: flex; align-items: center; justify-content: space-between; color: var(--gold); }
 .ft-favorites-heading h3 { margin: 0; color: var(--text); font-size: 17px; }
@@ -74,7 +69,6 @@
 .ft-favorite-row > div { display: grid; flex: 1; min-width: 0; gap: 3px; }
 .ft-favorite-row strong { color: var(--text); font-size: 15px; overflow-wrap: anywhere; }
 .ft-favorite-row span { color: var(--text-3); font-size: 14px; }
-.ft-favorite-row .btn { min-height: 42px; padding-inline: 12px; font-size: 14px; }
 .ft-favorites-empty { margin: 12px 0 0; color: var(--text-3); font-size: 14px; line-height: 1.6; }
 .ft-water-card { margin-top: 22px; }
 .ft-water-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; padding: 18px; border-radius: 18px; background: rgba(92, 201, 220, .07); border: 1px solid rgba(92, 201, 220, .18); }
@@ -86,7 +80,6 @@
 .ft-water-goal strong { font-size: 18px; }
 .ft-water-goal a, .ft-cup-note a { color: var(--gold); font-size: 14px; font-weight: 650; text-underline-offset: 3px; }
 .ft-quick-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-.ft-quick-actions .btn { min-height: 46px; font-size: 14px; }
 .ft-cup-note { margin: 0; color: var(--text-3); font-size: 14px; line-height: 1.55; }
 .ft-water-editor { margin-top: 18px; }
 .ft-water-form-grid { max-width: 560px; }

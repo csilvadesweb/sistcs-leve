@@ -30,7 +30,7 @@ import {
 import { Avatar, resizeImage } from '../photos';
 import { InstallCard } from '../pwa';
 import { HealthActivityCard } from '../components/HealthActivityCard';
-import { Button, Field, decimalInputText, decimalText, readError, todayInSaoPaulo } from '../ui';
+import { Button, Field, buttonClass, decimalInputText, decimalText, readError, todayInSaoPaulo } from '../ui';
 
 const goalFields: Array<{ key: GoalKey; label: string; unit: string }> = [
   { key: 'calories', label: 'Calorias', unit: 'kcal' },
@@ -365,7 +365,7 @@ export function ProfileSettings() {
               <p className="field-hint">JPG, PNG ou WebP. Ela é recortada em quadrado e fica privada na sua conta.</p>
               <div className="avatar-actions">
                 <input ref={avatarInput} id="avatar-file" className="sr-only" type="file" accept="image/jpeg,image/png,image/webp" onChange={onAvatarChosen} disabled={busy} />
-                <label htmlFor="avatar-file" className={`btn btn-outline btn-sm ${busy ? 'is-disabled' : ''}`}><Camera aria-hidden="true" /> {avatarPath ? 'Trocar foto' : 'Escolher foto'}</label>
+                <label htmlFor="avatar-file" className={buttonClass({ variant: 'outline', size: 'sm', className: busy ? 'is-disabled' : '' })}><Camera aria-hidden="true" /> {avatarPath ? 'Trocar foto' : 'Escolher foto'}</label>
                 {avatarPath && <Button variant="ghost" size="sm" onClick={onAvatarRemove} disabled={busy}><Trash2 aria-hidden="true" /> Remover</Button>}
               </div>
             </div>

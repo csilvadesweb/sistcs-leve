@@ -8,7 +8,7 @@ describe('componentes básicos da interface', () => {
     const html = renderToStaticMarkup(createElement(Button, { children: 'Salvar' }));
 
     expect(html).toContain('type="button"');
-    expect(html).toContain('class="btn btn-default btn-md "');
+    expect(html).toContain('class="btn btn-default btn-md"');
     expect(html).toContain('>Salvar</button>');
   });
 
@@ -24,7 +24,7 @@ describe('componentes básicos da interface', () => {
     );
 
     expect(html).toContain('type="submit"');
-    expect(html).toContain('class="btn btn-destructive btn-sm "');
+    expect(html).toContain('class="btn btn-destructive btn-sm"');
     expect(html).toContain('disabled=""');
     expect(html).toContain('>Apagar conta</button>');
   });

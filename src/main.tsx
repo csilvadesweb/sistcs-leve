@@ -7,6 +7,7 @@ import './app.css';
 import './recipes.css';
 import './visual-parity.css';
 import './polish.css';
+import './buttons.css';
 import { registerServiceWorker } from './pwa';
 
 createRoot(document.getElementById('root')!).render(

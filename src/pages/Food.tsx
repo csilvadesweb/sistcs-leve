@@ -627,11 +627,11 @@ export function FoodTracking() {
 
         <NutrientTotals entries={entriesForDate} goals={data.profile?.goals ?? null} />
 
-        <nav className="ft-meal-tabs" aria-label="Detalhes por refeição" role="tablist">
-          <button type="button" role="tab" aria-selected={selectedMealTab === 'summary'} className={selectedMealTab === 'summary' ? 'is-active' : ''} onClick={() => setSelectedMealTab('summary')}>Resumo</button>
+        <nav className="progressive-tabs ft-meal-tabs" aria-label="Detalhes por refeição" role="tablist">
+          <button type="button" role="tab" aria-selected={selectedMealTab === 'summary'} className={selectedMealTab === 'summary' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setSelectedMealTab('summary')}>Resumo</button>
           {mealKeys.map((meal) => (
-            <button key={meal} type="button" role="tab" aria-selected={selectedMealTab === meal} className={selectedMealTab === meal ? 'is-active' : ''} onClick={() => setSelectedMealTab(meal)}>
-              {mealLabels[meal]} <span>{mealGroups.find((group) => group.meal === meal)?.entries.length ?? 0}</span>
+            <button key={meal} type="button" role="tab" aria-selected={selectedMealTab === meal} className={selectedMealTab === meal ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setSelectedMealTab(meal)}>
+              {mealLabels[meal]} <span className="progressive-tab-count">{mealGroups.find((group) => group.meal === meal)?.entries.length ?? 0}</span>
             </button>
           ))}
         </nav>
@@ -715,9 +715,9 @@ export function FoodTracking() {
           </p>
         )}
 
-        <nav className="ft-meal-tabs ft-water-tabs" aria-label="Seções de hidratação" role="tablist">
-          <button type="button" role="tab" aria-selected={selectedWaterTab === 'summary'} className={selectedWaterTab === 'summary' ? 'is-active' : ''} onClick={() => setSelectedWaterTab('summary')}>Resumo</button>
-          <button type="button" role="tab" aria-selected={selectedWaterTab === 'history'} className={selectedWaterTab === 'history' ? 'is-active' : ''} onClick={() => setSelectedWaterTab('history')}>Registros <span>{waterForDate.length}</span></button>
+        <nav className="progressive-tabs ft-meal-tabs ft-water-tabs" aria-label="Seções de hidratação" role="tablist">
+          <button type="button" role="tab" aria-selected={selectedWaterTab === 'summary'} className={selectedWaterTab === 'summary' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setSelectedWaterTab('summary')}>Resumo</button>
+          <button type="button" role="tab" aria-selected={selectedWaterTab === 'history'} className={selectedWaterTab === 'history' ? 'progressive-tab is-active' : 'progressive-tab'} onClick={() => setSelectedWaterTab('history')}>Registros <span className="progressive-tab-count">{waterForDate.length}</span></button>
         </nav>
         {selectedWaterTab === 'summary' && <>
           <div className="ft-water-summary">

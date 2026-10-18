@@ -1,0 +1,120 @@
+/*
+ * Botões — fonte única de verdade.
+ *
+ * Variantes: .btn-default (principal) · .btn-outline · .btn-ghost · .btn-destructive
+ * Tamanhos:  .btn-md (48 px) · .btn-sm (42 px) · .btn-icon (42 × 42 px)
+ * Extra:     .btn-block (largura total, texto pode quebrar linha)
+ *
+ * Regra de ouro: nenhum outro arquivo CSS define altura, espaçamento, fonte ou
+ * cor de botão. Outros arquivos só posicionam (largura, margem, alinhamento).
+ * Este arquivo é importado por último em main.tsx.
+ */
+
+:root {
+  --btn-radius: 12px;
+  --btn-h-md: 48px;
+  --btn-h-sm: 42px;
+  --btn-green-1: #176b40;
+  --btn-green-2: #104d30;
+  --btn-green-1-hover: #1c7849;
+  --btn-green-2-hover: #125b38;
+}
+
+/* Base: sem variante, o botão já nasce como o botão principal. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: var(--btn-h-md);
+  padding: 0 20px;
+  border: 1px solid transparent;
+  border-radius: var(--btn-radius);
+  background: linear-gradient(135deg, var(--btn-green-1), var(--btn-green-2));
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(16, 77, 48, .18);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 680;
+  letter-spacing: .01em;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .18s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+.btn svg { width: 19px; height: 19px; flex: 0 0 auto; }
+.btn:active:not(:disabled) { transform: scale(.97); }
+/* Estado desabilitado: vale para .btn e para qualquer outro <button> (abas, cartões clicáveis). */
+button:disabled,
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: .58;
+  box-shadow: none;
+  filter: saturate(.72);
+}
+
+/* Variantes */
+.btn-default:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--btn-green-1-hover), var(--btn-green-2-hover));
+  box-shadow: 0 8px 20px rgba(16, 77, 48, .22);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  border-color: #d4dfd3;
+  background: #fff;
+  color: var(--text);
+  box-shadow: none;
+}
+.btn-outline:hover:not(:disabled) { border-color: #b5cdb8; background: #f4f8f2; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+  box-shadow: none;
+}
+.btn-ghost:hover:not(:disabled) { background: var(--surface-2); color: var(--text); }
+
+.btn-destructive {
+  background: linear-gradient(135deg, #e5604f, #c23a2b);
+  color: #fff;
+  box-shadow: none;
+}
+.btn-destructive:hover:not(:disabled) { filter: brightness(1.08); }
+
+/* Extra: botão sobre uma foto. Fundo escuro translúcido dá contraste em qualquer imagem. */
+.btn.btn-overlay {
+  background: rgba(15, 30, 22, .62);
+  color: #fff;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.btn.btn-overlay:hover:not(:disabled) { background: rgba(15, 30, 22, .82); color: #fff; }
+
+/* Tamanhos */
+.btn-md { min-height: var(--btn-h-md); padding: 0 20px; font-size: 15px; }
+.btn-sm { min-height: var(--btn-h-sm); padding: 0 14px; font-size: 14px; }
+.btn-sm svg, .btn-icon svg { width: 18px; height: 18px; }
+.btn-icon { min-height: var(--btn-h-sm); min-width: var(--btn-h-sm); padding: 0; font-size: 14px; }
+
+/* Largura total (cartões, formulários): o texto pode quebrar em duas linhas. */
+.btn-block {
+  width: 100%;
+  padding-block: 8px;
+  line-height: 1.25;
+  text-align: center;
+  white-space: normal;
+}
+
+/* Botão como <label> de envio de arquivo. */
+label.btn.is-disabled { opacity: .55; pointer-events: none; }
+
+/* Grupo de botões lado a lado (filtros, períodos): só layout, sem estilo de botão. */
+.btn-group { display: flex; flex-wrap: wrap; gap: 8px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .btn:active:not(:disabled), .btn-default:hover:not(:disabled) { transform: none; }
+}

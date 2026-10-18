@@ -23,22 +23,12 @@
 .recipe-card h2 { font-family: var(--app-font-display, inherit); }
 .recipe-nutrients { background: linear-gradient(180deg, #f8fbf8, #f1f6f2); }
 .recipe-nutrients div:first-child strong { color: var(--leaf-2, #17803f); font-size: 17px; }
-.recipe-details-button { border-radius: 12px; transition: background .2s ease; }
-.recipe-details-button:hover { background: rgba(154, 108, 18, .07); }
 .recipe-details { animation: polish-rise .25s ease both; }
-.recipe-favorite-button { display: inline-grid; place-items: center; width: 36px; height: 36px; border: 0; border-radius: 50%; background: transparent; color: var(--text-3); cursor: pointer; transition: color .2s ease, transform .2s ease, background .2s ease; }
-.recipe-favorite-button:hover { background: rgba(154, 108, 18, .09); }
-.recipe-favorite-button.is-favorite { color: #d49a1a; transform: scale(1.08); }
 .recipe-card-meta { display: inline-flex; align-items: center; gap: 4px; }
-.recipe-plan-button { width: 100%; min-height: 44px; margin-top: 4px; border: 1px dashed rgba(31, 154, 82, .45); border-radius: 12px; background: rgba(31, 154, 82, .05); color: var(--leaf-2, #17803f); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; transition: background .2s ease; }
-.recipe-plan-button:hover { background: rgba(31, 154, 82, .1); }
 .recipe-add-button { margin-top: auto; }
 .recipe-card .recipe-add-button { margin-top: 12px; }
 .recipes-categories { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; scrollbar-width: none; }
 .recipes-categories::-webkit-scrollbar { display: none; }
-.recipes-categories button { flex: 0 0 auto; transition: background .2s ease, border-color .2s ease, transform .15s ease; }
-.recipes-categories button:active { transform: scale(.96); }
-.recipes-categories .favorites-filter { display: inline-flex; align-items: center; gap: 6px; }
 .recipes-intro { box-shadow: 0 10px 30px -18px rgba(154, 108, 18, .4); }
 .meal-plan-day { background: #fbfdfb; }
 
@@ -55,11 +45,7 @@
 :focus-visible { outline: 2px solid var(--leaf, #1f9a52); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .recipe-card, .fast-method-card, .recipe-details { transition: none; animation: none; transform: none !important; } }
 
-.recipe-card .recipe-add-button { min-height: 48px; border: 0; border-radius: 14px; background: var(--green-grad, linear-gradient(135deg, #1f9a52, #17803f)); color: #fff; font-weight: 750; cursor: pointer; box-shadow: 0 10px 22px -12px rgba(23, 128, 63, .7); transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease; }
-.recipe-card .recipe-add-button:active { transform: scale(.98); }
-.recipe-card .recipe-add-button:disabled { opacity: .6; box-shadow: none; cursor: progress; }
 .recipe-nutrients div { align-content: start; }
-.recipe-favorite-button { background: transparent; }
 
 /* --- Constância e resumo semanal --- */
 .insight-card { display: grid; gap: 16px; padding: 20px; border: 1px solid var(--line-soft); border-radius: 22px; background: var(--surface); box-shadow: var(--shadow); }

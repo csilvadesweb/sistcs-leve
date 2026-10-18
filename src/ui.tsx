@@ -1,15 +1,21 @@
 import { forwardRef, useState, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { buttonClass, type ButtonSize, type ButtonVariant } from './button-style';
+
+export { buttonClass };
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'default' | 'outline' | 'ghost' | 'destructive';
-  size?: 'md' | 'sm';
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  /** Largura total; o texto pode quebrar em duas linhas. */
+  block?: boolean;
 };
 
+/** Botão padrão do app. Para links e <label> com cara de botão, use `buttonClass()`. */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { variant = 'default', size = 'md', className = '', type = 'button', ...props },
+  { variant = 'default', size = 'md', block = false, className = '', type = 'button', ...props },
   ref,
 ) {
-  return <button ref={ref} type={type} className={`btn btn-${variant} btn-${size} ${className}`} {...props} />;
+  return <button ref={ref} type={type} className={buttonClass({ variant, size, block, className })} {...props} />;
 });
 
 export function Field({

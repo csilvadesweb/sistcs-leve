@@ -3,7 +3,7 @@ import { Bot, Send, Sparkles, UserRound, RotateCcw, ShieldCheck } from 'lucide-r
 import { supabase } from '../supabase';
 import { useAppData } from '../session';
 import { calculateFoodNutrientTotals } from '../data';
-import { todayInSaoPaulo } from '../ui';
+import { Button, todayInSaoPaulo } from '../ui';
 import './assistant.css';
 
 type Message = { role: 'user' | 'model'; text: string };
@@ -109,7 +109,7 @@ export function Assistant() {
         <div className="ai-chat-heading">
           <span className="ai-avatar"><Bot size={21} aria-hidden="true" /></span>
           <div><strong>Coach de IA</strong><p>Português brasileiro · respostas objetivas</p></div>
-          <button className="ai-reset" type="button" onClick={() => { setMessages([]); setNotice(''); }} disabled={busy} aria-label="Limpar conversa" title="Limpar conversa"><RotateCcw size={17} /></button>
+          <Button variant="outline" size="icon" onClick={() => { setMessages([]); setNotice(''); }} disabled={busy} aria-label="Limpar conversa" title="Limpar conversa"><RotateCcw size={17} /></Button>
         </div>
         <div className="ai-messages" aria-live="polite" aria-busy={busy}>
           {messages.length === 0 && (
@@ -118,7 +118,7 @@ export function Assistant() {
               <h3>Como posso ajudar hoje?</h3>
               <p>Escolha uma ideia ou escreva sua própria pergunta.</p>
               <div className="ai-suggestions">
-                {suggestions.map((item) => <button key={item} type="button" onClick={() => void send(item)} disabled={busy}>{item}</button>)}
+                {suggestions.map((item) => <Button key={item} variant="outline" size="sm" block onClick={() => void send(item)} disabled={busy}>{item}</Button>)}
               </div>
             </div>
           )}
@@ -135,7 +135,7 @@ export function Assistant() {
         <form className="ai-compose" onSubmit={onSubmit}>
           <label className="sr-only" htmlFor="ai-message">Sua pergunta</label>
           <textarea id="ai-message" ref={inputRef} value={draft} onChange={(event) => setDraft(event.target.value)} maxLength={4000} rows={2} placeholder="Ex.: me ajude a montar um jantar simples…" disabled={busy} />
-          <button type="submit" disabled={busy || !draft.trim()} aria-label="Enviar pergunta"><Send size={18} aria-hidden="true" /><span>Enviar</span></button>
+          <Button type="submit" disabled={busy || !draft.trim()} aria-label="Enviar pergunta"><Send size={18} aria-hidden="true" /><span>Enviar</span></Button>
         </form>
         <label style={{ display: 'flex', alignItems: 'flex-start', gap: 9, padding: '12px 14px', fontSize: 13, lineHeight: 1.45 }}>
           <input type="checkbox" checked={includeDiaryContext} onChange={(event) => setIncludeDiaryContext(event.target.checked)} />

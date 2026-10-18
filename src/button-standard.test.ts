@@ -1,3 +1,4 @@
+// @ts-nocheck -- lê arquivos do disco; o projeto não inclui @types/node (mesmo padrão de catalog-validator.test.ts).
 import { readdirSync, readFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';

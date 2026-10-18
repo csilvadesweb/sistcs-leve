@@ -1,3 +1,6 @@
+import { readdirSync, readFileSync } from 'node:fs';
+import { join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { BUTTON_SIZES, BUTTON_VARIANTS, buttonClass } from './button-style';
 
@@ -5,14 +8,27 @@ import { BUTTON_SIZES, BUTTON_VARIANTS, buttonClass } from './button-style';
  * Garante que o padrão único de botões (button-style.ts + buttons.css) não se
  * desfaça: ninguém volta a escrever classes de botão à mão nem a definir a
  * aparência de botão fora de buttons.css.
+ *
+ * Os arquivos são lidos com node:fs porque o Vitest esvazia o conteúdo de
+ * arquivos CSS importados (mesmo com ?raw).
  */
 
-const cssFiles = import.meta.glob<string>('./**/*.css', { eager: true, query: '?raw', import: 'default' });
-const sourceFiles = import.meta.glob<string>('./**/*.tsx', { eager: true, query: '?raw', import: 'default' });
+const SRC_DIR = fileURLToPath(new URL('.', import.meta.url));
+
+function listFiles(dir: string): string[] {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) =>
+    entry.isDirectory() ? listFiles(join(dir, entry.name)) : [join(dir, entry.name)],
+  );
+}
+
+const allFiles = listFiles(SRC_DIR);
+const readText = (path: string) => readFileSync(path, 'utf8');
+const shortPath = (path: string) => './' + relative(SRC_DIR, path).split('\\').join('/');
 
 const stripComments = (css: string) => css.replace(/\/\*[\s\S]*?\*\//g, '');
-const appSources = Object.entries(sourceFiles).filter(([path]) => !path.includes('.test.'));
-const otherCss = Object.entries(cssFiles).filter(([path]) => !path.endsWith('/buttons.css'));
+const BUTTONS_CSS = join(SRC_DIR, 'buttons.css');
+const otherCss = allFiles.filter((path) => path.endsWith('.css') && path !== BUTTONS_CSS);
+const appSources = allFiles.filter((path) => path.endsWith('.tsx') && !path.includes('.test.'));
 
 /** Seletor que COMEÇA em .btn (definir o botão). `.pai .btn` só posiciona e é permitido. */
 const CSS_STARTS_WITH_BTN = /(?:^|[{},])\s*\.btn(?![A-Za-z0-9_])/;
@@ -34,7 +50,7 @@ describe('buttonClass', () => {
 });
 
 describe('padrão único de botões', () => {
-  const buttonsCss = stripComments(cssFiles['./buttons.css'] ?? '');
+  const buttonsCss = stripComments(readText(BUTTONS_CSS));
 
   it('buttons.css existe e define todas as variantes e tamanhos do TypeScript', () => {
     expect(buttonsCss.length).toBeGreaterThan(0);
@@ -44,19 +60,22 @@ describe('padrão único de botões', () => {
   });
 
   it('nenhum outro CSS define a aparência de botão (só posiciona com ".pai .btn")', () => {
-    const offenders = otherCss.filter(([, css]) => CSS_STARTS_WITH_BTN.test(stripComments(css))).map(([path]) => path);
+    const offenders = otherCss.filter((path) => CSS_STARTS_WITH_BTN.test(stripComments(readText(path)))).map(shortPath);
     expect(offenders).toEqual([]);
   });
 
   it('nenhuma tela escreve classes de botão à mão (use Button ou buttonClass())', () => {
     const offenders = appSources
-      .filter(([, source]) => TSX_VARIANT_TOKEN.test(source) || TSX_BARE_BTN.test(source))
-      .map(([path]) => path);
+      .filter((path) => {
+        const source = readText(path);
+        return TSX_VARIANT_TOKEN.test(source) || TSX_BARE_BTN.test(source);
+      })
+      .map(shortPath);
     expect(offenders).toEqual([]);
   });
 
   it('nenhum Button usa estilo inline', () => {
-    const offenders = appSources.filter(([, source]) => BUTTON_INLINE_STYLE.test(source)).map(([path]) => path);
+    const offenders = appSources.filter((path) => BUTTON_INLINE_STYLE.test(readText(path))).map(shortPath);
     expect(offenders).toEqual([]);
   });
 

@@ -1,100 +1,107 @@
-# SISTCS Leve (versão Supabase)
+# SISTCS Leve
 
-App de acompanhamento com dados na nuvem: alimentação com metas e "quanto falta", água, peso, medicamentos,
-relatórios e uma configuração personalizada que estima suas metas diárias.
+Aplicativo web instalável (PWA) para acompanhar alimentação, hidratação, atividade física, jejum e evolução pessoal. O frontend usa React, TypeScript e Vite; autenticação e persistência usam Supabase; a publicação web é preparada para Cloudflare Workers com arquivos estáticos. Há também um aplicativo Android complementar para integração com Health Connect.
 
-## Fontes e licença dos dados nutricionais
+> **Estado e limites:** esta documentação descreve recursos identificados no código do repositório. Não significa que cada integração foi validada em produção, em aparelho físico ou no projeto Supabase remoto. Consulte a [auditoria geral de 19/10/2026](docs/AUDITORIA_GERAL_2026-10-19.md) para riscos, evidências e pendências.
 
-Consulte `docs/FOOD_DATA_SOURCES_AND_LICENSES.md` antes de importar, redistribuir ou ampliar qualquer catálogo. A base TACO é mantida como referência atual, mas sua redistribuição deve ser confirmada com a fonte titular antes de qualquer pacote comercial. Dados USDA FoodData Central são CC0; Open Food Facts exige cumprimento da ODbL/DbCL, atribuição e avaliação de share-alike. Nenhuma importação em massa ou migration de produção deve ser feita sem revisão e testes.
+## Navegação e funcionalidades
 
-## Telas
+O menu principal tem cinco áreas. As opções internas ficam agrupadas em cada área, sem ocupar lugares adicionais no menu inferior; a ordem pode ser reorganizada por pressão longa e arraste, com preferências salvas na conta.
 
-- **Início:** resumo de hoje (calorias com anel de progresso, nutrientes, água, peso, doses) e atalho para configurar.
-- **Exercícios:** diário de atividades, duração e estimativa aproximada de calorias gastas por MET e peso corporal. Requer a migration aditiva `supabase/migrations/20261012195153_exercise_entries.sql`. A tabela já existe no banco remoto e a migration consta no histórico remoto; o histórico completo versionado ainda precisa ser reconciliado. Não execute `db push` até reconciliar o histórico documentado em `docs/SUPABASE_MIGRATION_AUDIT_2026-10-12.md`.
-- **Alimentação:** busca local de alimentos e preparações brasileiras, produtos embalados do Open Food Facts e referências USDA SR Legacy via TempoLife (priorizar registros com licença pública explícita e atribuição; nomes podem aparecer em inglês), leitura de código de barras pela câmera (Chrome/Android; nos outros navegadores, digite o número), lançamentos por refeição, favoritos, total do dia e **quanto falta (ou passou) para cada meta**; água com meta e copo. Os valores aproximados são identificados como estimativas. A foto do prato pode sugerir alimentos e porções estimadas; cada item precisa ser selecionado e revisado antes de salvar. A foto da tabela nutricional tenta transcrever valores do rótulo para revisão manual.
-- **Registros:** peso com gráfico, variação e progresso até o peso desejado.
-- **Registros também tem Antes e depois:** envio de fotos (antes, durante, depois), comparação lado a lado com dias e variação de peso, e galeria.
-- **Jejum:** protocolos 12:12 a 20:4 (ou 12 a 24 h), cronômetro com início e término, horas jejuadas, fase estimada, histórico, estatísticas e benefícios com avisos de saúde. Não é indicado para menores de 18 anos.
-- **Medicamentos:** cadastro com horários e marcação das doses de cada dia.
-- **Relatórios:** últimos 7, 14 ou 30 dias (calorias, água, peso, médias e dias dentro da meta). Inclui a maior sequência de dias com registro e a comparação dos dias que atingiram a meta de proteína. Um insight de tendência do peso só aparece com dados suficientes; ele não altera metas automaticamente.
-- **Perfil:** foto de perfil (recortada em quadrado), dados pessoais, objetivo, estimativa de metas, metas manuais, exportar JSON, importar dados antigos, sair e apagar tudo.
+- **Início:** resumo diário e atalhos para acompanhar as metas.
+- **Alimentação:** diário por refeição; busca de alimentos, produtos embalados e suplementos; porções e medidas caseiras; código de barras quando o navegador/dispositivo oferece suporte; favoritos; leitura assistida de foto de prato e de rótulo com revisão antes de salvar; totais de energia, macronutrientes, gordura saturada, açúcares e sódio quando informados.
+- **Coach de IA:** conversa para sugestões educativas de refeições, receitas e substituições. O serviço depende de configuração segura da API na Cloudflare. O envio do resumo alimentar diário é opcional e desativado por padrão.
+- **Hidratação:** registro de água, meta, volume do copo e lembretes configuráveis.
+- **Jejum:** protocolos e temporizador, com histórico e estatísticas estimadas.
+- **Receitas:** busca e filtros, favoritos, porções, planejamento semanal, lista de compras em PDF e receita em PDF, conforme os recursos disponíveis no catálogo.
+- **Atividade:** registro de exercícios e estimativa aproximada de calorias por MET; metas e cronômetro de atividade; consulta aos passos e sessões importados quando a integração Android/Health Connect estiver configurada.
+- **Evolução:** registros de peso, fotos de progresso, gráficos e relatórios.
+- **Perfil:** dados pessoais, metas calculadas ou manuais, medicamentos e registro de doses, preferências de navegação, exportação/importação de dados e exclusão dos dados da conta.
 
-## Configuração personalizada
+### Cálculos e segurança de saúde
 
-No Perfil você informa sexo, data de nascimento, altura, nível de atividade, objetivo (perder, manter ou ganhar peso),
-ritmo semanal e a distribuição de nutrientes (equilibrada, mais proteína ou menos carboidrato). Com o peso mais recente dos
-Registros, o app calcula pela equação de Mifflin-St Jeor:
+As metas calculadas são estimativas gerais, não prescrição nutricional. Cálculos dependem dos dados informados pela pessoa; confirme resultados e porções. O app não substitui orientação médica ou nutricional. Não use o jejum ou metas de perda de peso como recomendação clínica individual.
 
-- gasto basal e gasto diário estimado;
-- meta de calorias, com piso de 1.200 kcal (mulheres) e 1.500 kcal (homens) ao perder peso;
-- proteínas, carboidratos, gorduras, fibras (14 g por 1.000 kcal) e água (35 ml por kg).
+## Catálogo nutricional e qualidade dos dados
 
-O botão "Usar como minhas metas" preenche os campos; você ajusta o que quiser e salva. O cálculo só vale para maiores de 18
-anos e é uma estimativa geral, não orientação médica.
+A busca combina fontes distintas, que devem ser apresentadas com sua origem e nível de confiança:
 
-## PWA (app instalável)
+- **TACO/NEPA-UNICAMP:** usada como referência na base local; a autorização explícita para redistribuição comercial ainda precisa ser confirmada por escrito.
+- **USDA FoodData Central:** preferir registros com origem identificável e licença pública aplicável (USDA declara dados do FDC em domínio público/CC0).
+- **Open Food Facts:** útil para produtos embalados e códigos de barras; a base tem condições ODbL e requisitos de atribuição/share-alike. Imagens podem ter condições diferentes.
+- **Estimativas brasileiras:** receitas e preparações sem referência adequada são estimativas, não valores oficiais ou análises laboratoriais.
+- **Suplementos:** a busca consulta o catálogo estruturado no Supabase, mas a cobertura não é exaustiva. Um produto só deve ser considerado verificado quando os dados nutricionais e sua fonte foram confirmados; campos ausentes não devem ser inventados.
 
-- `public/manifest.webmanifest`: nome **SISTCS Leve**, ícones gerados da logo (comum e maskable), atalhos para Alimentos, Jejum e Peso.
-- `public/sw.js`: service worker que guarda só os arquivos do app (abre rápido e abre sem internet). Dados de saúde, Supabase e Open Food Facts nunca são guardados nele.
-- `src/pwa.tsx`: botão "Instalar app" (Perfil), aviso "nova versão disponível" e faixa de "sem internet".
-- Só funciona na versão **publicada com HTTPS** (`npm run build` e hospedar `dist/`). Em `npm run dev` o service worker fica desligado.
-- Sem internet o app abre, mas os dados vêm do Supabase: novos registros só são salvos quando a conexão voltar.
-- Para trocar a logo, substitua os arquivos de `public/` (`icon-*.png`, `logo.webp`, `emblem.webp`, `favicon-*.png`, `apple-touch-icon.png`).
-- Lembretes por notificação com o app fechado (push) ainda não existem: exigem um servidor (função do Supabase com chaves VAPID).
+Leia [fontes e licenças de dados alimentares](docs/FOOD_DATA_SOURCES_AND_LICENSES.md) e a [auditoria de cobertura alimentar brasileira](docs/auditoria-cobertura-alimentar-brasileira-2026-10.md) antes de importar, remover ou redistribuir dados. Não copie bases proprietárias nem faça importação em massa sem avaliação de licença, deduplicação e testes de regressão.
 
-Para publicar em leve.sistcs.com (Cloudflare), veja `DEPLOY.md`: `npm run deploy`.
+## PWA, notificações e modo offline
 
-## Rodar
+- A instalação depende de navegador compatível e publicação HTTPS; em desenvolvimento local o service worker não representa o comportamento de produção.
+- O service worker armazena arquivos da aplicação para permitir abrir a interface quando possível. **Isso não equivale a modo offline completo:** os registros e a sincronização dependem do Supabase/rede, e não há garantia de fila offline para gravações.
+- Os lembretes de água usam permissões e recursos locais do navegador. A execução em segundo plano, o áudio e a entrega com o app fechado variam conforme Android, navegador, economia de bateria e configurações do sistema. Não há garantia de entrega push contínua em todos os dispositivos.
+- Ao trocar logos/ícones, confira todos os assets e a versão/cache do service worker em aparelho real.
+
+## Health Connect e aplicativo Android complementar
+
+O código Android complementar solicita permissões para ler passos e sessões de exercício do Health Connect e envia registros vinculados à conta SISTCS. A disponibilidade depende dos dados fornecidos pelo Samsung Health ou outro app compatível e das permissões concedidas. A integração não deve ser considerada validada apenas porque a tela existe ou o APK compila.
+
+Instruções de execução e limitações: [android-health-connect/README.md](android-health-connect/README.md). Antes de distribuição, teste em aparelho físico Samsung Galaxy, incluindo permissões concedidas/negadas/revogadas, login, falhas de rede, renovação de sessão e isolamento entre contas.
+
+## Desenvolvimento
+
+Requisitos: Node.js **22 ou superior** (consulte `package.json`).
 
 ```bash
-npm install
-npm run dev        # desenvolvimento
-npm run build      # gera dist/ (site estático, rotas por #)
+npm ci
+npm run dev         # servidor de desenvolvimento
+npm run typecheck   # verificação TypeScript
+npm test            # testes unitários
+npm run build       # typecheck + build de produção em dist/
+npm run test:e2e    # testes Playwright, quando o ambiente/browser estiver configurado
 ```
 
-As variáveis `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY` são opcionais (veja `.env.example`); os valores do
-projeto já são o padrão. A chave publicável pode ficar no front-end. Nunca coloque a chave `service_role` no projeto.
+O workflow de CI também executa verificações automatizadas, incluindo auditoria de dependências. O resultado precisa ser consultado para o commit/PR específico; a existência do workflow não prova que a última execução passou.
 
-## Supabase
+## Configuração e publicação
 
-- Projeto `yzcmxdbnitturlbozvqu` (sa-east-1). Para recriar em outro projeto, rode `supabase/schema.sql` inteiro.
-- Tabelas: `profiles`, `food_entries`, `favorite_foods`, `water_entries`, `weight_entries`, `medications`, `medication_logs`, `progress_photos`, `fasting_entries`,
-  todas com RLS por usuário.
-- Fotos: buckets privados `avatars` e `progress-photos` (5 MB, só imagens), com política por pasta do usuário. As imagens são
-  reduzidas no navegador antes do envio e exibidas por links temporários de 1 hora.
-- Login por e-mail e senha. Por padrão o Supabase exige confirmar o e-mail; para testar sem isso, desligue "Confirm email" em
-  Authentication > Providers > Email.
-- Dados antigos do navegador (`meu-progresso-total:local-data:v1`) podem ser importados pelo Perfil.
+- Veja `.env.example` para `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY`. A chave publicável pode estar no frontend; **nunca** coloque `service_role`, chaves privadas, tokens ou segredos da IA no código cliente ou no Git.
+- A API do Coach de IA requer segredo configurado no ambiente seguro da Cloudflare. Sem ele, a interface pode abrir, mas o serviço não estará disponível.
+- Para publicar no domínio `https://leve.sistcs.com`, siga [DEPLOY.md](DEPLOY.md). `npm run deploy` publica diretamente: só execute após revisar o diff e aprovar os testes necessários.
+- Configure e valide Site URL/Redirect URLs do Supabase, confirmação de e-mail e SMTP antes de disponibilizar autenticação ao público.
+- Não presuma que o projeto permaneça 100% gratuito sob qualquer volume: quotas, armazenamento, tráfego, chamadas de IA e limites dos fornecedores podem mudar ou ser excedidos. Monitore os limites atuais dos planos usados.
 
-## Estrutura
+## Supabase: regra obrigatória para migrations
 
-- `src/calc.ts`: estimativa de metas.
-- `src/data.ts`: tipos, cálculos e todas as chamadas ao Supabase.
-- `src/session.tsx`: login, sessão e carregamento dos dados.
-- `src/pages/`: Home, Food, Records (com BeforeAfter), Fasting, Medications, Reports, Profile.
-- `src/foods-br.ts` e `src/foodsearch.tsx`: busca de alimentos e código de barras. A lista local é aproximada e digitada à mão (não é a tabela TACO oficial); o Open Food Facts é consultado direto do navegador e tem dados colaborativos.
-- `src/foodsearch.tsx` e `src/foods-br.ts`: busca de alimentos, Open Food Facts e código de barras.
-- `src/photos.tsx`: redução de imagem, links temporários e avatar.
-- `src/charts.tsx`: gráficos em SVG, sem biblioteca.
+O histórico de migrations do projeto de produção foi iniciado antes de todo o histórico estar versionado no Git. A documentação de auditoria anterior registra versões remotas sem scripts históricos completos correspondentes no repositório. Essa auditoria é um retrato datado e precisa ser reconciliada com o banco remoto antes de qualquer operação de schema.
 
-## Base de alimentos
+**Não execute `supabase db push`, `supabase db reset` nem repare versões manualmente** até recuperar/validar os scripts históricos, exportar o schema remoto, reproduzir uma baseline em projeto descartável e comparar tabelas, constraints, índices, funções, Storage e políticas RLS. `supabase/schema.sql` é um snapshot cumulativo e não substitui os scripts históricos exatos.
 
-A busca local combina entradas selecionadas de alimentos e preparações brasileiras com consultas a fontes externas. A cobertura não é exaustiva: marcas, receitas regionais e nomes podem variar; valores de estimativa não são dados oficiais e podem diferir do alimento real. Os registros TBCA/USP que não tinham autorização comercial clara foram removidos do catálogo executável e substituídos por estimativas genéricas, identificadas na interface.
+Toda alteração de banco deve ser aditiva, revisada em PR, testada com execução repetida/rollback em ambiente descartável e validada quanto ao isolamento de usuários. Não aplicar migrations de produção como parte de uma simples atualização de documentação.
 
-**Aviso de licença comercial:** a lista local contém registros derivados da TACO/NEPA-UNICAMP, mas a autorização explícita para redistribuição comercial desses dados não foi confirmada. A disponibilização pública da tabela não equivale, por si só, a uma licença comercial. Antes de comercializar ou redistribuir o catálogo, obtenha autorização escrita do titular ou substitua esses registros em lotes por dados com licença inequívoca, validando cada lote para evitar perda de cobertura. Não remova dados automaticamente: a proteção contra regressão exige validação antes de qualquer substituição.
+Referências: [auditoria de migrations Supabase](docs/SUPABASE_MIGRATION_AUDIT_2026-10-12.md) e [regras do diretório de migrations](supabase/migrations/README.md).
 
-- **USDA FoodData Central:** preferir registros cuja origem e licença pública estejam explícitas: https://fdc.nal.usda.gov/.
-- **Open Food Facts:** base ODbL; atribuição e obrigações de compartilhamento podem se aplicar à base derivada. Imagens de produtos têm condições próprias: https://world.openfoodfacts.org/terms-of-use.
-- **Auditoria de fontes e cobertura:** `docs/auditoria-cobertura-alimentar-brasileira-2026-10.md`.
+## Estrutura principal
 
-A lista local existente está em `src/foods-taco.ts` e usa valores por 100 g; medidas caseiras e prioridade dos resultados ficam em `src/foods-br.ts`. Produtos embalados são consultados no Open Food Facts. A cobertura e as licenças devem ser revistas antes de ampliar o catálogo.
+- `src/App.tsx`: rotas, shell e navegação principal.
+- `src/pages/`: páginas do app, incluindo alimentação, assistente, receitas, atividade, registros, relatórios, jejum, medicamentos e perfil.
+- `src/data.ts` e `src/session.tsx`: modelos, persistência, carregamento de sessão e integração com Supabase.
+- `src/calc.ts`: estimativas de metas.
+- `src/foods-br.ts`, `src/foods-taco.ts`, `src/foodsearch.tsx`: busca, fontes, porções e código de barras.
+- `src/recipes.ts`, `src/meal-plan.ts`: catálogo e planejamento de receitas.
+- `src/pwa.tsx`, `public/manifest.webmanifest`, `public/sw.js`: instalação, atualizações e cache dos arquivos estáticos.
+- `supabase/schema.sql`, `supabase/migrations/`: snapshot e alterações de banco versionadas.
+- `android-health-connect/`: app complementar Android.
+- `DEPLOY.md`: publicação no Cloudflare.
 
-## Segurança e privacidade
-- Política de Privacidade (LGPD) pública em `#/privacidade`; aceite obrigatório no cadastro.
-- Recuperação de senha por e-mail (`resetPasswordForEmail` + tela de nova senha).
-- Cabeçalhos de segurança e CSP em `public/_headers`.
-- Pendente no painel do Supabase (não dá para fazer por código): Site URL/Redirect URL `https://leve.sistcs.com`, SMTP próprio e Leaked Password Protection.
+## Auditoria, critérios de aceite e pendências
 
-## Custo zero
-Cloudflare Workers (assets estáticos), Supabase Free, Open Food Facts, GitHub Actions e Google Fonts têm plano gratuito.
-O workflow `keepalive` evita a pausa do projeto Supabase por inatividade. Limites do Supabase Free: 500 MB de banco, 1 GB de arquivos (fotos), 50 mil usuários ativos/mês.
+A [auditoria geral de 19/10/2026](docs/AUDITORIA_GERAL_2026-10-19.md) separa o que foi verificado no código do que ainda exige validação externa. Em resumo:
+
+1. Resolver a reconciliação histórica de migrations antes de qualquer alteração de schema em produção.
+2. Revalidar políticas RLS e permissões, especialmente tabelas/funções adicionadas depois da auditoria remota anterior.
+3. Confirmar licenças e proveniência do catálogo TACO e manter atribuição/obrigações do Open Food Facts.
+4. Verificar cobertura, duplicatas e completude dos alimentos/suplementos sem inventar valores de rótulo.
+5. Executar CI/E2E e smoke tests em preview; validar notificações e integração Health Connect em aparelhos físicos.
+6. Não declarar produção validada com base apenas em typecheck/build ou documentação.
+
+Nenhuma auditoria estática substitui testes de ponta a ponta no ambiente publicado. Atualize esta documentação quando a implementação, o estado remoto ou os limites de fornecedores forem confirmados novamente.

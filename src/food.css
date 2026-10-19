@@ -125,3 +125,8 @@
   .ft-favorite-row { flex-wrap: wrap; }
   .ft-favorite-row > div { min-width: calc(100% - 100px); }
 }
+
+/* Registro rápido e cópia de dia */
+.ft-quick-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+.ft-quick-form { display: grid; gap: 10px; margin: 0 0 14px; padding: 14px; border: 1px solid var(--line-soft); border-radius: 14px; background: var(--surface-2); }
+.ft-quick-form-actions { display: flex; flex-wrap: wrap; gap: 8px; }

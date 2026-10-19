@@ -3,9 +3,9 @@ import { FoodSearch, type PickedFood } from '../foodsearch';
 import { NutritionLabelScanner } from '../label-scanner';
 import { MealPhotoScanner } from '../meal-photo';
 import { Link } from 'wouter';
-import { Apple, Check, Copy, Droplets, Heart, Pencil, Plus, Save, Trash2, X } from 'lucide-react';
+import { Apple, CalendarDays, Check, Copy, Droplets, Heart, Pencil, Plus, Save, Trash2, X, Zap } from 'lucide-react';
 import { useAppData } from '../session';
-import { foodEntryToInput } from '../food-actions';
+import { QUICK_CALORIES_MAX, copyDayInputs, foodEntryToInput, previousDay, quickCaloriesInput } from '../food-actions';
 import {
   calculateFoodEntryNutrient,
   calculateFoodNutrientTotals,
@@ -243,6 +243,7 @@ export function FoodTracking() {
   const [waterError, setWaterError] = useState<{ date?: string; volumeMl?: string }>({});
   const [busy, setBusy] = useState(false);
   const [manualOpen, setManualOpen] = useState(false);
+  const [quick, setQuick] = useState<{ meal: MealType; calories: string; name: string; error?: string } | null>(null);
 
   const entriesForDate = useMemo(
     () => data.foodEntries.filter((e) => e.date === selectedDate),
@@ -365,6 +366,46 @@ export function FoodTracking() {
       },
       (message) => setFoodFeedback({ kind: 'error', message }),
       'Não foi possível copiar o alimento.',
+    );
+  }
+
+  /** Repete no dia aberto os lançamentos do dia anterior (tudo ou só uma refeição). */
+  async function copyFromYesterday(meal?: MealType) {
+    const yesterday = previousDay(selectedDate);
+    const inputs = copyDayInputs(data.foodEntries, yesterday, selectedDate, meal);
+    const scope = meal ? mealLabels[meal].toLowerCase() : 'o dia';
+    if (!inputs.length) {
+      setFoodFeedback({ kind: 'error', message: `Não há ${meal ? `lançamentos de ${scope}` : 'lançamentos'} em ${formatDate(yesterday)} para copiar.` });
+      return;
+    }
+    if (!window.confirm(`Copiar ${inputs.length} ${inputs.length === 1 ? 'alimento' : 'alimentos'} de ${formatDate(yesterday)} para ${formatDate(selectedDate)}?`)) return;
+    await run(
+      async () => {
+        for (const input of inputs) await createFoodEntry(input);
+        setFoodFeedback({ kind: 'success', message: `${inputs.length} ${inputs.length === 1 ? 'alimento copiado' : 'alimentos copiados'} de ${formatDate(yesterday)}.` });
+      },
+      (message) => setFoodFeedback({ kind: 'error', message }),
+      'Não foi possível copiar os alimentos.',
+    );
+  }
+
+  async function onQuickSubmit(event: FormEvent) {
+    event.preventDefault();
+    if (!quick) return;
+    const calories = decimalIsValid(quick.calories, false) ? parseDecimal(quick.calories) : Number.NaN;
+    const input = quickCaloriesInput(selectedDate, quick.meal, calories, quick.name);
+    if (!input) {
+      setQuick({ ...quick, error: `Informe as calorias, de 1 a ${QUICK_CALORIES_MAX.toLocaleString('pt-BR')} kcal.` });
+      return;
+    }
+    await run(
+      async () => {
+        await createFoodEntry(input);
+        setQuick(null);
+        setFoodFeedback({ kind: 'success', message: `${decimalText(input.nutrientsPerPortion.calories)} kcal registradas em ${mealLabels[input.meal]}.` });
+      },
+      (message) => setQuick((current) => (current ? { ...current, error: message } : current)),
+      'Não foi possível registrar as calorias.',
     );
   }
 
@@ -636,6 +677,12 @@ export function FoodTracking() {
           ))}
         </nav>
         {selectedMealTab === 'summary' ? (
+          <>
+          <div className="ft-quick-actions">
+            <Button variant="outline" size="sm" onClick={() => copyFromYesterday()} disabled={busy}>
+              <CalendarDays aria-hidden="true" /> Copiar o dia de ontem
+            </Button>
+          </div>
           <div className="ft-meal-summary-grid">
             {mealGroups.map(({ meal, entries }) => (
               <button className="ft-meal-summary-card" type="button" key={meal} onClick={() => setSelectedMealTab(meal)}>
@@ -645,6 +692,7 @@ export function FoodTracking() {
               </button>
             ))}
           </div>
+          </>
         ) : (
           <div className="ft-meal-groups">
             {mealGroups.filter(({ meal }) => meal === selectedMealTab).map(({ meal, entries }) => (
@@ -653,6 +701,24 @@ export function FoodTracking() {
                   <div><h3 id={`meal-${meal}`}>{mealLabels[meal]}</h3><span>{sum(entries, 'calories')} kcal</span></div>
                   <Button variant="outline" size="sm" onClick={() => openNewFoodForMeal(meal)} disabled={busy} aria-label={`Adicionar alimento em ${mealLabels[meal]}`}><Plus aria-hidden="true" /> Adicionar</Button>
                 </div>
+                <div className="ft-quick-actions">
+                  <Button variant="ghost" size="sm" onClick={() => setQuick({ meal, calories: '', name: '' })} disabled={busy}><Zap aria-hidden="true" /> Só calorias</Button>
+                  <Button variant="ghost" size="sm" onClick={() => copyFromYesterday(meal)} disabled={busy}><CalendarDays aria-hidden="true" /> Copiar de ontem</Button>
+                </div>
+                {quick?.meal === meal && (
+                  <form className="ft-quick-form" onSubmit={onQuickSubmit} noValidate>
+                    <Field id="quick-calories" label="Calorias (kcal)" className="ft-field" error={quick.error}>
+                      <input id="quick-calories" className="input" type="text" inputMode="decimal" maxLength={8} autoFocus value={quick.calories} onChange={(e) => setQuick({ ...quick, calories: e.target.value, error: undefined })} />
+                    </Field>
+                    <Field id="quick-name" label={<>Nome <span>(opcional)</span></>} className="ft-field">
+                      <input id="quick-name" className="input" type="text" maxLength={80} placeholder="Registro rápido" value={quick.name} onChange={(e) => setQuick({ ...quick, name: e.target.value })} />
+                    </Field>
+                    <div className="ft-quick-form-actions">
+                      <Button type="submit" size="sm" disabled={busy}><Save aria-hidden="true" /> Registrar</Button>
+                      <Button variant="ghost" size="sm" onClick={() => setQuick(null)}><X aria-hidden="true" /> Cancelar</Button>
+                    </div>
+                  </form>
+                )}
                 <p className="ft-meal-subtotal">
                   Subtotal · {sum(entries, 'calories')} kcal
                   <span>Proteínas {sum(entries, 'proteins')} g</span><span>Carboidratos {sum(entries, 'carbohydrates')} g</span><span>Gorduras {sum(entries, 'fats')} g</span><span>Fibras {sum(entries, 'fiber')} g</span>

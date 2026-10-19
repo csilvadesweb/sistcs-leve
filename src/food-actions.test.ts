@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { QUICK_CALORIES_MAX, copyDayInputs, foodEntryToInput, previousDay, quickCaloriesInput } from './food-actions';
-import type { FoodEntry } from './data';
+import { calculateExtraTotals, type FoodEntry } from './data';
 
 const entry: FoodEntry = {
   id: 'original-id',
@@ -69,5 +69,26 @@ describe('registro rápido e cópia de dia', () => {
     for (const bad of [0, -5, Number.NaN, Infinity, QUICK_CALORIES_MAX + 1]) {
       expect(quickCaloriesInput('2026-10-19', 'snack', bad)).toBeNull();
     }
+  });
+});
+
+describe('nutrientes extras', () => {
+  it('copia os extras junto com o lançamento', () => {
+    const withExtras: FoodEntry = { ...entry, extras: { saturatedFat: 2, sugars: null, sodiumMg: 300 } };
+    const copy = foodEntryToInput(withExtras, '2026-10-20');
+    expect(copy.extras).toEqual({ saturatedFat: 2, sugars: null, sodiumMg: 300 });
+    expect(copy.extras).not.toBe(withExtras.extras);
+    expect(foodEntryToInput(entry, '2026-10-20').extras).toBeUndefined();
+  });
+
+  it('soma só o que foi informado e conta quantos informaram', () => {
+    const totals = calculateExtraTotals([
+      { quantity: 2, extras: { saturatedFat: 1.5, sugars: null, sodiumMg: 100 } },
+      { quantity: 1, extras: { saturatedFat: null, sugars: null, sodiumMg: 50 } },
+      { quantity: 1 },
+    ]);
+    expect(totals.sodiumMg).toEqual({ total: 250, counted: 2 });
+    expect(totals.saturatedFat).toEqual({ total: 3, counted: 1 });
+    expect(totals.sugars).toEqual({ total: 0, counted: 0 });
   });
 });

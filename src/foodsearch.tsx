@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScanBarcode, Search, X } from 'lucide-react';
 import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
-import { foodConfidence, foodSourceLabel, foodSourceUrl, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchFoodCatalog, searchLocal, searchOpenFoodFactsPage, searchSupplementCatalog, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { foodConfidence, foodSourceLabel, foodSourceUrl, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchFoodCatalog, searchLocal, searchOpenFoodFactsPage, searchSupplementCatalog, scaleExtras, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
 
 export interface PickedFood {
   name: string;
   portion: string;
   nutritionSource?: "user-reported" | "user-estimated";
   nutrients: { calories: number; proteins: number; carbohydrates: number; fats: number; fiber: number };
+  /** Gordura saturada, açúcares e sódio da porção; null = a fonte não informou. */
+  extras?: { saturatedFat: number | null; sugars: number | null; sodiumMg: number | null };
 }
 
 type Detector = { detect(v: HTMLVideoElement): Promise<Array<{ rawValue: string }>> };
@@ -182,6 +184,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
       name: food.brand ? `${food.name} (${food.brand})` : food.name,
       portion: label,
       nutrients: scale(food, grams),
+      extras: scaleExtras(food, grams),
     });
   }, [food, gramsOk, grams, label]);
 

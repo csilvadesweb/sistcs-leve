@@ -7,7 +7,7 @@ const migration = readFileSync(
   join(process.cwd(), 'supabase/migrations/20261019134000_seed_supplement_catalog_batches_04_25.sql'),
   'utf8',
 );
-const executableSql = migration.replace(/^\\s*--.*$/gm, '');
+const executableSql = migration.split('\n').filter(line => !line.trimStart().startsWith('--')).join('\n');
 
 describe('consolidated supplement catalog seed', () => {
   it('preserves all 22 source batches as separate idempotent inserts', () => {
@@ -24,6 +24,6 @@ describe('consolidated supplement catalog seed', () => {
   });
 
   it('does not delete or overwrite existing catalog data', () => {
-    expect(migration).not.toMatch(/\b(delete\s+from|truncate|drop\s+table|update\s+public\.supplement_catalog)\b/i);
+    expect(executableSql).not.toMatch(/\b(delete\s+from|truncate|drop\s+table|update\s+public\.supplement_catalog)\b/i);
   });
 });

@@ -175,3 +175,12 @@ A lista de migrations foi consultada diretamente duas vezes: pelo conector Supab
 6. Só depois da revisão e autorização explícita, executar um plano de mudança remoto com backup, janela, smoke tests e plano de recuperação.
 
 **Estado final desta etapa:** o bloqueio de migrations permanece aberto. A evidência melhorou, mas não existe base suficiente para executar mudanças de schema com segurança na produção.
+
+
+## 10. Verificações após aplicação aditiva — 19/10/2026
+
+- A migration de metas de atividade foi aplicada por ferramenta de migration do Supabase, com DDL aditivo, RLS e quatro políticas por proprietário. A consulta posterior confirmou `activity_goal_state` presente, RLS habilitado e quatro políticas. Ainda falta teste funcional com duas contas/aparelhos.
+- O snapshot `supabase/schema.sql` tinha um erro de sintaxe no delimitador da função `touch_activity_goal_state`; a correção e o teste de regressão foram integrados pela [PR #177](https://github.com/csilvadesweb/sistcs-leve/pull/177). Os checks `verify`, `e2e`, `validate` e o build Cloudflare concluíram com sucesso no commit de correção antes do merge.
+- Para reconciliar `food_extra_nutrients`, a consulta remota confirmou os seis campos (três em `food_entries`, três em `favorite_foods`) e os seis constraints CHECK de não-negatividade/nulo esperados pelo SQL versionado. O arquivo foi renomeado para corresponder ao timestamp do ledger remoto, sem reaplicar DDL; a mudança aguarda checks e merge na [PR #178](https://github.com/csilvadesweb/sistcs-leve/pull/178).
+- A proteção contra senhas comprometidas permanece desativada no Supabase Auth e exige configuração no painel, indisponível pela ferramenta utilizada. A RPC `consume_ai_quota()` foi inspecionada: nega execução a `anon`, exige usuário autenticado e limita o consumo a 30 chamadas por usuário/dia. O alerta de SECURITY DEFINER é uma revisão pendente de desenho, não foi “corrigido” revogando a permissão usada pelo Coach.
+- Os lotes 04–25 do catálogo de suplementos continuam sem aplicação na produção. A revisão estática não substitui validar rótulos, EANs e SQL em ambiente descartável. Não foi executado `supabase db push`.

@@ -135,3 +135,20 @@ Esta seção complementa o retrato estático inicial. Foram consultados o histó
 5. Confirmar licença/autorizações dos dados nutricionais e realizar testes de RLS CRUD entre duas contas.
 
 A consulta remota reduz a incerteza sobre o estado atual, mas não é uma prova completa de segurança nem substitui testes integrados e físicos. A regra de não executar `db push` continua válida.
+
+
+## 8. Atualização após integração dos lotes de suplementos e inspeção de deploy — 19/10/2026
+
+- A [PR #161](https://github.com/csilvadesweb/sistcs-leve/pull/161) foi integrada à `main` por squash commit após os workflows `ci`, `Validate SISTCS Leve` e `e2e` concluírem em `success` no SHA revisado. Os lotes 04–25 agora estão versionados no repositório; isso **não** significa que os produtos foram carregados no banco de produção.
+- A consulta read-only do Supabase ainda mostrou 126 linhas no catálogo: 11 com status `label_transcribed` e 115 termos/categorias `needs_verified_product_data`. Nenhuma migration dos lotes 04–25 foi aplicada durante esta rodada.
+- O Worker `sistcs-leve` no Cloudflare tinha como implantação mais recente observada a versão criada em `2026-10-19T12:11:24Z` (100% do tráfego). A consulta não encontrou implantação posterior; por isso, a presença do filtro de suplementos e de outras mudanças recentes na versão publicada não está comprovada.
+- O histórico Supabase continua com a versão remota `20261019113958 food_extra_nutrients`, enquanto o arquivo versionado se chama `20261019120000_food_extra_nutrients.sql`. Não se deve aplicar `db push`, reparar o histórico ou renomear o arquivo de migration sem comparar o SQL remoto, o conteúdo do arquivo e o estado de todos os ambientes.
+- A migration de `activity_goal_state` está na `main`, mas a tabela ainda não foi encontrada no banco remoto. O fluxo permanece sem sincronização entre aparelhos até a reconciliação e aplicação autorizada.
+
+### Próximas ações seguras
+
+1. Obter o diff exato entre o SQL remoto das colunas nutricionais e o arquivo `20261019120000_food_extra_nutrients.sql`, além do inventário de migrations em cada ambiente.
+2. Reconciliar a versão divergente sem perder histórico nem fazer a migration ser aplicada duas vezes em ambientes diferentes; validar em ambiente descartável.
+3. Executar as migrations do catálogo 04–25 em ambiente descartável com repetição/idempotência, rollback e auditoria de duplicatas; revisar os registros pendentes do lote 18 antes de contar esses itens como produtos prontos.
+4. Planejar e verificar um deploy do Worker a partir do commit `main` atual, depois dos checks verdes. Não inferir deploy só porque o merge aconteceu.
+5. Só então programar a aplicação remota autorizada e testar a sincronização de metas e a busca de suplementos em duas contas e em dispositivo real.

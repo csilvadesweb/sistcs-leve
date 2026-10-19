@@ -103,7 +103,7 @@ A [auditoria geral de 19/10/2026](docs/AUDITORIA_GERAL_2026-10-19.md) separa o q
 4. Verificar cobertura, duplicatas e completude dos alimentos/suplementos sem inventar valores de rótulo.
 5. Executar CI/E2E e smoke tests em preview; validar notificações e integração Health Connect em aparelhos físicos.
 6. Não declarar produção validada com base apenas em typecheck/build ou documentação.
-7. Confirmar o deploy após as últimas alterações: a consulta ao Cloudflare encontrou a última implantação do Worker `sistcs-leve` em `2026-10-19 12:11:24 UTC`, sem uma implantação posterior visível na consulta. Não foi possível provar que a versão publicada contém os merges recentes.
+7. Confirmar o deploy após as últimas alterações: a consulta ao Cloudflare encontrou uma implantação do Worker `sistcs-leve` às `2026-10-19 13:52:16 UTC`, posterior ao merge da PR #182. O histórico de implantação consultado não expõe vínculo verificável com o SHA exato do merge; por isso, concluir a validação exige smoke test no domínio publicado.
 
 Nenhuma auditoria estática substitui testes de ponta a ponta no ambiente publicado. Atualize esta documentação quando a implementação, o estado remoto ou os limites de fornecedores forem confirmados novamente.
 

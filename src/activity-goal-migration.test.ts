@@ -33,6 +33,7 @@ describe('migration de sincronização de metas de atividade', () => {
     expect(schema).toMatch(/activity_goal_state_update_own/i);
     expect(schema).toMatch(/activity_goal_state_delete_own/i);
     expect(schema).toMatch(/activity_goal_state_touch/i);
-    expect(schema).toMatch(/create or replace function public\\.touch_activity_goal_state\\(\\)[\\s\\S]*?as \\$\\$[\\s\\S]*?end;[\\s\\S]*?\\$\\$;/i);
+    expect(schema).toContain('returns trigger language plpgsql set search_path = public as $$');
+    expect(schema).toContain('end;\n$$;');
   });
 });

@@ -299,12 +299,12 @@ create policy activity_goal_state_delete_own on public.activity_goal_state
   for delete to authenticated using ((select auth.uid()) = user_id);
 
 create or replace function public.touch_activity_goal_state()
-returns trigger language plpgsql set search_path = public as $
+returns trigger language plpgsql set search_path = public as $$
 begin
   new.updated_at = now();
   return new;
 end;
-$;
+$$;
 drop trigger if exists activity_goal_state_touch on public.activity_goal_state;
 create trigger activity_goal_state_touch before update on public.activity_goal_state
   for each row execute function public.touch_activity_goal_state();

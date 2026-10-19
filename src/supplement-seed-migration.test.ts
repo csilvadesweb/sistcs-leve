@@ -7,6 +7,7 @@ const migration = readFileSync(
   join(process.cwd(), 'supabase/migrations/20261019134000_seed_supplement_catalog_batches_04_25.sql'),
   'utf8',
 );
+const executableSql = migration.replace(/^\\s*--.*$/gm, '');
 
 describe('consolidated supplement catalog seed', () => {
   it('preserves all 22 source batches as separate idempotent inserts', () => {

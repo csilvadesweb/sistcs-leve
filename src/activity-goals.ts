@@ -353,3 +353,37 @@ export function saveAwards(awards: Award[]): boolean {
     return false;
   }
 }
+
+/* ------------------------- sincronização na conta ------------------------ */
+
+export interface CloudGoalState {
+  goals: Goals;
+  awards: Award[];
+}
+
+export interface SyncResolution {
+  goals: Goals;
+  awards: Award[];
+  /** Enviar as metas para a conta. */
+  pushGoals: boolean;
+  /** Enviar as medalhas para a conta. */
+  pushAwards: boolean;
+}
+
+/**
+ * Decide o que vale ao abrir a tela com a conta já consultada.
+ * - Sem registro na conta: o que está no aparelho sobe (primeira sincronização).
+ * - Alteração de metas feita sem conexão (`localDirty`): a do aparelho vence e sobe.
+ * - Caso normal: as metas da conta valem, assim apagar uma meta em outro aparelho
+ *   também a apaga aqui.
+ * Medalhas nunca são removidas: são a união das duas listas.
+ */
+export function resolveSync(local: CloudGoalState, localDirty: boolean, remote: CloudGoalState | null): SyncResolution {
+  if (!remote) {
+    const hasLocal = Object.keys(local.goals).length > 0 || local.awards.length > 0;
+    return { goals: local.goals, awards: local.awards, pushGoals: hasLocal, pushAwards: hasLocal };
+  }
+  const { all: awards } = mergeAwards(remote.awards, local.awards);
+  const goals = localDirty ? local.goals : remote.goals;
+  return { goals, awards, pushGoals: localDirty, pushAwards: awards.length > remote.awards.length };
+}

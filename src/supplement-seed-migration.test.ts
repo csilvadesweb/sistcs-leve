@@ -1,3 +1,4 @@
+// @ts-nocheck -- Vitest reads a migration fixture from disk; @types/node is not part of the frontend typecheck.
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';

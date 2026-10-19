@@ -106,3 +106,32 @@ O frontend permite que a chave publicável do Supabase esteja no cliente, mas ch
 ## 6. Limites desta auditoria
 
 Esta é uma auditoria estática do código e da documentação disponíveis no repositório em 19/10/2026. Não é pentest, auditoria legal, análise completa de dependências executada, validação de produção, consulta atual ao schema remoto nem certificação de todos os fluxos de interface. Os itens listados como pendentes são intencionalmente mantidos em aberto até que exista evidência verificável.
+
+
+## 7. Atualização após consulta somente de leitura ao Supabase — 19/10/2026
+
+Esta seção complementa o retrato estático inicial. Foram consultados o histórico de migrations, tabelas/colunas, políticas RLS e advisors do projeto remoto `yzcmxdbnitturlbozvqu`. Nenhum dado foi alterado.
+
+### Estado remoto observado
+
+- **18 migrations registradas.** As versões incluem as onze já documentadas na auditoria de 14/10 e sete versões posteriores: `20261014095327 medication_effect_logs`, `20261015034843 harden_ai_usage_direct_access`, `20261016014035 exercise_met_and_body_weight`, `20261016124123 create_supplement_catalog`, `20261016124142 seed_supplement_search_terms`, `20261016131549 seed_supplement_catalog_batch_02` e `20261019113958 food_extra_nutrients`.
+- **15 tabelas públicas, todas com RLS habilitado; 51 políticas.** O estado do RLS está habilitado, mas a validação completa de isolamento CRUD com duas contas não foi executada nesta rodada.
+- **Bug confirmado: `activity_goal_state` ausente.** O frontend chama essa tabela em `src/activity-cloud.ts`, mas ela não consta no inventário remoto. As metas e medalhas podem permanecer locais, mas a sincronização entre dispositivos não funciona até a tabela existir. A proposta de correção está em [PR #169](https://github.com/csilvadesweb/sistcs-leve/pull/169), com migration aditiva, RLS por proprietário, permissões explícitas, atualização do snapshot e teste estático. Não foi aplicada em produção.
+- **Divergência de migration nutricional:** o remoto registra `20261019113958 food_extra_nutrients`, enquanto o arquivo em `main` se chama `20261019120000_food_extra_nutrients.sql`. As colunas extras existem no banco, mas o timestamp divergente precisa de reconciliação por fonte confiável. Não renomear/reparar o histórico por suposição.
+- **Catálogo de suplementos:** 126 linhas totais; 11 `label_transcribed` com URL de fonte e valores de energia/proteína; 115 `needs_verified_product_data` sem URL de fonte, código de barras ou macronutrientes. Os 115 são categorias/termos de busca e não devem ser contados como produtos verificados. A busca do frontend exige energia, proteína, carboidratos e gorduras antes de apresentar um resultado.
+
+### Advisors e interpretação
+
+- **Proteção contra senhas comprometidas desativada (WARN):** pendência de configuração do painel Supabase Auth. Não há ferramenta de configuração disponível nesta execução, portanto não foi alterada.
+- **`consume_ai_quota()` SECURITY DEFINER executável por `authenticated` (WARN):** a função é a RPC esperada pelo Coach para consumir quota enquanto o acesso direto à tabela `ai_usage` está bloqueado. A definição verificada checa `auth.uid()` e limita a 30 chamadas por usuário/dia. Não revogar EXECUTE sem redesenhar o fluxo; o advisor deve permanecer documentado como revisão de segurança, não como falha automaticamente corrigível.
+- **Três índices não usados (INFO):** `supplement_catalog_name_search`, `medication_logs_medication_idx` e `food_catalog_name_en_idx`. Não removê-los sem perfil de consultas e evidência de que não são necessários em cargas futuras.
+
+### Bloqueios que continuam reais
+
+1. Reconciliar o histórico de migrations, incluindo as versões históricas ausentes e a divergência de timestamp de `food_extra_nutrients`.
+2. Validar a migration de `activity_goal_state` em ambiente descartável e integrar PR #169 com checks verdes; só depois planejar aplicação remota autorizada.
+3. Ajustar a proteção contra senhas comprometidas no painel Supabase Auth e testar o fluxo de cadastro/login antes de declarar essa pendência resolvida.
+4. Expandir o catálogo com produtos reais e rótulos confirmados; não preencher campos ausentes por inferência nem contar termos de busca como produtos.
+5. Confirmar licença/autorizações dos dados nutricionais e realizar testes de RLS CRUD entre duas contas.
+
+A consulta remota reduz a incerteza sobre o estado atual, mas não é uma prova completa de segurança nem substitui testes integrados e físicos. A regra de não executar `db push` continua válida.

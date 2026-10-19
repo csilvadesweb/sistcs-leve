@@ -99,6 +99,16 @@ export interface FoodNutrients {
 }
 export type FoodNutrientKey = keyof FoodNutrients;
 
+/** Nutrientes extras por porção. null = não informado (diferente de zero). */
+export interface FoodExtras {
+  saturatedFat: number | null;
+  sugars: number | null;
+  sodiumMg: number | null;
+}
+export type FoodExtraKey = keyof FoodExtras;
+export const FOOD_EXTRA_KEYS: readonly FoodExtraKey[] = ['saturatedFat', 'sugars', 'sodiumMg'];
+export const NO_EXTRAS: FoodExtras = { saturatedFat: null, sugars: null, sodiumMg: null };
+
 export interface FoodEntryInput {
   date: string;
   meal: MealType;
@@ -106,6 +116,7 @@ export interface FoodEntryInput {
   portion: string;
   quantity: number;
   nutrientsPerPortion: FoodNutrients;
+  extras?: FoodExtras;
   nutritionSource: NutritionSource;
 }
 export interface FoodEntry extends FoodEntryInput {
@@ -118,6 +129,7 @@ export interface FavoriteFood {
   name: string;
   portion: string;
   nutrientsPerPortion: FoodNutrients;
+  extras?: FoodExtras;
   nutritionSource: NutritionSource;
 }
 
@@ -182,6 +194,33 @@ export function calculateFoodNutrientTotals(
     },
     { calories: 0, proteins: 0, carbohydrates: 0, fats: 0, fiber: 0 },
   );
+}
+
+export interface ExtraTotal {
+  /** Soma só dos lançamentos que informaram o valor. */
+  total: number;
+  /** Quantos lançamentos informaram o valor. */
+  counted: number;
+}
+
+/** Totais dos nutrientes extras; lançamentos sem o dado não entram como zero. */
+export function calculateExtraTotals(
+  entries: Array<Pick<FoodEntry, 'quantity' | 'extras'>>,
+): Record<FoodExtraKey, ExtraTotal> {
+  const totals: Record<FoodExtraKey, ExtraTotal> = {
+    saturatedFat: { total: 0, counted: 0 },
+    sugars: { total: 0, counted: 0 },
+    sodiumMg: { total: 0, counted: 0 },
+  };
+  for (const entry of entries) {
+    for (const key of FOOD_EXTRA_KEYS) {
+      const value = entry.extras?.[key];
+      if (value === null || value === undefined) continue;
+      totals[key].total += value * entry.quantity;
+      totals[key].counted += 1;
+    }
+  }
+  return totals;
 }
 
 /* ---------- mapeamento linhas <-> tipos do app ---------- */
@@ -278,6 +317,26 @@ function nutrientsToRow(n: FoodNutrients) {
   };
 }
 
+const optNum = (v: unknown): number | null => (v === null || v === undefined || v === '' ? null : Number(v));
+
+function extrasFromRow(r: Row): FoodExtras {
+  return { saturatedFat: optNum(r.saturated_fat), sugars: optNum(r.sugars), sodiumMg: optNum(r.sodium_mg) };
+}
+
+/**
+ * Com `onlyFilled`, só envia as colunas preenchidas: assim lançamentos sem
+ * extras continuam funcionando mesmo antes da migration ser aplicada.
+ */
+function extrasToRow(e: FoodExtras | undefined, onlyFilled: boolean) {
+  const row = {
+    saturated_fat: e?.saturatedFat ?? null,
+    sugars: e?.sugars ?? null,
+    sodium_mg: e?.sodiumMg ?? null,
+  };
+  if (!onlyFilled) return row;
+  return Object.fromEntries(Object.entries(row).filter(([, value]) => value !== null));
+}
+
 function foodFromRow(r: Row): FoodEntry {
   return {
     id: r.id,
@@ -287,11 +346,12 @@ function foodFromRow(r: Row): FoodEntry {
     portion: r.portion,
     quantity: num(r.quantity),
     nutrientsPerPortion: nutrientsFromRow(r),
+    extras: extrasFromRow(r),
     nutritionSource: r.nutrition_source,
   };
 }
 
-function foodToRow(i: FoodEntryInput) {
+function foodToRow(i: FoodEntryInput, onlyFilled = true) {
   return {
     entry_date: i.date,
     meal: i.meal,
@@ -299,6 +359,7 @@ function foodToRow(i: FoodEntryInput) {
     portion: i.portion,
     quantity: i.quantity,
     ...nutrientsToRow(i.nutrientsPerPortion),
+    ...extrasToRow(i.extras, onlyFilled),
     nutrition_source: i.nutritionSource,
   };
 }
@@ -310,6 +371,7 @@ function favoriteFromRow(r: Row): FavoriteFood {
     name: r.name,
     portion: r.portion,
     nutrientsPerPortion: nutrientsFromRow(r),
+    extras: extrasFromRow(r),
     nutritionSource: r.nutrition_source,
   };
 }
@@ -471,7 +533,7 @@ export async function createFoodEntry(input: FoodEntryInput): Promise<FoodEntry>
 export async function updateFoodEntry(id: string, input: FoodEntryInput): Promise<FoodEntry> {
   const { data, error } = await supabase
     .from('food_entries')
-    .update(foodToRow(input))
+    .update(foodToRow(input, false))
     .eq('id', id)
     .select()
     .maybeSingle();
@@ -489,6 +551,7 @@ export async function updateFoodEntry(id: string, input: FoodEntryInput): Promis
       name: input.name,
       portion: input.portion,
       ...nutrientsToRow(input.nutrientsPerPortion),
+      ...extrasToRow(input.extras, false),
       nutrition_source: input.nutritionSource,
     })
     .eq('source_entry_id', id);
@@ -507,6 +570,7 @@ export async function saveFoodFavoriteFromEntry(entry: FoodEntry) {
     name: entry.name,
     portion: entry.portion,
     ...nutrientsToRow(entry.nutrientsPerPortion),
+    ...extrasToRow(entry.extras, true),
     nutrition_source: entry.nutritionSource,
   });
   fail(error, 'Não foi possível salvar o favorito.');

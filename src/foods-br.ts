@@ -1029,6 +1029,12 @@ export function scale(f: FoodPer100, grams: number) {
   };
 }
 
+/** Nutrientes extras para `grams`; null quando a fonte não informou o valor. */
+export function scaleExtras(f: FoodPer100, grams: number) {
+  const k = grams / 100;
+  const part = (value: number | undefined) => (value === undefined ? null : round1(value * k));
+  return { saturatedFat: part(f.saturatedFat), sugars: part(f.sugars), sodiumMg: part(f.sodiumMg) };
+}
 
 /* ---------- Texto livre: "2 ovos", "150 g de arroz", "1 colher de sopa de azeite" ---------- */
 

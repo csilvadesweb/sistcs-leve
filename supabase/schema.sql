@@ -27,6 +27,9 @@ create table public.food_entries (
   carbohydrates numeric not null default 0 check (carbohydrates >= 0),
   fats numeric not null default 0 check (fats >= 0),
   fiber numeric not null default 0 check (fiber >= 0),
+  saturated_fat numeric check (saturated_fat is null or saturated_fat >= 0),
+  sugars numeric check (sugars is null or sugars >= 0),
+  sodium_mg numeric check (sodium_mg is null or sodium_mg >= 0),
   nutrition_source text not null check (nutrition_source in ('user-reported','user-estimated')),
   created_at timestamptz not null default now()
 );
@@ -42,6 +45,9 @@ create table public.favorite_foods (
   carbohydrates numeric not null default 0 check (carbohydrates >= 0),
   fats numeric not null default 0 check (fats >= 0),
   fiber numeric not null default 0 check (fiber >= 0),
+  saturated_fat numeric check (saturated_fat is null or saturated_fat >= 0),
+  sugars numeric check (sugars is null or sugars >= 0),
+  sodium_mg numeric check (sodium_mg is null or sodium_mg >= 0),
   nutrition_source text not null check (nutrition_source in ('user-reported','user-estimated')),
   created_at timestamptz not null default now()
 );

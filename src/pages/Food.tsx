@@ -8,6 +8,7 @@ import { useAppData } from '../session';
 import { QUICK_CALORIES_MAX, copyDayInputs, foodEntryToInput, previousDay, quickCaloriesInput } from '../food-actions';
 import {
   calculateFoodEntryNutrient,
+  calculateExtraTotals,
   calculateFoodNutrientTotals,
   createFoodEntry,
   createWaterEntry,
@@ -18,6 +19,8 @@ import {
   updateFoodEntry,
   updateWaterEntry,
   type FavoriteFood,
+  type FoodExtraKey,
+  type FoodExtras,
   type FoodEntry,
   type FoodEntryInput,
   type FoodNutrientKey,
@@ -51,6 +54,10 @@ interface FoodForm {
   carbohydrates: string;
   fats: string;
   fiber: string;
+  /** Vazio = não informado. */
+  saturatedFat: string;
+  sugars: string;
+  sodiumMg: string;
   nutritionSource: string;
 }
 type FoodErrors = Partial<Record<keyof FoodForm, string>>;
@@ -97,8 +104,23 @@ const blankFood = (date: string): FoodForm => ({
   carbohydrates: '',
   fats: '',
   fiber: '',
+  saturatedFat: '',
+  sugars: '',
+  sodiumMg: '',
   nutritionSource: 'user-estimated',
 });
+
+const extraText = (value: number | null | undefined) => (value === null || value === undefined ? '' : decimalInputText(value));
+
+function extrasToForm(extras: FoodExtras | undefined) {
+  return { saturatedFat: extraText(extras?.saturatedFat), sugars: extraText(extras?.sugars), sodiumMg: extraText(extras?.sodiumMg) };
+}
+
+const extraFields: Array<{ key: FoodExtraKey; label: string; unit: string }> = [
+  { key: 'saturatedFat', label: 'Gordura saturada', unit: 'g' },
+  { key: 'sugars', label: 'Açúcares', unit: 'g' },
+  { key: 'sodiumMg', label: 'Sódio', unit: 'mg' },
+];
 
 function foodToForm(entry: FoodEntry): FoodForm {
   // Older or partially populated records must remain editable instead of
@@ -120,6 +142,7 @@ function foodToForm(entry: FoodEntry): FoodForm {
     carbohydrates: decimalInputText(safeNumber(n.carbohydrates, 0)),
     fats: decimalInputText(safeNumber(n.fats, 0)),
     fiber: decimalInputText(safeNumber(n.fiber, 0)),
+    ...extrasToForm(entry.extras),
     nutritionSource: source,
   };
 }
@@ -135,6 +158,7 @@ function favoriteToForm(f: FavoriteFood): FoodForm {
     carbohydrates: decimalInputText(n.carbohydrates),
     fats: decimalInputText(n.fats),
     fiber: decimalInputText(n.fiber),
+    ...extrasToForm(f.extras),
     nutritionSource: f.nutritionSource,
   };
 }
@@ -150,6 +174,9 @@ function validateFood(v: FoodForm): FoodErrors {
   if (!decimalIsValid(v.quantity, false)) e.quantity = 'Informe uma quantidade maior que zero.';
   for (const { key } of nutrientFields) {
     if (!decimalIsValid(v[key])) e[key] = 'Informe zero ou um número válido.';
+  }
+  for (const { key } of extraFields) {
+    if (v[key].trim() !== '' && !decimalIsValid(v[key])) e[key] = 'Deixe em branco ou informe um número válido.';
   }
   if (v.nutritionSource !== 'user-reported' && v.nutritionSource !== 'user-estimated') {
     e.nutritionSource = 'Escolha como informou os valores.';
@@ -171,13 +198,48 @@ function foodInput(v: FoodForm): FoodEntryInput {
       fats: parseDecimal(v.fats),
       fiber: parseDecimal(v.fiber),
     },
+    extras: {
+      saturatedFat: v.saturatedFat.trim() === '' ? null : parseDecimal(v.saturatedFat),
+      sugars: v.sugars.trim() === '' ? null : parseDecimal(v.sugars),
+      sodiumMg: v.sodiumMg.trim() === '' ? null : parseDecimal(v.sodiumMg),
+    },
     nutritionSource: v.nutritionSource as NutritionSource,
   };
+}
+
+/** Referência diária de sódio da OMS (menos de 2 g). Não é uma meta pessoal. */
+const SODIUM_REFERENCE_MG = 2000;
+
+function ExtraTotals({ entries }: { entries: FoodEntry[] }) {
+  if (!entries.length) return null;
+  const totals = calculateExtraTotals(entries);
+  return (
+    <div className="ft-extra-totals" aria-label="Outros nutrientes do dia">
+      {extraFields.map(({ key, label, unit }) => {
+        const { total, counted } = totals[key];
+        return (
+          <div key={key}>
+            <span>{label}</span>
+            <strong>{counted ? <>{decimalText(total)} <small>{unit}</small></> : '—'}</strong>
+            <small>
+              {counted === 0
+                ? 'Nenhum alimento informou'
+                : counted < entries.length
+                  ? `Soma parcial: ${counted} de ${entries.length} alimentos informaram`
+                  : 'Todos os alimentos informaram'}
+            </small>
+            {key === 'sodiumMg' && counted > 0 && <small>Referência OMS: menos de {SODIUM_REFERENCE_MG.toLocaleString('pt-BR')} mg</small>}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 function NutrientTotals({ entries, goals }: { entries: FoodEntry[]; goals: UserGoals | null }) {
   const totals = calculateFoodNutrientTotals(entries);
   return (
+    <>
     <div className="ft-total-grid">
       {nutrientFields.map(({ key, label, unit }) => {
         const goal = goals?.[key] ?? null;
@@ -211,6 +273,8 @@ function NutrientTotals({ entries, goals }: { entries: FoodEntry[]; goals: UserG
         );
       })}
     </div>
+    <ExtraTotals entries={entries} />
+    </>
   );
 }
 
@@ -288,6 +352,7 @@ export function FoodTracking() {
       carbohydrates: decimalInputText(food.nutrients.carbohydrates),
       fats: decimalInputText(food.nutrients.fats),
       fiber: decimalInputText(food.nutrients.fiber),
+      ...extrasToForm(food.extras),
       nutritionSource: food.nutritionSource ?? 'user-estimated',
     }));
     setFoodErrors({});
@@ -332,7 +397,7 @@ export function FoodTracking() {
     );
   }
 
-  const hiddenErrors = (['name', 'portion', 'quantity', 'calories', 'proteins', 'carbohydrates', 'fats', 'fiber', 'nutritionSource'] as const).some((k) => foodErrors[k]);
+  const hiddenErrors = (['name', 'portion', 'quantity', 'calories', 'proteins', 'carbohydrates', 'fats', 'fiber', 'saturatedFat', 'sugars', 'sodiumMg', 'nutritionSource'] as const).some((k) => foodErrors[k]);
 
   const preview = useMemo(() => {
     const kcalPortion = decimalIsValid(foodForm.calories) ? parseDecimal(foodForm.calories) : 0;
@@ -643,6 +708,14 @@ export function FoodTracking() {
               <p>Informe os valores que você conhece ou estime-os. Zero também é válido.</p>
               <div className="ft-nutrient-grid">
                 {nutrientFields.map(({ key, label, unit }) => (
+                  <Field key={key} id={`food-${key}`} label={<>{label} <span>({unit})</span></>} className="ft-field" error={foodErrors[key]}>
+                    <input id={`food-${key}`} className="input" type="text" inputMode="decimal" maxLength={24} value={foodForm[key]} onChange={setFood(key)} />
+                  </Field>
+                ))}
+              </div>
+              <p className="ft-extras-hint">Opcionais: deixe em branco se não souber. Em branco é “não informado”, não zero.</p>
+              <div className="ft-nutrient-grid">
+                {extraFields.map(({ key, label, unit }) => (
                   <Field key={key} id={`food-${key}`} label={<>{label} <span>({unit})</span></>} className="ft-field" error={foodErrors[key]}>
                     <input id={`food-${key}`} className="input" type="text" inputMode="decimal" maxLength={24} value={foodForm[key]} onChange={setFood(key)} />
                   </Field>

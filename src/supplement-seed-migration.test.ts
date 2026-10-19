@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const migration = readFileSync(
-  join(process.cwd(), 'supabase/migrations/20261019134000_seed_supplement_catalog_batches_04_25.sql'),
+  join(process.cwd(), 'supabase/migrations/20261019134118_seed_supplement_catalog_batches_04_25.sql'),
   'utf8',
 );
 const executableSql = migration.split('\n').filter(line => !line.trimStart().startsWith('--')).join('\n');

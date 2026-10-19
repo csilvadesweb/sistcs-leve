@@ -140,8 +140,8 @@ A consulta remota reduz a incerteza sobre o estado atual, mas não é uma prova 
 ## 8. Atualização após integração dos lotes de suplementos e inspeção de deploy — 19/10/2026
 
 - A [PR #161](https://github.com/csilvadesweb/sistcs-leve/pull/161) foi integrada à `main` por squash commit após os workflows `ci`, `Validate SISTCS Leve` e `e2e` concluírem em `success` no SHA revisado. Os lotes 04–25 agora estão versionados no repositório; isso **não** significa que os produtos foram carregados no banco de produção.
-- A consulta read-only do Supabase ainda mostrou 126 linhas no catálogo: 11 com status `label_transcribed` e 115 termos/categorias `needs_verified_product_data`. Nenhuma migration dos lotes 04–25 foi aplicada durante esta rodada.
-- O Worker `sistcs-leve` no Cloudflare tinha como implantação mais recente observada a versão criada em `2026-10-19T12:11:24Z` (100% do tráfego). A consulta não encontrou implantação posterior; por isso, a presença do filtro de suplementos e de outras mudanças recentes na versão publicada não está comprovada.
+- A consulta read-only do Supabase ainda mostrou 126 linhas no catálogo: 11 com status `label_transcribed` e 115 termos/categorias `needs_verified_product_data`. Os 11 registros transcritos têm URL de fonte e os quatro nutrientes-base; 5 têm código de barras. A checagem atual encontrou zero grupos duplicados por nome normalizado, zero grupos de EAN duplicado e zero registros `label_transcribed` sem fonte. Nenhuma migration dos lotes 04–25 foi aplicada durante esta rodada.
+- O Worker `sistcs-leve` no Cloudflare tinha como implantação mais recente observada a versão criada em `2026-10-19T12:17:39Z` (100% do tráfego; versão `8371cf52-8331-47f9-b844-ac0a442e9364`). A API de versões não associa essa implantação a um SHA Git; portanto, a data posterior não prova que ela contém exatamente os merges mais recentes da `main`.
 - O histórico Supabase continua com a versão remota `20261019113958 food_extra_nutrients`, enquanto o arquivo versionado se chama `20261019120000_food_extra_nutrients.sql`. Não se deve aplicar `db push`, reparar o histórico ou renomear o arquivo de migration sem comparar o SQL remoto, o conteúdo do arquivo e o estado de todos os ambientes.
 - A migration de `activity_goal_state` está na `main`, mas a tabela ainda não foi encontrada no banco remoto. O fluxo permanece sem sincronização entre aparelhos até a reconciliação e aplicação autorizada.
 
@@ -152,3 +152,26 @@ A consulta remota reduz a incerteza sobre o estado atual, mas não é uma prova 
 3. Executar as migrations do catálogo 04–25 em ambiente descartável com repetição/idempotência, rollback e auditoria de duplicatas; revisar os registros pendentes do lote 18 antes de contar esses itens como produtos prontos.
 4. Planejar e verificar um deploy do Worker a partir do commit `main` atual, depois dos checks verdes. Não inferir deploy só porque o merge aconteceu.
 5. Só então programar a aplicação remota autorizada e testar a sincronização de metas e a busca de suplementos em duas contas e em dispositivo real.
+
+
+## 9. Reconciliação adicional do ledger remoto — 19/10/2026
+
+A lista de migrations foi consultada diretamente duas vezes: pelo conector Supabase e por SQL read-only em `supabase_migrations.schema_migrations`. Ambos retornaram as mesmas **18 versões**. A consulta não alterou dados.
+
+### Conclusões verificáveis
+
+- O ledger remoto contém as migrations-base do catálogo `20261016124123 create_supplement_catalog`, `20261016124142 seed_supplement_search_terms` e `20261016131549 seed_supplement_catalog_batch_02`. Não contém registros de ledger para os lotes 04–25 que estão em `main`; por isso, esses lotes não podem ser considerados aplicados em produção.
+- A migration `20261019130000_activity_goal_state.sql` também não consta no ledger, e a tabela `public.activity_goal_state` continua ausente. Isso confirma que o merge do arquivo não executou o DDL remoto.
+- O ledger registra `20261019113958 food_extra_nutrients`, enquanto o arquivo versionado é `20261019120000_food_extra_nutrients.sql`. A presença das colunas por si só não autoriza reparar o ledger: primeiro é preciso comparar a definição exata dos constraints/colunas e rastrear como a versão remota foi criada.
+- Não foi criado nem usado branch de desenvolvimento Supabase, pois a ferramenta de criação pode gerar cobrança e não há confirmação de custo zero para essa conta. Não foi executado `apply_migration`, `db push`, reset, reparo do ledger ou escrita manual.
+
+### Próximo procedimento de reconciliação (sem tocar na produção)
+
+1. Exportar um snapshot de schema e o ledger de cada ambiente acessível; guardar os artefatos com timestamp e checksum.
+2. Comparar o schema remoto com `supabase/schema.sql` e com cada migration ausente, incluindo índices, constraints, triggers, funções, grants, RLS e policies.
+3. Reproduzir as migrations em PostgreSQL/Supabase local descartável, com cópia sanitizada quando necessária; executar duas vezes as migrations que alegam idempotência e testar rollback/recriação. Confirmar que os seeds usam chaves estáveis e não geram duplicatas.
+4. Produzir uma tabela de decisão por versão: `aplicar`, `já refletida no schema — reconciliar histórico`, `não segura` ou `aguarda dados verificados`. Não marcar uma migration como aplicada só porque o schema parece semelhante.
+5. Revisar especialmente o lote 18: registros sem dados nutricionais verificados devem permanecer fora da busca de produtos prontos até transcrição e validação de rótulo.
+6. Só depois da revisão e autorização explícita, executar um plano de mudança remoto com backup, janela, smoke tests e plano de recuperação.
+
+**Estado final desta etapa:** o bloqueio de migrations permanece aberto. A evidência melhorou, mas não existe base suficiente para executar mudanças de schema com segurança na produção.

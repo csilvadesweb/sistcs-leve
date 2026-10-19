@@ -130,3 +130,12 @@
 .ft-quick-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
 .ft-quick-form { display: grid; gap: 10px; margin: 0 0 14px; padding: 14px; border: 1px solid var(--line-soft); border-radius: 14px; background: var(--surface-2); }
 .ft-quick-form-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* Nutrientes extras (saturada, açúcares, sódio) */
+.ft-extras-hint { margin: 14px 0 8px; color: var(--text-3); font-size: 13px; }
+.ft-extra-totals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 12px; padding: 14px 18px; border-radius: 16px; border: 1px dashed var(--line-soft); background: var(--surface); }
+.ft-extra-totals > div { display: grid; gap: 2px; }
+.ft-extra-totals span { color: var(--text-2); font-size: 13px; }
+.ft-extra-totals strong { font-size: 18px; }
+.ft-extra-totals small { color: var(--text-3); font-size: 12px; }
+@media (max-width: 640px) { .ft-extra-totals { grid-template-columns: 1fr; } }

@@ -13,6 +13,7 @@ export function foodEntryToInput(
     portion: entry.portion,
     quantity: entry.quantity,
     nutrientsPerPortion: { ...entry.nutrientsPerPortion },
+    ...(entry.extras ? { extras: { ...entry.extras } } : {}),
     nutritionSource: entry.nutritionSource,
   };
 }

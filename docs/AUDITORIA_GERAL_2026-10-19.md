@@ -186,7 +186,7 @@ A lista de migrations foi consultada diretamente duas vezes: pelo conector Supab
 - A proteção contra senhas comprometidas continua desativada no Supabase Auth e requer alteração manual no painel. O alerta de `consume_ai_quota()` como `SECURITY DEFINER` permanece: a RPC é usada pelo Coach, a execução anônima está negada e o acesso direto à tabela `ai_usage` continua bloqueado. Não revogar EXECUTE sem redesenhar e testar o fluxo.
 - O histórico geral de migrations ainda não foi completamente reconstruído para todos os scripts históricos ausentes. O bloqueio ao `db push` permanece até reconciliar o ledger completo e reproduzir a baseline.
 
-- Contagem atual observada: **16 tabelas públicas com RLS e 57 políticas** (a tabela de metas adicionou quatro políticas às 53 anteriores). O catálogo tem **183 registros**, dos quais 61 com status `label_transcribed` e 122 aguardando verificação. A tabela de metas está vazia fora dos testes transacionais revertidos, até usuários gravarem metas reais.
+- Contagem atual observada: **16 tabelas públicas com RLS e 55 políticas**. O catálogo tem **183 registros**, dos quais 61 com status `label_transcribed` e 122 aguardando verificação. A tabela de metas está vazia fora dos testes transacionais revertidos, até usuários gravarem metas reais.
 
 ## 11. Fechamento dos lotes de suplementos — 19/10/2026
 

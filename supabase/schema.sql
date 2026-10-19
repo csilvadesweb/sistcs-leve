@@ -271,6 +271,44 @@ do $$ begin
   create policy health_activity_records_delete_own on public.health_activity_records for delete to authenticated using ((select auth.uid()) = user_id);
 exception when duplicate_object then null; end $$;
 
+create table if not exists public.activity_goal_state (
+  user_id uuid primary key default auth.uid() references auth.users(id) on delete cascade,
+  goals jsonb not null default '{}'::jsonb
+    check (jsonb_typeof(goals) = 'object'),
+  awards jsonb not null default '[]'::jsonb
+    check (jsonb_typeof(awards) = 'array' and jsonb_array_length(awards) <= 5000),
+  updated_at timestamptz not null default now()
+);
+alter table public.activity_goal_state enable row level security;
+revoke all on table public.activity_goal_state from public;
+revoke all on table public.activity_goal_state from anon;
+grant select, insert, update, delete on table public.activity_goal_state to authenticated;
+
+drop policy if exists activity_goal_state_select_own on public.activity_goal_state;
+create policy activity_goal_state_select_own on public.activity_goal_state
+  for select to authenticated using ((select auth.uid()) = user_id);
+drop policy if exists activity_goal_state_insert_own on public.activity_goal_state;
+create policy activity_goal_state_insert_own on public.activity_goal_state
+  for insert to authenticated with check ((select auth.uid()) = user_id);
+drop policy if exists activity_goal_state_update_own on public.activity_goal_state;
+create policy activity_goal_state_update_own on public.activity_goal_state
+  for update to authenticated using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
+drop policy if exists activity_goal_state_delete_own on public.activity_goal_state;
+create policy activity_goal_state_delete_own on public.activity_goal_state
+  for delete to authenticated using ((select auth.uid()) = user_id);
+
+create or replace function public.touch_activity_goal_state()
+returns trigger language plpgsql set search_path = public as $
+begin
+  new.updated_at = now();
+  return new;
+end;
+$;
+drop trigger if exists activity_goal_state_touch on public.activity_goal_state;
+create trigger activity_goal_state_touch before update on public.activity_goal_state
+  for each row execute function public.touch_activity_goal_state();
+
 create table if not exists public.ai_usage (
   user_id uuid not null references auth.users(id) on delete cascade,
   day date not null,

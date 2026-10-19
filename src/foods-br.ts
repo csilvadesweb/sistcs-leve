@@ -933,6 +933,8 @@ export async function searchSupplementCatalog(query: string, limit = 20): Promis
     .from('supplement_catalog')
     .select('id,name,brand,barcode,serving_size,nutrition_basis,calories_kcal,protein_g,carbohydrates_g,total_fat_g,saturated_fat_g,fiber_g,sugars_g,sodium_mg,micronutrients,ingredients,source_url,data_status')
     .or(filters.join(','))
+    // Não exibe termos de busca nem produtos ainda sem rótulo nutricional verificado.
+    .eq('data_status', 'label_transcribed')
     .not('calories_kcal', 'is', null)
     .not('protein_g', 'is', null)
     .not('carbohydrates_g', 'is', null)

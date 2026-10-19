@@ -11,6 +11,7 @@ import {
   periodRange,
   validateGoalsInput,
   weekStart,
+  resolveSync,
   type Award,
   type Goals,
 } from './activity-goals';
@@ -212,5 +213,40 @@ describe('validação e edição das metas', () => {
     const valid: Award = { id: 'day:2026-10-12', kind: 'day', earnedOn: '2026-10-12', periodKey: '2026-10-12' };
     expect(parseAwards([valid, { id: 'x', kind: 'inventada', earnedOn: '2026-10-12', periodKey: '2026-10-12' }, null, 3])).toEqual([valid]);
     expect(parseAwards('nada')).toEqual([]);
+  });
+});
+
+describe('sincronização na conta', () => {
+  const g = (minutes: number, since = '2026-10-01'): Goals => ({ week: { minutes, since } });
+  const a = (id: string, earnedOn = '2026-10-10'): Award => ({ id, kind: 'day', earnedOn, periodKey: earnedOn });
+
+  it('primeira sincronização: sobe o que está no aparelho', () => {
+    const r = resolveSync({ goals: g(150), awards: [a('x')] }, false, null);
+    expect(r).toMatchObject({ goals: g(150), pushGoals: true, pushAwards: true });
+  });
+
+  it('sem registro na conta e nada local: não envia nada', () => {
+    expect(resolveSync({ goals: {}, awards: [] }, false, null)).toMatchObject({ pushGoals: false, pushAwards: false });
+  });
+
+  it('caso normal: as metas da conta valem e uma meta apagada lá some aqui', () => {
+    const r = resolveSync({ goals: g(150), awards: [] }, false, { goals: {}, awards: [] });
+    expect(r.goals).toEqual({});
+    expect(r.pushGoals).toBe(false);
+  });
+
+  it('alteração feita sem conexão vence a da conta e sobe', () => {
+    const r = resolveSync({ goals: g(200), awards: [] }, true, { goals: g(100), awards: [] });
+    expect(r.goals).toEqual(g(200));
+    expect(r.pushGoals).toBe(true);
+  });
+
+  it('medalhas são a união das duas listas e só sobem se a conta estava atrás', () => {
+    const both = resolveSync({ goals: {}, awards: [a('b', '2026-10-12')] }, false, { goals: {}, awards: [a('a', '2026-10-10')] });
+    expect(both.awards.map((x) => x.id).sort()).toEqual(['a', 'b']);
+    expect(both.pushAwards).toBe(true);
+    const same = resolveSync({ goals: {}, awards: [a('a')] }, false, { goals: {}, awards: [a('a'), a('b')] });
+    expect(same.awards).toHaveLength(2);
+    expect(same.pushAwards).toBe(false);
   });
 });

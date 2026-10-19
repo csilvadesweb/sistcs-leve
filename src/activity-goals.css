@@ -142,3 +142,5 @@
   .ag-ring-arc, .ag-status-running i, .ag-celebration, .ag-celebration-medal, .ag-confetti span { animation: none; }
   .ag-confetti { display: none; }
 }
+
+.ag-sync { margin: 10px 0 0; color: var(--text-3); font-size: 13px; }

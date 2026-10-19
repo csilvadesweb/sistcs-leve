@@ -819,6 +819,7 @@ export async function clearAllUserData(userId: string) {
     if (files?.length) await supabase.storage.from(bucket).remove(files.map((f) => `${userId}/${f.name}`));
   }
   const tables = [
+    'activity_goal_state',
     'health_activity_records',
     'medication_effect_logs',
     'exercise_entries',
@@ -834,7 +835,7 @@ export async function clearAllUserData(userId: string) {
   ];
   for (const table of tables) {
     const { error } = await supabase.from(table).delete().eq('user_id', userId);
-    if ((table === 'exercise_entries' || table === 'health_activity_records' || table === 'medication_effect_logs') && isMissingRelation(error, table)) continue;
+    if ((table === 'activity_goal_state' || table === 'exercise_entries' || table === 'health_activity_records' || table === 'medication_effect_logs') && isMissingRelation(error, table)) continue;
     fail(error, 'Não foi possível apagar os dados.');
   }
 }

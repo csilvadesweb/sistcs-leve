@@ -4,6 +4,7 @@ import { Flame, Pause, Play, RotateCcw, Save, Square, Trophy } from 'lucide-reac
 import { useAppData } from '../session';
 import { Button, todayInSaoPaulo } from '../ui';
 import { saveExerciseWithMetrics } from '../exercise-persistence';
+import { pushAwards, pushGoals, syncActivityState } from '../activity-cloud';
 import { EXERCISE_ACTIVITIES, estimateExerciseCalories, validateExerciseInput } from '../exercise';
 import {
   AWARD_PRIORITY,
@@ -205,7 +206,7 @@ function Celebration({ awards, onClose }: { awards: Award[]; onClose: () => void
 /* --------------------------------- página -------------------------------- */
 
 export function ActivityGoalsPage() {
-  const { data, reload } = useAppData();
+  const { data, reload, user } = useAppData();
   // Atualiza a data se a tela ficar aberta passando da meia-noite.
   const [today, setToday] = useState(() => todayInSaoPaulo());
   useEffect(() => {
@@ -234,7 +235,36 @@ export function ActivityGoalsPage() {
   const [awards, setAwards] = useState<Award[]>(() => loadAwards());
   const awardsRef = useRef<Award[]>(awards);
   const [celebration, setCelebration] = useState<Award[]>([]);
+  /** Estado da cópia na conta: só envia depois da primeira consulta. */
+  const [cloud, setCloud] = useState<'syncing' | 'synced' | 'offline'>('syncing');
+  const cloudReady = useRef(false);
   const closeCelebration = useCallback(() => setCelebration([]), []);
+
+  // Ao abrir: traz metas e medalhas da conta, junta com as deste aparelho e envia o que faltar.
+  useEffect(() => {
+    let cancelled = false;
+    cloudReady.current = false;
+    setCloud('syncing');
+    void syncActivityState(user.id, () => ({ goals: loadGoals(todayInSaoPaulo()), awards: awardsRef.current })).then((result) => {
+      if (cancelled) return;
+      if (result.status === 'offline') {
+        setCloud('offline');
+        return;
+      }
+      const merged = mergeAwards(awardsRef.current, result.awards).all;
+      awardsRef.current = merged;
+      setAwards(merged);
+      saveAwards(merged);
+      saveGoals(result.goals);
+      setGoals(result.goals);
+      setGoalInput({ day: String(result.goals.day?.minutes ?? ''), week: String(result.goals.week?.minutes ?? ''), month: String(result.goals.month?.minutes ?? '') });
+      cloudReady.current = true;
+      setCloud('synced');
+      // Medalhas conquistadas aqui enquanto a consulta rodava ainda não estão na conta.
+      if (merged.length > result.awards.length) void pushAwards(user.id, merged);
+    });
+    return () => { cancelled = true; };
+  }, [user.id]);
 
   useEffect(() => {
     const computed = computeAwards(entries, goals, today);
@@ -243,6 +273,7 @@ export function ActivityGoalsPage() {
     awardsRef.current = all;
     setAwards(all);
     saveAwards(all);
+    if (cloudReady.current) void pushAwards(user.id, all).then((ok) => { if (!ok) setCloud('offline'); });
     // Só comemora o que foi conquistado hoje ou ontem; o resto entra na coleção sem alarde.
     const recent = added.filter((award) => award.earnedOn >= addDays(today, -1));
     if (recent.length > 0) setCelebration(recent);
@@ -342,6 +373,10 @@ export function ActivityGoalsPage() {
     }
     setGoals(next);
     setGoalsNotice({ kind: 'ok', text: 'Metas salvas. As medalhas contam a partir de hoje.' });
+    void pushGoals(user.id, next).then((ok) => {
+      setCloud(ok ? 'synced' : 'offline');
+      if (!ok) setGoalsNotice({ kind: 'ok', text: 'Metas salvas neste aparelho. Elas vão para a sua conta quando a conexão voltar.' });
+    });
   }
 
   const medalCounts = useMemo(() => {
@@ -466,6 +501,9 @@ export function ActivityGoalsPage() {
           </div>
         </form>
         {goalsNotice && <p className={`ag-notice ag-notice-${goalsNotice.kind}`} role={goalsNotice.kind === 'error' ? 'alert' : 'status'}>{goalsNotice.text}</p>}
+        <p className="ag-sync" aria-live="polite">
+          {cloud === 'synced' ? 'Metas e medalhas salvas na sua conta: aparecem em qualquer aparelho.' : cloud === 'offline' ? 'Sem conexão com a conta: tudo fica neste aparelho e sincroniza depois.' : 'Sincronizando com a sua conta…'}
+        </p>
         <p className="ag-hint">As metas ficam guardadas neste dispositivo. Ao alterar uma meta, as medalhas dela passam a contar a partir de hoje.</p>
       </section>
 

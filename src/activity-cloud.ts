@@ -25,14 +25,30 @@ function setGoalsDirty(dirty: boolean) {
   }
 }
 
+export type CloudSyncStatus = 'synced' | 'offline' | 'not-configured';
+
 export type CloudSyncResult =
   | { status: 'synced'; goals: Goals; awards: Award[] }
-  | { status: 'offline' };
+  | { status: 'offline' | 'not-configured' };
+
+/** Distingue uma tabela ausente de uma falha de rede/permissão transitória. */
+export function isMissingActivityGoalTable(error: { code?: string; message?: string } | null | undefined): boolean {
+  if (!error) return false;
+  const code = (error.code ?? '').toUpperCase();
+  const message = (error.message ?? '').toLowerCase();
+  return code === '42P01' || code === 'PGRST205' ||
+    (message.includes('activity_goal_state') &&
+      (message.includes('does not exist') || message.includes('schema cache') || message.includes('could not find the table')));
+}
+
+function statusForError(error: { code?: string; message?: string } | null | undefined): CloudSyncStatus {
+  return isMissingActivityGoalTable(error) ? 'not-configured' : 'offline';
+}
 
 /** Consulta a conta, resolve conflitos e envia o que estiver à frente. */
 export async function syncActivityState(userId: string, getLocal: () => CloudGoalState): Promise<CloudSyncResult> {
   const { data, error } = await supabase.from('activity_goal_state').select('goals,awards').eq('user_id', userId).maybeSingle();
-  if (error) return { status: 'offline' };
+  if (error) return { status: statusForError(error) };
 
   const remote: CloudGoalState | null = data ? { goals: parseGoals(data.goals), awards: parseAwards(data.awards) } : null;
   // O estado do aparelho é lido só agora: o usuário pode ter editado enquanto a consulta rodava.
@@ -43,23 +59,23 @@ export async function syncActivityState(userId: string, getLocal: () => CloudGoa
     if (resolved.pushGoals) row.goals = resolved.goals;
     if (resolved.pushAwards) row.awards = resolved.awards;
     const { error: pushError } = await supabase.from('activity_goal_state').upsert(row, { onConflict: 'user_id' });
-    if (pushError) return { status: 'offline' };
+    if (pushError) return { status: statusForError(pushError) };
     if (resolved.pushGoals) setGoalsDirty(false);
   }
   return { status: 'synced', goals: resolved.goals, awards: resolved.awards };
 }
 
 /** Envia as metas editadas. Se falhar, marca para tentar de novo na próxima abertura. */
-export async function pushGoals(userId: string, goals: Goals): Promise<boolean> {
+export async function pushGoals(userId: string, goals: Goals): Promise<CloudSyncStatus> {
   setGoalsDirty(true);
   const { error } = await supabase.from('activity_goal_state').upsert({ user_id: userId, goals }, { onConflict: 'user_id' });
-  if (error) return false;
+  if (error) return statusForError(error);
   setGoalsDirty(false);
-  return true;
+  return 'synced';
 }
 
 /** Envia só as medalhas (nunca mexe nas metas da conta). */
-export async function pushAwards(userId: string, awards: Award[]): Promise<boolean> {
+export async function pushAwards(userId: string, awards: Award[]): Promise<CloudSyncStatus> {
   const { error } = await supabase.from('activity_goal_state').upsert({ user_id: userId, awards }, { onConflict: 'user_id' });
-  return !error;
+  return error ? statusForError(error) : 'synced';
 }

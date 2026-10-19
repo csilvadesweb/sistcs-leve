@@ -186,3 +186,16 @@ A lista de migrations foi consultada diretamente duas vezes: pelo conector Supab
 - Os lotes 04–25 do catálogo de suplementos continuam sem aplicação na produção. A revisão estática não substitui validar rótulos, EANs e SQL em ambiente descartável. Não foi executado `supabase db push`.
 
 - Recontagem após a migration: **16 tabelas públicas, 16 com RLS e 55 políticas**. A tabela `activity_goal_state` está criada e ainda vazia (0 linhas), o que é esperado até que usuários salvem metas na nuvem. O catálogo de suplementos permanece em 126 linhas, com 11 `label_transcribed`; os lotes 04–25 seguem pendentes.
+
+
+## 11. Fechamento dos lotes de suplementos — 19/10/2026
+
+- A [PR #179](https://github.com/csilvadesweb/sistcs-leve/pull/179) consolidou os lotes 04–25 em uma migration idempotente. Os checks `ci`, `Validate SISTCS Leve` e `e2e` passaram antes do merge.
+- A migration foi aplicada no Supabase remoto pelo mecanismo de migration, sem `db push`. O ledger registrou `20261019134118 seed_supplement_catalog_batches_04_25`.
+- A auditoria posterior encontrou quatro linhas com status `label_transcribed` mas sem todos os campos nucleares exigidos pela busca. Uma migration aditiva de normalização foi aplicada: esses registros passaram para `needs_verified_product_data`, sem inventar valores nutricionais. O ledger registrou `20261019134154 normalize_supplement_verification_status`.
+- Estado remoto após a normalização: **183 registros no catálogo, 61 `label_transcribed` e 122 `needs_verified_product_data`**. Foram encontrados **zero** registros prontos para busca com fonte ou macronutrientes-base ausentes, **zero** grupos duplicados por nome/marca/fonte e **zero** grupos com EAN duplicado.
+- Os lotes acrescentaram produtos reais ao catálogo; isso não comprova cobertura de todo o mercado brasileiro. Os 122 registros pendentes continuam deliberadamente fora da busca de produtos verificados.
+- O arquivo de migration consolidada e o arquivo de normalização estão sendo alinhados aos timestamps reais do ledger nesta PR, para evitar que o CLI tente reaplicar scripts com versões diferentes. Até essa reconciliação ser integrada e revista, continua proibido usar `supabase db push` em produção.
+- O bug de timestamp da migration `food_extra_nutrients` foi reconciliado pela [PR #178](https://github.com/csilvadesweb/sistcs-leve/pull/178). A tabela `activity_goal_state` também está criada em produção, com RLS e quatro políticas por proprietário; ainda faltam testes CRUD entre duas contas e validação física no Galaxy.
+
+**Limite atual:** o status nutricional agora é consistente com a presença dos campos exigidos pela busca, mas a conferência visual de todos os rótulos, licenças e EANs continua sendo uma tarefa de qualidade de dados. A proteção contra senhas comprometidas continua exigindo ajuste manual no painel Supabase Auth.

@@ -1,9 +1,23 @@
+import {
+  TEST_MESSAGE,
+  bearerUserId,
+  pushConfigured,
+  runMedicationReminders,
+  sendToSubscriptions,
+  subscriptionsFor,
+} from "./worker-push";
+
 interface Env {
   ASSETS: { fetch(request: Request): Promise<Response> };
   GEMINI_API_KEY?: string;
   GEMINI_MODEL?: string;
   SUPABASE_URL: string;
   SUPABASE_ANON_KEY: string;
+  // Notificações push (veja DEPLOY.md). Os dois últimos são segredos.
+  VAPID_PUBLIC_KEY?: string;
+  VAPID_PRIVATE_KEY?: string;
+  VAPID_SUBJECT?: string;
+  SUPABASE_SERVICE_ROLE_KEY?: string;
 }
 
 const json = (body: unknown, status = 200) =>
@@ -434,10 +448,45 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   }
 }
 
+async function handlePush(request: Request, env: Env): Promise<Response> {
+  const url = new URL(request.url);
+  if (request.method === "OPTIONS") return withCors(new Response(null, { status: 204 }));
+  // Chave pública: o navegador precisa dela para assinar. Sem configuração, o app avisa.
+  if (url.pathname === "/api/push/key" && request.method === "GET") {
+    if (!pushConfigured(env)) return withCors(json({ error: "As notificações com o app fechado ainda não foram ativadas no servidor." }, 503));
+    return withCors(json({ publicKey: env.VAPID_PUBLIC_KEY }));
+  }
+  // Envia um aviso de teste aos aparelhos da própria pessoa.
+  if (url.pathname === "/api/push/test" && request.method === "POST") {
+    if (!pushConfigured(env)) return withCors(json({ error: "As notificações com o app fechado ainda não foram ativadas no servidor." }, 503));
+    const userId = await bearerUserId(request, env);
+    if (!userId) return withCors(json({ error: "Entre na sua conta para testar." }, 401));
+    try {
+      const subs = await subscriptionsFor(env, [userId]);
+      if (!subs.length) return withCors(json({ error: "Nenhum aparelho ativado. Ative as notificações primeiro." }, 404));
+      const { sent } = await sendToSubscriptions(env, subs, TEST_MESSAGE);
+      if (!sent) return withCors(json({ error: "O envio falhou. Tente ativar as notificações de novo." }, 502));
+      return withCors(json({ sent }));
+    } catch {
+      return withCors(json({ error: "Não foi possível enviar o teste agora." }, 502));
+    }
+  }
+  return withCors(json({ error: "Rota não encontrada." }, 404));
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     if (url.pathname.startsWith("/api/ai/")) return handleApi(request, env);
+    if (url.pathname.startsWith("/api/push/")) return handlePush(request, env);
     return env.ASSETS.fetch(request);
+  },
+  /** Agendador (a cada minuto): lembretes de medicamento com o app fechado. */
+  async scheduled(_event: unknown, env: Env): Promise<void> {
+    try {
+      await runMedicationReminders(env);
+    } catch (error) {
+      console.error("Falha nos lembretes de medicamento:", error instanceof Error ? error.message : "erro desconhecido");
+    }
   },
 };

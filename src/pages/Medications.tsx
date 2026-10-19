@@ -1,6 +1,7 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import { Check, Clock, Pencil, Pill, Plus, Save, Trash2, X } from 'lucide-react';
 import { useAppData } from '../session';
+import { PushReminders } from '../PushReminders';
 import {
   createMedication,
   createMedicationEffect,
@@ -179,6 +180,8 @@ export function Medications() {
 
       {loadError && <p className="ft-feedback ft-feedback-error" role="alert">{loadError}</p>}
       {loading && <p className="ft-feedback" role="status">Carregando seus medicamentos…</p>}
+
+      <PushReminders />
 
       <section className="ft-card" aria-labelledby="effects-title">
         <div className="ft-section-heading">

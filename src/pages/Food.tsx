@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { FoodSearch, type PickedFood } from '../foodsearch';
 import { NutritionLabelScanner } from '../label-scanner';
 import { MealPhotoScanner } from '../meal-photo';
@@ -294,6 +294,7 @@ export function FoodTracking() {
     });
   }, [selectedDate]);
   const [foodEditorOpen, setFoodEditorOpen] = useState(false);
+  const foodEditorRef = useRef<HTMLFormElement>(null);
   const [selectedMealTab, setSelectedMealTab] = useState<MealType | 'summary'>('summary');
   const [editingFood, setEditingFood] = useState<FoodEntry | null>(null);
   const [waterEditorOpen, setWaterEditorOpen] = useState(false);
@@ -306,6 +307,12 @@ export function FoodTracking() {
   const [waterForm, setWaterForm] = useState<WaterForm>({ date: todayInSaoPaulo(), volumeMl: '' });
   const [waterError, setWaterError] = useState<{ date?: string; volumeMl?: string }>({});
   const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    if (!foodEditorOpen) return;
+    // The editor is rendered above the diary list; bring it into view after opening
+    // so tapping "Editar" never appears to do nothing when the list is scrolled down.
+    foodEditorRef.current?.scrollIntoView?.({ behavior: 'smooth', block: 'start' });
+  }, [foodEditorOpen, editingFood]);
   const [manualOpen, setManualOpen] = useState(false);
   const [quick, setQuick] = useState<{ meal: MealType; calories: string; name: string; error?: string } | null>(null);
 
@@ -658,7 +665,7 @@ export function FoodTracking() {
         )}
 
         {foodEditorOpen && (
-          <form className="ft-editor" onSubmit={onFoodSubmit} noValidate>
+          <form ref={foodEditorRef} className="ft-editor" style={{ scrollMarginTop: '6rem' }} onSubmit={onFoodSubmit} noValidate>
             <div className="ft-editor-top">
               <h3>{editingFood ? 'Editar alimento' : 'Novo lançamento'}</h3>
               <Button variant="ghost" onClick={() => { setFoodEditorOpen(false); setEditingFood(null); }}>

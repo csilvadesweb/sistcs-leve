@@ -1,13 +1,12 @@
 import { useState, type ChangeEvent } from 'react';
-import { Camera, ScanLine } from 'lucide-react';
 import { supabase } from './supabase';
-import { Button, buttonClass } from './ui';
+import { Button } from './ui';
 import type { PickedFood } from './foodsearch';
+import { imageProblem, readImageAsBase64 } from './photo-upload';
 import { normalizeMealPhotoEstimates, type MealPhotoEstimate } from './photo-nutrition';
 
-
-
-export function MealPhotoScanner({ onPick }: { onPick: (food: PickedFood) => void }) {
+/** Foto do prato: a IA sugere alimentos e porções; a pessoa escolhe cada item e revisa. */
+export function useMealPhoto(onPick: (food: PickedFood) => void) {
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
   const [items, setItems] = useState<MealPhotoEstimate[]>([]);
@@ -18,27 +17,14 @@ export function MealPhotoScanner({ onPick }: { onPick: (food: PickedFood) => voi
     setNotice('');
     setItems([]);
     if (!file) return;
-    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-      setNotice('Escolha uma imagem JPG, PNG ou WebP.');
-      return;
-    }
-    if (file.size > 4 * 1024 * 1024) {
-      setNotice('A imagem deve ter no máximo 4 MB.');
+    const problem = imageProblem(file);
+    if (problem) {
+      setNotice(problem);
       return;
     }
     setBusy(true);
     try {
-      const imageBase64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onerror = () => reject(new Error('Não foi possível abrir a imagem.'));
-        reader.onload = () => {
-          const result = typeof reader.result === 'string' ? reader.result : '';
-          const comma = result.indexOf(',');
-          if (comma < 0) reject(new Error('Não foi possível preparar a imagem.'));
-          else resolve(result.slice(comma + 1));
-        };
-        reader.readAsDataURL(file);
-      });
+      const imageBase64 = await readImageAsBase64(file);
       const { data } = await supabase.auth.getSession();
       const token = data.session?.access_token;
       if (!token) throw new Error('Entre na sua conta para analisar o prato.');
@@ -51,7 +37,7 @@ export function MealPhotoScanner({ onPick }: { onPick: (food: PickedFood) => voi
       if (!response.ok) throw new Error(body.error || 'Não foi possível analisar a foto.');
       const valid = normalizeMealPhotoEstimates(body.items);
       setItems(valid);
-      setNotice(valid.length ? 'Estimativas geradas. Escolha um item e revise os valores antes de salvar.' : 'Não consegui identificar itens com confiança suficiente. Tente outra foto ou use a busca.');
+      setNotice(valid.length ? 'Estimativas geradas. Escolha um item e revise os valores antes de salvar.' : 'Não consegui identificar itens com confiança suficiente. Tente outra foto ou digite o alimento.');
     } catch (error) {
       setNotice(error instanceof Error ? error.message : 'Não foi possível analisar a foto.');
     } finally {
@@ -59,46 +45,43 @@ export function MealPhotoScanner({ onPick }: { onPick: (food: PickedFood) => voi
     }
   }
 
+  function use(item: MealPhotoEstimate) {
+    onPick({
+      name: item.name,
+      portion: `~${Math.round(item.grams)} g (estimativa por foto)`,
+      nutritionSource: 'user-estimated',
+      nutrients: {
+        calories: item.calories,
+        proteins: item.proteins,
+        carbohydrates: item.carbohydrates,
+        fats: item.fats,
+        fiber: item.fiber,
+      },
+    });
+    setNotice(`“${item.name}” foi para o formulário. Confira e ajuste antes de salvar.`);
+  }
+
+  return { busy, notice, items, analyze, use };
+}
+
+export type MealPhotoState = ReturnType<typeof useMealPhoto>;
+
+/** Itens reconhecidos, com as calorias de cada um e a soma do prato. */
+export function MealPhotoResults({ photo }: { photo: MealPhotoState }) {
+  if (photo.items.length === 0) return null;
+  const total = photo.items.reduce((sum, item) => sum + item.calories, 0);
   return (
-    <section className="ft-card" style={{ margin: '12px 0', padding: 14 }} aria-label="Estimativa de alimentos por foto do prato">
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <span aria-hidden="true"><ScanLine size={20} /></span>
-        <div style={{ flex: 1 }}>
-          <strong>Identificar alimentos pela foto do prato</strong>
-          <p className="ft-explainer" style={{ margin: '4px 0 0' }}>A IA sugere alimentos e porções aproximadas; você confirma cada item.</p>
-        </div>
-        <label className={buttonClass({ variant: 'outline' })} style={{ cursor: busy ? 'wait' : 'pointer' }}>
-          <Camera size={16} />{busy ? 'Analisando…' : 'Foto do prato'}
-          <input type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={analyze} disabled={busy} hidden />
-        </label>
-      </div>
-      <p className="ft-explainer" style={{ marginTop: 8 }}>A foto é enviada ao serviço de IA e não é salva pelo SISTCS Leve. As calorias são estimativas, não medições; confirme porção e nutrientes no formulário. Limite de 4 MB e até 30 usos de IA por dia.</p>
-      {notice && <p className="ft-feedback" role="status" aria-live="polite">{notice}</p>}
-      {items.length > 0 && (
-        <div style={{ display: 'grid', gap: 10, marginTop: 12 }}>
-          {items.map((item, index) => (
-            <article key={`${item.name}-${index}`} style={{ border: '1px solid var(--border, #ddd)', borderRadius: 12, padding: 12 }}>
-              <strong>{item.name}</strong>
-              <p className="ft-explainer" style={{ margin: '4px 0' }}>~{Math.round(item.grams)} g · {Math.round(item.calories)} kcal · proteína {Math.round(item.proteins * 10) / 10} g · confiança {item.confidence}</p>
-              <Button variant="outline" size="sm" onClick={() => {
-                onPick({
-                  name: item.name,
-                  portion: `~${Math.round(item.grams)} g (estimativa por foto)`,
-                  nutritionSource: 'user-estimated',
-                  nutrients: {
-                    calories: item.calories,
-                    proteins: item.proteins,
-                    carbohydrates: item.carbohydrates,
-                    fats: item.fats,
-                    fiber: item.fiber,
-                  },
-                });
-                setNotice(`“${item.name}” foi transferido ao formulário. Confira e ajuste antes de salvar.`);
-              }}>Revisar no formulário</Button>
-            </article>
-          ))}
-        </div>
-      )}
-    </section>
+    <div className="fs-photo-results" aria-label="Alimentos reconhecidos na foto">
+      <p className="fs-photo-total"><strong>≈ {Math.round(total)} kcal</strong> no prato todo <small>(soma estimada dos itens)</small></p>
+      {photo.items.map((item, index) => (
+        <article key={`${item.name}-${index}`} className="fs-photo-item">
+          <div>
+            <strong>{item.name}</strong>
+            <span>~{Math.round(item.grams)} g · <b>{Math.round(item.calories)} kcal</b> · proteína {Math.round(item.proteins * 10) / 10} g · confiança {item.confidence}</span>
+          </div>
+          <Button variant="outline" size="sm" onClick={() => photo.use(item)}>Usar</Button>
+        </article>
+      ))}
+    </div>
   );
 }

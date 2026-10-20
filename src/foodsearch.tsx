@@ -1,7 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ScanBarcode, Search, X } from 'lucide-react';
-import { Button, decimalIsValid, decimalText, parseDecimal } from './ui';
-import { foodConfidence, foodSourceLabel, foodSourceUrl, gramsFor, householdUnitsForFood, lookupBarcode, normalize, normalizeBarcodeInput, parseQuery, scale, searchFoodCatalog, searchLocal, searchOpenFoodFactsPage, searchSupplementCatalog, scaleExtras, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { Camera, ScanBarcode, ScanText, Search, X } from 'lucide-react';
+import { Button, buttonClass, decimalIsValid, decimalText, parseDecimal } from './ui';
+import { foodConfidence, foodSourceLabel, foodSourceUrl, gramsFor, householdUnitsForFood, lookupBarcode, normalize, parseQuery, scale, searchFoodCatalog, searchLocal, searchOpenFoodFactsPage, searchSupplementCatalog, scaleExtras, searchTempoLifeFoods, type FoodPer100 } from './foods-br';
+import { LabelResults, useLabelScan } from './label-scanner';
+import { MealPhotoResults, useMealPhoto } from './meal-photo';
+
+/** Código de barras digitado ou colado: só números, de 8 a 14. */
+export function isBarcodeText(text: string): boolean {
+  return /^\d{8,14}$/.test(text.replace(/[\s.-]/g, ''));
+}
 
 export interface PickedFood {
   name: string;
@@ -128,11 +135,12 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   const [loadingMore, setLoadingMore] = useState(false);
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
   const [message, setMessage] = useState('');
-  const [code, setCode] = useState('');
   const [scanning, setScanning] = useState(false);
   const abort = useRef<AbortController | null>(null);
   const onPickRef = useRef(onPick);
   onPickRef.current = onPick;
+  const photo = useMealPhoto((picked) => onPickRef.current(picked));
+  const labelScan = useLabelScan((picked) => onPickRef.current(picked));
   useEffect(() => () => abort.current?.abort(), []);
 
   // Tudo é derivado do que foi digitado: "2 ovos", "150 g de arroz", "1 colher de sopa de azeite".
@@ -197,6 +205,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
     setHasMoreOnline(false);
     setLoadingMore(false);
     if (manualPick) return;
+    if (isBarcodeText(query)) return;
     if (normalize(parsed.name).length < 3) {
       setStatus('idle');
       return;
@@ -295,6 +304,15 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
     }
   }
 
+  // Número de código de barras digitado ou colado no mesmo campo: consulta sozinho.
+  const byCodeRef = useRef(byCode);
+  byCodeRef.current = byCode;
+  useEffect(() => {
+    if (!isBarcodeText(query)) return;
+    const timer = window.setTimeout(() => void byCodeRef.current(query), 500);
+    return () => window.clearTimeout(timer);
+  }, [query]);
+
   const localNames = new Set(matches.map((item) => normalize(item.name)));
   const others = [
     ...matches.filter((m) => m !== food),
@@ -319,7 +337,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
     <div className="fs-box">
       <div className="fs-head">
         <h4><Search size={15} aria-hidden="true" /> O que você comeu?</h4>
-        <p>Digite do seu jeito, como “2 ovos”, “150 g de arroz” ou “1 banana”. O app encontra o alimento e calcula tudo sozinho.</p>
+        <p>Escreva, leia o código de barras ou tire uma foto: as calorias aparecem na hora.</p>
       </div>
       <div className="fs-bar" role="search">
         <label className="sr-only" htmlFor="fs-q">O que você comeu</label>
@@ -327,25 +345,35 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           id="fs-q"
           className="input fs-main"
           type="search"
-          placeholder="Ex.: 2 ovos, 150 g de arroz, 1 banana…"
+          inputMode="search"
+          placeholder="Ex.: 2 ovos, 150 g de arroz, ou o número do código de barras"
           value={query}
           onChange={(e) => { setQuery(e.target.value); setManualPick(null); setGramsText(null); }}
           autoComplete="off"
           autoFocus
         />
       </div>
-      <section className="fs-supplement-shortcuts" aria-label="Catálogo de suplementos">
-        <strong>Catálogo de suplementos</strong>
-        <p className="field-hint">Digite o nome do produto ou da marca — por exemplo, “creatina Integralmédica” ou “ISO Triple Zero”. Também pode consultar pelo código de barras. Os resultados mostram produtos identificados, não categorias genéricas.</p>
-        <small className="field-hint">Confira a porção e o rótulo antes de registrar. Quando os dados nutricionais não estiverem disponíveis, eles não serão inventados.</small>
-      </section>
-      <div className="fs-bar">
-        <label className="sr-only" htmlFor="fs-code">Código de barras</label>
-        <input id="fs-code" className="input" inputMode="numeric" placeholder="Ou o código de barras (EAN)" value={code} onChange={(e) => setCode(normalizeBarcodeInput(e.target.value))} />
-        <Button variant="outline" size="sm" onClick={() => byCode(code)} disabled={status === 'loading'}>Consultar</Button>
-        <Button variant="outline" size="sm" onClick={() => setScanning((v) => !v)}><ScanBarcode aria-hidden="true" /> {scanning ? 'Parar' : 'Ler com a câmera'}</Button>
+      <div className="fs-actions" role="group" aria-label="Outras formas de registrar">
+        <label className={buttonClass({ variant: 'outline', size: 'sm' })}>
+          <Camera aria-hidden="true" /> {photo.busy ? 'Analisando…' : 'Foto do prato'}
+          <input className="sr-only" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" disabled={photo.busy} onChange={photo.analyze} />
+        </label>
+        <label className={buttonClass({ variant: 'outline', size: 'sm' })}>
+          <ScanText aria-hidden="true" /> {labelScan.busy ? 'Lendo…' : 'Foto do rótulo'}
+          <input className="sr-only" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" disabled={labelScan.busy} onChange={labelScan.scan} />
+        </label>
+        <Button variant="outline" size="sm" onClick={() => setScanning((v) => !v)}><ScanBarcode aria-hidden="true" /> {scanning ? 'Parar' : 'Código de barras'}</Button>
       </div>
-      {scanning && <BarcodeScanner onCode={(c) => { setCode(c); void byCode(c); }} onClose={() => setScanning(false)} />}
+      {scanning && <BarcodeScanner onCode={(c) => { setQuery(c); void byCode(c); }} onClose={() => setScanning(false)} />}
+      <div aria-live="polite">
+        {(photo.notice || labelScan.notice) && <p className="field-hint">{photo.notice || labelScan.notice}</p>}
+      </div>
+      <MealPhotoResults photo={photo} />
+      <LabelResults label={labelScan} />
+      <details className="fs-privacy">
+        <summary>Como funcionam as fotos e as estimativas</summary>
+        <p className="field-hint">As fotos são enviadas ao serviço de IA para leitura e não são salvas pelo SISTCS Leve; evite fotografar dados pessoais. Limite de 4 MB por imagem e 30 usos de IA por dia. Calorias de foto são estimativas, não medições: confirme porção e valores antes de salvar. Quando um dado nutricional não estiver disponível, ele não é inventado.</p>
+      </details>
 
       <div aria-live="polite">
         {message && <p className={status === 'error' ? 'field-error' : 'field-hint'}>{message}</p>}

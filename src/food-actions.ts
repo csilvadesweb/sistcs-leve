@@ -1,4 +1,4 @@
-import type { FoodEntry, FoodEntryInput, MealType } from './data';
+import type { FavoriteFood, FoodEntry, FoodEntryInput, MealType, SavedMeal, SavedMealInput, SavedMealItem } from './data';
 
 /** Builds a fresh input for repeating an entry without copying its database ID. */
 export function foodEntryToInput(
@@ -99,4 +99,66 @@ export function recentFoods(entries: readonly FoodEntry[], limit = 8): RecentFoo
   return [...groups.values()]
     .sort((a, b) => b.uses - a.uses || b.entry.date.localeCompare(a.entry.date) || a.entry.name.localeCompare(b.entry.name))
     .slice(0, Math.max(0, limit));
+}
+
+/* ---------- refeições salvas ---------- */
+
+export const SAVED_MEAL_NAME_MAX = 80;
+export const SAVED_MEAL_ITEMS_MAX = 60;
+
+const itemFromEntry = (entry: FoodEntry | FoodEntryInput): SavedMealItem => ({
+  name: entry.name,
+  portion: entry.portion,
+  quantity: entry.quantity,
+  nutrientsPerPortion: { ...entry.nutrientsPerPortion },
+  ...(entry.extras ? { extras: { ...entry.extras } } : {}),
+  nutritionSource: entry.nutritionSource,
+});
+
+/** Lançamentos do dia viram uma refeição salva (sem datas nem IDs). */
+export function savedMealFromEntries(name: string, entries: Array<FoodEntry | FoodEntryInput>): SavedMealInput | null {
+  const clean = name.trim().replace(/\s+/g, ' ').slice(0, SAVED_MEAL_NAME_MAX);
+  if (!clean || entries.length === 0) return null;
+  return { name: clean, items: entries.slice(0, SAVED_MEAL_ITEMS_MAX).map(itemFromEntry) };
+}
+
+/** Um favorito entra na refeição com quantidade 1. */
+export function savedItemFromFavorite(favorite: FavoriteFood): SavedMealItem {
+  return {
+    name: favorite.name,
+    portion: favorite.portion,
+    quantity: 1,
+    nutrientsPerPortion: { ...favorite.nutrientsPerPortion },
+    ...(favorite.extras ? { extras: { ...favorite.extras } } : {}),
+    nutritionSource: favorite.nutritionSource,
+  };
+}
+
+export const savedItemFromEntry = itemFromEntry;
+
+/** Registra todos os itens da refeição salva no dia e na refeição escolhidos. */
+export function savedMealToInputs(meal: SavedMeal, date: string, mealType: MealType): FoodEntryInput[] {
+  return meal.items.map((item) => ({
+    date,
+    meal: mealType,
+    name: item.name,
+    portion: item.portion,
+    quantity: item.quantity,
+    nutrientsPerPortion: { ...item.nutrientsPerPortion },
+    ...(item.extras ? { extras: { ...item.extras } } : {}),
+    nutritionSource: item.nutritionSource,
+  }));
+}
+
+export function savedMealCalories(items: SavedMealItem[]): number {
+  return Math.round(items.reduce((sum, item) => sum + item.nutrientsPerPortion.calories * item.quantity, 0) * 10) / 10;
+}
+
+/** Valida o que a pessoa editou: nome, ao menos um item e quantidades positivas. */
+export function validateSavedMeal(name: string, items: SavedMealItem[]): string | null {
+  if (!name.trim()) return 'Dê um nome à refeição.';
+  if (items.length === 0) return 'Inclua ao menos um alimento.';
+  if (items.length > SAVED_MEAL_ITEMS_MAX) return `Uma refeição pode ter até ${SAVED_MEAL_ITEMS_MAX} alimentos.`;
+  if (items.some((item) => !Number.isFinite(item.quantity) || item.quantity <= 0 || item.quantity > 10000)) return 'Confira as quantidades: use números maiores que zero.';
+  return null;
 }

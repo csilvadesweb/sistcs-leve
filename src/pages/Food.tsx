@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { FoodSearch, type PickedFood } from '../foodsearch';
 import { Link } from 'wouter';
-import { Apple, CalendarDays, Check, Copy, Droplets, Heart, History, Pencil, Plus, Save, Trash2, X, Zap } from 'lucide-react';
+import { FoodSaved } from './FoodSaved';
+import { Apple, CalendarDays, Check, Copy, Droplets, Heart, Pencil, Plus, Save, Trash2, X, Zap } from 'lucide-react';
 import { useAppData } from '../session';
 import { QUICK_CALORIES_MAX, copyDayInputs, foodEntryToInput, previousDay, quickCaloriesInput, recentFoods } from '../food-actions';
 import {
@@ -845,57 +846,22 @@ export function FoodTracking() {
           </div>
         )}
 
-        {recent.length > 0 && (
-          <section className="ft-favorites ft-recents" aria-labelledby="recents-title">
-            <div className="ft-favorites-heading">
-              <div><p className="ft-kicker">REPITA COM UM TOQUE</p><h3 id="recents-title">Recentes e mais usados</h3></div>
-              <History size={18} aria-hidden="true" />
-            </div>
-            <div className="ft-favorite-list">
-              {recent.map(({ entry, uses }) => (
-                <div className="ft-favorite-row" key={entry.id}>
-                  <div>
-                    <strong>{entry.name}</strong>
-                    <span>{decimalText(entry.quantity)} × {entry.portion} · {decimalText(calculateFoodEntryNutrient(entry, 'calories'))} kcal{uses > 1 ? ` · ${uses} vezes` : ''}</span>
-                  </div>
-                  <Button variant="outline" size="sm" onClick={() => registerRecent(entry)} disabled={busy} aria-label={`Registrar ${entry.name} em ${mealLabels[targetMeal()]}`}>
-                    <Plus aria-hidden="true" /> Registrar
-                  </Button>
-                  <Button variant="ghost" size="sm" onClick={() => editRecent(entry)} disabled={busy} aria-label={`Ajustar ${entry.name} antes de registrar`}>
-                    <Pencil aria-hidden="true" /> Ajustar
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        <section className="ft-favorites" aria-labelledby="favorites-title">
-          <div className="ft-favorites-heading">
-            <div><p className="ft-kicker">SEUS SALVOS</p><h3 id="favorites-title">Alimentos favoritos</h3></div>
-            <Heart size={18} aria-hidden="true" />
-          </div>
-          {data.favoriteFoods.length ? (
-            <div className="ft-favorite-list">
-              {data.favoriteFoods.map((favorite) => (
-                <div className="ft-favorite-row" key={favorite.id}>
-                  <div>
-                    <strong>{favorite.name}</strong>
-                    <span>{favorite.portion} · {favorite.nutritionSource === 'user-estimated' ? 'estimado por você' : 'informado por você'}</span>
-                  </div>
-                  <Button variant="outline" size="sm" onClick={() => openNewFood(favorite)}>
-                    <Plus aria-hidden="true" /> Usar
-                  </Button>
-                  <Button variant="ghost" size="sm" onClick={() => removeFavorite(favorite)} disabled={busy} aria-label={`Remover ${favorite.name} dos favoritos`}>
-                    <Trash2 aria-hidden="true" />
-                  </Button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="ft-favorites-empty">Seus lançamentos podem ser salvos aqui para preencher novamente quando você escolher.</p>
-          )}
-        </section>
+        <FoodSaved
+          data={data}
+          recent={recent}
+          busy={busy}
+          selectedDate={selectedDate}
+          targetMeal={targetMeal()}
+          targetLabel={mealLabels[targetMeal()]}
+          sourceEntries={selectedMealTab === 'summary' ? entriesForDate : entriesForDate.filter((e) => e.meal === selectedMealTab)}
+          sourceLabel={selectedMealTab === 'summary' ? 'Dia todo' : mealLabels[selectedMealTab]}
+          run={run}
+          setFeedback={setFoodFeedback}
+          onRegisterRecent={(entry) => void registerRecent(entry)}
+          onEditRecent={editRecent}
+          onUseFavorite={(favorite) => openNewFood(favorite)}
+          onRemoveFavorite={(favorite) => void removeFavorite(favorite)}
+        />
       </section>
 
       <section className="ft-card ft-water-card" aria-labelledby="water-section-title">

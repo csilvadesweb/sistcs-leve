@@ -60,3 +60,7 @@ Nada de dados de saúde vai no texto: o aviso diz só "Você tem uma dose agenda
 5. **iPhone:** só funciona com o app instalado na tela inicial (iOS 16.4 ou superior).
 
 O agendador olha as doses dos últimos 10 minutos, então um atraso de execução não perde o aviso. Aparelhos que cancelam a inscrição (erro 404/410 do serviço de push) são removidos sozinhos.
+
+## 7. Refeições salvas (aba "Seus salvos > Refeições")
+Rode no Supabase (**SQL Editor**) `supabase/migrations/20261020120000_saved_meals.sql`. Cria `saved_meals` (só o dono acessa, RLS).
+Sem a migração o app continua funcionando: a aba mostra um aviso e as demais abas (Recentes, Favoritos) seguem normais.

@@ -150,3 +150,15 @@
 .fs-photo-item span { font-size: .85rem; opacity: .85; }
 .fs-privacy { margin-top: .5rem; font-size: .85rem; }
 .fs-privacy summary { cursor: pointer; opacity: .8; }
+
+/* Salvos: recentes, favoritos e refeições em abas. */
+.ft-saved .progressive-tabs { margin-top: 10px; }
+.ft-saved-editor { display: grid; gap: 10px; margin-top: 12px; padding: 12px; border: 1px solid var(--line-soft); border-radius: 12px; }
+.ft-saved-item { display: flex; align-items: center; gap: 10px; }
+.ft-saved-item > div { display: grid; flex: 1; min-width: 0; gap: 2px; }
+.ft-saved-item span { color: var(--text-3); font-size: 13px; }
+.ft-saved-qty { display: flex; align-items: center; gap: 4px; }
+.ft-saved-qty .input { width: 4.5rem; }
+.ft-saved-add { display: flex; gap: 8px; align-items: center; }
+.ft-saved-add .input { flex: 1; min-width: 0; }
+.ft-favorite-row small { color: var(--text-3); font-size: 13px; overflow-wrap: anywhere; }

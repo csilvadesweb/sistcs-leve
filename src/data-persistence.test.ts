@@ -110,6 +110,7 @@ describe('persistência — falha segura ao carregar dados', () => {
       'fasting_entries',
       'exercise_entries',
       'medication_effect_logs',
+      'saved_meals',
     ];
     expect(fromMock.mock.calls.map(([table]) => table)).toEqual(expectedTables);
 

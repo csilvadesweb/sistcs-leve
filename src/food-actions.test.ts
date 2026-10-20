@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { QUICK_CALORIES_MAX, copyDayInputs, foodEntryToInput, previousDay, quickCaloriesInput } from './food-actions';
+import { QUICK_CALORIES_MAX, copyDayInputs, foodEntryToInput, previousDay, quickCaloriesInput, recentFoods } from './food-actions';
 import { calculateExtraTotals, type FoodEntry } from './data';
 
 const entry: FoodEntry = {
@@ -90,5 +90,33 @@ describe('nutrientes extras', () => {
     expect(totals.sodiumMg).toEqual({ total: 250, counted: 2 });
     expect(totals.saturatedFat).toEqual({ total: 3, counted: 1 });
     expect(totals.sugars).toEqual({ total: 0, counted: 0 });
+  });
+});
+
+describe('alimentos recentes', () => {
+  const at = (id: string, name: string, date: string, portion = '100 g'): FoodEntry => ({ ...entry, id, name, date, portion });
+
+  it('agrupa por nome e porção, ordena por uso e depois por recência', () => {
+    const list = [
+      at('1', 'Ovo cozido', '2026-10-10', '1 un'),
+      at('2', 'ovo cozido ', '2026-10-12', '1 un'),
+      at('3', 'Arroz', '2026-10-18'),
+      at('4', 'Café', '2026-10-17'),
+      at('5', 'Ovo cozido', '2026-10-15', '2 un'),
+    ];
+    const result = recentFoods(list);
+    expect(result.map((r) => [r.entry.name.trim(), r.uses])).toEqual([['ovo cozido', 2], ['Arroz', 1], ['Café', 1], ['Ovo cozido', 1]]);
+    expect(result[0].entry.id).toBe('2');
+  });
+
+  it('ignora registro rápido, respeita o limite e aceita lista vazia', () => {
+    const list = [at('1', 'Registro rápido', '2026-10-10'), at('2', 'Pão', '2026-10-11'), at('3', 'Leite', '2026-10-12')];
+    expect(recentFoods(list).map((r) => r.entry.name)).toEqual(['Leite', 'Pão']);
+    expect(recentFoods(list, 1)).toHaveLength(1);
+    expect(recentFoods([])).toEqual([]);
+  });
+
+  it('não diferencia acentos e maiúsculas', () => {
+    expect(recentFoods([at('1', 'Feijão', '2026-10-10'), at('2', 'FEIJAO', '2026-10-11')])[0].uses).toBe(2);
   });
 });

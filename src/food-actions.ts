@@ -66,3 +66,37 @@ export function quickCaloriesInput(
     nutritionSource: 'user-estimated',
   };
 }
+
+export interface RecentFood {
+  /** Lançamento mais recente desse alimento, usado como modelo para repetir. */
+  entry: FoodEntry;
+  /** Quantas vezes apareceu no período. */
+  uses: number;
+}
+
+const normalizeKey = (value: string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
+/** Nome padrão do registro rápido, já normalizado (sem acento) como os nomes comparados. */
+const QUICK_NAME = normalizeKey('Registro rápido');
+
+/**
+ * Alimentos que a pessoa mais repete, a partir do próprio histórico (sem
+ * tabela nova). Agrupa por nome + porção, ordena por uso e depois por
+ * recência, e ignora o "Registro rápido" (só calorias, sem alimento).
+ */
+export function recentFoods(entries: readonly FoodEntry[], limit = 8): RecentFood[] {
+  const groups = new Map<string, RecentFood>();
+  for (const entry of entries) {
+    const name = normalizeKey(entry.name);
+    if (!name || name === QUICK_NAME) continue;
+    const key = `${name}|${normalizeKey(entry.portion)}`;
+    const current = groups.get(key);
+    if (!current) groups.set(key, { entry, uses: 1 });
+    else {
+      current.uses += 1;
+      if (entry.date > current.entry.date) current.entry = entry;
+    }
+  }
+  return [...groups.values()]
+    .sort((a, b) => b.uses - a.uses || b.entry.date.localeCompare(a.entry.date) || a.entry.name.localeCompare(b.entry.name))
+    .slice(0, Math.max(0, limit));
+}

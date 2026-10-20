@@ -3,9 +3,9 @@ import { FoodSearch, type PickedFood } from '../foodsearch';
 import { NutritionLabelScanner } from '../label-scanner';
 import { MealPhotoScanner } from '../meal-photo';
 import { Link } from 'wouter';
-import { Apple, CalendarDays, Check, Copy, Droplets, Heart, Pencil, Plus, Save, Trash2, X, Zap } from 'lucide-react';
+import { Apple, CalendarDays, Check, Copy, Droplets, Heart, History, Pencil, Plus, Save, Trash2, X, Zap } from 'lucide-react';
 import { useAppData } from '../session';
-import { QUICK_CALORIES_MAX, copyDayInputs, foodEntryToInput, previousDay, quickCaloriesInput } from '../food-actions';
+import { QUICK_CALORIES_MAX, copyDayInputs, foodEntryToInput, previousDay, quickCaloriesInput, recentFoods } from '../food-actions';
 import {
   calculateFoodEntryNutrient,
   calculateExtraTotals,
@@ -461,6 +461,31 @@ export function FoodTracking() {
     );
   }
 
+  /** Refeição de destino: a aba aberta ou, no resumo, a do horário atual. */
+  const targetMeal = (): MealType => (selectedMealTab === 'summary' ? mealByClock() : selectedMealTab);
+
+  /** Um toque: repete o alimento no dia aberto, com a mesma porção. */
+  async function registerRecent(entry: FoodEntry) {
+    const meal = targetMeal();
+    await run(
+      async () => {
+        await createFoodEntry(foodEntryToInput(entry, selectedDate, meal));
+        setFoodFeedback({ kind: 'success', message: `“${entry.name}” registrado em ${mealLabels[meal]}.` });
+      },
+      (message) => setFoodFeedback({ kind: 'error', message }),
+      'Não foi possível registrar o alimento.',
+    );
+  }
+
+  /** Abre o formulário já preenchido para ajustar a quantidade antes de salvar. */
+  function editRecent(entry: FoodEntry) {
+    setEditingFood(null);
+    setFoodForm({ ...foodToForm(entry), date: selectedDate, meal: targetMeal() });
+    setFoodErrors({});
+    setFoodFeedback(null);
+    setFoodEditorOpen(true);
+  }
+
   async function onQuickSubmit(event: FormEvent) {
     event.preventDefault();
     if (!quick) return;
@@ -581,6 +606,8 @@ export function FoodTracking() {
     openNewFood();
     setFoodForm((current) => ({ ...current, meal }));
   }
+
+  const recent = useMemo(() => recentFoods(data.foodEntries), [data.foodEntries]);
 
   const sum = (entries: FoodEntry[], key: FoodNutrientKey) =>
     decimalText(entries.reduce((total, e) => total + calculateFoodEntryNutrient(e, key), 0));
@@ -818,6 +845,31 @@ export function FoodTracking() {
               </section>
             ))}
           </div>
+        )}
+
+        {recent.length > 0 && (
+          <section className="ft-favorites ft-recents" aria-labelledby="recents-title">
+            <div className="ft-favorites-heading">
+              <div><p className="ft-kicker">REPITA COM UM TOQUE</p><h3 id="recents-title">Recentes e mais usados</h3></div>
+              <History size={18} aria-hidden="true" />
+            </div>
+            <div className="ft-favorite-list">
+              {recent.map(({ entry, uses }) => (
+                <div className="ft-favorite-row" key={entry.id}>
+                  <div>
+                    <strong>{entry.name}</strong>
+                    <span>{decimalText(entry.quantity)} × {entry.portion} · {decimalText(calculateFoodEntryNutrient(entry, 'calories'))} kcal{uses > 1 ? ` · ${uses} vezes` : ''}</span>
+                  </div>
+                  <Button variant="outline" size="sm" onClick={() => registerRecent(entry)} disabled={busy} aria-label={`Registrar ${entry.name} em ${mealLabels[targetMeal()]}`}>
+                    <Plus aria-hidden="true" /> Registrar
+                  </Button>
+                  <Button variant="ghost" size="sm" onClick={() => editRecent(entry)} disabled={busy} aria-label={`Ajustar ${entry.name} antes de registrar`}>
+                    <Pencil aria-hidden="true" /> Ajustar
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </section>
         )}
 
         <section className="ft-favorites" aria-labelledby="favorites-title">

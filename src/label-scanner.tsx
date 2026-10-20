@@ -1,9 +1,9 @@
-import { useRef, useState, type ChangeEvent } from 'react';
-import { Camera, LoaderCircle, ScanText } from 'lucide-react';
+import { useState, type ChangeEvent } from 'react';
 import { supabase } from './supabase';
-import { Button, buttonClass } from './ui';
+import { Button } from './ui';
 import type { PickedFood } from './foodsearch';
 import { hasCompleteNonNegativeNutrition } from './photo-nutrition';
+import { imageProblem, readImageAsBase64 } from './photo-upload';
 
 type LabelResult = {
   name: string;
@@ -19,8 +19,8 @@ type LabelResult = {
   notes: string;
 };
 
-export function NutritionLabelScanner({ onPick }: { onPick: (food: PickedFood) => void }) {
-  const inputRef = useRef<HTMLInputElement>(null);
+/** Foto da tabela nutricional: a IA transcreve o rótulo; a pessoa revisa os números antes de usar. */
+export function useLabelScan(onPick: (food: PickedFood) => void) {
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
   const [preview, setPreview] = useState<LabelResult | null>(null);
@@ -31,27 +31,14 @@ export function NutritionLabelScanner({ onPick }: { onPick: (food: PickedFood) =
     setNotice('');
     setPreview(null);
     if (!file) return;
-    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-      setNotice('Escolha uma imagem JPG, PNG ou WebP.');
-      return;
-    }
-    if (file.size > 4 * 1024 * 1024) {
-      setNotice('A imagem deve ter no máximo 4 MB.');
+    const problem = imageProblem(file);
+    if (problem) {
+      setNotice(problem);
       return;
     }
     setBusy(true);
     try {
-      const imageBase64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onerror = () => reject(new Error('Não foi possível abrir a imagem.'));
-        reader.onload = () => {
-          const result = typeof reader.result === 'string' ? reader.result : '';
-          const comma = result.indexOf(',');
-          if (comma < 0) reject(new Error('Não foi possível preparar a imagem.'));
-          else resolve(result.slice(comma + 1));
-        };
-        reader.readAsDataURL(file);
-      });
+      const imageBase64 = await readImageAsBase64(file);
       const { data } = await supabase.auth.getSession();
       const token = data.session?.access_token;
       if (!token) throw new Error('Entre na sua conta para ler o rótulo.');
@@ -105,47 +92,38 @@ export function NutritionLabelScanner({ onPick }: { onPick: (food: PickedFood) =
     setNotice('Valores transferidos para o formulário. Confira e ajuste os campos antes de salvar.');
   }
 
+  return { busy, notice, preview, setPreview, scan, useResult };
+}
+
+export type LabelScanState = ReturnType<typeof useLabelScan>;
+
+/** Leitura do rótulo, com os números editáveis. */
+export function LabelResults({ label }: { label: LabelScanState }) {
+  const { preview, setPreview, useResult } = label;
+  if (!preview) return null;
   return (
-    <section className="ft-card" style={{ margin: '12px 0', padding: 14 }} aria-label="Leitura de tabela nutricional por foto">
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <span aria-hidden="true"><ScanText size={20} /></span>
-        <div style={{ flex: 1 }}>
-          <strong>Fotografar tabela nutricional</strong>
-          <p className="ft-explainer" style={{ margin: '4px 0 0' }}>A IA tenta transcrever o rótulo; você revisa antes de registrar.</p>
-        </div>
-        <label className={buttonClass({ variant: 'outline' })} style={{ cursor: busy ? 'wait' : 'pointer' }}>
-          {busy ? <LoaderCircle size={16} /> : <Camera size={16} />}
-          {busy ? 'Lendo…' : 'Enviar foto'}
-          <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={scan} disabled={busy} hidden />
-        </label>
+    <div className="fs-label-results" aria-label="Valores lidos do rótulo">
+      <div>
+        <strong>{preview.name || 'Produto sem nome reconhecido'}</strong>
+        {preview.brand && <p>{preview.brand}</p>}
+        <small>Base: {preview.basis} · confiança {preview.confidence} · porção lida: {preview.servingSize || 'não identificada'}</small>
       </div>
-      <p className="ft-explainer" style={{ marginTop: 8 }}>A imagem é enviada ao serviço de IA para leitura e não é salva pelo SISTCS Leve. Evite fotografar dados pessoais. Limite de 4 MB; usos de IA entram no limite diário de 30.</p>
-      {notice && <p className="ft-feedback" role="status" aria-live="polite">{notice}</p>}
-      {preview && (
-        <div style={{ marginTop: 12, display: 'grid', gap: 10 }}>
-          <div>
-            <strong>{preview.name || 'Produto sem nome reconhecido'}</strong>
-            {preview.brand && <p>{preview.brand}</p>}
-            <small>Base: {preview.basis} · confiança {preview.confidence} · porção lida: {preview.servingSize || 'não identificada'}</small>
-          </div>
-          <div className="ft-form-grid">
-            {([
-              ['calories', 'Calorias (kcal)'],
-              ['proteins', 'Proteínas (g)'],
-              ['carbohydrates', 'Carboidratos (g)'],
-              ['fats', 'Gorduras (g)'],
-              ['fiber', 'Fibras (g)'],
-            ] as const).map(([key, label]) => (
-              <label key={key} className="ft-field">
-                <span>{label}</span>
-                <input className="input" type="number" min="0" step="any" value={preview[key] ?? ''} onChange={(event) => setPreview((current) => current ? { ...current, [key]: event.target.value === '' ? null : Number(event.target.value) } : current)} />
-              </label>
-            ))}
-          </div>
-          {preview.notes && <p className="ft-explainer">{preview.notes}</p>}
-          <Button block onClick={useResult}>Revisar no formulário de alimento</Button>
-        </div>
-      )}
-    </section>
+      <div className="ft-form-grid">
+        {([
+          ['calories', 'Calorias (kcal)'],
+          ['proteins', 'Proteínas (g)'],
+          ['carbohydrates', 'Carboidratos (g)'],
+          ['fats', 'Gorduras (g)'],
+          ['fiber', 'Fibras (g)'],
+        ] as const).map(([key, text]) => (
+          <label key={key} className="ft-field">
+            <span>{text}</span>
+            <input className="input" type="number" min="0" step="any" value={preview[key] ?? ''} onChange={(event) => setPreview((current) => current ? { ...current, [key]: event.target.value === '' ? null : Number(event.target.value) } : current)} />
+          </label>
+        ))}
+      </div>
+      {preview.notes && <p className="ft-explainer">{preview.notes}</p>}
+      <Button block onClick={useResult}>Usar estes valores</Button>
+    </div>
   );
 }

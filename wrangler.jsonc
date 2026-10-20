@@ -12,11 +12,14 @@
   "routes": [
     { "pattern": "leve.sistcs.com", "custom_domain": true }
   ],
+  // Agendador: lembretes de medicamento com o app fechado (veja DEPLOY.md, seção de notificações).
+  "triggers": { "crons": ["* * * * *"] },
   "previews": {},
   "preview_urls": true,
   "vars": {
     "SUPABASE_URL": "https://yzcmxdbnitturlbozvqu.supabase.co",
     "SUPABASE_ANON_KEY": "sb_publishable_8NA8UB_55isWrQJawod7OQ_tvNKEJNz",
-    "GEMINI_MODEL": "gemini-3.5-flash-lite"
+    "GEMINI_MODEL": "gemini-3.5-flash-lite",
+    "VAPID_SUBJECT": "https://leve.sistcs.com"
   }
 }

@@ -39,6 +39,7 @@ Leia [fontes e licenças de dados alimentares](docs/FOOD_DATA_SOURCES_AND_LICENS
 - A instalação depende de navegador compatível e publicação HTTPS; em desenvolvimento local o service worker não representa o comportamento de produção.
 - O service worker armazena arquivos da aplicação para permitir abrir a interface quando possível. **Isso não equivale a modo offline completo:** os registros e a sincronização dependem do Supabase/rede, e não há garantia de fila offline para gravações.
 - Os lembretes de água usam permissões e recursos locais do navegador. A execução em segundo plano, o áudio e a entrega com o app fechado variam conforme Android, navegador, economia de bateria e configurações do sistema. Não há garantia de entrega push contínua em todos os dispositivos.
+- **Lembretes de dose com o app fechado (push):** em Medicamentos > Ativar lembretes. O servidor é o próprio Worker, com agendador a cada minuto e chaves VAPID; o aviso é genérico (sem nome de medicamento). Exige a configuração da seção "Notificações push" do `DEPLOY.md`; sem ela, o app informa que ainda não está ativado. Os lembretes de água continuam só com o app aberto.
 - Ao trocar logos/ícones, confira todos os assets e a versão/cache do service worker em aparelho real.
 
 ## Health Connect e aplicativo Android complementar

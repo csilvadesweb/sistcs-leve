@@ -41,3 +41,22 @@ Depois, em **Authentication > Providers > Email**, deixe "Confirm email" ligado 
 - No Chrome do celular: menu > "Instalar app". No iPhone, Safari > Compartilhar > "Adicionar à Tela de Início".
 - Lighthouse (Chrome DevTools) > categoria PWA: deve indicar "instalável".
 - Ao trocar a logo ou os ícones no futuro, aumente `VERSION` em `public/sw.js` para o app buscar os arquivos novos.
+
+## 6. Notificações push (lembretes de dose com o app fechado)
+O Worker envia o aviso a cada minuto (`triggers.crons` do `wrangler.jsonc`) para quem tem dose agendada e ainda não marcada.
+Nada de dados de saúde vai no texto: o aviso diz só "Você tem uma dose agendada agora".
+
+1. **Banco:** no Supabase (**SQL Editor**), rode `supabase/migrations/20261019140000_push_notifications.sql`.
+   Cria `push_subscriptions` (um registro por aparelho, só o dono acessa) e `push_sent` (evita avisar a mesma dose duas vezes; só o servidor acessa).
+2. **Chaves VAPID:** no seu computador, `node scripts/generate-vapid.mjs`. A chave **privada** é segredo: não coloque no Git nem no chat.
+3. **Cloudflare:** guarde as três como **segredos** (os valores do `wrangler.jsonc` são recriados a cada deploy, os segredos não):
+   ```bash
+   npx wrangler secret put VAPID_PUBLIC_KEY
+   npx wrangler secret put VAPID_PRIVATE_KEY
+   npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY   # Supabase > Settings > API Keys > service_role (secret)
+   ```
+   A chave `service_role` só pode existir aqui, como segredo do Worker. Nunca no front-end, no Git ou no chat.
+4. **Conferir:** abra o app > **Medicamentos > Ativar lembretes** > **Enviar teste**. Sem os segredos, o app informa que ainda não foram ativadas no servidor.
+5. **iPhone:** só funciona com o app instalado na tela inicial (iOS 16.4 ou superior).
+
+O agendador olha as doses dos últimos 10 minutos, então um atraso de execução não perde o aviso. Aparelhos que cancelam a inscrição (erro 404/410 do serviço de push) são removidos sozinhos.

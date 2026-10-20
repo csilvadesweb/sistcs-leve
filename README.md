@@ -9,12 +9,12 @@ Aplicativo web instalável (PWA) para acompanhar alimentação, hidratação, at
 O menu principal tem cinco áreas. As opções internas ficam agrupadas em cada área, sem ocupar lugares adicionais no menu inferior; a ordem pode ser reorganizada por pressão longa e arraste, com preferências salvas na conta.
 
 - **Início:** resumo diário e atalhos para acompanhar as metas.
-- **Alimentação:** diário por refeição; busca de alimentos, produtos embalados e suplementos; porções e medidas caseiras; código de barras quando o navegador/dispositivo oferece suporte; favoritos; leitura assistida de foto de prato e de rótulo com revisão antes de salvar; totais de energia, macronutrientes, gordura saturada, açúcares e sódio quando informados.
+- **Alimentação:** diário por refeição; busca de alimentos, produtos embalados e suplementos; porções e medidas caseiras; código de barras quando o navegador/dispositivo oferece suporte; favoritos; leitura assistida de foto de prato e de rótulo com revisão antes de salvar; registro rápido só com calorias (marcado como estimado); copiar uma refeição ou o dia anterior; totais de energia, macronutrientes, gordura saturada, açúcares e sódio quando informados (o que não foi informado não entra como zero).
 - **Coach de IA:** conversa para sugestões educativas de refeições, receitas e substituições. O serviço depende de configuração segura da API na Cloudflare. O envio do resumo alimentar diário é opcional e desativado por padrão.
 - **Hidratação:** registro de água, meta, volume do copo e lembretes configuráveis.
 - **Jejum:** protocolos e temporizador, com histórico e estatísticas estimadas.
 - **Receitas:** busca e filtros, favoritos, porções, planejamento semanal, lista de compras em PDF e receita em PDF, conforme os recursos disponíveis no catálogo.
-- **Atividade:** registro de exercícios e estimativa aproximada de calorias por MET; metas e cronômetro de atividade; consulta aos passos e sessões importados quando a integração Android/Health Connect estiver configurada.
+- **Atividade:** registro de exercícios e estimativa aproximada de calorias por MET; metas diárias, semanais e mensais com cronômetro e medalhas, guardadas na conta (`activity_goal_state`) e com cópia no navegador para funcionar sem internet; consulta aos passos e sessões importados quando a integração Android/Health Connect estiver configurada.
 - **Evolução:** registros de peso, fotos de progresso, gráficos e relatórios.
 - **Perfil:** dados pessoais, metas calculadas ou manuais, medicamentos e registro de doses, preferências de navegação, exportação/importação de dados e exclusão dos dados da conta.
 
@@ -89,13 +89,17 @@ Referências: [auditoria de migrations Supabase](docs/SUPABASE_MIGRATION_AUDIT_2
 - `src/foods-br.ts`, `src/foods-taco.ts`, `src/foodsearch.tsx`: busca, fontes, porções e código de barras.
 - `src/recipes.ts`, `src/meal-plan.ts`: catálogo e planejamento de receitas.
 - `src/pwa.tsx`, `public/manifest.webmanifest`, `public/sw.js`: instalação, atualizações e cache dos arquivos estáticos.
+- `src/button-style.ts`, `src/buttons.css`, `src/ui.tsx`: padrão único de botões (`Button` e `buttonClass()`); `src/button-standard.test.ts` impede que ele se desfaça.
+- `src/activity-goals.ts`, `src/activity-timer.ts`, `src/activity-cloud.ts`: metas, medalhas, cronômetro e sincronização com a conta.
+- `src/food-actions.ts`: copiar alimento/refeição/dia e registro rápido.
 - `supabase/schema.sql`, `supabase/migrations/`: snapshot e alterações de banco versionadas.
 - `android-health-connect/`: app complementar Android.
+- `worker.ts`: Worker do Cloudflare (Coach de IA e rotas da API).
 - `DEPLOY.md`: publicação no Cloudflare.
 
 ## Auditoria, critérios de aceite e pendências
 
-A [auditoria geral de 19/10/2026](docs/AUDITORIA_GERAL_2026-10-19.md) separa o que foi verificado no código do que ainda exige validação externa. Em resumo:
+A [auditoria geral de 19/10/2026](docs/AUDITORIA_GERAL_2026-10-19.md) (com a [rodada de 20/10/2026](docs/AUDITORIA_2026-10-20.md)) separa o que foi verificado no código do que ainda exige validação externa. Em resumo:
 
 1. Resolver a reconciliação histórica de migrations antes de qualquer alteração de schema em produção.
 2. Revalidar políticas RLS e permissões, especialmente tabelas/funções adicionadas depois da auditoria remota anterior.

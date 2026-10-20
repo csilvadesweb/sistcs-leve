@@ -140,7 +140,7 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
   const onPickRef = useRef(onPick);
   onPickRef.current = onPick;
   const photo = useMealPhoto((picked) => onPickRef.current(picked));
-  const label = useLabelScan((picked) => onPickRef.current(picked));
+  const labelScan = useLabelScan((picked) => onPickRef.current(picked));
   useEffect(() => () => abort.current?.abort(), []);
 
   // Tudo é derivado do que foi digitado: "2 ovos", "150 g de arroz", "1 colher de sopa de azeite".
@@ -359,17 +359,17 @@ export function FoodSearch({ onPick }: { onPick: (food: PickedFood) => void }) {
           <input className="sr-only" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" disabled={photo.busy} onChange={photo.analyze} />
         </label>
         <label className={buttonClass({ variant: 'outline', size: 'sm' })}>
-          <ScanText aria-hidden="true" /> {label.busy ? 'Lendo…' : 'Foto do rótulo'}
-          <input className="sr-only" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" disabled={label.busy} onChange={label.scan} />
+          <ScanText aria-hidden="true" /> {labelScan.busy ? 'Lendo…' : 'Foto do rótulo'}
+          <input className="sr-only" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" disabled={labelScan.busy} onChange={labelScan.scan} />
         </label>
         <Button variant="outline" size="sm" onClick={() => setScanning((v) => !v)}><ScanBarcode aria-hidden="true" /> {scanning ? 'Parar' : 'Código de barras'}</Button>
       </div>
       {scanning && <BarcodeScanner onCode={(c) => { setQuery(c); void byCode(c); }} onClose={() => setScanning(false)} />}
       <div aria-live="polite">
-        {(photo.notice || label.notice) && <p className="field-hint">{photo.notice || label.notice}</p>}
+        {(photo.notice || labelScan.notice) && <p className="field-hint">{photo.notice || labelScan.notice}</p>}
       </div>
       <MealPhotoResults photo={photo} />
-      <LabelResults label={label} />
+      <LabelResults label={labelScan} />
       <details className="fs-privacy">
         <summary>Como funcionam as fotos e as estimativas</summary>
         <p className="field-hint">As fotos são enviadas ao serviço de IA para leitura e não são salvas pelo SISTCS Leve; evite fotografar dados pessoais. Limite de 4 MB por imagem e 30 usos de IA por dia. Calorias de foto são estimativas, não medições: confirme porção e valores antes de salvar. Quando um dado nutricional não estiver disponível, ele não é inventado.</p>

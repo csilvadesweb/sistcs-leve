@@ -43,9 +43,17 @@ async function fetchPublicKey(): Promise<string> {
   return body.publicKey;
 }
 
+/** `serviceWorker.ready` nunca resolve se o service worker não foi registrado (por exemplo, fora da versão publicada). */
+async function readyRegistration(timeoutMs = 6000): Promise<ServiceWorkerRegistration> {
+  const timeout = new Promise<never>((_, reject) => {
+    window.setTimeout(() => reject(new PushUnavailableError('O app ainda não está pronto para notificações. Recarregue a página e tente de novo.')), timeoutMs);
+  });
+  return Promise.race([navigator.serviceWorker.ready, timeout]);
+}
+
 async function currentSubscription(): Promise<PushSubscription | null> {
   if (pushSupport() === 'unsupported') return null;
-  const registration = await navigator.serviceWorker.ready;
+  const registration = await readyRegistration();
   return registration.pushManager.getSubscription();
 }
 
@@ -67,7 +75,7 @@ export async function enablePush(): Promise<void> {
   const permission = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
   if (permission !== 'granted') throw new Error('Permissão negada. Ative as notificações nas configurações do navegador para este site.');
 
-  const registration = await navigator.serviceWorker.ready;
+  const registration = await readyRegistration();
   const subscription =
     (await registration.pushManager.getSubscription()) ??
     (await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlBase64ToBytes(publicKey) as BufferSource }));

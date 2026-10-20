@@ -1,6 +1,7 @@
 import {
   TEST_MESSAGE,
   bearerUserId,
+  claimOnce,
   pushConfigured,
   runMedicationReminders,
   sendToSubscriptions,
@@ -462,6 +463,10 @@ async function handlePush(request: Request, env: Env): Promise<Response> {
     const userId = await bearerUserId(request, env);
     if (!userId) return withCors(json({ error: "Entre na sua conta para testar." }, 401));
     try {
+      // No máximo um teste por minuto e por pessoa.
+      if (!(await claimOnce(env, userId, `test:${Math.floor(Date.now() / 60_000)}`))) {
+        return withCors(json({ error: "Aguarde um minuto para enviar outro teste." }, 429));
+      }
       const subs = await subscriptionsFor(env, [userId]);
       if (!subs.length) return withCors(json({ error: "Nenhum aparelho ativado. Ative as notificações primeiro." }, 404));
       const { sent } = await sendToSubscriptions(env, subs, TEST_MESSAGE);

@@ -282,6 +282,28 @@ async function rest<T>(env: PushEnv, path: string, init: RequestInit = {}): Prom
   return (text ? JSON.parse(text) : []) as T;
 }
 
+/** Lê todas as linhas, página a página: o PostgREST corta respostas em 1.000 linhas sem avisar. */
+async function restAll<T>(env: PushEnv, path: string): Promise<T[]> {
+  const pageSize = 1000;
+  const rows: T[] = [];
+  for (let page = 0; page < 50; page += 1) {
+    const chunk = await rest<T[]>(env, `${path}&order=id.asc&limit=${pageSize}&offset=${page * pageSize}`);
+    rows.push(...chunk);
+    if (chunk.length < pageSize) break;
+  }
+  return rows;
+}
+
+/** Reserva a chave uma única vez. false = já havia sido reservada. */
+export async function claimOnce(env: PushEnv, userId: string, key: string): Promise<boolean> {
+  const rows = await rest<Array<{ user_id: string }>>(env, 'push_sent?on_conflict=user_id,dedupe_key', {
+    method: 'POST',
+    headers: { prefer: 'resolution=ignore-duplicates,return=representation' },
+    body: JSON.stringify([{ user_id: userId, dedupe_key: key }]),
+  });
+  return rows.length > 0;
+}
+
 export async function subscriptionsFor(env: PushEnv, userIds: string[]): Promise<PushSubscriptionRow[]> {
   if (!userIds.length) return [];
   const list = userIds.map((id) => encodeURIComponent(id)).join(',');
@@ -330,8 +352,13 @@ export async function bearerUserId(request: Request, env: PushEnv): Promise<stri
 export async function runMedicationReminders(env: PushEnv, now: Date = new Date()): Promise<{ due: number; notified: number }> {
   if (!pushConfigured(env)) return { due: 0, notified: 0 };
   const { date } = saoPauloClock(now);
-  const medications = await rest<MedicationRow[]>(env, 'medications?select=id,user_id,times&active=eq.true');
-  const logs = await rest<DoseLogRow[]>(env, `medication_logs?select=medication_id,log_date,scheduled_time&log_date=eq.${date}`);
+  // Limpeza de reservas antigas: uma vez por hora, mesmo nos minutos sem dose.
+  if (now.getUTCMinutes() === 0) {
+    const cutoff = new Date(now.getTime() - 3 * 24 * 3600 * 1000).toISOString();
+    await rest(env, `push_sent?sent_at=lt.${encodeURIComponent(cutoff)}`, { method: 'DELETE' }).catch(() => undefined);
+  }
+  const medications = await restAll<MedicationRow>(env, 'medications?select=id,user_id,times&active=eq.true');
+  const logs = await restAll<DoseLogRow>(env, `medication_logs?select=medication_id,log_date,scheduled_time&log_date=eq.${date}`);
   const due = dueDoses(medications, logs, now);
   if (!due.length) return { due: 0, notified: 0 };
 
@@ -355,8 +382,5 @@ export async function runMedicationReminders(env: PushEnv, now: Date = new Date(
       await rest(env, `push_sent?user_id=eq.${encodeURIComponent(userId)}&dedupe_key=in.(${keys})`, { method: 'DELETE' }).catch(() => undefined);
     }
   }
-  // Limpeza: reservas com mais de 3 dias não servem mais.
-  const cutoff = new Date(now.getTime() - 3 * 24 * 3600 * 1000).toISOString();
-  await rest(env, `push_sent?sent_at=lt.${encodeURIComponent(cutoff)}`, { method: 'DELETE' }).catch(() => undefined);
   return { due: due.length, notified };
 }

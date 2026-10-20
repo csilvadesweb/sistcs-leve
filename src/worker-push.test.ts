@@ -229,6 +229,49 @@ describe('agendador de lembretes', () => {
   });
 });
 
+describe('agendador: escala e limpeza', () => {
+  const json = (data: unknown) => new Response(JSON.stringify(data), { status: 200 });
+  const env: PushEnv = {
+    SUPABASE_URL: 'https://example.supabase.co',
+    SUPABASE_ANON_KEY: 'anon',
+    SUPABASE_SERVICE_ROLE_KEY: 'svc',
+    VAPID_PUBLIC_KEY: 'p',
+    VAPID_PRIVATE_KEY: 'q',
+  };
+
+  it('lê todas as páginas de medicamentos (o servidor corta em 1.000 linhas)', async () => {
+    const pages: string[] = [];
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url.includes('/rest/v1/medications')) {
+        pages.push(url);
+        const offset = Number(/offset=(\d+)/.exec(url)![1]);
+        const size = offset === 0 ? 1000 : 5;
+        return json(Array.from({ length: size }, (_, i) => ({ id: `m${offset + i}`, user_id: 'u', times: ['03:00'] })));
+      }
+      return json([]);
+    }));
+    // 15:30 em São Paulo: ninguém tem dose às 03:00, então não há envio.
+    expect(await runMedicationReminders(env, new Date('2026-10-19T18:30:30Z'))).toEqual({ due: 0, notified: 0 });
+    expect(pages).toHaveLength(2);
+    expect(pages[1]).toContain('offset=1000');
+  });
+
+  it('limpa reservas antigas uma vez por hora, mesmo sem dose no horário', async () => {
+    const deletes: string[] = [];
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      const url = String(input);
+      if (init?.method === 'DELETE') deletes.push(url);
+      return json([]);
+    }));
+    await runMedicationReminders(env, new Date('2026-10-19T18:30:00Z'));
+    expect(deletes).toHaveLength(0);
+    await runMedicationReminders(env, new Date('2026-10-19T19:00:00Z'));
+    expect(deletes).toHaveLength(1);
+    expect(deletes[0]).toContain('push_sent?sent_at=lt.');
+  });
+});
+
 describe('rotas /api/push do Worker', () => {
   const assets = { fetch: vi.fn(async () => new Response('app')) };
   const base = { ASSETS: assets, SUPABASE_URL: 'https://example.supabase.co', SUPABASE_ANON_KEY: 'anon' };
@@ -246,6 +289,24 @@ describe('rotas /api/push do Worker', () => {
     expect(JSON.parse(text)).toEqual({ publicKey: 'PUB' });
     expect(text).not.toContain('PRIV');
     expect(text).not.toContain('SVC');
+  });
+
+  it('o teste é limitado a um por minuto por pessoa', async () => {
+    const env = { ...base, VAPID_PUBLIC_KEY: 'PUB', VAPID_PRIVATE_KEY: 'PRIV', SUPABASE_SERVICE_ROLE_KEY: 'SVC' };
+    let claimed = [{ user_id: 'u1' }];
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url.includes('/auth/v1/user')) return new Response(JSON.stringify({ id: 'u1' }), { status: 200 });
+      if (url.includes('/rest/v1/push_sent')) return new Response(JSON.stringify(claimed), { status: 200 });
+      if (url.includes('/rest/v1/push_subscriptions')) return new Response('[]', { status: 200 });
+      return new Response('[]', { status: 200 });
+    }));
+    const call = () => worker.fetch(new Request('https://leve.sistcs.com/api/push/test', { method: 'POST', headers: { authorization: 'Bearer t' } }), env as never);
+    // Primeiro teste passa da reserva e só então descobre que não há aparelho ativado (404).
+    expect((await call()).status).toBe(404);
+    // Segundo teste no mesmo minuto: a reserva já existia.
+    claimed = [];
+    expect((await call()).status).toBe(429);
   });
 
   it('o teste exige login', async () => {

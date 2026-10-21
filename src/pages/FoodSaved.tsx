@@ -54,6 +54,8 @@ interface Props {
   onRemoveFavorite: (favorite: FavoriteFood) => void;
 }
 
+const RECENT_VISIBLE = 5;
+
 const toEditorItems = (items: SavedMealItem[]) => items.map((item) => ({ item, quantityText: decimalText(item.quantity) }));
 
 export function FoodSaved(props: Props) {
@@ -61,6 +63,7 @@ export function FoodSaved(props: Props) {
   const [tab, setTab] = useState<Tab>('recent');
   const [editor, setEditor] = useState<Editor | null>(null);
   const [pickerKey, setPickerKey] = useState('');
+  const [showAllRecent, setShowAllRecent] = useState(false);
 
   const onError = (message: string) => setFeedback({ kind: 'error', message });
 
@@ -150,16 +153,19 @@ export function FoodSaved(props: Props) {
       {tab === 'recent' && (
         recent.length ? (
           <div className="ft-favorite-list">
-            {recent.map(({ entry, uses }) => (
+            {(showAllRecent ? recent : recent.slice(0, RECENT_VISIBLE)).map(({ entry, uses }) => (
               <div className="ft-favorite-row" key={entry.id}>
                 <div>
                   <strong>{entry.name}</strong>
                   <span>{decimalText(entry.quantity)} × {entry.portion} · {decimalText(calculateFoodEntryNutrient(entry, 'calories'))} kcal{uses > 1 ? ` · ${uses} vezes` : ''}</span>
                 </div>
-                <Button variant="outline" size="sm" onClick={() => props.onRegisterRecent(entry)} disabled={busy} aria-label={`Registrar ${entry.name} em ${targetLabel}`}><Plus aria-hidden="true" /> Registrar</Button>
-                <Button variant="ghost" size="sm" onClick={() => props.onEditRecent(entry)} disabled={busy} aria-label={`Ajustar ${entry.name} antes de registrar`}><Pencil aria-hidden="true" /> Ajustar</Button>
+                <Button variant="outline" size="sm" onClick={() => props.onRegisterRecent(entry)} disabled={busy} aria-label={`Registrar ${entry.name} em ${targetLabel}`}><Plus aria-hidden="true" /> <span className="ft-btn-label">Registrar</span></Button>
+                <Button variant="ghost" size="sm" onClick={() => props.onEditRecent(entry)} disabled={busy} aria-label={`Ajustar ${entry.name} antes de registrar`}><Pencil aria-hidden="true" /> <span className="ft-btn-label">Ajustar</span></Button>
               </div>
             ))}
+            {recent.length > RECENT_VISIBLE && (
+              <Button variant="ghost" size="sm" block onClick={() => setShowAllRecent((v) => !v)}>{showAllRecent ? 'Mostrar menos' : `Ver todos (${recent.length})`}</Button>
+            )}
           </div>
         ) : <p className="ft-favorites-empty">Os alimentos que você registra aparecem aqui para repetir com um toque.</p>
       )}
@@ -173,7 +179,7 @@ export function FoodSaved(props: Props) {
                   <strong>{favorite.name}</strong>
                   <span>{favorite.portion} · {decimalText(favorite.nutrientsPerPortion.calories)} kcal · {favorite.nutritionSource === 'user-estimated' ? 'estimado por você' : 'informado por você'}</span>
                 </div>
-                <Button variant="outline" size="sm" onClick={() => props.onUseFavorite(favorite)}><Plus aria-hidden="true" /> Usar</Button>
+                <Button variant="outline" size="sm" onClick={() => props.onUseFavorite(favorite)}><Plus aria-hidden="true" /> <span className="ft-btn-label">Usar</span></Button>
                 <Button variant="ghost" size="sm" onClick={() => props.onRemoveFavorite(favorite)} disabled={busy} aria-label={`Remover ${favorite.name} dos favoritos`}><Trash2 aria-hidden="true" /></Button>
               </div>
             ))}
@@ -243,7 +249,7 @@ export function FoodSaved(props: Props) {
                     <span>{meal.items.length} {meal.items.length === 1 ? 'alimento' : 'alimentos'} · {decimalText(savedMealCalories(meal.items))} kcal</span>
                     <small>{meal.items.map((i) => i.name).join(', ')}</small>
                   </div>
-                  <Button variant="outline" size="sm" onClick={() => void registerMeal(meal)} disabled={busy} aria-label={`Registrar ${meal.name} em ${targetLabel}`}><Plus aria-hidden="true" /> Registrar</Button>
+                  <Button variant="outline" size="sm" onClick={() => void registerMeal(meal)} disabled={busy} aria-label={`Registrar ${meal.name} em ${targetLabel}`}><Plus aria-hidden="true" /> <span className="ft-btn-label">Registrar</span></Button>
                   <Button variant="ghost" size="sm" onClick={() => setEditor({ id: meal.id, name: meal.name, items: toEditorItems(meal.items) })} disabled={busy} aria-label={`Editar ${meal.name}`}><Pencil aria-hidden="true" /></Button>
                   <Button variant="ghost" size="sm" onClick={() => void removeMeal(meal)} disabled={busy} aria-label={`Excluir ${meal.name}`}><Trash2 aria-hidden="true" /></Button>
                 </div>

@@ -162,3 +162,14 @@
 .ft-saved-add { display: flex; gap: 8px; align-items: center; }
 .ft-saved-add .input { flex: 1; min-width: 0; }
 .ft-favorite-row small { color: var(--text-3); font-size: 13px; overflow-wrap: anywhere; }
+
+/* Seus salvos: abas que cabem na largura e linhas compactas (sem rolagem lateral). */
+.ft-saved .progressive-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; }
+.ft-saved .progressive-tab { min-width: 0; justify-content: center; padding-inline: 6px; white-space: nowrap; }
+.ft-saved .ft-favorite-row { flex-wrap: nowrap; gap: 6px; }
+.ft-saved .ft-favorite-row > div { min-width: 0; }
+.ft-saved .ft-favorite-row .ft-btn-label { color: inherit; font-size: inherit; }
+@media (max-width: 560px) {
+  .ft-saved .ft-favorite-row .ft-btn-label { display: none; }
+  .ft-saved .ft-favorite-row button { min-width: 44px; padding-inline: 10px; }
+}

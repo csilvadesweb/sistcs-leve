@@ -162,3 +162,18 @@ export function validateSavedMeal(name: string, items: SavedMealItem[]): string 
   if (items.some((item) => !Number.isFinite(item.quantity) || item.quantity <= 0 || item.quantity > 10000)) return 'Confira as quantidades: use números maiores que zero.';
   return null;
 }
+
+/** Valida o formulário de favorito: nome, porção e nutrientes numéricos não negativos. */
+export function validateFavoriteForm(form: { name: string; portion: string; values: number[] }): string | null {
+  if (!form.name.trim()) return 'Informe o nome do alimento.';
+  if (form.name.trim().length > 120) return 'O nome pode ter até 120 caracteres.';
+  if (!form.portion.trim()) return 'Informe a porção, por exemplo “100 g”.';
+  if (form.portion.trim().length > 120) return 'A porção pode ter até 120 caracteres.';
+  if (form.values.some((v) => !Number.isFinite(v) || v < 0 || v > 10000)) return 'Preencha calorias e nutrientes com números válidos (use 0 se não tiver).';
+  return null;
+}
+
+/** Chave para identificar um recente que a pessoa tirou da lista. */
+export function recentKey(entry: { name: string; portion: string }): string {
+  return `${entry.name.trim().toLocaleLowerCase('pt-BR')}|${entry.portion.trim().toLocaleLowerCase('pt-BR')}`;
+}

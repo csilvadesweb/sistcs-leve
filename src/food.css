@@ -173,3 +173,6 @@
   .ft-saved .ft-favorite-row .ft-btn-label { display: none; }
   .ft-saved .ft-favorite-row button { min-width: 44px; padding-inline: 10px; }
 }
+.ft-saved-adjust { display: flex; flex-wrap: wrap; align-items: end; gap: 8px; padding: 8px 0 12px; border-bottom: 1px solid var(--line-soft); }
+.ft-saved-adjust .ft-saved-qty { flex: 1 1 10rem; display: grid; gap: 4px; }
+.ft-saved-adjust .ft-saved-qty .input { width: 100%; }

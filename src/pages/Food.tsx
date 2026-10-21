@@ -476,15 +476,6 @@ export function FoodTracking() {
     );
   }
 
-  /** Abre o formulário já preenchido para ajustar a quantidade antes de salvar. */
-  function editRecent(entry: FoodEntry) {
-    setEditingFood(null);
-    setFoodForm({ ...foodToForm(entry), date: selectedDate, meal: targetMeal() });
-    setFoodErrors({});
-    setFoodFeedback(null);
-    setFoodEditorOpen(true);
-  }
-
   async function onQuickSubmit(event: FormEvent) {
     event.preventDefault();
     if (!quick) return;
@@ -858,8 +849,6 @@ export function FoodTracking() {
           run={run}
           setFeedback={setFoodFeedback}
           onRegisterRecent={(entry) => void registerRecent(entry)}
-          onEditRecent={editRecent}
-          onUseFavorite={(favorite) => openNewFood(favorite)}
           onRemoveFavorite={(favorite) => void removeFavorite(favorite)}
         />
       </section>

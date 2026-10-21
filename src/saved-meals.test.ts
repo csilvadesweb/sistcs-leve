@@ -45,3 +45,19 @@ describe('refeições salvas', () => {
     expect(item.nutritionSource).toBe('user-estimated');
   });
 });
+
+import { recentKey, validateFavoriteForm } from './food-actions';
+
+describe('favoritos e recentes dentro da aba', () => {
+  it('valida o formulário de favorito', () => {
+    expect(validateFavoriteForm({ name: 'Pão', portion: '1 fatia', values: [70, 2, 12, 1, 1] })).toBeNull();
+    expect(validateFavoriteForm({ name: ' ', portion: '1 fatia', values: [1, 0, 0, 0, 0] })).toMatch(/nome/);
+    expect(validateFavoriteForm({ name: 'Pão', portion: '', values: [1, 0, 0, 0, 0] })).toMatch(/porção/);
+    expect(validateFavoriteForm({ name: 'Pão', portion: '1', values: [Number.NaN, 0, 0, 0, 0] })).toMatch(/números/);
+    expect(validateFavoriteForm({ name: 'Pão', portion: '1', values: [-1, 0, 0, 0, 0] })).toMatch(/números/);
+  });
+
+  it('identifica o mesmo recente sem diferenciar maiúsculas', () => {
+    expect(recentKey({ name: 'Arroz ', portion: '100 G' })).toBe(recentKey({ name: 'arroz', portion: '100 g' }));
+  });
+});

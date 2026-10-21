@@ -624,6 +624,40 @@ export async function saveFoodFavoriteFromEntry(entry: FoodEntry) {
   fail(error, 'Não foi possível salvar o favorito.');
 }
 
+export interface FavoriteFoodInput {
+  name: string;
+  portion: string;
+  nutrientsPerPortion: FoodNutrients;
+  nutritionSource: NutritionSource;
+}
+
+/** Favorito criado direto na aba, sem lançamento de origem. */
+export async function createFavoriteFood(input: FavoriteFoodInput) {
+  const { error } = await supabase.from('favorite_foods').insert({
+    name: input.name,
+    portion: input.portion,
+    ...nutrientsToRow(input.nutrientsPerPortion),
+    nutrition_source: input.nutritionSource,
+  });
+  fail(error, 'Não foi possível salvar o favorito.');
+}
+
+export async function updateFavoriteFood(id: string, input: FavoriteFoodInput) {
+  const { data, error } = await supabase
+    .from('favorite_foods')
+    .update({
+      name: input.name,
+      portion: input.portion,
+      ...nutrientsToRow(input.nutrientsPerPortion),
+      nutrition_source: input.nutritionSource,
+    })
+    .eq('id', id)
+    .select('id')
+    .maybeSingle();
+  fail(error, 'Não foi possível atualizar o favorito.');
+  if (!data) throw new Error('O favorito não foi encontrado. Atualize a tela e tente novamente.');
+}
+
 export async function deleteFoodFavorite(id: string) {
   const { error } = await supabase.from('favorite_foods').delete().eq('id', id);
   fail(error, 'Não foi possível remover o favorito.');

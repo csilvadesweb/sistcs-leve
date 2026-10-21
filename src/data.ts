@@ -133,6 +133,23 @@ export interface FavoriteFood {
   nutritionSource: NutritionSource;
 }
 
+/** Um alimento dentro de uma refeição salva (valores copiados no momento de salvar). */
+export interface SavedMealItem {
+  name: string;
+  portion: string;
+  quantity: number;
+  nutrientsPerPortion: FoodNutrients;
+  extras?: FoodExtras;
+  nutritionSource: NutritionSource;
+}
+export interface SavedMealInput {
+  name: string;
+  items: SavedMealItem[];
+}
+export interface SavedMeal extends SavedMealInput {
+  id: string;
+}
+
 export interface WaterEntryInput {
   date: string;
   volumeMl: number;
@@ -145,6 +162,8 @@ export interface AppData {
   profile: UserProfile | null;
   foodEntries: FoodEntry[];
   favoriteFoods: FavoriteFood[];
+  savedMeals: SavedMeal[];
+  savedMealsAvailable: boolean;
   waterEntries: WaterEntry[];
   weightEntries: WeightEntry[];
   medications: Medication[];
@@ -161,6 +180,8 @@ export const EMPTY_DATA: AppData = {
   profile: null,
   foodEntries: [],
   favoriteFoods: [],
+  savedMeals: [],
+  savedMealsAvailable: false,
   waterEntries: [],
   weightEntries: [],
   medications: [],
@@ -376,6 +397,28 @@ function favoriteFromRow(r: Row): FavoriteFood {
   };
 }
 
+function savedMealFromRow(r: Row): SavedMeal {
+  const raw = Array.isArray(r.items) ? r.items : [];
+  const items: SavedMealItem[] = [];
+  for (const item of raw as Row[]) {
+    if (!item || typeof item.name !== 'string' || typeof item.portion !== 'string') continue;
+    const n = item.nutrientsPerPortion ?? {};
+    items.push({
+      name: item.name,
+      portion: item.portion,
+      quantity: num(item.quantity) > 0 ? num(item.quantity) : 1,
+      nutrientsPerPortion: {
+        calories: num(n.calories) || 0, proteins: num(n.proteins) || 0, carbohydrates: num(n.carbohydrates) || 0, fats: num(n.fats) || 0, fiber: num(n.fiber) || 0,
+      },
+      ...(item.extras ? { extras: {
+        saturatedFat: item.extras.saturatedFat ?? null, sugars: item.extras.sugars ?? null, sodiumMg: item.extras.sodiumMg ?? null,
+      } } : {}),
+      nutritionSource: item.nutritionSource === 'user-estimated' ? 'user-estimated' : 'user-reported',
+    });
+  }
+  return { id: r.id, name: r.name, items };
+}
+
 function waterFromRow(r: Row): WaterEntry {
   return { id: r.id, date: r.entry_date, volumeMl: num(r.volume_ml) };
 }
@@ -430,7 +473,7 @@ function isMissingRelation(error:{code?:string;message?:string}|null|undefined,t
 /* ---------- leitura ---------- */
 
 export async function loadAll(userId: string): Promise<AppData> {
-  const [profile, foods, favorites, water, weights, meds, medLogs, photos, fasts, exercises, effects] = await Promise.all([
+  const [profile, foods, favorites, water, weights, meds, medLogs, photos, fasts, exercises, effects, meals] = await Promise.all([
     supabase.from('profiles').select('*').eq('user_id', userId).maybeSingle(),
     supabase.from('food_entries').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
     supabase.from('favorite_foods').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
@@ -442,6 +485,7 @@ export async function loadAll(userId: string): Promise<AppData> {
     supabase.from('fasting_entries').select('*').eq('user_id', userId).order('started_at', { ascending: false }).limit(200),
     supabase.from('exercise_entries').select('*').eq('user_id', userId).order('entry_date', { ascending: false }).order('created_at', { ascending: false }).limit(500),
     supabase.from('medication_effect_logs').select('*').eq('user_id', userId).order('event_date', { ascending: false }).order('created_at', { ascending: false }).limit(500),
+    supabase.from('saved_meals').select('*').eq('user_id', userId).order('created_at', { ascending: false }).limit(200),
   ]);
   fail(profile.error, 'Não foi possível carregar o perfil.');
   fail(foods.error, 'Não foi possível carregar os alimentos.');
@@ -456,10 +500,14 @@ export async function loadAll(userId: string): Promise<AppData> {
   if (exercises.error && !exerciseTableMissing) fail(exercises.error, 'Não foi possível carregar os exercícios.');
   const effectsTableMissing = isMissingRelation(effects.error, 'medication_effect_logs');
   if (effects.error && !effectsTableMissing) fail(effects.error, 'Não foi possível carregar o histórico de efeitos.');
+  const mealsTableMissing = isMissingRelation(meals.error, 'saved_meals');
+  if (meals.error && !mealsTableMissing) fail(meals.error, 'Não foi possível carregar as refeições salvas.');
   return {
     profile: profile.data ? profileFromRow(profile.data) : null,
     foodEntries: (foods.data ?? []).map(foodFromRow),
     favoriteFoods: (favorites.data ?? []).map(favoriteFromRow),
+    savedMeals: mealsTableMissing ? [] : (meals.data ?? []).map(savedMealFromRow),
+    savedMealsAvailable: !mealsTableMissing,
     waterEntries: (water.data ?? []).map(waterFromRow),
     weightEntries: (weights.data ?? []).map(weightFromRow),
     medications: (meds.data ?? []).map(medicationFromRow),
@@ -579,6 +627,22 @@ export async function saveFoodFavoriteFromEntry(entry: FoodEntry) {
 export async function deleteFoodFavorite(id: string) {
   const { error } = await supabase.from('favorite_foods').delete().eq('id', id);
   fail(error, 'Não foi possível remover o favorito.');
+}
+
+export async function createSavedMeal(input: SavedMealInput) {
+  const { error } = await supabase.from('saved_meals').insert({ name: input.name, items: input.items });
+  fail(error, 'Não foi possível salvar a refeição.');
+}
+
+export async function updateSavedMeal(id: string, input: SavedMealInput) {
+  const { data, error } = await supabase.from('saved_meals').update({ name: input.name, items: input.items }).eq('id', id).select('id').maybeSingle();
+  fail(error, 'Não foi possível atualizar a refeição.');
+  if (!data) throw new Error('A refeição não foi encontrada. Atualize a tela e tente novamente.');
+}
+
+export async function deleteSavedMeal(id: string) {
+  const { error } = await supabase.from('saved_meals').delete().eq('id', id);
+  fail(error, 'Não foi possível excluir a refeição.');
 }
 
 /* ---------- água ---------- */
@@ -821,6 +885,7 @@ export async function clearAllUserData(userId: string) {
   const tables = [
     'push_subscriptions',
     'activity_goal_state',
+    'saved_meals',
     'health_activity_records',
     'medication_effect_logs',
     'exercise_entries',
@@ -836,7 +901,7 @@ export async function clearAllUserData(userId: string) {
   ];
   for (const table of tables) {
     const { error } = await supabase.from(table).delete().eq('user_id', userId);
-    if ((table === 'push_subscriptions' || table === 'activity_goal_state' || table === 'exercise_entries' || table === 'health_activity_records' || table === 'medication_effect_logs') && isMissingRelation(error, table)) continue;
+    if ((table === 'push_subscriptions' || table === 'saved_meals' || table === 'activity_goal_state' || table === 'exercise_entries' || table === 'health_activity_records' || table === 'medication_effect_logs') && isMissingRelation(error, table)) continue;
     fail(error, 'Não foi possível apagar os dados.');
   }
 }

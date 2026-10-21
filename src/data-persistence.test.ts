@@ -66,6 +66,29 @@ describe('persistência — falha segura ao carregar dados', () => {
     expect(result.exerciseTrackingAvailable).toBe(false);
   });
 
+  it('mantém o app carregável quando a tabela de refeições salvas ainda não existe', async () => {
+    results.saved_meals = { data: null, error: { code: '42P01', message: 'relation saved_meals does not exist' } };
+
+    const result = await loadAll('user-a');
+
+    expect(result.savedMeals).toEqual([]);
+    expect(result.savedMealsAvailable).toBe(false);
+  });
+
+  it('carrega refeições salvas e ignora itens inválidos', async () => {
+    results.saved_meals = { data: [{ id: 'm1', name: 'Café da manhã', items: [
+      { name: 'Ovo', portion: '1 unidade', quantity: 2, nutrientsPerPortion: { calories: 70, proteins: 6 }, nutritionSource: 'user-reported' },
+      { portion: 'sem nome' },
+    ] }], error: null };
+
+    const result = await loadAll('user-a');
+
+    expect(result.savedMealsAvailable).toBe(true);
+    expect(result.savedMeals).toHaveLength(1);
+    expect(result.savedMeals[0].items).toHaveLength(1);
+    expect(result.savedMeals[0].items[0].nutrientsPerPortion.fats).toBe(0);
+  });
+
   it('não esconde falhas de permissão ou rede no diário de exercícios', async () => {
     results.exercise_entries = { data: null, error: { code: '42501', message: 'permission denied' } };
 
@@ -87,6 +110,7 @@ describe('persistência — falha segura ao carregar dados', () => {
       'fasting_entries',
       'exercise_entries',
       'medication_effect_logs',
+      'saved_meals',
     ];
     expect(fromMock.mock.calls.map(([table]) => table)).toEqual(expectedTables);
 
